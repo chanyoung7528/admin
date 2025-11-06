@@ -10,12 +10,33 @@
 
 import { Route as rootRouteImport } from './pages/__root'
 import { Route as TestRouteImport } from './pages/test'
+import { Route as LoginRouteImport } from './pages/login'
 import { Route as AboutRouteImport } from './pages/about'
 import { Route as IndexRouteImport } from './pages/index'
+import { Route as ReportIndexRouteImport } from './pages/report/index'
+import { Route as MonitoringIndexRouteImport } from './pages/monitoring/index'
+import { Route as InquiryIndexRouteImport } from './pages/inquiry/index'
+import { Route as UserMessageRouteImport } from './pages/user/message'
+import { Route as UserListRouteImport } from './pages/user/list'
+import { Route as MyMindUsageRouteImport } from './pages/my-mind/usage'
+import { Route as MyMindSettlementRouteImport } from './pages/my-mind/settlement'
+import { Route as MyMindInvoiceRouteImport } from './pages/my-mind/invoice'
+import { Route as MyMindDashboardRouteImport } from './pages/my-mind/dashboard'
+import { Route as MyFoodSettlementRouteImport } from './pages/my-food/settlement'
+import { Route as MyFoodOrderRouteImport } from './pages/my-food/order'
+import { Route as MyFoodInvoiceRouteImport } from './pages/my-food/invoice'
+import { Route as MyFoodDashboardRouteImport } from './pages/my-food/dashboard'
+import { Route as MyBodySettlementRouteImport } from './pages/my-body/settlement'
+import { Route as MyBodyDashboardRouteImport } from './pages/my-body/dashboard'
 
 const TestRoute = TestRouteImport.update({
   id: '/test',
   path: '/test',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -28,35 +49,232 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReportIndexRoute = ReportIndexRouteImport.update({
+  id: '/report/',
+  path: '/report/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MonitoringIndexRoute = MonitoringIndexRouteImport.update({
+  id: '/monitoring/',
+  path: '/monitoring/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InquiryIndexRoute = InquiryIndexRouteImport.update({
+  id: '/inquiry/',
+  path: '/inquiry/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UserMessageRoute = UserMessageRouteImport.update({
+  id: '/user/message',
+  path: '/user/message',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const UserListRoute = UserListRouteImport.update({
+  id: '/user/list',
+  path: '/user/list',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyMindUsageRoute = MyMindUsageRouteImport.update({
+  id: '/my-mind/usage',
+  path: '/my-mind/usage',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyMindSettlementRoute = MyMindSettlementRouteImport.update({
+  id: '/my-mind/settlement',
+  path: '/my-mind/settlement',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyMindInvoiceRoute = MyMindInvoiceRouteImport.update({
+  id: '/my-mind/invoice',
+  path: '/my-mind/invoice',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyMindDashboardRoute = MyMindDashboardRouteImport.update({
+  id: '/my-mind/dashboard',
+  path: '/my-mind/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyFoodSettlementRoute = MyFoodSettlementRouteImport.update({
+  id: '/my-food/settlement',
+  path: '/my-food/settlement',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyFoodOrderRoute = MyFoodOrderRouteImport.update({
+  id: '/my-food/order',
+  path: '/my-food/order',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyFoodInvoiceRoute = MyFoodInvoiceRouteImport.update({
+  id: '/my-food/invoice',
+  path: '/my-food/invoice',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyFoodDashboardRoute = MyFoodDashboardRouteImport.update({
+  id: '/my-food/dashboard',
+  path: '/my-food/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyBodySettlementRoute = MyBodySettlementRouteImport.update({
+  id: '/my-body/settlement',
+  path: '/my-body/settlement',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyBodyDashboardRoute = MyBodyDashboardRouteImport.update({
+  id: '/my-body/dashboard',
+  path: '/my-body/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/login': typeof LoginRoute
   '/test': typeof TestRoute
+  '/my-body/dashboard': typeof MyBodyDashboardRoute
+  '/my-body/settlement': typeof MyBodySettlementRoute
+  '/my-food/dashboard': typeof MyFoodDashboardRoute
+  '/my-food/invoice': typeof MyFoodInvoiceRoute
+  '/my-food/order': typeof MyFoodOrderRoute
+  '/my-food/settlement': typeof MyFoodSettlementRoute
+  '/my-mind/dashboard': typeof MyMindDashboardRoute
+  '/my-mind/invoice': typeof MyMindInvoiceRoute
+  '/my-mind/settlement': typeof MyMindSettlementRoute
+  '/my-mind/usage': typeof MyMindUsageRoute
+  '/user/list': typeof UserListRoute
+  '/user/message': typeof UserMessageRoute
+  '/inquiry': typeof InquiryIndexRoute
+  '/monitoring': typeof MonitoringIndexRoute
+  '/report': typeof ReportIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/login': typeof LoginRoute
   '/test': typeof TestRoute
+  '/my-body/dashboard': typeof MyBodyDashboardRoute
+  '/my-body/settlement': typeof MyBodySettlementRoute
+  '/my-food/dashboard': typeof MyFoodDashboardRoute
+  '/my-food/invoice': typeof MyFoodInvoiceRoute
+  '/my-food/order': typeof MyFoodOrderRoute
+  '/my-food/settlement': typeof MyFoodSettlementRoute
+  '/my-mind/dashboard': typeof MyMindDashboardRoute
+  '/my-mind/invoice': typeof MyMindInvoiceRoute
+  '/my-mind/settlement': typeof MyMindSettlementRoute
+  '/my-mind/usage': typeof MyMindUsageRoute
+  '/user/list': typeof UserListRoute
+  '/user/message': typeof UserMessageRoute
+  '/inquiry': typeof InquiryIndexRoute
+  '/monitoring': typeof MonitoringIndexRoute
+  '/report': typeof ReportIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/login': typeof LoginRoute
   '/test': typeof TestRoute
+  '/my-body/dashboard': typeof MyBodyDashboardRoute
+  '/my-body/settlement': typeof MyBodySettlementRoute
+  '/my-food/dashboard': typeof MyFoodDashboardRoute
+  '/my-food/invoice': typeof MyFoodInvoiceRoute
+  '/my-food/order': typeof MyFoodOrderRoute
+  '/my-food/settlement': typeof MyFoodSettlementRoute
+  '/my-mind/dashboard': typeof MyMindDashboardRoute
+  '/my-mind/invoice': typeof MyMindInvoiceRoute
+  '/my-mind/settlement': typeof MyMindSettlementRoute
+  '/my-mind/usage': typeof MyMindUsageRoute
+  '/user/list': typeof UserListRoute
+  '/user/message': typeof UserMessageRoute
+  '/inquiry/': typeof InquiryIndexRoute
+  '/monitoring/': typeof MonitoringIndexRoute
+  '/report/': typeof ReportIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/test'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/login'
+    | '/test'
+    | '/my-body/dashboard'
+    | '/my-body/settlement'
+    | '/my-food/dashboard'
+    | '/my-food/invoice'
+    | '/my-food/order'
+    | '/my-food/settlement'
+    | '/my-mind/dashboard'
+    | '/my-mind/invoice'
+    | '/my-mind/settlement'
+    | '/my-mind/usage'
+    | '/user/list'
+    | '/user/message'
+    | '/inquiry'
+    | '/monitoring'
+    | '/report'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/test'
-  id: '__root__' | '/' | '/about' | '/test'
+  to:
+    | '/'
+    | '/about'
+    | '/login'
+    | '/test'
+    | '/my-body/dashboard'
+    | '/my-body/settlement'
+    | '/my-food/dashboard'
+    | '/my-food/invoice'
+    | '/my-food/order'
+    | '/my-food/settlement'
+    | '/my-mind/dashboard'
+    | '/my-mind/invoice'
+    | '/my-mind/settlement'
+    | '/my-mind/usage'
+    | '/user/list'
+    | '/user/message'
+    | '/inquiry'
+    | '/monitoring'
+    | '/report'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/login'
+    | '/test'
+    | '/my-body/dashboard'
+    | '/my-body/settlement'
+    | '/my-food/dashboard'
+    | '/my-food/invoice'
+    | '/my-food/order'
+    | '/my-food/settlement'
+    | '/my-mind/dashboard'
+    | '/my-mind/invoice'
+    | '/my-mind/settlement'
+    | '/my-mind/usage'
+    | '/user/list'
+    | '/user/message'
+    | '/inquiry/'
+    | '/monitoring/'
+    | '/report/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  LoginRoute: typeof LoginRoute
   TestRoute: typeof TestRoute
+  MyBodyDashboardRoute: typeof MyBodyDashboardRoute
+  MyBodySettlementRoute: typeof MyBodySettlementRoute
+  MyFoodDashboardRoute: typeof MyFoodDashboardRoute
+  MyFoodInvoiceRoute: typeof MyFoodInvoiceRoute
+  MyFoodOrderRoute: typeof MyFoodOrderRoute
+  MyFoodSettlementRoute: typeof MyFoodSettlementRoute
+  MyMindDashboardRoute: typeof MyMindDashboardRoute
+  MyMindInvoiceRoute: typeof MyMindInvoiceRoute
+  MyMindSettlementRoute: typeof MyMindSettlementRoute
+  MyMindUsageRoute: typeof MyMindUsageRoute
+  UserListRoute: typeof UserListRoute
+  UserMessageRoute: typeof UserMessageRoute
+  InquiryIndexRoute: typeof InquiryIndexRoute
+  MonitoringIndexRoute: typeof MonitoringIndexRoute
+  ReportIndexRoute: typeof ReportIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -66,6 +284,13 @@ declare module '@tanstack/react-router' {
       path: '/test'
       fullPath: '/test'
       preLoaderRoute: typeof TestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -82,13 +307,134 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/report/': {
+      id: '/report/'
+      path: '/report'
+      fullPath: '/report'
+      preLoaderRoute: typeof ReportIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/monitoring/': {
+      id: '/monitoring/'
+      path: '/monitoring'
+      fullPath: '/monitoring'
+      preLoaderRoute: typeof MonitoringIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/inquiry/': {
+      id: '/inquiry/'
+      path: '/inquiry'
+      fullPath: '/inquiry'
+      preLoaderRoute: typeof InquiryIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/user/message': {
+      id: '/user/message'
+      path: '/user/message'
+      fullPath: '/user/message'
+      preLoaderRoute: typeof UserMessageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/user/list': {
+      id: '/user/list'
+      path: '/user/list'
+      fullPath: '/user/list'
+      preLoaderRoute: typeof UserListRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-mind/usage': {
+      id: '/my-mind/usage'
+      path: '/my-mind/usage'
+      fullPath: '/my-mind/usage'
+      preLoaderRoute: typeof MyMindUsageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-mind/settlement': {
+      id: '/my-mind/settlement'
+      path: '/my-mind/settlement'
+      fullPath: '/my-mind/settlement'
+      preLoaderRoute: typeof MyMindSettlementRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-mind/invoice': {
+      id: '/my-mind/invoice'
+      path: '/my-mind/invoice'
+      fullPath: '/my-mind/invoice'
+      preLoaderRoute: typeof MyMindInvoiceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-mind/dashboard': {
+      id: '/my-mind/dashboard'
+      path: '/my-mind/dashboard'
+      fullPath: '/my-mind/dashboard'
+      preLoaderRoute: typeof MyMindDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-food/settlement': {
+      id: '/my-food/settlement'
+      path: '/my-food/settlement'
+      fullPath: '/my-food/settlement'
+      preLoaderRoute: typeof MyFoodSettlementRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-food/order': {
+      id: '/my-food/order'
+      path: '/my-food/order'
+      fullPath: '/my-food/order'
+      preLoaderRoute: typeof MyFoodOrderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-food/invoice': {
+      id: '/my-food/invoice'
+      path: '/my-food/invoice'
+      fullPath: '/my-food/invoice'
+      preLoaderRoute: typeof MyFoodInvoiceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-food/dashboard': {
+      id: '/my-food/dashboard'
+      path: '/my-food/dashboard'
+      fullPath: '/my-food/dashboard'
+      preLoaderRoute: typeof MyFoodDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-body/settlement': {
+      id: '/my-body/settlement'
+      path: '/my-body/settlement'
+      fullPath: '/my-body/settlement'
+      preLoaderRoute: typeof MyBodySettlementRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-body/dashboard': {
+      id: '/my-body/dashboard'
+      path: '/my-body/dashboard'
+      fullPath: '/my-body/dashboard'
+      preLoaderRoute: typeof MyBodyDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  LoginRoute: LoginRoute,
   TestRoute: TestRoute,
+  MyBodyDashboardRoute: MyBodyDashboardRoute,
+  MyBodySettlementRoute: MyBodySettlementRoute,
+  MyFoodDashboardRoute: MyFoodDashboardRoute,
+  MyFoodInvoiceRoute: MyFoodInvoiceRoute,
+  MyFoodOrderRoute: MyFoodOrderRoute,
+  MyFoodSettlementRoute: MyFoodSettlementRoute,
+  MyMindDashboardRoute: MyMindDashboardRoute,
+  MyMindInvoiceRoute: MyMindInvoiceRoute,
+  MyMindSettlementRoute: MyMindSettlementRoute,
+  MyMindUsageRoute: MyMindUsageRoute,
+  UserListRoute: UserListRoute,
+  UserMessageRoute: UserMessageRoute,
+  InquiryIndexRoute: InquiryIndexRoute,
+  MonitoringIndexRoute: MonitoringIndexRoute,
+  ReportIndexRoute: ReportIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

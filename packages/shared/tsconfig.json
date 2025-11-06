@@ -6,7 +6,12 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@repo/shared/*": ["./src/*"]
+      "@repo/shared/*": ["./src/*"],
+      "@ui/*": ["./src/components/ui/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@components/*": ["./src/components/*"],
+      "@stores/*": ["./src/stores/*"]
     }
   }
 }
