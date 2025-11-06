@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { MessageForm } from "@/domains/user/components";
-
+import { MessageForm } from "../../domains/user/components";
 export const Route = createFileRoute("/user/message")({
   component: UserMessagePage,
 });
