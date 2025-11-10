@@ -1,0 +1,27 @@
+# Dependencies
+node_modules
+.pnpm-debug.log*
+
+# Storybook
+storybook-static
+
+# TypeScript
+*.tsbuildinfo
+
+# Environment
+.env
+.env.local
+.env.production.local
+.env.development.local
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
