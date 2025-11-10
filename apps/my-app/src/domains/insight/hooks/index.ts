@@ -1,0 +1,2 @@
+export { useInsightData } from "./useInsightData";
+
