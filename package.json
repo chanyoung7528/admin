@@ -4,7 +4,9 @@
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "gf": "git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -d",
+    "gfl": "git branch | grep -v '^*' | xargs git branch -D"
   },
   "devDependencies": {
     "eslint": "^8.57.0",
