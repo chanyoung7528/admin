@@ -1,0 +1,208 @@
+# 번들 크기 분석 결과
+
+## 현재 빌드 파일 크기
+
+```
+412K - index-DdTqnIKX.js (앱 코드 + 기타 라이브러리)
+104K - tanstack-vendor-BcoaNIkb.js (TanStack Router + Query)
+ 64K - index-BkylTbfJ.css (Tailwind CSS)
+ 12K - react-vendor-Bzgz95E1.js (React + ReactDOM)
+  8K - index-ClKPa7us.js
+  4K - vendor-CgbjetqP.js (zustand, axios)
+  4K - index-Dho7K2ld.js
+```
+
+## 용량을 많이 차지하는 주요 라이브러리 (추정)
+
+### 1. 🔴 **lucide-react** (~150-200KB)
+- **문제**: 전체 아이콘 세트가 포함됨
+- **해결방법**: 
+
+```typescript
+// ❌ 나쁜 예 - 전체 번들 포함
+import { Menu, User, Settings } from 'lucide-react';
+
+// ✅ 좋은 예 - 필요한 아이콘만 import
+import Menu from 'lucide-react/dist/esm/icons/menu';
+import User from 'lucide-react/dist/esm/icons/user';
+import Settings from 'lucide-react/dist/esm/icons/settings';
+```
+
+또는 더 작은 아이콘 라이브러리로 교체:
+- `@iconify/react` (on-demand)
+- `react-icons` (tree-shakeable)
+
+### 2. 🟡 **@radix-ui 패키지들** (~100KB)
+현재 사용 중:
+- @radix-ui/react-alert-dialog
+- @radix-ui/react-avatar
+- @radix-ui/react-collapsible
+- @radix-ui/react-dialog
+- @radix-ui/react-dropdown-menu
+- @radix-ui/react-separator
+- @radix-ui/react-slot
+- @radix-ui/react-tabs
+- @radix-ui/react-tooltip
+
+**해결방법**: 
+- 사용하지 않는 Radix UI 컴포넌트 제거
+- 실제로 사용하는 컴포넌트만 import
+
+### 3. 🟡 **TanStack Router** (~70-80KB)
+- 이미 별도 청크로 분리됨 ✅
+- routeTree.gen.ts 파일이 클 수 있음 (페이지 수에 비례)
+
+### 4. 🟡 **TanStack Query** (~30-40KB)
+- 이미 별도 청크로 분리됨 ✅
+
+### 5. 🟢 **기타**
+- axios: ~14KB (작음)
+- zustand: ~3KB (매우 작음)
+- class-variance-authority: ~5KB
+- clsx: ~1KB
+- tailwind-merge: ~10KB
+
+## 즉시 적용 가능한 최적화
+
+### 1. lucide-react 최적화 (가장 효과적!)
+
+**방법 A: 직접 import**
+```typescript
+// Before
+import { Menu, User, Settings, Home, Bell } from 'lucide-react';
+
+// After
+import Menu from 'lucide-react/dist/esm/icons/menu';
+import User from 'lucide-react/dist/esm/icons/user';
+import Settings from 'lucide-react/dist/esm/icons/settings';
+import Home from 'lucide-react/dist/esm/icons/home';
+import Bell from 'lucide-react/dist/esm/icons/bell';
+```
+
+**방법 B: 아이콘 라이브러리 교체**
+```bash
+pnpm remove lucide-react
+pnpm add @iconify/react
+```
+
+```typescript
+import { Icon } from '@iconify/react';
+
+// On-demand 로딩 (네트워크 필요)
+<Icon icon="lucide:menu" />
+
+// 또는 필요한 아이콘만 번들에 포함
+import menuIcon from '@iconify-icons/lucide/menu';
+<Icon icon={menuIcon} />
+```
+
+### 2. Radix UI 사용 현황 확인
+
+```bash
+# 프로젝트에서 실제로 사용하는 Radix UI 컴포넌트 검색
+cd /Users/mz01-chansm/Desktop/side-project/admin
+grep -r "@radix-ui" packages/shared/src/components/ui/
+```
+
+사용하지 않는 컴포넌트가 있다면 제거:
+```bash
+pnpm remove @radix-ui/react-alert-dialog  # 예시
+```
+
+### 3. 동적 import 확대 적용
+
+현재 한 페이지만 적용됨. 모든 페이지에 적용:
+
+```typescript
+// pages/my-food/invoice.tsx
+import { lazy, Suspense } from 'react';
+
+const InvoiceGenerator = lazy(() =>
+  import("@/domains/billing/components").then(m => ({
+    default: m.InvoiceGenerator
+  }))
+);
+
+export const Route = createFileRoute("/my-food/invoice")({
+  component: () => (
+    <Suspense fallback={<div>Loading...</div>}>
+      <InvoiceGenerator />
+    </Suspense>
+  ),
+});
+```
+
+### 4. Tree Shaking 개선
+
+vite.config.ts에 추가:
+
+```typescript
+export default defineConfig({
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          "react-vendor": ["react", "react-dom"],
+          "tanstack-vendor": ["@tanstack/react-router", "@tanstack/react-query"],
+          "ui-vendor": [
+            "@radix-ui/react-dialog",
+            "@radix-ui/react-dropdown-menu",
+            "@radix-ui/react-tabs",
+            // 실제 사용하는 것만 추가
+          ],
+          vendor: ["axios", "zustand"],
+        },
+      },
+    },
+  },
+  // Tree shaking 최적화
+  optimizeDeps: {
+    exclude: ["lucide-react"], // 직접 import 사용 시
+  },
+});
+```
+
+## 예상 개선 효과
+
+| 최적화 항목 | 예상 절감 | 난이도 |
+|-----------|----------|--------|
+| lucide-react 개선 | ~100-150KB | 중 |
+| 미사용 Radix UI 제거 | ~20-50KB | 쉬움 |
+| 모든 페이지 lazy loading | ~50-100KB (초기 로딩) | 중 |
+| UI vendor 청크 분리 | 캐싱 개선 | 쉬움 |
+
+**총 예상 개선**: 170-300KB (30-50% 감소)
+
+## 번들 분석 확인 방법
+
+1. **시각적 분석**:
+```bash
+open /Users/mz01-chansm/Desktop/side-project/admin/apps/my-app/dist/stats.html
+```
+
+2. **명령줄 분석**:
+```bash
+cd /Users/mz01-chansm/Desktop/side-project/admin/apps/my-app
+du -sh dist/assets/* | sort -h
+```
+
+3. **Source Map Explorer** (더 상세한 분석):
+```bash
+pnpm add -D source-map-explorer
+pnpm run build
+npx source-map-explorer 'dist/assets/*.js'
+```
+
+## 다음 단계
+
+1. [x] 번들 분석 완료
+2. [ ] lucide-react 최적화 적용
+3. [ ] 미사용 Radix UI 컴포넌트 제거
+4. [ ] 모든 페이지에 lazy loading 적용
+5. [ ] 재빌드 후 크기 비교
+
+## 참고
+
+- 브라우저에 열린 `stats.html`에서 각 라이브러리의 정확한 크기를 확인할 수 있습니다
+- 마우스로 각 블록을 클릭하면 상세 정보가 표시됩니다
+
