@@ -1,0 +1,9 @@
+{
+  "buildCommand": "cd ../.. && pnpm run build:my-app",
+  "outputDirectory": "dist",
+  "installCommand": "pnpm install",
+  "framework": null,
+  "devCommand": "pnpm run dev",
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD ./apps/my-app"
+}
+

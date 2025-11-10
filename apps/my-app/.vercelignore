@@ -1,0 +1,29 @@
+# Storybook (별도 프로젝트로 배포)
+../storybook/**
+
+# 빌드 아티팩트
+node_modules
+dist
+*.tsbuildinfo
+
+# 개발 전용
+*.local
+.env.local
+.env.development.local
+
+# IDE
+.vscode
+.idea
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 테스트
+coverage
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+

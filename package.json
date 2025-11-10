@@ -2,7 +2,11 @@
   "private": true,
   "scripts": {
     "build": "turbo run build",
+    "build:my-app": "turbo run build --filter=my-app",
+    "build:storybook": "turbo run build --filter=storybook-docs",
     "dev": "turbo run dev",
+    "dev:my-app": "turbo run dev --filter=my-app",
+    "dev:storybook": "turbo run dev --filter=storybook-docs",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "gf": "git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -d",
