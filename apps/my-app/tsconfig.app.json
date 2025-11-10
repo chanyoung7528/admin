@@ -16,6 +16,18 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
+    /* Path Aliases */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      // shared 패키지 alias
+      "@ui/*": ["../../packages/shared/src/components/ui/*"],
+      "@lib/*": ["../../packages/shared/src/lib/*"],
+      "@components/*": ["../../packages/shared/src/components/*"],
+      "@stores/*": ["../../packages/shared/src/stores/*"],
+      "@hooks/*": ["../../packages/shared/src/hooks/*"]
+    },
+
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,

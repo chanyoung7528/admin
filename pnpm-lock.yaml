@@ -20,6 +20,9 @@ importers:
 
   apps/my-app:
     dependencies:
+      '@repo/core':
+        specifier: workspace:*
+        version: link:../../packages/core
       '@repo/shared':
         specifier: workspace:*
         version: link:../../packages/shared
@@ -93,6 +96,25 @@ importers:
       vite:
         specifier: ^7.1.7
         version: 7.1.12(@types/node@24.10.0)
+
+  packages/core:
+    dependencies:
+      axios:
+        specifier: ^1.7.9
+        version: 1.13.2
+    devDependencies:
+      '@repo/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      eslint:
+        specifier: ^8.57.0
+        version: 8.57.1
+      typescript:
+        specifier: 5.5.4
+        version: 5.5.4
 
   packages/eslint-config:
     dependencies:

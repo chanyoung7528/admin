@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { OperationReport } from "../../domains/billing/components";
+import { ReportSection } from "@/domains/report/components";
 
 export const Route = createFileRoute("/my-mind/report")({
   component: MindReportPage,
@@ -13,7 +13,7 @@ function MindReportPage() {
         <p className="text-muted-foreground">MY MIND B2B 운영 현황 리포트</p>
       </div>
 
-      <OperationReport />
+      <ReportSection service="MIND" period="monthly" />
     </div>
   );
 }

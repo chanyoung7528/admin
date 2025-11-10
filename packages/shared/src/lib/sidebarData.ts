@@ -1,16 +1,10 @@
-import { SidebarData } from "../types/sidebar";
+import type { SidebarData } from "../types/sidebar";
 import {
   LayoutDashboard,
   Users,
-  UserPlus,
-  MessageSquare,
-  MessagesSquare,
-  Monitor,
   DollarSign,
   Activity,
   ShoppingCart,
-  FileText,
-  Package,
   TrendingUp,
   Brain,
   FileCheck,

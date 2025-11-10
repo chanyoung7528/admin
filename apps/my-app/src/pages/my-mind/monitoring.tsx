@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { DeviceStatusDashboard } from "../../domains/monitoring/components";
+import { MonitoringPanel } from "@/domains/monitoring/components";
 
 export const Route = createFileRoute("/my-mind/monitoring")({
   component: MindMonitoringPage,
@@ -15,7 +15,7 @@ function MindMonitoringPage() {
         </p>
       </div>
 
-      <DeviceStatusDashboard />
+      <MonitoringPanel service="MIND" refreshInterval={30000} />
     </div>
   );
 }

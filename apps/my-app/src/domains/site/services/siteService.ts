@@ -1,8 +1,6 @@
-import { apiClient } from "@/core/api";
-
 // Site 목록 조회
 export async function getSites() {
-  // TODO: Implement API call
+  // TODO: Implement API call with apiClient from @repo/core/api
   return [
     { id: "1", name: "서울 본사", location: "서울시 강남구", status: "활성" },
     { id: "2", name: "판교 지점", location: "경기도 성남시", status: "활성" },

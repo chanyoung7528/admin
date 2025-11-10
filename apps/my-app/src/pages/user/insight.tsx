@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { UserInsightChart } from "../../domains/user/components";
+import { InsightDashboard } from "@/domains/insight/components";
 
 export const Route = createFileRoute("/user/insight")({
   component: UserInsightPage,
@@ -15,7 +15,7 @@ function UserInsightPage() {
         </p>
       </div>
 
-      <UserInsightChart />
+      <InsightDashboard />
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ContentContractInfo } from "../../domains/productMind/components";
+import { ContentList } from "@/domains/content/components";
 
 export const Route = createFileRoute("/my-mind/contract")({
   component: MindContractPage,
@@ -15,7 +15,7 @@ function MindContractPage() {
         </p>
       </div>
 
-      <ContentContractInfo />
+      <ContentList />
     </div>
   );
 }

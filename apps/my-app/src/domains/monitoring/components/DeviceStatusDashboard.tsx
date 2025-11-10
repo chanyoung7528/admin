@@ -1,5 +1,11 @@
 import { useDeviceStatus } from "../hooks";
 
+interface Device {
+  name: string;
+  location: string;
+  status: "online" | "warning" | "error";
+}
+
 export default function DeviceStatusDashboard() {
   const { data, isLoading } = useDeviceStatus();
 
@@ -44,7 +50,7 @@ export default function DeviceStatusDashboard() {
           <p className="text-muted-foreground">로딩 중...</p>
         ) : (
           <div className="space-y-2">
-            {data?.devices?.map((device: any, index: number) => (
+            {data?.devices?.map((device: Device, index: number) => (
               <div
                 key={index}
                 className="flex items-center justify-between rounded-lg border p-4"
@@ -72,4 +78,3 @@ export default function DeviceStatusDashboard() {
     </div>
   );
 }
-

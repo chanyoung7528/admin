@@ -9,12 +9,14 @@
     "paths": {
       "@/*": ["./src/*"],
       "@domains/*": ["./src/domains/*"],
-      "@shared/*": ["./src/shared/*"],
-      "@core/*": ["./src/core/*"],
       "@pages/*": ["./src/pages/*"],
       "@components/*": ["./src/components/*"],
       "@hooks/*": ["./src/hooks/*"],
-      "@utils/*": ["./src/utils/*"]
+      "@utils/*": ["./src/utils/*"],
+      // shared 패키지 alias
+      "@ui/*": ["../../packages/shared/src/components/ui/*"],
+      "@lib/*": ["../../packages/shared/src/lib/*"],
+      "@stores/*": ["../../packages/shared/src/stores/*"]
     }
   }
 }

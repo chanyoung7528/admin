@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { SettlementTable } from "@/domains/settlement/components";
 
 export const Route = createFileRoute("/my-food/settlement")({
   component: FoodSettlementPage,
@@ -12,10 +13,7 @@ function FoodSettlementPage() {
         <p className="text-muted-foreground">MY FOOD 서비스 B2B 정산 내역</p>
       </div>
 
-      <div className="rounded-lg border bg-card p-6">
-        <h2 className="mb-4 text-lg font-semibold">B2B 정산 내역</h2>
-        <p className="text-muted-foreground">정산 테이블 구현 예정</p>
-      </div>
+      <SettlementTable service="FOOD" />
     </div>
   );
 }

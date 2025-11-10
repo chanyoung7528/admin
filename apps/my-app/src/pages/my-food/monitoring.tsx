@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { DeviceStatusDashboard } from "../../domains/monitoring/components";
+import { MonitoringPanel } from "@/domains/monitoring/components";
 
 export const Route = createFileRoute("/my-food/monitoring")({
   component: FoodMonitoringPage,
@@ -13,7 +13,7 @@ function FoodMonitoringPage() {
         <p className="text-muted-foreground">MY FOOD 기기 상태를 모니터링합니다</p>
       </div>
 
-      <DeviceStatusDashboard />
+      <MonitoringPanel service="FOOD" refreshInterval={30000} />
     </div>
   );
 }

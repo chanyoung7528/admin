@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { InquiryList } from "../../domains/inquiry/components";
+import { InquiryList } from "@/domains/inquiry/components";
 
 export const Route = createFileRoute("/my-mind/inquiry")({
   component: MindInquiryPage,

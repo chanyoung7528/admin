@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { FoodOrderList } from "../../domains/productFood/components";
+import { OrderList } from "@/domains/order/components";
 
 export const Route = createFileRoute("/my-food/delivery")({
   component: FoodDeliveryPage,
@@ -13,7 +13,7 @@ function FoodDeliveryPage() {
         <p className="text-muted-foreground">MY FOOD 구매 및 배송 현황</p>
       </div>
 
-      <FoodOrderList />
+      <OrderList />
     </div>
   );
 }
