@@ -13,26 +13,7 @@
 ```
 
 ## 용량을 많이 차지하는 주요 라이브러리 (추정)
-
-### 1. 🔴 **lucide-react** (~150-200KB)
-- **문제**: 전체 아이콘 세트가 포함됨
-- **해결방법**: 
-
-```typescript
-// ❌ 나쁜 예 - 전체 번들 포함
-import { Menu, User, Settings } from 'lucide-react';
-
-// ✅ 좋은 예 - 필요한 아이콘만 import
-import Menu from 'lucide-react/dist/esm/icons/menu';
-import User from 'lucide-react/dist/esm/icons/user';
-import Settings from 'lucide-react/dist/esm/icons/settings';
-```
-
-또는 더 작은 아이콘 라이브러리로 교체:
-- `@iconify/react` (on-demand)
-- `react-icons` (tree-shakeable)
-
-### 2. 🟡 **@radix-ui 패키지들** (~100KB)
+1. 🟡 **@radix-ui 패키지들** (~100KB)
 현재 사용 중:
 - @radix-ui/react-alert-dialog
 - @radix-ui/react-avatar
