@@ -1,6 +1,7 @@
 {
   "extends": "@repo/typescript-config/base.json",
   "compilerOptions": {
+    "lib": ["ES2022", "DOM"],
     "outDir": "dist",
     "rootDir": "src",
     "baseUrl": ".",
@@ -8,6 +9,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "src/vite-env.d.ts"],
   "exclude": ["node_modules", "dist"]
 }
