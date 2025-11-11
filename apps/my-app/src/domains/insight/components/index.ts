@@ -1,2 +1,1 @@
-export { InsightDashboard } from "./InsightDashboard";
-
+export { InsightDashboard } from './InsightDashboard';

@@ -1,3 +1,2 @@
 // Inquiry domain services
-export * from "./inquiryService";
-
+export * from './inquiryService';

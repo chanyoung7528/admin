@@ -1,2 +1,1 @@
-export { SettlementTable } from "./SettlementTable";
-
+export { SettlementTable } from './SettlementTable';

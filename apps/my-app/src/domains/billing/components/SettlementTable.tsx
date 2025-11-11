@@ -1,4 +1,4 @@
-import { useSettlementQuery } from "../hooks";
+import { useSettlementQuery } from '../hooks';
 
 export default function SettlementTable() {
   const { data, isLoading } = useSettlementQuery();
@@ -11,12 +11,9 @@ export default function SettlementTable() {
       ) : (
         <div className="space-y-4">
           {/* TODO: Implement settlement table with data */}
-          <p className="text-muted-foreground">
-            정산 내역 테이블 (총 {data?.length || 0}건)
-          </p>
+          <p className="text-muted-foreground">정산 내역 테이블 (총 {data?.length || 0}건)</p>
         </div>
       )}
     </div>
   );
 }
-

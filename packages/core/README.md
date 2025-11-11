@@ -16,4 +16,3 @@ src/
 ```typescript
 import { apiClient } from '@repo/core/api';
 ```
-

@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
 
 interface Settlement {
   id: string;
@@ -9,9 +9,9 @@ interface Settlement {
   date: string;
 }
 
-export function useSettlementData(service: "BODY" | "FOOD" | "MIND") {
+export function useSettlementData(service: 'BODY' | 'FOOD' | 'MIND') {
   return useQuery<Settlement[]>({
-    queryKey: ["settlement", service],
+    queryKey: ['settlement', service],
     queryFn: async () => {
       // TODO: API 호출
       return [];
@@ -19,4 +19,3 @@ export function useSettlementData(service: "BODY" | "FOOD" | "MIND") {
     staleTime: 1000 * 60 * 5,
   });
 }
-

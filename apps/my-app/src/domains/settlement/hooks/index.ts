@@ -1,2 +1,1 @@
-export { useSettlementData } from "./useSettlementData";
-
+export { useSettlementData } from './useSettlementData';

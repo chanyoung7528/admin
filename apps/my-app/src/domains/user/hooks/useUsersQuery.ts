@@ -1,12 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
 
 export function useUsersQuery() {
   return useQuery({
-    queryKey: ["users"],
+    queryKey: ['users'],
     queryFn: async () => {
       // TODO: Implement API call
       return [];
     },
   });
 }
-

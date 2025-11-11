@@ -1,2 +1,1 @@
-export { useOrdersData } from "./useOrdersData";
-
+export { useOrdersData } from './useOrdersData';

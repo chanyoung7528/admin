@@ -1,7 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { DashboardView } from "@/domains/dashboard/components";
+import { createFileRoute } from '@tanstack/react-router';
+import { DashboardView } from '@/domains/dashboard/components';
 
-export const Route = createFileRoute("/dashboard")({
+export const Route = createFileRoute('/dashboard')({
   component: DashboardPage,
 });
 

@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
 
 interface ReportData {
   revenue: number;
@@ -7,12 +7,9 @@ interface ReportData {
   churnRate: number;
 }
 
-export function useReportData(
-  service: "BODY" | "FOOD" | "MIND",
-  period: "daily" | "weekly" | "monthly" | "yearly"
-) {
+export function useReportData(service: 'BODY' | 'FOOD' | 'MIND', period: 'daily' | 'weekly' | 'monthly' | 'yearly') {
   return useQuery<ReportData>({
-    queryKey: ["report", service, period],
+    queryKey: ['report', service, period],
     queryFn: async () => {
       // TODO: API 호출
       return {
@@ -25,4 +22,3 @@ export function useReportData(
     staleTime: 1000 * 60 * 5,
   });
 }
-

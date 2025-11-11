@@ -1,4 +1,4 @@
-import { useOperationReport } from "../hooks";
+import { useOperationReport } from '../hooks';
 
 export default function OperationReport() {
   const { data, isLoading } = useOperationReport();
@@ -14,21 +14,15 @@ export default function OperationReport() {
           <div className="grid gap-4 md:grid-cols-3">
             <div className="rounded-lg bg-muted p-4">
               <p className="text-sm text-muted-foreground">총 매출</p>
-              <p className="mt-2 text-2xl font-bold">
-                {data?.totalRevenue || "₩0"}
-              </p>
+              <p className="mt-2 text-2xl font-bold">{data?.totalRevenue || '₩0'}</p>
             </div>
             <div className="rounded-lg bg-muted p-4">
               <p className="text-sm text-muted-foreground">정산 완료</p>
-              <p className="mt-2 text-2xl font-bold">
-                {data?.completedCount || 0}건
-              </p>
+              <p className="mt-2 text-2xl font-bold">{data?.completedCount || 0}건</p>
             </div>
             <div className="rounded-lg bg-muted p-4">
               <p className="text-sm text-muted-foreground">정산 대기</p>
-              <p className="mt-2 text-2xl font-bold">
-                {data?.pendingCount || 0}건
-              </p>
+              <p className="mt-2 text-2xl font-bold">{data?.pendingCount || 0}건</p>
             </div>
           </div>
         </div>
@@ -36,4 +30,3 @@ export default function OperationReport() {
     </div>
   );
 }
-

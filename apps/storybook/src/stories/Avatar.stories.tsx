@@ -1,31 +1,20 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@repo/shared/components/ui/avatar";
-import { CustomDocsPage } from "../components/CustomDocsPage";
-import { Badge } from "@repo/shared/components/ui/badge";
-import {
-  User,
-  Crown,
-  Check,
-  MoreVertical,
-  Mail,
-  Phone,
-} from "lucide-react";
+import type { Meta, StoryObj } from '@storybook/react';
+import { Avatar, AvatarFallback, AvatarImage } from '@repo/shared/components/ui/avatar';
+import { CustomDocsPage } from '../components/CustomDocsPage';
+import { Badge } from '@repo/shared/components/ui/badge';
+import { User, Crown, Check, MoreVertical, Mail, Phone } from 'lucide-react';
 
 const meta = {
-  title: "UI Components/Avatar",
+  title: 'UI Components/Avatar',
   component: Avatar,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       page: () => (
         <CustomDocsPage
           componentName="Avatar"
           description="사용자 프로필 이미지 또는 아이콘을 표시하는 Avatar 컴포넌트입니다. 이미지 로딩 실패 시 폴백을 지원합니다."
-          installationDeps={["@radix-ui/react-avatar", "clsx", "tailwind-merge"]}
+          installationDeps={['@radix-ui/react-avatar', 'clsx', 'tailwind-merge']}
           implementationCode={`import {
   Avatar,
   AvatarFallback,
@@ -59,7 +48,7 @@ function UserProfile({ user }) {
       ),
     },
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
 } satisfies Meta<typeof Avatar>;
 
 export default meta;
@@ -196,19 +185,14 @@ export const WithBadge: Story = {
           <AvatarImage src="https://github.com/shadcn.png" />
           <AvatarFallback>HG</AvatarFallback>
         </Avatar>
-        <Badge className="absolute -right-1 -top-1 h-5 min-w-5 p-0.5 text-xs">
-          5
-        </Badge>
+        <Badge className="absolute -right-1 -top-1 h-5 min-w-5 p-0.5 text-xs">5</Badge>
       </div>
 
       <div className="relative inline-block">
         <Avatar>
           <AvatarFallback>KY</AvatarFallback>
         </Avatar>
-        <Badge
-          variant="destructive"
-          className="absolute -right-1 -top-1 h-5 min-w-5 p-0.5 text-xs"
-        >
+        <Badge variant="destructive" className="absolute -right-1 -top-1 h-5 min-w-5 p-0.5 text-xs">
           99+
         </Badge>
       </div>
@@ -219,9 +203,7 @@ export const WithBadge: Story = {
             <Crown className="h-6 w-6" />
           </AvatarFallback>
         </Avatar>
-        <Badge className="absolute -bottom-1 -right-1 px-1.5 py-0 text-xs">
-          Pro
-        </Badge>
+        <Badge className="absolute -bottom-1 -right-1 px-1.5 py-0 text-xs">Pro</Badge>
       </div>
     </div>
   ),
@@ -247,9 +229,7 @@ export const AvatarGroup: Story = {
           <AvatarFallback>PM</AvatarFallback>
         </Avatar>
         <Avatar className="border-2 border-background">
-          <AvatarFallback className="bg-muted text-muted-foreground">
-            +5
-          </AvatarFallback>
+          <AvatarFallback className="bg-muted text-muted-foreground">+5</AvatarFallback>
         </Avatar>
       </div>
 
@@ -257,9 +237,7 @@ export const AvatarGroup: Story = {
       <div className="flex -space-x-2">
         {Array.from({ length: 4 }).map((_, i) => (
           <Avatar key={i} className="h-8 w-8 border-2 border-background">
-            <AvatarFallback className="text-xs">
-              {String.fromCharCode(65 + i)}
-            </AvatarFallback>
+            <AvatarFallback className="text-xs">{String.fromCharCode(65 + i)}</AvatarFallback>
           </Avatar>
         ))}
       </div>
@@ -321,12 +299,8 @@ export const UserProfile: Story = {
       </div>
 
       <div className="mt-6 flex gap-2">
-        <button className="flex-1 rounded-md border px-4 py-2 text-sm hover:bg-accent">
-          메시지
-        </button>
-        <button className="flex-1 rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground hover:bg-primary/90">
-          팔로우
-        </button>
+        <button className="flex-1 rounded-md border px-4 py-2 text-sm hover:bg-accent">메시지</button>
+        <button className="flex-1 rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground hover:bg-primary/90">팔로우</button>
       </div>
     </div>
   ),
@@ -337,15 +311,12 @@ export const UserList: Story = {
   render: () => (
     <div className="w-full max-w-md space-y-2 rounded-lg border bg-card">
       {[
-        { name: "홍길동", email: "hong@example.com", status: "online" },
-        { name: "김영희", email: "kim@example.com", status: "away" },
-        { name: "이철수", email: "lee@example.com", status: "offline" },
-        { name: "박민수", email: "park@example.com", status: "online" },
+        { name: '홍길동', email: 'hong@example.com', status: 'online' },
+        { name: '김영희', email: 'kim@example.com', status: 'away' },
+        { name: '이철수', email: 'lee@example.com', status: 'offline' },
+        { name: '박민수', email: 'park@example.com', status: 'online' },
       ].map((user, i) => (
-        <div
-          key={i}
-          className="flex items-center justify-between p-4 hover:bg-accent"
-        >
+        <div key={i} className="flex items-center justify-between p-4 hover:bg-accent">
           <div className="flex items-center gap-3">
             <div className="relative">
               <Avatar>
@@ -353,11 +324,7 @@ export const UserList: Story = {
               </Avatar>
               <span
                 className={`absolute bottom-0 right-0 block h-3 w-3 rounded-full ring-2 ring-white ${
-                  user.status === "online"
-                    ? "bg-green-500"
-                    : user.status === "away"
-                      ? "bg-yellow-500"
-                      : "bg-gray-400"
+                  user.status === 'online' ? 'bg-green-500' : user.status === 'away' ? 'bg-yellow-500' : 'bg-gray-400'
                 }`}
               />
             </div>
@@ -366,9 +333,7 @@ export const UserList: Story = {
               <p className="text-sm text-muted-foreground">{user.email}</p>
             </div>
           </div>
-          <button className="rounded-md border px-3 py-1 text-sm hover:bg-accent">
-            보기
-          </button>
+          <button className="rounded-md border px-3 py-1 text-sm hover:bg-accent">보기</button>
         </div>
       ))}
     </div>
@@ -381,21 +346,21 @@ export const Comments: Story = {
     <div className="w-full max-w-2xl space-y-4">
       {[
         {
-          name: "홍길동",
-          time: "2시간 전",
-          comment: "정말 유용한 정보네요! 감사합니다.",
+          name: '홍길동',
+          time: '2시간 전',
+          comment: '정말 유용한 정보네요! 감사합니다.',
           likes: 12,
         },
         {
-          name: "김영희",
-          time: "5시간 전",
-          comment: "저도 비슷한 경험이 있습니다. 좋은 글 잘 읽었습니다.",
+          name: '김영희',
+          time: '5시간 전',
+          comment: '저도 비슷한 경험이 있습니다. 좋은 글 잘 읽었습니다.',
           likes: 8,
         },
         {
-          name: "이철수",
-          time: "1일 전",
-          comment: "더 자세한 설명을 부탁드려도 될까요?",
+          name: '이철수',
+          time: '1일 전',
+          comment: '더 자세한 설명을 부탁드려도 될까요?',
           likes: 3,
         },
       ].map((comment, i) => (
@@ -413,12 +378,7 @@ export const Comments: Story = {
             <p className="mt-2 text-sm">{comment.comment}</p>
             <div className="mt-3 flex items-center gap-4">
               <button className="flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
-                <svg
-                  className="h-4 w-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -428,9 +388,7 @@ export const Comments: Story = {
                 </svg>
                 {comment.likes}
               </button>
-              <button className="text-sm text-muted-foreground hover:text-foreground">
-                답글
-              </button>
+              <button className="text-sm text-muted-foreground hover:text-foreground">답글</button>
             </div>
           </div>
         </div>
@@ -446,26 +404,19 @@ export const TeamMembers: Story = {
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h3 className="text-lg font-semibold">팀 멤버</h3>
-          <p className="text-sm text-muted-foreground">
-            프로젝트에 참여 중인 멤버 목록
-          </p>
+          <p className="text-sm text-muted-foreground">프로젝트에 참여 중인 멤버 목록</p>
         </div>
-        <button className="rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground hover:bg-primary/90">
-          멤버 초대
-        </button>
+        <button className="rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground hover:bg-primary/90">멤버 초대</button>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
         {[
-          { name: "홍길동", role: "팀 리더", avatar: "", badge: "Admin" },
-          { name: "김영희", role: "개발자", avatar: "", badge: "Dev" },
-          { name: "이철수", role: "디자이너", avatar: "", badge: "Design" },
-          { name: "박민수", role: "마케터", avatar: "", badge: "Marketing" },
+          { name: '홍길동', role: '팀 리더', avatar: '', badge: 'Admin' },
+          { name: '김영희', role: '개발자', avatar: '', badge: 'Dev' },
+          { name: '이철수', role: '디자이너', avatar: '', badge: 'Design' },
+          { name: '박민수', role: '마케터', avatar: '', badge: 'Marketing' },
         ].map((member, i) => (
-          <div
-            key={i}
-            className="flex items-center justify-between rounded-lg border p-4"
-          >
+          <div key={i} className="flex items-center justify-between rounded-lg border p-4">
             <div className="flex items-center gap-3">
               <Avatar>
                 <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>

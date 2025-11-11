@@ -1,4 +1,3 @@
 // Monitoring domain hooks
-export { useDeviceStatus } from "./useDeviceStatus";
-export { useErrorLogs } from "./useErrorLogs";
-
+export { useDeviceStatus } from './useDeviceStatus';
+export { useErrorLogs } from './useErrorLogs';

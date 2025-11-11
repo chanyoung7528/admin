@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from '@storybook/react';
 import {
   Sidebar,
   SidebarContent,
@@ -14,35 +14,28 @@ import {
   SidebarProvider,
   SidebarRail,
   SidebarTrigger,
-} from "@repo/shared/components/ui/sidebar";
-import { CustomDocsPage } from "../components/CustomDocsPage";
-import {
-  Home,
-  Settings,
-  Users,
-  FileText,
-  BarChart,
-  HelpCircle,
-} from "lucide-react";
+} from '@repo/shared/components/ui/sidebar';
+import { CustomDocsPage } from '../components/CustomDocsPage';
+import { Home, Settings, Users, FileText, BarChart, HelpCircle } from 'lucide-react';
 
 const meta = {
-  title: "UI Components/Sidebar",
+  title: 'UI Components/Sidebar',
   component: Sidebar,
   parameters: {
-    layout: "fullscreen",
+    layout: 'fullscreen',
     docs: {
       page: () => (
         <CustomDocsPage
           componentName="Sidebar"
           description="접고 펼칠 수 있는 반응형 사이드바 컴포넌트입니다. 데스크톱에서는 고정되고, 모바일에서는 Sheet로 표시됩니다."
           installationDeps={[
-            "@radix-ui/react-slot",
-            "@radix-ui/react-dialog",
-            "@radix-ui/react-tooltip",
-            "class-variance-authority",
-            "lucide-react",
-            "clsx",
-            "tailwind-merge",
+            '@radix-ui/react-slot',
+            '@radix-ui/react-dialog',
+            '@radix-ui/react-tooltip',
+            'class-variance-authority',
+            'lucide-react',
+            'clsx',
+            'tailwind-merge',
           ]}
           implementationCode={`// 기본 Sidebar 구조
 import {
@@ -108,7 +101,7 @@ export default function Layout({ children }) {
       ),
     },
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
 } satisfies Meta<typeof Sidebar>;
 
 export default meta;
@@ -175,9 +168,7 @@ export const Default: Story = {
           <main className="flex flex-1 flex-col gap-4 p-4">
             <div className="rounded-lg border p-4">
               <h2 className="mb-2 text-xl font-semibold">환영합니다!</h2>
-              <p className="text-muted-foreground">
-                사이드바를 접고 펼치려면 왼쪽 상단의 버튼을 클릭하세요.
-              </p>
+              <p className="text-muted-foreground">사이드바를 접고 펼치려면 왼쪽 상단의 버튼을 클릭하세요.</p>
             </div>
             <div className="grid gap-4 md:grid-cols-2">
               <div className="rounded-lg border p-4">
@@ -281,9 +272,7 @@ export const MultipleGroups: Story = {
             <h1 className="text-lg font-semibold">메인 콘텐츠</h1>
           </header>
           <main className="flex-1 p-4">
-            <p className="text-muted-foreground">
-              여러 그룹으로 메뉴를 구성할 수 있습니다.
-            </p>
+            <p className="text-muted-foreground">여러 그룹으로 메뉴를 구성할 수 있습니다.</p>
           </main>
         </SidebarInset>
       </div>
@@ -339,9 +328,7 @@ export const FloatingVariant: Story = {
           <main className="flex-1 p-4">
             <div className="rounded-lg border p-4">
               <h2 className="mb-2 text-xl font-semibold">Floating 변형</h2>
-              <p className="text-muted-foreground">
-                사이드바가 떠있는 스타일로 표시됩니다.
-              </p>
+              <p className="text-muted-foreground">사이드바가 떠있는 스타일로 표시됩니다.</p>
             </div>
           </main>
         </SidebarInset>
@@ -398,9 +385,7 @@ export const InsetVariant: Story = {
           <main className="flex-1 p-4">
             <div className="rounded-lg border p-4">
               <h2 className="mb-2 text-xl font-semibold">Inset 변형</h2>
-              <p className="text-muted-foreground">
-                메인 콘텐츠가 둥근 모서리와 그림자를 가진 inset 스타일입니다.
-              </p>
+              <p className="text-muted-foreground">메인 콘텐츠가 둥근 모서리와 그림자를 가진 inset 스타일입니다.</p>
             </div>
           </main>
         </SidebarInset>
@@ -469,13 +454,8 @@ export const IconCollapsible: Story = {
           <main className="flex-1 p-4">
             <div className="rounded-lg border p-4">
               <h2 className="mb-2 text-xl font-semibold">아이콘만 표시</h2>
-              <p className="mb-4 text-muted-foreground">
-                사이드바가 접혀있을 때 아이콘만 표시되고, 마우스를 올리면 툴팁이
-                나타납니다.
-              </p>
-              <p className="text-sm text-muted-foreground">
-                💡 사이드바 토글 버튼을 클릭해서 펼쳐보세요!
-              </p>
+              <p className="mb-4 text-muted-foreground">사이드바가 접혀있을 때 아이콘만 표시되고, 마우스를 올리면 툴팁이 나타납니다.</p>
+              <p className="text-sm text-muted-foreground">💡 사이드바 토글 버튼을 클릭해서 펼쳐보세요!</p>
             </div>
           </main>
         </SidebarInset>
@@ -564,9 +544,7 @@ export const ButtonSizes: Story = {
             <h1 className="text-lg font-semibold">버튼 크기 변형</h1>
           </header>
           <main className="flex-1 p-4">
-            <p className="text-muted-foreground">
-              메뉴 버튼은 sm, default, lg 세 가지 크기를 지원합니다.
-            </p>
+            <p className="text-muted-foreground">메뉴 버튼은 sm, default, lg 세 가지 크기를 지원합니다.</p>
           </main>
         </SidebarInset>
       </div>

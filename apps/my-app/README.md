@@ -70,7 +70,7 @@ src/
 
 - **프레임워크**: React 19
 - **라우터**: TanStack Router (파일 기반 라우팅)
-- **상태 관리**: 
+- **상태 관리**:
   - TanStack Query (서버 상태)
   - Zustand (클라이언트 상태)
 - **스타일링**: Tailwind CSS v4
@@ -117,25 +117,25 @@ VITE_API_BASE_URL=https://api.example.com
 ### API 호출
 
 ```typescript
-import { apiClient } from "@/core/api";
+import { apiClient } from '@/core/api';
 
 // GET 요청
-const data = await apiClient.get("/users");
+const data = await apiClient.get('/users');
 
 // POST 요청
-const result = await apiClient.post("/users", { name: "John" });
+const result = await apiClient.post('/users', { name: 'John' });
 ```
 
 ### TanStack Query 사용
 
 ```typescript
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
 
 export function useUsersQuery() {
   return useQuery({
-    queryKey: ["users"],
+    queryKey: ['users'],
     queryFn: async () => {
-      const data = await apiClient.get("/users");
+      const data = await apiClient.get('/users');
       return data;
     },
   });
@@ -145,13 +145,16 @@ export function useUsersQuery() {
 ## 폴더 구조 설계 원칙
 
 ### 도메인 주도 설계 (DDD)
+
 각 비즈니스 도메인은 독립적으로 구성되어 있으며, 해당 도메인의 컴포넌트, 훅, 서비스를 포함합니다.
 
 ### 관심사의 분리
+
 - `domains/`: 비즈니스 로직
 - `shared/`: 재사용 가능한 공통 모듈
 - `core/`: 애플리케이션 인프라
 - `pages/`: 라우팅 및 페이지 조합
 
 ### 확장성
+
 새로운 기능 추가 시 기존 코드에 영향을 최소화하도록 설계되었습니다.

@@ -174,22 +174,26 @@ export default function MyBodySettlementPage() {
 ## 4. 재구조화 단계
 
 ### Step 1: 공통 도메인 생성
+
 1. ✅ `dashboard` 도메인 생성 (productBody/Food/Mind의 Dashboard 통합)
 2. ✅ `monitoring` 도메인 리팩토링 (service prop 추가)
 3. ✅ `settlement` 도메인 생성 (billing에서 분리)
 4. ✅ `report` 도메인 생성 (billing에서 분리)
 
 ### Step 2: 특화 도메인 정리
+
 1. ✅ `order` 도메인 생성 (productFood에서 주문 관련만 추출)
 2. ✅ `content` 도메인 생성 (productMind에서 콘텐츠 관련만 추출)
 3. ✅ `insight` 도메인 생성 (user에서 분리)
 
 ### Step 3: 잘못된 도메인 제거
+
 1. ❌ `productBody` 삭제
 2. ❌ `productFood` 삭제
 3. ❌ `productMind` 삭제
 
 ### Step 4: 페이지 업데이트
+
 1. 모든 페이지를 새 도메인 구조에 맞게 수정
 2. Import 경로 수정
 3. Props 전달 방식 수정
@@ -197,14 +201,17 @@ export default function MyBodySettlementPage() {
 ## 5. 핵심 원칙
 
 ### DDD 관점:
+
 - ✅ 도메인 = 비즈니스 기능 (dashboard, monitoring, settlement)
 - ❌ 도메인 ≠ 제품/서비스 (productBody, productFood)
 
 ### 재사용성:
+
 - ✅ 하나의 `DashboardView` 컴포넌트가 `service` prop으로 모든 서비스 지원
 - ❌ `BodyDashboard`, `FoodDashboard`, `MindDashboard` 중복 생성
 
 ### 확장성:
+
 - ✅ 새 서비스 추가 시 `service` enum에만 추가
 - ❌ 새 `productXXX` 폴더 전체 생성
 
@@ -212,7 +219,7 @@ export default function MyBodySettlementPage() {
 
 - [ ] dashboard 도메인 생성
 - [ ] monitoring 도메인 리팩토링
-- [ ] settlement 도메인 생성  
+- [ ] settlement 도메인 생성
 - [ ] report 도메인 생성
 - [ ] order 도메인 생성
 - [ ] content 도메인 생성
@@ -222,4 +229,3 @@ export default function MyBodySettlementPage() {
 - [ ] ARCHITECTURE.md 업데이트
 - [ ] 타입 에러 확인
 - [ ] 런타임 테스트
-

@@ -1,6 +1,6 @@
 // Dashboard 도메인 서비스
 
-export async function getServiceStats(_service: "ALL" | "BODY" | "FOOD" | "MIND") {
+export async function getServiceStats(_service: 'ALL' | 'BODY' | 'FOOD' | 'MIND') {
   // TODO: API 호출
   return {
     totalUsers: 12345,
@@ -10,11 +10,7 @@ export async function getServiceStats(_service: "ALL" | "BODY" | "FOOD" | "MIND"
   };
 }
 
-export async function getUsageTrend(
-  _service: "ALL" | "BODY" | "FOOD" | "MIND",
-  _period: "daily" | "weekly" | "monthly"
-) {
+export async function getUsageTrend(_service: 'ALL' | 'BODY' | 'FOOD' | 'MIND', _period: 'daily' | 'weekly' | 'monthly') {
   // TODO: API 호출
   return [];
 }
-

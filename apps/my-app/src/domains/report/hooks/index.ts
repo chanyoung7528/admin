@@ -1,2 +1,1 @@
-export { useReportData } from "./useReportData";
-
+export { useReportData } from './useReportData';

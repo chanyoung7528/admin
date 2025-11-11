@@ -1,2 +1,1 @@
-export { useContentData } from "./useContentData";
-
+export { useContentData } from './useContentData';

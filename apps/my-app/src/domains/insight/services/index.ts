@@ -1,2 +1,1 @@
-export * from "./insightService";
-
+export * from './insightService';

@@ -1,2 +1,1 @@
-export { ReportSection } from "./ReportSection";
-
+export { ReportSection } from './ReportSection';

@@ -1,9 +1,9 @@
 interface UsageChartProps {
-  service: "BODY" | "FOOD" | "MIND" | "ALL";
-  period?: "daily" | "weekly" | "monthly";
+  service: 'BODY' | 'FOOD' | 'MIND' | 'ALL';
+  period?: 'daily' | 'weekly' | 'monthly';
 }
 
-export function UsageChart({ service, period = "daily" }: UsageChartProps) {
+export function UsageChart({ service, period = 'daily' }: UsageChartProps) {
   return (
     <div className="rounded-lg border bg-card p-6">
       <h3 className="mb-4 text-base font-semibold">이용 현황 차트</h3>
@@ -13,4 +13,3 @@ export function UsageChart({ service, period = "daily" }: UsageChartProps) {
     </div>
   );
 }
-

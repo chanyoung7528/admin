@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation } from '@tanstack/react-query';
 
 export function useSendMessage() {
   return useMutation({
@@ -8,4 +8,3 @@ export function useSendMessage() {
     },
   });
 }
-

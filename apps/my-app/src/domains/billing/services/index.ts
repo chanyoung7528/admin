@@ -1,3 +1,2 @@
 // Billing domain services
-export * from "./billingService";
-
+export * from './billingService';
