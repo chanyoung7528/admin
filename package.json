@@ -16,11 +16,23 @@
     "clean:cache": "turbo clean",
     "test": "turbo test",
     "gf": "git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -d",
-    "gfl": "git branch | grep -v '^*' | xargs git branch -D"
+    "gfl": "git branch | grep -v '^*' | xargs git branch -D",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.6",
     "turbo": "^2.6.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,mdx,css,scss,yaml,yml}": [
+      "prettier --write"
+    ]
   },
   "packageManager": "pnpm@8.15.6",
   "name": "with-vite"
