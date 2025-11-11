@@ -92,11 +92,11 @@ export function CustomDocsPage({ installationDeps, implementationCode, exampleCo
       title: '컴포넌트 설명',
       icon: BookOpen,
       content: (
-        <div className="rounded-lg bg-gradient-to-r from-blue-50 to-indigo-50 p-6 dark:from-blue-900/20 dark:to-indigo-900/20">
+        <div className="rounded-lg p-6">
           <Description />
-          <div className="mt-6 rounded-lg border border-blue-200 bg-white/50 p-4 dark:border-blue-700 dark:bg-gray-800/50">
+          <div className="mt-6 rounded-lg">
             <Primary />
-            <div className="mt-4 border-t border-blue-200 pt-4 dark:border-blue-700">
+            <div className="mt-4">
               <div className="mb-2 flex items-center gap-2">
                 <Sliders className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                 <h4 className="font-semibold text-blue-900 dark:text-blue-200">실시간 테스트</h4>
@@ -113,7 +113,7 @@ export function CustomDocsPage({ installationDeps, implementationCode, exampleCo
       icon: Package,
       content: (
         <div className="space-y-6">
-          <div className="rounded-lg border border-emerald-200 bg-emerald-50 p-6 dark:border-emerald-700 dark:bg-emerald-900/20">
+          <div className="rounded-lg">
             <Tabs defaultValue="npm" className="w-full">
               <TabsList variant="underline" className="mb-4">
                 <TabsTrigger value="npm">NPM</TabsTrigger>
@@ -136,7 +136,7 @@ export function CustomDocsPage({ installationDeps, implementationCode, exampleCo
       icon: Settings,
       content: implementationCode ? (
         <div className="space-y-4">
-          <div className="rounded-lg border border-gray-200 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800">
+          <div className="rounded-lg">
             <div className="mb-4 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="rounded-full bg-green-100 p-2 dark:bg-green-900">
@@ -151,7 +151,7 @@ export function CustomDocsPage({ installationDeps, implementationCode, exampleCo
           </div>
         </div>
       ) : (
-        <div className="rounded-lg border border-gray-200 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800">
+        <div className="rounded-lg">
           <div className="text-center text-gray-500 dark:text-gray-400">
             <div className="mb-2 text-4xl">📄</div>
             <p>구현 코드는 예시 섹션에서 확인할 수 있습니다.</p>
@@ -167,7 +167,7 @@ export function CustomDocsPage({ installationDeps, implementationCode, exampleCo
             icon: Sparkles,
             content: (
               <div className="space-y-4">
-                <div className="rounded-lg border border-purple-200 bg-purple-50 p-6 dark:border-purple-700 dark:bg-purple-900/20">
+                <div className="rounded-lg">
                   <div className="mb-4 flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <span className="rounded-full bg-purple-100 p-2 dark:bg-purple-900">
@@ -177,7 +177,10 @@ export function CustomDocsPage({ installationDeps, implementationCode, exampleCo
                     </div>
                   </div>
                   <div className="mb-4 text-sm text-purple-700 dark:text-purple-300">
-                    <p>실제 프로젝트에서 이 컴포넌트를 어떻게 사용하는지 확인하세요.</p>
+                    <p>
+                      실제 프로젝트에서 이 컴포넌트를 어떻게 사용하는지
+                      확인하세요.
+                    </p>
                   </div>
                   <div className="animate-slideDown mt-4">
                     <CodeBlock code={exampleCode} />
@@ -194,7 +197,7 @@ export function CustomDocsPage({ installationDeps, implementationCode, exampleCo
       icon: Wrench,
       content: (
         <div className="space-y-4">
-          <div className="rounded-lg border border-orange-200 bg-orange-50 p-6 dark:border-orange-700 dark:bg-orange-900/20">
+          <div className="rounded-lg">
             <div className="mb-4 flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <span className="rounded-full bg-orange-100 p-2 dark:bg-orange-900">
@@ -299,7 +302,7 @@ export function cn(...inputs: ClassValue[]) {
         }}
         aria-hidden={activeTab !== 'examples'}
       >
-        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
           <Stories />
         </div>
       </div>

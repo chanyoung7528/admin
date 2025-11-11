@@ -36,6 +36,7 @@ lerna-debug.log*
 
 # Turbo
 .turbo
+.turbo-dev.log
 
 # TypeScript
 *.tsbuildinfo
@@ -56,6 +57,10 @@ tsconfig.tsbuildinfo
 .cache
 .eslintcache
 .parcel-cache
+
+# TanStack Router
+**/routeTree.gen.ts
+*.routeTree.gen.ts
 
 # OS
 .DS_Store
