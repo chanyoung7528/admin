@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import { Input } from '@repo/shared/components/ui/input';
-import { CustomDocsPage } from '../components/CustomDocsPage';
-import { Mail, Lock, Search, User, Eye, EyeOff, Phone, Calendar, DollarSign, AlertCircle, Check } from 'lucide-react';
+import type { Meta, StoryObj } from '@storybook/react';
+import { AlertCircle, Check, DollarSign, Eye, EyeOff, Lock, Mail, Phone, Search, User } from 'lucide-react';
 import { useState } from 'react';
+import { CustomDocsPage } from '../components/CustomDocsPage';
 
 const meta = {
   title: 'UI Components/Input',
