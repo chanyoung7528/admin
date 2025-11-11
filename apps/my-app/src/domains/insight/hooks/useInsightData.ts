@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
 
 interface InsightData {
   topAgeGroup: string;
@@ -8,11 +8,11 @@ interface InsightData {
 
 export function useInsightData() {
   return useQuery<InsightData>({
-    queryKey: ["insight"],
+    queryKey: ['insight'],
     queryFn: async () => {
       // TODO: API 호출
       return {
-        topAgeGroup: "30-39",
+        topAgeGroup: '30-39',
         avgUsageTime: 45,
         retentionRate: 87.5,
       };
@@ -20,4 +20,3 @@ export function useInsightData() {
     staleTime: 1000 * 60 * 5,
   });
 }
-

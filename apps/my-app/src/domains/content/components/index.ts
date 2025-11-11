@@ -1,2 +1,1 @@
-export { ContentList } from "./ContentList";
-
+export { ContentList } from './ContentList';

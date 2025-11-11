@@ -117,4 +117,3 @@ export const Default: Story = {
 - [Storybook 공식 문서](https://storybook.js.org/)
 - [Radix UI](https://www.radix-ui.com/)
 - [Tailwind CSS](https://tailwindcss.com/)
-

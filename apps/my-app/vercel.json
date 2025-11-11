@@ -6,4 +6,3 @@
   "devCommand": "pnpm run dev",
   "ignoreCommand": "git diff --quiet HEAD^ HEAD ./apps/my-app"
 }
-

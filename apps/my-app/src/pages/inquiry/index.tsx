@@ -1,6 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute("/inquiry/")({
+export const Route = createFileRoute('/inquiry/')({
   component: InquiryListPage,
 });
 
@@ -19,4 +19,3 @@ function InquiryListPage() {
     </div>
   );
 }
-

@@ -1,6 +1,6 @@
-import { useNavigate } from "@tanstack/react-router";
-import { useAuthStore } from "@stores/useAuthStore";
-import { ConfirmDialog } from "./ConfirmDialog";
+import { useNavigate } from '@tanstack/react-router';
+import { useAuthStore } from '@stores/useAuthStore';
+import { ConfirmDialog } from './ConfirmDialog';
 
 interface SignOutDialogProps {
   open: boolean;
@@ -15,7 +15,7 @@ export function SignOutDialog({ open, onOpenChange }: SignOutDialogProps) {
     auth.reset();
     // Redirect to login page
     navigate({
-      to: "/login",
+      to: '/login',
       replace: true,
     });
   };

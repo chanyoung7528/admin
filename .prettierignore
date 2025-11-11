@@ -1,0 +1,39 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Build outputs
+dist
+build
+storybook-static
+.next
+out
+.nuxt
+.output
+
+# Testing
+coverage
+*.lcov
+
+# Lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Cache & temp
+.cache
+.turbo
+.parcel-cache
+.eslintcache
+
+# IDE
+.vscode
+.idea
+
+# Logs
+*.log
+
+# Misc
+.changeset
+.DS_Store

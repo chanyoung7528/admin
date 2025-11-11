@@ -1,7 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { UserForm } from "../../domains/user/components";
+import { createFileRoute } from '@tanstack/react-router';
+import { UserForm } from '../../domains/user/components';
 
-export const Route = createFileRoute("/user/register")({
+export const Route = createFileRoute('/user/register')({
   component: UserRegisterPage,
 });
 

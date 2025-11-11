@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
 
 interface DashboardData {
   totalUsers: number;
@@ -7,9 +7,9 @@ interface DashboardData {
   usageRate: number;
 }
 
-export function useDashboardData(service: "ALL" | "BODY" | "FOOD" | "MIND") {
+export function useDashboardData(service: 'ALL' | 'BODY' | 'FOOD' | 'MIND') {
   return useQuery<DashboardData>({
-    queryKey: ["dashboard", service],
+    queryKey: ['dashboard', service],
     queryFn: async () => {
       // TODO: API 호출
       return {
@@ -22,4 +22,3 @@ export function useDashboardData(service: "ALL" | "BODY" | "FOOD" | "MIND") {
     staleTime: 1000 * 60 * 5, // 5분
   });
 }
-

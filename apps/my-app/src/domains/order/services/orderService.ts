@@ -9,4 +9,3 @@ export async function createFoodOrder(_orderData: unknown) {
   // TODO: API 호출
   return {};
 }
-

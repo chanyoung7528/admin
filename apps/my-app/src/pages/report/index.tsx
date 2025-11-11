@@ -1,6 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute("/report/")({
+export const Route = createFileRoute('/report/')({
   component: ReportPage,
 });
 
@@ -14,9 +14,7 @@ function ReportPage() {
 
       <div className="rounded-lg border bg-card p-6">
         <h2 className="mb-4 text-lg font-semibold">Site별 리포트</h2>
-        <p className="text-muted-foreground">
-          Site별 운영 현황 테이블 구현 예정
-        </p>
+        <p className="text-muted-foreground">Site별 운영 현황 테이블 구현 예정</p>
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { SettlementTable } from "@/domains/settlement/components";
+import { createFileRoute } from '@tanstack/react-router';
+import { SettlementTable } from '@/domains/settlement/components';
 
-export const Route = createFileRoute("/my-body/settlement")({
+export const Route = createFileRoute('/my-body/settlement')({
   component: BodySettlementPage,
 });
 

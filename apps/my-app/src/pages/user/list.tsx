@@ -1,7 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { UserListTable } from "../../domains/user/components";
- 
-export const Route = createFileRoute("/user/list")({
+import { createFileRoute } from '@tanstack/react-router';
+import { UserListTable } from '../../domains/user/components';
+
+export const Route = createFileRoute('/user/list')({
   component: UserListPage,
 });
 

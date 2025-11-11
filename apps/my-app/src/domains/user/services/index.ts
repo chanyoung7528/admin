@@ -1,3 +1,2 @@
 // User domain services
-export * from "./userService";
-
+export * from './userService';

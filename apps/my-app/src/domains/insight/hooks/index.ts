@@ -1,2 +1,1 @@
-export { useInsightData } from "./useInsightData";
-
+export { useInsightData } from './useInsightData';

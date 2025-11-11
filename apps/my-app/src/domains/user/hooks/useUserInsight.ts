@@ -1,12 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
 
 export function useUserInsight() {
   return useQuery({
-    queryKey: ["user-insight"],
+    queryKey: ['user-insight'],
     queryFn: async () => {
       // TODO: Implement API call
       return {};
     },
   });
 }
-

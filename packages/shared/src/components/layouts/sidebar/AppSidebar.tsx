@@ -1,16 +1,10 @@
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarHeader,
-  SidebarRail,
-} from "@ui/sidebar";
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from '@ui/sidebar';
 // import { AppTitle } from './app-title'
-import { sidebarData } from "@lib/sidebarData";
-import { TeamSwitcher } from "./TeamSwitcher";
-import { NavGroup } from "./NavGroup";
-import { NavUser } from "./NavUser";
-import { useLayout } from "@components/context/LayoutProvider";
+import { sidebarData } from '@lib/sidebarData';
+import { TeamSwitcher } from './TeamSwitcher';
+import { NavGroup } from './NavGroup';
+import { NavUser } from './NavUser';
+import { useLayout } from '@components/context/LayoutProvider';
 
 export function AppSidebar() {
   const { collapsible, variant } = useLayout();
@@ -24,7 +18,7 @@ export function AppSidebar() {
         {/* <AppTitle /> */}
       </SidebarHeader>
       <SidebarContent>
-        {sidebarData.navGroups.map((props) => (
+        {sidebarData.navGroups.map(props => (
           <NavGroup key={props.title} {...props} />
         ))}
       </SidebarContent>

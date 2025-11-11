@@ -1,7 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { SettlementTable } from "@/domains/settlement/components";
+import { createFileRoute } from '@tanstack/react-router';
+import { SettlementTable } from '@/domains/settlement/components';
 
-export const Route = createFileRoute("/my-mind/settlement")({
+export const Route = createFileRoute('/my-mind/settlement')({
   component: MindSettlementPage,
 });
 
@@ -17,4 +17,3 @@ function MindSettlementPage() {
     </div>
   );
 }
-

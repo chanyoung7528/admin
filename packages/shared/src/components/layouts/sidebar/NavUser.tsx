@@ -1,12 +1,5 @@
-import {
-  BadgeCheck,
-  Bell,
-  ChevronsUpDown,
-  CreditCard,
-  LogOut,
-  Sparkles,
-} from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@ui/avatar";
+import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Sparkles } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '@ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,15 +8,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@ui/dropdown-menu";
-import {
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  useSidebar,
-} from "@ui/sidebar";
-import { SignOutDialog } from "./SignOutDialog";
-import useDialogState from "@hooks/useDialogState";
+} from '@ui/dropdown-menu';
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@ui/sidebar';
+import { SignOutDialog } from './SignOutDialog';
+import useDialogState from '@hooks/useDialogState';
 
 type NavUserProps = {
   user: {
@@ -43,10 +31,7 @@ export function NavUser({ user }: NavUserProps) {
         <SidebarMenuItem>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <SidebarMenuButton
-                size="lg"
-                className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
-              >
+              <SidebarMenuButton size="lg" className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground">
                 <Avatar className="h-8 w-8 rounded-lg">
                   <AvatarImage src={user.avatar} alt={user.name} />
                   <AvatarFallback className="rounded-lg">SN</AvatarFallback>
@@ -60,7 +45,7 @@ export function NavUser({ user }: NavUserProps) {
             </DropdownMenuTrigger>
             <DropdownMenuContent
               className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-              side={isMobile ? "bottom" : "right"}
+              side={isMobile ? 'bottom' : 'right'}
               align="end"
               sideOffset={4}
             >
@@ -99,10 +84,7 @@ export function NavUser({ user }: NavUserProps) {
                 </DropdownMenuItem>
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
-              <DropdownMenuItem
-                variant="destructive"
-                onClick={() => setOpen(true)}
-              >
+              <DropdownMenuItem variant="destructive" onClick={() => setOpen(true)}>
                 <LogOut />
                 Sign out
               </DropdownMenuItem>

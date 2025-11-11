@@ -1,36 +1,19 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { Badge } from "@repo/shared/components/ui/badge";
-import { CustomDocsPage } from "../components/CustomDocsPage";
-import {
-  Check,
-  X,
-  Clock,
-  AlertCircle,
-  Info,
-  TrendingUp,
-  TrendingDown,
-  Star,
-  Zap,
-  Shield,
-  Crown,
-} from "lucide-react";
+import type { Meta, StoryObj } from '@storybook/react';
+import { Badge } from '@repo/shared/components/ui/badge';
+import { CustomDocsPage } from '../components/CustomDocsPage';
+import { Check, X, Clock, AlertCircle, Info, TrendingUp, TrendingDown, Star, Zap, Shield, Crown } from 'lucide-react';
 
 const meta = {
-  title: "UI Components/Badge",
+  title: 'UI Components/Badge',
   component: Badge,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       page: () => (
         <CustomDocsPage
           componentName="Badge"
           description="상태, 카테고리, 라벨 등을 표시하는 Badge 컴포넌트입니다."
-          installationDeps={[
-            "@radix-ui/react-slot",
-            "class-variance-authority",
-            "clsx",
-            "tailwind-merge",
-          ]}
+          installationDeps={['@radix-ui/react-slot', 'class-variance-authority', 'clsx', 'tailwind-merge']}
           implementationCode={`import { Badge } from "@/components/ui/badge";
 
 export default function Example() {
@@ -64,11 +47,11 @@ function UserStatus({ status }: { status: string }) {
       ),
     },
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     variant: {
-      control: "select",
-      options: ["default", "secondary", "destructive", "outline"],
+      control: 'select',
+      options: ['default', 'secondary', 'destructive', 'outline'],
     },
   },
 } satisfies Meta<typeof Badge>;
@@ -317,48 +300,25 @@ export const UserList: Story = {
   render: () => (
     <div className="w-full max-w-2xl space-y-2 rounded-lg border bg-card">
       {[
-        { name: "홍길동", role: "관리자", status: "활성", email: "hong@example.com" },
-        { name: "김영희", role: "운영자", status: "활성", email: "kim@example.com" },
-        { name: "이철수", role: "멤버", status: "대기", email: "lee@example.com" },
-        { name: "박민수", role: "멤버", status: "비활성", email: "park@example.com" },
+        { name: '홍길동', role: '관리자', status: '활성', email: 'hong@example.com' },
+        { name: '김영희', role: '운영자', status: '활성', email: 'kim@example.com' },
+        { name: '이철수', role: '멤버', status: '대기', email: 'lee@example.com' },
+        { name: '박민수', role: '멤버', status: '비활성', email: 'park@example.com' },
       ].map((user, i) => (
-        <div
-          key={i}
-          className="flex items-center justify-between border-b p-4 last:border-0"
-        >
+        <div key={i} className="flex items-center justify-between border-b p-4 last:border-0">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-sm font-medium text-primary">
-              {user.name.charAt(0)}
-            </div>
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-sm font-medium text-primary">{user.name.charAt(0)}</div>
             <div>
               <p className="font-medium">{user.name}</p>
               <p className="text-sm text-muted-foreground">{user.email}</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <Badge
-              variant={
-                user.role === "관리자"
-                  ? "default"
-                  : user.role === "운영자"
-                    ? "secondary"
-                    : "outline"
-              }
-            >
-              {user.role}
-            </Badge>
-            <Badge
-              variant={
-                user.status === "활성"
-                  ? "default"
-                  : user.status === "대기"
-                    ? "secondary"
-                    : "destructive"
-              }
-            >
-              {user.status === "활성" && <Check />}
-              {user.status === "대기" && <Clock />}
-              {user.status === "비활성" && <X />}
+            <Badge variant={user.role === '관리자' ? 'default' : user.role === '운영자' ? 'secondary' : 'outline'}>{user.role}</Badge>
+            <Badge variant={user.status === '활성' ? 'default' : user.status === '대기' ? 'secondary' : 'destructive'}>
+              {user.status === '활성' && <Check />}
+              {user.status === '대기' && <Clock />}
+              {user.status === '비활성' && <X />}
               {user.status}
             </Badge>
           </div>
@@ -385,9 +345,7 @@ export const ProductCard: Story = {
             </Badge>
           </div>
         </div>
-        <p className="mb-3 text-sm text-muted-foreground">
-          인체공학적 디자인의 프리미엄 노트북 스탠드
-        </p>
+        <p className="mb-3 text-sm text-muted-foreground">인체공학적 디자인의 프리미엄 노트북 스탠드</p>
         <div className="mb-3 flex items-center gap-2">
           <Badge variant="outline">전자기기</Badge>
           <Badge variant="outline">액세서리</Badge>
@@ -395,9 +353,7 @@ export const ProductCard: Story = {
         <div className="flex items-center justify-between">
           <div>
             <span className="text-lg font-bold">₩45,000</span>
-            <span className="ml-2 text-sm text-muted-foreground line-through">
-              ₩60,000
-            </span>
+            <span className="ml-2 text-sm text-muted-foreground line-through">₩60,000</span>
           </div>
           <Badge>
             <Star />
@@ -420,34 +376,34 @@ export const NotificationList: Story = {
 
       {[
         {
-          type: "success",
-          title: "주문이 완료되었습니다",
-          time: "방금 전",
+          type: 'success',
+          title: '주문이 완료되었습니다',
+          time: '방금 전',
         },
         {
-          type: "info",
-          title: "새로운 메시지가 도착했습니다",
-          time: "5분 전",
+          type: 'info',
+          title: '새로운 메시지가 도착했습니다',
+          time: '5분 전',
         },
         {
-          type: "warning",
-          title: "결제가 필요합니다",
-          time: "1시간 전",
+          type: 'warning',
+          title: '결제가 필요합니다',
+          time: '1시간 전',
         },
       ].map((notif, i) => (
         <div key={i} className="flex items-start gap-3 rounded-lg p-3 hover:bg-accent">
           <div className="mt-1">
-            {notif.type === "success" && (
+            {notif.type === 'success' && (
               <div className="rounded-full bg-green-100 p-1">
                 <Check className="h-4 w-4 text-green-600" />
               </div>
             )}
-            {notif.type === "info" && (
+            {notif.type === 'info' && (
               <div className="rounded-full bg-blue-100 p-1">
                 <Info className="h-4 w-4 text-blue-600" />
               </div>
             )}
-            {notif.type === "warning" && (
+            {notif.type === 'warning' && (
               <div className="rounded-full bg-yellow-100 p-1">
                 <AlertCircle className="h-4 w-4 text-yellow-600" />
               </div>
@@ -457,19 +413,10 @@ export const NotificationList: Story = {
             <p className="text-sm font-medium">{notif.title}</p>
             <p className="text-xs text-muted-foreground">{notif.time}</p>
           </div>
-          <Badge
-            variant={
-              notif.type === "success"
-                ? "default"
-                : notif.type === "info"
-                  ? "secondary"
-                  : "outline"
-            }
-            className="text-xs"
-          >
-            {notif.type === "success" && "완료"}
-            {notif.type === "info" && "새 소식"}
-            {notif.type === "warning" && "중요"}
+          <Badge variant={notif.type === 'success' ? 'default' : notif.type === 'info' ? 'secondary' : 'outline'} className="text-xs">
+            {notif.type === 'success' && '완료'}
+            {notif.type === 'info' && '새 소식'}
+            {notif.type === 'warning' && '중요'}
           </Badge>
         </div>
       ))}
@@ -483,39 +430,35 @@ export const DashboardStats: Story = {
     <div className="grid w-full max-w-4xl gap-4 md:grid-cols-2 lg:grid-cols-4">
       {[
         {
-          title: "총 매출",
-          value: "₩12,345,678",
-          change: "+12.5%",
-          trend: "up",
+          title: '총 매출',
+          value: '₩12,345,678',
+          change: '+12.5%',
+          trend: 'up',
         },
         {
-          title: "신규 사용자",
-          value: "1,234",
-          change: "+8.2%",
-          trend: "up",
+          title: '신규 사용자',
+          value: '1,234',
+          change: '+8.2%',
+          trend: 'up',
         },
         {
-          title: "활성 주문",
-          value: "89",
-          change: "-3.1%",
-          trend: "down",
+          title: '활성 주문',
+          value: '89',
+          change: '-3.1%',
+          trend: 'down',
         },
         {
-          title: "전환율",
-          value: "3.24%",
-          change: "+0.5%",
-          trend: "up",
+          title: '전환율',
+          value: '3.24%',
+          change: '+0.5%',
+          trend: 'up',
         },
       ].map((stat, i) => (
         <div key={i} className="rounded-lg border bg-card p-6 shadow-sm">
           <div className="mb-2 flex items-center justify-between">
             <p className="text-sm text-muted-foreground">{stat.title}</p>
-            <Badge variant={stat.trend === "up" ? "default" : "destructive"}>
-              {stat.trend === "up" ? (
-                <TrendingUp className="h-3 w-3" />
-              ) : (
-                <TrendingDown className="h-3 w-3" />
-              )}
+            <Badge variant={stat.trend === 'up' ? 'default' : 'destructive'}>
+              {stat.trend === 'up' ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
               {stat.change}
             </Badge>
           </div>

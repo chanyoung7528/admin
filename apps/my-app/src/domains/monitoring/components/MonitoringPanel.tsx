@@ -1,30 +1,23 @@
 interface MonitoringPanelProps {
-  service: "BODY" | "FOOD" | "MIND";
+  service: 'BODY' | 'FOOD' | 'MIND';
   refreshInterval?: number;
 }
 
-export function MonitoringPanel({
-  service,
-  refreshInterval = 60000,
-}: MonitoringPanelProps) {
+export function MonitoringPanel({ service, refreshInterval = 60000 }: MonitoringPanelProps) {
   const serviceLabel = {
-    BODY: "MY BODY",
-    FOOD: "MY FOOD",
-    MIND: "MY MIND",
+    BODY: 'MY BODY',
+    FOOD: 'MY FOOD',
+    MIND: 'MY MIND',
   }[service];
 
   return (
     <div className="rounded-lg border bg-card p-6">
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-lg font-semibold">{serviceLabel} 모니터링</h2>
-        <span className="text-xs text-muted-foreground">
-          자동 새로고침: {refreshInterval / 1000}초
-        </span>
+        <span className="text-xs text-muted-foreground">자동 새로고침: {refreshInterval / 1000}초</span>
       </div>
 
-      <p className="text-muted-foreground mb-6">
-        {serviceLabel} 서비스의 실시간 시스템 상태를 모니터링합니다
-      </p>
+      <p className="text-muted-foreground mb-6">{serviceLabel} 서비스의 실시간 시스템 상태를 모니터링합니다</p>
 
       {/* 상태 카드 */}
       <div className="grid gap-4 md:grid-cols-3">
@@ -33,12 +26,8 @@ export function MonitoringPanel({
             <div className="h-3 w-3 rounded-full bg-green-500"></div>
             <p className="text-sm font-medium">서버 상태</p>
           </div>
-          <p className="mt-2 text-xl font-bold text-green-700 dark:text-green-300">
-            정상
-          </p>
-          <p className="text-xs text-green-600 dark:text-green-400">
-            응답시간: 45ms
-          </p>
+          <p className="mt-2 text-xl font-bold text-green-700 dark:text-green-300">정상</p>
+          <p className="text-xs text-green-600 dark:text-green-400">응답시간: 45ms</p>
         </div>
 
         <div className="rounded-lg border bg-green-50 p-4 dark:bg-green-950">
@@ -46,12 +35,8 @@ export function MonitoringPanel({
             <div className="h-3 w-3 rounded-full bg-green-500"></div>
             <p className="text-sm font-medium">DB 상태</p>
           </div>
-          <p className="mt-2 text-xl font-bold text-green-700 dark:text-green-300">
-            정상
-          </p>
-          <p className="text-xs text-green-600 dark:text-green-400">
-            연결 수: 45/100
-          </p>
+          <p className="mt-2 text-xl font-bold text-green-700 dark:text-green-300">정상</p>
+          <p className="text-xs text-green-600 dark:text-green-400">연결 수: 45/100</p>
         </div>
 
         <div className="rounded-lg border bg-yellow-50 p-4 dark:bg-yellow-950">
@@ -59,12 +44,8 @@ export function MonitoringPanel({
             <div className="h-3 w-3 rounded-full bg-yellow-500"></div>
             <p className="text-sm font-medium">API 응답</p>
           </div>
-          <p className="mt-2 text-xl font-bold text-yellow-700 dark:text-yellow-300">
-            지연
-          </p>
-          <p className="text-xs text-yellow-600 dark:text-yellow-400">
-            응답시간: 850ms
-          </p>
+          <p className="mt-2 text-xl font-bold text-yellow-700 dark:text-yellow-300">지연</p>
+          <p className="text-xs text-yellow-600 dark:text-yellow-400">응답시간: 850ms</p>
         </div>
       </div>
 
@@ -89,4 +70,3 @@ export function MonitoringPanel({
     </div>
   );
 }
-

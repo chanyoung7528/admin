@@ -13,4 +13,3 @@ export async function postPushMessage(data: { userId: string; message: string })
   // TODO: Implement API call
   return data;
 }
-

@@ -1,38 +1,19 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import { Button } from "@repo/shared/components/ui/button";
-import { CustomDocsPage } from "../components/CustomDocsPage";
-import {
-  Mail,
-  Download,
-  Plus,
-  Trash2,
-  Edit,
-  Search,
-  Settings,
-  ChevronRight,
-  Loader2,
-  Check,
-  AlertCircle,
-  ArrowRight,
-  Upload,
-} from "lucide-react";
+import type { Meta, StoryObj } from '@storybook/react';
+import { Button } from '@repo/shared/components/ui/button';
+import { CustomDocsPage } from '../components/CustomDocsPage';
+import { Mail, Download, Plus, Trash2, Edit, Search, Settings, ChevronRight, Loader2, Check, AlertCircle, ArrowRight, Upload } from 'lucide-react';
 
 const meta = {
-  title: "UI Components/Button",
+  title: 'UI Components/Button',
   component: Button,
   parameters: {
-    layout: "centered",
+    layout: 'centered',
     docs: {
       page: () => (
         <CustomDocsPage
           componentName="Button"
           description="다양한 스타일과 크기를 지원하는 버튼 컴포넌트입니다. 아이콘, 로딩 상태 등을 포함할 수 있습니다."
-          installationDeps={[
-            "@radix-ui/react-slot",
-            "class-variance-authority",
-            "clsx",
-            "tailwind-merge",
-          ]}
+          installationDeps={['@radix-ui/react-slot', 'class-variance-authority', 'clsx', 'tailwind-merge']}
           implementationCode={`// 기본 Button 컴포넌트 사용
 import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react";
@@ -86,15 +67,15 @@ function UserActions() {
       ),
     },
   },
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   argTypes: {
     variant: {
-      control: "select",
-      options: ["default", "destructive", "outline", "secondary", "ghost", "link"],
+      control: 'select',
+      options: ['default', 'destructive', 'outline', 'secondary', 'ghost', 'link'],
     },
     size: {
-      control: "select",
-      options: ["default", "sm", "lg", "icon", "icon-sm", "icon-lg"],
+      control: 'select',
+      options: ['default', 'sm', 'lg', 'icon', 'icon-sm', 'icon-lg'],
     },
   },
 } satisfies Meta<typeof Button>;
@@ -368,9 +349,7 @@ export const CardActions: Story = {
         <div className="mb-4 flex items-start justify-between">
           <div>
             <h3 className="text-lg font-semibold">어드민 대시보드 프로젝트</h3>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Next.js 15와 React 19를 활용한 모던 어드민 시스템
-            </p>
+            <p className="mt-1 text-sm text-muted-foreground">Next.js 15와 React 19를 활용한 모던 어드민 시스템</p>
           </div>
           <Button size="icon-sm" variant="ghost">
             <Settings />
@@ -412,10 +391,7 @@ export const DangerousAction: Story = {
         </div>
         <div>
           <h3 className="font-semibold text-destructive">계정 영구 삭제</h3>
-          <p className="mt-1 text-sm text-destructive/90">
-            이 작업은 되돌릴 수 없습니다. 모든 데이터가 영구적으로 삭제되며
-            복구할 수 없습니다.
-          </p>
+          <p className="mt-1 text-sm text-destructive/90">이 작업은 되돌릴 수 없습니다. 모든 데이터가 영구적으로 삭제되며 복구할 수 없습니다.</p>
         </div>
       </div>
       <div className="flex justify-end gap-2">
@@ -438,9 +414,7 @@ export const DashboardActions: Story = {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold">대시보드</h2>
-          <p className="text-sm text-muted-foreground">
-            전체 시스템 현황을 한눈에 확인하세요
-          </p>
+          <p className="text-sm text-muted-foreground">전체 시스템 현황을 한눈에 확인하세요</p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm">

@@ -103,6 +103,7 @@ domains/user/
 ```
 
 **장점:**
+
 - 도메인별로 독립적 개발 가능
 - 코드 응집도 향상
 - 유지보수 용이
@@ -118,12 +119,13 @@ domains/user/
 
 ```typescript
 // pages/user/list.tsx → /user/list
-export const Route = createFileRoute("/user/list")({
+export const Route = createFileRoute('/user/list')({
   component: UserListPage,
 });
 ```
 
 **규칙:**
+
 - `index.tsx`: 해당 경로의 기본 페이지 (`/user/index.tsx` → `/user`)
 - `$param.tsx`: 동적 파라미터 (`/user/$userId.tsx` → `/user/:userId`)
 - `__root.tsx`: 전체 앱의 루트 레이아웃
@@ -131,18 +133,22 @@ export const Route = createFileRoute("/user/list")({
 ## 📝 파일 명명 규칙
 
 ### 컴포넌트
+
 - **PascalCase**: `UserListTable.tsx`, `SiteSelector.tsx`
 - **기본 export 사용**: `export default function UserListTable() {}`
 
 ### 훅 (Hooks)
+
 - **camelCase + use 접두사**: `useUsersQuery.ts`, `useSendMessage.ts`
 - **named export 사용**: `export function useUsersQuery() {}`
 
 ### 서비스
+
 - **camelCase**: `userService.ts`, `foodService.ts`
 - **named export 사용**: `export async function getUserList() {}`
 
 ### 유틸리티
+
 - **camelCase**: `format.ts`, `validation.ts`
 - **named export 사용**: `export function formatDate() {}`
 
@@ -232,7 +238,7 @@ export async function getUserById(id: string) {
 // src/domains/user/hooks/useUserQuery.ts
 export function useUserQuery(id: string) {
   return useQuery({
-    queryKey: ["user", id],
+    queryKey: ['user', id],
     queryFn: () => getUserById(id),
   });
 }
@@ -249,8 +255,8 @@ export default function UserDetail({ userId }: { userId: string }) {
 
 ```typescript
 // src/core/api/client.ts
-apiClient.interceptors.request.use((config) => {
-  const token = localStorage.getItem("accessToken");
+apiClient.interceptors.request.use(config => {
+  const token = localStorage.getItem('accessToken');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -259,10 +265,10 @@ apiClient.interceptors.request.use((config) => {
 
 // src/core/api/client.ts
 apiClient.interceptors.response.use(
-  (response) => response.data,
-  (error) => {
+  response => response.data,
+  error => {
     if (error.response?.status === 401) {
-      window.location.href = "/login";
+      window.location.href = '/login';
     }
     return Promise.reject(error);
   }
@@ -284,10 +290,11 @@ resolve: {
 ```
 
 **사용 예시:**
+
 ```typescript
-import { Button } from "@ui/button";
-import { formatDate } from "@/shared/utils";
-import { useUsersQuery } from "@/domains/user/hooks";
+import { Button } from '@ui/button';
+import { formatDate } from '@/shared/utils';
+import { useUsersQuery } from '@/domains/user/hooks';
 ```
 
 ## 🎨 스타일링 가이드
@@ -318,4 +325,3 @@ import { useUsersQuery } from "@/domains/user/hooks";
 - [TanStack Query](https://tanstack.com/query)
 - [Tailwind CSS](https://tailwindcss.com)
 - [Zustand](https://zustand-demo.pmnd.rs/)
-

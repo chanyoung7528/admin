@@ -14,4 +14,3 @@ export interface CommonApiResponse<T> {
 export interface PaginatedResponse<T> extends CommonApiResponse<T> {
   pagination: Pagination;
 }
-

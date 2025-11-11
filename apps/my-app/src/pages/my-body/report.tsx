@@ -1,7 +1,7 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { ReportSection } from "@/domains/report/components";
+import { createFileRoute } from '@tanstack/react-router';
+import { ReportSection } from '@/domains/report/components';
 
-export const Route = createFileRoute("/my-body/report")({
+export const Route = createFileRoute('/my-body/report')({
   component: BodyReportPage,
 });
 

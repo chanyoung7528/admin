@@ -1,4 +1,4 @@
-import { useInquiriesQuery } from "../hooks";
+import { useInquiriesQuery } from '../hooks';
 
 export default function InquiryList() {
   const { data, isLoading } = useInquiriesQuery();
@@ -12,10 +12,7 @@ export default function InquiryList() {
         <div className="space-y-4">
           {data && data.length > 0 ? (
             data.map((inquiry, index) => (
-              <div
-                key={index}
-                className="flex items-center justify-between rounded-lg border p-4"
-              >
+              <div key={index} className="flex items-center justify-between rounded-lg border p-4">
                 <div>
                   <p className="font-medium">{inquiry.title}</p>
                   <p className="text-sm text-muted-foreground">
@@ -24,9 +21,7 @@ export default function InquiryList() {
                 </div>
                 <span
                   className={`rounded-full px-3 py-1 text-xs ${
-                    inquiry.status === "답변완료"
-                      ? "bg-green-100 text-green-700"
-                      : "bg-yellow-100 text-yellow-700"
+                    inquiry.status === '답변완료' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
                   }`}
                 >
                   {inquiry.status}
@@ -41,4 +36,3 @@ export default function InquiryList() {
     </div>
   );
 }
-

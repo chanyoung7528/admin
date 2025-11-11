@@ -1,21 +1,19 @@
 interface DashboardViewProps {
-  service: "ALL" | "BODY" | "FOOD" | "MIND";
+  service: 'ALL' | 'BODY' | 'FOOD' | 'MIND';
 }
 
 export function DashboardView({ service }: DashboardViewProps) {
   const serviceLabel = {
-    ALL: "전체",
-    BODY: "MY BODY",
-    FOOD: "MY FOOD",
-    MIND: "MY MIND",
+    ALL: '전체',
+    BODY: 'MY BODY',
+    FOOD: 'MY FOOD',
+    MIND: 'MY MIND',
   }[service];
 
   return (
     <div className="rounded-lg border bg-card p-6">
       <h2 className="mb-4 text-lg font-semibold">{serviceLabel} 대시보드</h2>
-      <p className="text-muted-foreground mb-6">
-        {serviceLabel} 서비스의 핵심 지표를 시각화합니다
-      </p>
+      <p className="text-muted-foreground mb-6">{serviceLabel} 서비스의 핵심 지표를 시각화합니다</p>
 
       {/* 통계 카드 */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -48,4 +46,3 @@ export function DashboardView({ service }: DashboardViewProps) {
     </div>
   );
 }
-

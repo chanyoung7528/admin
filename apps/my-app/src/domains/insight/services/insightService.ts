@@ -4,4 +4,3 @@ export async function getUserInsights() {
   // TODO: API 호출
   return {};
 }
-

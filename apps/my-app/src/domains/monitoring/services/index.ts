@@ -1,3 +1,2 @@
 // Monitoring domain services
-export * from "./monitoringService";
-
+export * from './monitoringService';

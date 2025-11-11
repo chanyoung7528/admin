@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { Button } from "@ui/button";
-import { useSendReply } from "../hooks";
+import { useState } from 'react';
+import { Button } from '@ui/button';
+import { useSendReply } from '../hooks';
 
 export default function InquiryReplyForm({ inquiryId }: { inquiryId: string }) {
-  const [reply, setReply] = useState("");
+  const [reply, setReply] = useState('');
   const { mutate: sendReply, isPending } = useSendReply();
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -12,8 +12,8 @@ export default function InquiryReplyForm({ inquiryId }: { inquiryId: string }) {
       { inquiryId, reply },
       {
         onSuccess: () => {
-          setReply("");
-          alert("답변이 전송되었습니다");
+          setReply('');
+          alert('답변이 전송되었습니다');
         },
       }
     );
@@ -27,7 +27,7 @@ export default function InquiryReplyForm({ inquiryId }: { inquiryId: string }) {
           <label className="text-sm font-medium">답변 내용</label>
           <textarea
             value={reply}
-            onChange={(e) => setReply(e.target.value)}
+            onChange={e => setReply(e.target.value)}
             className="mt-2 w-full rounded-md border p-3"
             rows={5}
             placeholder="답변을 입력하세요..."
@@ -35,10 +35,9 @@ export default function InquiryReplyForm({ inquiryId }: { inquiryId: string }) {
           />
         </div>
         <Button type="submit" disabled={isPending}>
-          {isPending ? "전송 중..." : "답변 전송"}
+          {isPending ? '전송 중...' : '답변 전송'}
         </Button>
       </form>
     </div>
   );
 }
-

@@ -1,4 +1,4 @@
-import { useErrorLogs } from "../hooks";
+import { useErrorLogs } from '../hooks';
 
 export default function ErrorLogViewer() {
   const { data, isLoading } = useErrorLogs();
@@ -20,9 +20,7 @@ export default function ErrorLogViewer() {
                       기기: {log.device} • {log.timestamp}
                     </p>
                   </div>
-                  <span className="rounded-full bg-red-200 px-2 py-1 text-xs text-red-900">
-                    {log.severity}
-                  </span>
+                  <span className="rounded-full bg-red-200 px-2 py-1 text-xs text-red-900">{log.severity}</span>
                 </div>
               </div>
             ))
@@ -34,4 +32,3 @@ export default function ErrorLogViewer() {
     </div>
   );
 }
-

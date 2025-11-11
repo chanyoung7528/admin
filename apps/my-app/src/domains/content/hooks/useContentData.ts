@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
 
 interface Content {
   id: string;
@@ -12,7 +12,7 @@ interface Content {
 
 export function useContentData() {
   return useQuery<Content[]>({
-    queryKey: ["content"],
+    queryKey: ['content'],
     queryFn: async () => {
       // TODO: API 호출
       return [];
@@ -20,4 +20,3 @@ export function useContentData() {
     staleTime: 1000 * 60 * 5,
   });
 }
-

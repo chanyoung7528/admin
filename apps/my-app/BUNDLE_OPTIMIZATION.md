@@ -81,7 +81,7 @@ export const Route = createFileRoute("/my-food/dashboard")({
 
 ```typescript
 // vite.config.ts에 이미지 최적화 플러그인 추가
-import { imagetools } from "vite-imagetools";
+import { imagetools } from 'vite-imagetools';
 
 export default defineConfig({
   plugins: [
@@ -122,11 +122,7 @@ Tailwind CSS를 사용 중이므로 불필요한 클래스가 포함되지 않�
 ```javascript
 // tailwind.config.js
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-    "../../packages/shared/src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}', '../../packages/shared/src/**/*.{js,ts,jsx,tsx}'],
   // ... 나머지 설정
 };
 ```
