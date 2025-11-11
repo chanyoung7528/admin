@@ -38,26 +38,26 @@ export function SettlementTable({ service }: SettlementTableProps) {
   ];
 
   return (
-    <div className="rounded-lg border bg-card p-6">
+    <div className="bg-card rounded-lg border p-6">
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-lg font-semibold">{serviceLabel} 정산 내역</h2>
-        <button className="rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground hover:bg-primary/90">정산 엑셀 다운로드</button>
+        <button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-md px-4 py-2 text-sm">정산 엑셀 다운로드</button>
       </div>
 
       <p className="text-muted-foreground mb-6">{serviceLabel} 서비스의 Site별 정산 내역을 확인하세요</p>
 
       {/* 요약 통계 */}
       <div className="mb-6 grid gap-4 md:grid-cols-3">
-        <div className="rounded-lg bg-background p-4">
-          <p className="text-sm text-muted-foreground">총 정산 금액</p>
+        <div className="bg-background rounded-lg p-4">
+          <p className="text-muted-foreground text-sm">총 정산 금액</p>
           <p className="mt-1 text-2xl font-bold">₩10.5M</p>
         </div>
-        <div className="rounded-lg bg-background p-4">
-          <p className="text-sm text-muted-foreground">정산 완료</p>
+        <div className="bg-background rounded-lg p-4">
+          <p className="text-muted-foreground text-sm">정산 완료</p>
           <p className="mt-1 text-2xl font-bold">2건</p>
         </div>
-        <div className="rounded-lg bg-background p-4">
-          <p className="text-sm text-muted-foreground">정산 대기</p>
+        <div className="bg-background rounded-lg p-4">
+          <p className="text-muted-foreground text-sm">정산 대기</p>
           <p className="mt-1 text-2xl font-bold">1건</p>
         </div>
       </div>
@@ -77,7 +77,7 @@ export function SettlementTable({ service }: SettlementTableProps) {
           </thead>
           <tbody>
             {settlements.map(settlement => (
-              <tr key={settlement.id} className="border-t hover:bg-muted/50">
+              <tr key={settlement.id} className="hover:bg-muted/50 border-t">
                 <td className="px-4 py-3 text-sm font-medium">{settlement.id}</td>
                 <td className="px-4 py-3 text-sm">{settlement.site}</td>
                 <td className="px-4 py-3 text-sm">{settlement.period}</td>

@@ -18,14 +18,14 @@ export function ReportSection({ service, period = 'monthly' }: ReportSectionProp
   }[period];
 
   return (
-    <div className="rounded-lg border bg-card p-6">
+    <div className="bg-card rounded-lg border p-6">
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-lg font-semibold">
           {serviceLabel} 운영 리포트 ({periodLabel})
         </h2>
         <div className="flex gap-2">
-          <button className="rounded-md border px-3 py-1 text-sm hover:bg-muted">PDF 저장</button>
-          <button className="rounded-md bg-primary px-3 py-1 text-sm text-primary-foreground hover:bg-primary/90">엑셀 다운로드</button>
+          <button className="hover:bg-muted rounded-md border px-3 py-1 text-sm">PDF 저장</button>
+          <button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-md px-3 py-1 text-sm">엑셀 다운로드</button>
         </div>
       </div>
 
@@ -58,15 +58,15 @@ export function ReportSection({ service, period = 'monthly' }: ReportSectionProp
       </div>
 
       {/* 차트 영역 */}
-      <div className="mb-6 rounded-lg border bg-background p-4">
+      <div className="bg-background mb-6 rounded-lg border p-4">
         <h3 className="mb-3 text-sm font-semibold">매출 추이</h3>
-        <div className="flex h-48 items-center justify-center text-muted-foreground">
+        <div className="text-muted-foreground flex h-48 items-center justify-center">
           📈 {serviceLabel} {periodLabel} 매출 추이 차트 (구현 예정)
         </div>
       </div>
 
       {/* Site별 실적 */}
-      <div className="rounded-lg border bg-background p-4">
+      <div className="bg-background rounded-lg border p-4">
         <h3 className="mb-3 text-sm font-semibold">Site별 실적 Top 5</h3>
         <div className="space-y-2">
           {[
@@ -78,7 +78,7 @@ export function ReportSection({ service, period = 'monthly' }: ReportSectionProp
           ].map((site, index) => (
             <div key={index} className="flex items-center justify-between rounded-lg border p-3">
               <div className="flex items-center gap-3">
-                <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-sm font-bold text-primary">{index + 1}</span>
+                <span className="bg-primary/10 text-primary flex h-8 w-8 items-center justify-center rounded-full text-sm font-bold">{index + 1}</span>
                 <span className="text-sm font-medium">{site.name}</span>
               </div>
               <div className="text-right">

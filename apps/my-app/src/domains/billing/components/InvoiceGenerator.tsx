@@ -11,7 +11,7 @@ export default function InvoiceGenerator() {
   };
 
   return (
-    <div className="rounded-lg border bg-card p-6">
+    <div className="bg-card rounded-lg border p-6">
       <h2 className="mb-4 text-lg font-semibold">계산서 생성</h2>
       <div className="space-y-4">
         <div className="space-y-2">

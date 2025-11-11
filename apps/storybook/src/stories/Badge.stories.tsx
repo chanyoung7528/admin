@@ -298,7 +298,7 @@ export const Sizes: Story = {
 // 실제 사용 예시 - 사용자 목록
 export const UserList: Story = {
   render: () => (
-    <div className="w-full max-w-2xl space-y-2 rounded-lg border bg-card">
+    <div className="bg-card w-full max-w-2xl space-y-2 rounded-lg border">
       {[
         { name: '홍길동', role: '관리자', status: '활성', email: 'hong@example.com' },
         { name: '김영희', role: '운영자', status: '활성', email: 'kim@example.com' },
@@ -307,10 +307,10 @@ export const UserList: Story = {
       ].map((user, i) => (
         <div key={i} className="flex items-center justify-between border-b p-4 last:border-0">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-sm font-medium text-primary">{user.name.charAt(0)}</div>
+            <div className="bg-primary/10 text-primary flex h-10 w-10 items-center justify-center rounded-full text-sm font-medium">{user.name.charAt(0)}</div>
             <div>
               <p className="font-medium">{user.name}</p>
-              <p className="text-sm text-muted-foreground">{user.email}</p>
+              <p className="text-muted-foreground text-sm">{user.email}</p>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -331,7 +331,7 @@ export const UserList: Story = {
 // 실제 사용 예시 - 제품 카드
 export const ProductCard: Story = {
   render: () => (
-    <div className="w-full max-w-sm rounded-lg border bg-card shadow-sm">
+    <div className="bg-card w-full max-w-sm rounded-lg border shadow-sm">
       <div className="aspect-video w-full bg-gray-200"></div>
       <div className="p-4">
         <div className="mb-2 flex items-start justify-between">
@@ -345,7 +345,7 @@ export const ProductCard: Story = {
             </Badge>
           </div>
         </div>
-        <p className="mb-3 text-sm text-muted-foreground">인체공학적 디자인의 프리미엄 노트북 스탠드</p>
+        <p className="text-muted-foreground mb-3 text-sm">인체공학적 디자인의 프리미엄 노트북 스탠드</p>
         <div className="mb-3 flex items-center gap-2">
           <Badge variant="outline">전자기기</Badge>
           <Badge variant="outline">액세서리</Badge>
@@ -353,7 +353,7 @@ export const ProductCard: Story = {
         <div className="flex items-center justify-between">
           <div>
             <span className="text-lg font-bold">₩45,000</span>
-            <span className="ml-2 text-sm text-muted-foreground line-through">₩60,000</span>
+            <span className="text-muted-foreground ml-2 text-sm line-through">₩60,000</span>
           </div>
           <Badge>
             <Star />
@@ -368,7 +368,7 @@ export const ProductCard: Story = {
 // 실제 사용 예시 - 알림 목록
 export const NotificationList: Story = {
   render: () => (
-    <div className="w-full max-w-md space-y-2 rounded-lg border bg-card p-4">
+    <div className="bg-card w-full max-w-md space-y-2 rounded-lg border p-4">
       <div className="mb-2 flex items-center justify-between">
         <h3 className="font-semibold">알림</h3>
         <Badge variant="destructive">3</Badge>
@@ -391,7 +391,7 @@ export const NotificationList: Story = {
           time: '1시간 전',
         },
       ].map((notif, i) => (
-        <div key={i} className="flex items-start gap-3 rounded-lg p-3 hover:bg-accent">
+        <div key={i} className="hover:bg-accent flex items-start gap-3 rounded-lg p-3">
           <div className="mt-1">
             {notif.type === 'success' && (
               <div className="rounded-full bg-green-100 p-1">
@@ -411,7 +411,7 @@ export const NotificationList: Story = {
           </div>
           <div className="flex-1">
             <p className="text-sm font-medium">{notif.title}</p>
-            <p className="text-xs text-muted-foreground">{notif.time}</p>
+            <p className="text-muted-foreground text-xs">{notif.time}</p>
           </div>
           <Badge variant={notif.type === 'success' ? 'default' : notif.type === 'info' ? 'secondary' : 'outline'} className="text-xs">
             {notif.type === 'success' && '완료'}
@@ -454,9 +454,9 @@ export const DashboardStats: Story = {
           trend: 'up',
         },
       ].map((stat, i) => (
-        <div key={i} className="rounded-lg border bg-card p-6 shadow-sm">
+        <div key={i} className="bg-card rounded-lg border p-6 shadow-sm">
           <div className="mb-2 flex items-center justify-between">
-            <p className="text-sm text-muted-foreground">{stat.title}</p>
+            <p className="text-muted-foreground text-sm">{stat.title}</p>
             <Badge variant={stat.trend === 'up' ? 'default' : 'destructive'}>
               {stat.trend === 'up' ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
               {stat.change}

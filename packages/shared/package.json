@@ -1,6 +1,7 @@
 {
   "name": "@repo/shared",
   "version": "0.0.0",
+  "type": "module",
   "exports": {
     "./globals.css": "./src/styles/globals.css",
     "./lib/*": "./src/lib/*.ts",
@@ -12,7 +13,9 @@
   },
   "license": "MIT",
   "scripts": {
-    "lint": "eslint \"**/*.ts\""
+    "lint": "eslint \"**/*.ts\"",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf dist .turbo node_modules/.tmp"
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.1.15",
@@ -42,8 +45,7 @@
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitejs/plugin-react-swc": "^4.2.0",
-    "eslint": "^8.57.0",
-    "typescript": "5.5.4",
+    "typescript": "~5.9.3",
     "vite": "^7.1.7"
   }
 }

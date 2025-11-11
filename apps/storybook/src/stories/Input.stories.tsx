@@ -1,8 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import { Input } from '@repo/shared/components/ui/input';
-import { CustomDocsPage } from '../components/CustomDocsPage';
-import { Mail, Lock, Search, User, Eye, EyeOff, Phone, Calendar, DollarSign, AlertCircle, Check } from 'lucide-react';
+import type { Meta, StoryObj } from '@storybook/react';
+import { AlertCircle, Check, DollarSign, Eye, EyeOff, Lock, Mail, Phone, Search, User } from 'lucide-react';
 import { useState } from 'react';
+import { CustomDocsPage } from '../components/CustomDocsPage';
 
 const meta = {
   title: 'UI Components/Input',
@@ -140,7 +140,7 @@ export const WithDescription: Story = {
           사용자명
         </label>
         <Input id="username" type="text" placeholder="username" />
-        <p className="text-xs text-muted-foreground">4-20자의 영문, 숫자만 사용 가능합니다</p>
+        <p className="text-muted-foreground text-xs">4-20자의 영문, 숫자만 사용 가능합니다</p>
       </div>
 
       <div className="space-y-2">
@@ -148,7 +148,7 @@ export const WithDescription: Story = {
           이메일
         </label>
         <Input id="email-sub" type="email" placeholder="email@example.com" />
-        <p className="text-xs text-muted-foreground">알림을 받을 이메일 주소를 입력하세요</p>
+        <p className="text-muted-foreground text-xs">알림을 받을 이메일 주소를 입력하세요</p>
       </div>
     </div>
   ),
@@ -161,7 +161,7 @@ export const WithIcons: Story = {
       <div className="space-y-2">
         <label className="text-sm font-medium">이메일</label>
         <div className="relative">
-          <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Mail className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
           <Input type="email" placeholder="email@example.com" className="pl-9" />
         </div>
       </div>
@@ -169,7 +169,7 @@ export const WithIcons: Story = {
       <div className="space-y-2">
         <label className="text-sm font-medium">비밀번호</label>
         <div className="relative">
-          <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Lock className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
           <Input type="password" placeholder="••••••••" className="pl-9" />
         </div>
       </div>
@@ -177,7 +177,7 @@ export const WithIcons: Story = {
       <div className="space-y-2">
         <label className="text-sm font-medium">검색</label>
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Search className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
           <Input type="search" placeholder="검색어를 입력하세요" className="pl-9" />
         </div>
       </div>
@@ -185,7 +185,7 @@ export const WithIcons: Story = {
       <div className="space-y-2">
         <label className="text-sm font-medium">사용자명</label>
         <div className="relative">
-          <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <User className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
           <Input type="text" placeholder="username" className="pl-9" />
         </div>
       </div>
@@ -193,7 +193,7 @@ export const WithIcons: Story = {
       <div className="space-y-2">
         <label className="text-sm font-medium">전화번호</label>
         <div className="relative">
-          <Phone className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Phone className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
           <Input type="tel" placeholder="010-1234-5678" className="pl-9" />
         </div>
       </div>
@@ -201,7 +201,7 @@ export const WithIcons: Story = {
       <div className="space-y-2">
         <label className="text-sm font-medium">금액</label>
         <div className="relative">
-          <DollarSign className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <DollarSign className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
           <Input type="number" placeholder="0" className="pl-9" />
         </div>
       </div>
@@ -218,12 +218,12 @@ export const PasswordToggle: Story = {
       <div className="w-80 space-y-2">
         <label className="text-sm font-medium">비밀번호</label>
         <div className="relative">
-          <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input type={showPassword ? 'text' : 'password'} placeholder="••••••••" className="pl-9 pr-9" />
+          <Lock className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+          <Input type={showPassword ? 'text' : 'password'} placeholder="••••••••" className="pr-9 pl-9" />
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+            className="text-muted-foreground hover:text-foreground absolute top-1/2 right-3 -translate-y-1/2"
           >
             {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
           </button>
@@ -242,7 +242,7 @@ export const WithError: Story = {
           이메일
         </label>
         <Input id="error-email" type="email" placeholder="email@example.com" aria-invalid="true" defaultValue="invalid-email" />
-        <p className="flex items-center gap-1 text-xs text-destructive">
+        <p className="text-destructive flex items-center gap-1 text-xs">
           <AlertCircle className="h-3 w-3" />
           유효한 이메일 주소를 입력하세요
         </p>
@@ -253,7 +253,7 @@ export const WithError: Story = {
           비밀번호
         </label>
         <Input id="error-password" type="password" placeholder="••••••••" aria-invalid="true" defaultValue="123" />
-        <p className="flex items-center gap-1 text-xs text-destructive">
+        <p className="text-destructive flex items-center gap-1 text-xs">
           <AlertCircle className="h-3 w-3" />
           비밀번호는 최소 8자 이상이어야 합니다
         </p>
@@ -270,9 +270,9 @@ export const WithSuccess: Story = {
         이메일
       </label>
       <div className="relative">
-        <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-        <Input id="success-email" type="email" placeholder="email@example.com" className="pl-9 pr-9" defaultValue="user@example.com" />
-        <Check className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-green-600" />
+        <Mail className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
+        <Input id="success-email" type="email" placeholder="email@example.com" className="pr-9 pl-9" defaultValue="user@example.com" />
+        <Check className="absolute top-1/2 right-3 h-4 w-4 -translate-y-1/2 text-green-600" />
       </div>
       <p className="flex items-center gap-1 text-xs text-green-600">
         <Check className="h-3 w-3" />
@@ -289,9 +289,9 @@ export const Disabled: Story = {
       <Input type="text" placeholder="비활성화된 입력" disabled />
       <Input type="text" placeholder="값이 있는 비활성화" defaultValue="읽기 전용 값" disabled />
       <div className="space-y-2">
-        <label className="text-sm font-medium text-muted-foreground">비활성화된 필드</label>
+        <label className="text-muted-foreground text-sm font-medium">비활성화된 필드</label>
         <div className="relative">
-          <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <Mail className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
           <Input type="email" placeholder="email@example.com" className="pl-9" disabled />
         </div>
       </div>
@@ -313,10 +313,10 @@ export const Sizes: Story = {
 // 로그인 폼 예시
 export const LoginForm: Story = {
   render: () => (
-    <div className="w-full max-w-sm rounded-lg border bg-card p-6 shadow-sm">
+    <div className="bg-card w-full max-w-sm rounded-lg border p-6 shadow-sm">
       <div className="mb-6 text-center">
         <h2 className="text-2xl font-bold">로그인</h2>
-        <p className="mt-2 text-sm text-muted-foreground">계정에 로그인하세요</p>
+        <p className="text-muted-foreground mt-2 text-sm">계정에 로그인하세요</p>
       </div>
 
       <div className="space-y-4">
@@ -325,7 +325,7 @@ export const LoginForm: Story = {
             이메일
           </label>
           <div className="relative">
-            <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Mail className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
             <Input id="login-email" type="email" placeholder="email@example.com" className="pl-9" />
           </div>
         </div>
@@ -335,15 +335,15 @@ export const LoginForm: Story = {
             비밀번호
           </label>
           <div className="relative">
-            <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Lock className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
             <Input id="login-password" type="password" placeholder="••••••••" className="pl-9" />
           </div>
         </div>
 
-        <button className="w-full rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">로그인</button>
+        <button className="bg-primary text-primary-foreground hover:bg-primary/90 w-full rounded-md px-4 py-2 text-sm font-medium">로그인</button>
 
         <div className="text-center">
-          <a href="#" className="text-xs text-muted-foreground hover:underline">
+          <a href="#" className="text-muted-foreground text-xs hover:underline">
             비밀번호를 잊으셨나요?
           </a>
         </div>
@@ -355,10 +355,10 @@ export const LoginForm: Story = {
 // 회원가입 폼 예시
 export const SignupForm: Story = {
   render: () => (
-    <div className="w-full max-w-md rounded-lg border bg-card p-6 shadow-sm">
+    <div className="bg-card w-full max-w-md rounded-lg border p-6 shadow-sm">
       <div className="mb-6">
         <h2 className="text-2xl font-bold">회원가입</h2>
-        <p className="mt-2 text-sm text-muted-foreground">새 계정을 만들어보세요</p>
+        <p className="text-muted-foreground mt-2 text-sm">새 계정을 만들어보세요</p>
       </div>
 
       <div className="space-y-4">
@@ -382,7 +382,7 @@ export const SignupForm: Story = {
             이메일
           </label>
           <div className="relative">
-            <Mail className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Mail className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
             <Input id="signup-email" type="email" placeholder="email@example.com" className="pl-9" />
           </div>
         </div>
@@ -392,7 +392,7 @@ export const SignupForm: Story = {
             전화번호
           </label>
           <div className="relative">
-            <Phone className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Phone className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
             <Input id="signup-phone" type="tel" placeholder="010-1234-5678" className="pl-9" />
           </div>
         </div>
@@ -402,13 +402,13 @@ export const SignupForm: Story = {
             비밀번호
           </label>
           <div className="relative">
-            <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Lock className="text-muted-foreground absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2" />
             <Input id="signup-password" type="password" placeholder="••••••••" className="pl-9" />
           </div>
-          <p className="text-xs text-muted-foreground">최소 8자 이상, 영문/숫자/특수문자 포함</p>
+          <p className="text-muted-foreground text-xs">최소 8자 이상, 영문/숫자/특수문자 포함</p>
         </div>
 
-        <button className="w-full rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90">가입하기</button>
+        <button className="bg-primary text-primary-foreground hover:bg-primary/90 w-full rounded-md px-4 py-2 text-sm font-medium">가입하기</button>
       </div>
     </div>
   ),
@@ -419,15 +419,15 @@ export const SearchBar: Story = {
   render: () => (
     <div className="w-full max-w-2xl space-y-4">
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-muted-foreground" />
-        <Input type="search" placeholder="사용자, 주문, 제품 검색..." className="h-11 pl-10 pr-4" />
+        <Search className="text-muted-foreground absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2" />
+        <Input type="search" placeholder="사용자, 주문, 제품 검색..." className="h-11 pr-4 pl-10" />
       </div>
 
       <div className="space-y-2">
-        <p className="text-sm text-muted-foreground">빠른 검색</p>
+        <p className="text-muted-foreground text-sm">빠른 검색</p>
         <div className="flex flex-wrap gap-2">
           {['최근 주문', '활성 사용자', '신규 가입', '매출 보고서'].map(tag => (
-            <button key={tag} className="rounded-full border px-3 py-1 text-xs hover:bg-accent">
+            <button key={tag} className="hover:bg-accent rounded-full border px-3 py-1 text-xs">
               {tag}
             </button>
           ))}

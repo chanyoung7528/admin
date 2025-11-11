@@ -8,15 +8,31 @@
     "dev:my-app": "turbo dev --filter=my-app",
     "dev:storybook": "turbo dev --filter=storybook-docs",
     "lint": "turbo lint",
+    "lint:fix": "turbo lint -- --fix",
+    "type-check": "turbo type-check",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,mdx,css,scss,yaml,yml}\" --ignore-path .prettierignore",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md,mdx,css,scss,yaml,yml}\" --ignore-path .prettierignore",
+    "clean": "turbo clean && rm -rf node_modules .turbo",
+    "clean:cache": "turbo clean",
+    "test": "turbo test",
     "gf": "git fetch -p && git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -d",
-    "gfl": "git branch | grep -v '^*' | xargs git branch -D"
+    "gfl": "git branch | grep -v '^*' | xargs git branch -D",
+    "prepare": "husky"
   },
   "devDependencies": {
-    "eslint": "^8.57.0",
-    "prettier": "^3.2.5",
+    "@repo/eslint-config": "workspace:*",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.6",
     "turbo": "^2.6.0"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,mdx,css,scss,yaml,yml}": [
+      "prettier --write"
+    ]
   },
   "packageManager": "pnpm@8.15.6",
   "name": "with-vite"

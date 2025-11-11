@@ -308,14 +308,14 @@ export const FullWidth: Story = {
 // 실제 사용 예시 - 폼 액션
 export const FormActions: Story = {
   render: () => (
-    <div className="w-full max-w-md rounded-lg border bg-card p-6 shadow-sm">
+    <div className="bg-card w-full max-w-md rounded-lg border p-6 shadow-sm">
       <h3 className="mb-4 text-lg font-semibold">사용자 정보 수정</h3>
       <div className="space-y-4">
         <div>
           <label className="mb-2 block text-sm font-medium">이름</label>
           <input
             type="text"
-            className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs outline-none ring-offset-background focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50"
+            className="border-input ring-offset-background focus-visible:border-ring focus-visible:ring-ring/50 w-full rounded-md border bg-transparent px-3 py-2 text-sm shadow-xs outline-none focus-visible:ring-2"
             placeholder="이름을 입력하세요"
             defaultValue="홍길동"
           />
@@ -324,7 +324,7 @@ export const FormActions: Story = {
           <label className="mb-2 block text-sm font-medium">이메일</label>
           <input
             type="email"
-            className="w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs outline-none ring-offset-background focus-visible:border-ring focus-visible:ring-2 focus-visible:ring-ring/50"
+            className="border-input ring-offset-background focus-visible:border-ring focus-visible:ring-ring/50 w-full rounded-md border bg-transparent px-3 py-2 text-sm shadow-xs outline-none focus-visible:ring-2"
             placeholder="email@example.com"
             defaultValue="hong@example.com"
           />
@@ -344,18 +344,18 @@ export const FormActions: Story = {
 // 실제 사용 예시 - 카드 액션
 export const CardActions: Story = {
   render: () => (
-    <div className="w-full max-w-md rounded-lg border bg-card shadow-sm">
+    <div className="bg-card w-full max-w-md rounded-lg border shadow-sm">
       <div className="p-6">
         <div className="mb-4 flex items-start justify-between">
           <div>
             <h3 className="text-lg font-semibold">어드민 대시보드 프로젝트</h3>
-            <p className="mt-1 text-sm text-muted-foreground">Next.js 15와 React 19를 활용한 모던 어드민 시스템</p>
+            <p className="text-muted-foreground mt-1 text-sm">Next.js 15와 React 19를 활용한 모던 어드민 시스템</p>
           </div>
           <Button size="icon-sm" variant="ghost">
             <Settings />
           </Button>
         </div>
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+        <div className="text-muted-foreground flex items-center gap-2 text-sm">
           <span>업데이트: 2일 전</span>
           <span>•</span>
           <span>멤버: 5명</span>
@@ -384,14 +384,14 @@ export const CardActions: Story = {
 // 실제 사용 예시 - 위험한 작업
 export const DangerousAction: Story = {
   render: () => (
-    <div className="w-full max-w-md rounded-lg border border-destructive/50 bg-destructive/10 p-6">
+    <div className="border-destructive/50 bg-destructive/10 w-full max-w-md rounded-lg border p-6">
       <div className="mb-4 flex items-start gap-3">
-        <div className="rounded-full bg-destructive/20 p-2">
-          <AlertCircle className="h-5 w-5 text-destructive" />
+        <div className="bg-destructive/20 rounded-full p-2">
+          <AlertCircle className="text-destructive h-5 w-5" />
         </div>
         <div>
-          <h3 className="font-semibold text-destructive">계정 영구 삭제</h3>
-          <p className="mt-1 text-sm text-destructive/90">이 작업은 되돌릴 수 없습니다. 모든 데이터가 영구적으로 삭제되며 복구할 수 없습니다.</p>
+          <h3 className="text-destructive font-semibold">계정 영구 삭제</h3>
+          <p className="text-destructive/90 mt-1 text-sm">이 작업은 되돌릴 수 없습니다. 모든 데이터가 영구적으로 삭제되며 복구할 수 없습니다.</p>
         </div>
       </div>
       <div className="flex justify-end gap-2">
@@ -410,11 +410,11 @@ export const DangerousAction: Story = {
 // 실제 사용 예시 - 대시보드 액션
 export const DashboardActions: Story = {
   render: () => (
-    <div className="w-full max-w-2xl space-y-4 rounded-lg border bg-card p-6 shadow-sm">
+    <div className="bg-card w-full max-w-2xl space-y-4 rounded-lg border p-6 shadow-sm">
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold">대시보드</h2>
-          <p className="text-sm text-muted-foreground">전체 시스템 현황을 한눈에 확인하세요</p>
+          <p className="text-muted-foreground text-sm">전체 시스템 현황을 한눈에 확인하세요</p>
         </div>
         <div className="flex gap-2">
           <Button variant="outline" size="sm">
@@ -430,15 +430,15 @@ export const DashboardActions: Story = {
 
       <div className="grid gap-4 md:grid-cols-3">
         <div className="rounded-lg border p-4">
-          <p className="text-sm text-muted-foreground">총 사용자</p>
+          <p className="text-muted-foreground text-sm">총 사용자</p>
           <p className="mt-1 text-2xl font-bold">1,234</p>
         </div>
         <div className="rounded-lg border p-4">
-          <p className="text-sm text-muted-foreground">활성 사용자</p>
+          <p className="text-muted-foreground text-sm">활성 사용자</p>
           <p className="mt-1 text-2xl font-bold">892</p>
         </div>
         <div className="rounded-lg border p-4">
-          <p className="text-sm text-muted-foreground">신규 가입</p>
+          <p className="text-muted-foreground text-sm">신규 가입</p>
           <p className="mt-1 text-2xl font-bold">45</p>
         </div>
       </div>
