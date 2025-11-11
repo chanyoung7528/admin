@@ -153,7 +153,7 @@ export const Default: Story = {
           </SidebarContent>
           <SidebarFooter>
             <div className="px-4 py-2">
-              <p className="text-xs text-muted-foreground">© 2024 My App</p>
+              <p className="text-muted-foreground text-xs">© 2024 My App</p>
             </div>
           </SidebarFooter>
           <SidebarRail />
@@ -173,11 +173,11 @@ export const Default: Story = {
             <div className="grid gap-4 md:grid-cols-2">
               <div className="rounded-lg border p-4">
                 <h3 className="mb-2 font-semibold">카드 1</h3>
-                <p className="text-sm text-muted-foreground">콘텐츠 내용</p>
+                <p className="text-muted-foreground text-sm">콘텐츠 내용</p>
               </div>
               <div className="rounded-lg border p-4">
                 <h3 className="mb-2 font-semibold">카드 2</h3>
-                <p className="text-sm text-muted-foreground">콘텐츠 내용</p>
+                <p className="text-muted-foreground text-sm">콘텐츠 내용</p>
               </div>
             </div>
           </main>
@@ -261,7 +261,7 @@ export const MultipleGroups: Story = {
           </SidebarContent>
           <SidebarFooter>
             <div className="px-4 py-2">
-              <p className="text-xs text-muted-foreground">버전 1.0.0</p>
+              <p className="text-muted-foreground text-xs">버전 1.0.0</p>
             </div>
           </SidebarFooter>
           <SidebarRail />
@@ -454,8 +454,8 @@ export const IconCollapsible: Story = {
           <main className="flex-1 p-4">
             <div className="rounded-lg border p-4">
               <h2 className="mb-2 text-xl font-semibold">아이콘만 표시</h2>
-              <p className="mb-4 text-muted-foreground">사이드바가 접혀있을 때 아이콘만 표시되고, 마우스를 올리면 툴팁이 나타납니다.</p>
-              <p className="text-sm text-muted-foreground">💡 사이드바 토글 버튼을 클릭해서 펼쳐보세요!</p>
+              <p className="text-muted-foreground mb-4">사이드바가 접혀있을 때 아이콘만 표시되고, 마우스를 올리면 툴팁이 나타납니다.</p>
+              <p className="text-muted-foreground text-sm">💡 사이드바 토글 버튼을 클릭해서 펼쳐보세요!</p>
             </div>
           </main>
         </SidebarInset>

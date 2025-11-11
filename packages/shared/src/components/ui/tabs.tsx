@@ -27,7 +27,7 @@ function TabsList({
         className={cn(
           'inline-flex items-center justify-center',
           variant === 'default' && 'bg-muted text-muted-foreground h-9 w-fit rounded-lg p-[3px]',
-          variant === 'underline' && 'border-b border-border w-full',
+          variant === 'underline' && 'border-border w-full border-b',
           className
         )}
         {...props}
@@ -43,13 +43,13 @@ function TabsTrigger({ className, ...props }: React.ComponentProps<typeof TabsPr
     <TabsPrimitive.Trigger
       data-slot="tabs-trigger"
       className={cn(
-        'inline-flex items-center justify-center gap-1.5 whitespace-nowrap text-sm font-medium transition-all',
-        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+        'inline-flex items-center justify-center gap-1.5 text-sm font-medium whitespace-nowrap transition-all',
+        'focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none',
         'disabled:pointer-events-none disabled:opacity-50',
         "[&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         variant === 'default' &&
-          'data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-sm rounded-md border border-transparent px-3 py-1.5 h-[calc(100%-6px)] flex-1',
-        variant === 'underline' && 'border-b-2 border-transparent px-3 py-2 data-[state=active]:border-primary data-[state=active]:text-foreground',
+          'data-[state=active]:bg-background data-[state=active]:text-foreground h-[calc(100%-6px)] flex-1 rounded-md border border-transparent px-3 py-1.5 data-[state=active]:shadow-sm',
+        variant === 'underline' && 'data-[state=active]:border-primary data-[state=active]:text-foreground border-b-2 border-transparent px-3 py-2',
         className
       )}
       {...props}

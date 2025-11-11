@@ -20,7 +20,7 @@ export default function InquiryReplyForm({ inquiryId }: { inquiryId: string }) {
   };
 
   return (
-    <div className="rounded-lg border bg-card p-6">
+    <div className="bg-card rounded-lg border p-6">
       <h2 className="mb-4 text-lg font-semibold">답변 작성</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>

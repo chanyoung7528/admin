@@ -4,7 +4,7 @@ export default function SettlementTable() {
   const { data, isLoading } = useSettlementQuery();
 
   return (
-    <div className="rounded-lg border bg-card p-6">
+    <div className="bg-card rounded-lg border p-6">
       <h2 className="mb-4 text-lg font-semibold">정산 내역</h2>
       {isLoading ? (
         <p className="text-muted-foreground">로딩 중...</p>

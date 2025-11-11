@@ -16,11 +16,11 @@ function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="w-full max-w-md space-y-8 rounded-lg border bg-card p-8">
+    <div className="bg-background flex min-h-screen items-center justify-center">
+      <div className="bg-card w-full max-w-md space-y-8 rounded-lg border p-8">
         <div className="text-center">
           <h1 className="text-3xl font-bold">관리자 로그인</h1>
-          <p className="mt-2 text-muted-foreground">관리자 계정으로 로그인하세요</p>
+          <p className="text-muted-foreground mt-2">관리자 계정으로 로그인하세요</p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-6">

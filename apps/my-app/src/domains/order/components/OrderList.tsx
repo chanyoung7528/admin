@@ -27,18 +27,18 @@ export function OrderList() {
   ];
 
   return (
-    <div className="rounded-lg border bg-card p-6">
+    <div className="bg-card rounded-lg border p-6">
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-lg font-semibold">주문/발주 내역</h2>
-        <button className="rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground hover:bg-primary/90">신규 주문 등록</button>
+        <button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-md px-4 py-2 text-sm">신규 주문 등록</button>
       </div>
 
       <p className="text-muted-foreground mb-6">MY FOOD 제품 주문 및 배송 현황을 관리합니다</p>
 
       {/* 주문 요약 */}
       <div className="mb-6 grid gap-4 md:grid-cols-4">
-        <div className="rounded-lg bg-background p-4">
-          <p className="text-sm text-muted-foreground">총 주문</p>
+        <div className="bg-background rounded-lg p-4">
+          <p className="text-muted-foreground text-sm">총 주문</p>
           <p className="mt-1 text-2xl font-bold">156건</p>
         </div>
         <div className="rounded-lg bg-green-50 p-4 dark:bg-green-950">
@@ -70,7 +70,7 @@ export function OrderList() {
           </thead>
           <tbody>
             {orders.map(order => (
-              <tr key={order.id} className="border-t hover:bg-muted/50">
+              <tr key={order.id} className="hover:bg-muted/50 border-t">
                 <td className="px-4 py-3 text-sm font-medium">{order.id}</td>
                 <td className="px-4 py-3 text-sm">{order.site}</td>
                 <td className="px-4 py-3 text-sm">{order.items}</td>

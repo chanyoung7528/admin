@@ -177,10 +177,7 @@ export function CustomDocsPage({ installationDeps, implementationCode, exampleCo
                     </div>
                   </div>
                   <div className="mb-4 text-sm text-purple-700 dark:text-purple-300">
-                    <p>
-                      실제 프로젝트에서 이 컴포넌트를 어떻게 사용하는지
-                      확인하세요.
-                    </p>
+                    <p>실제 프로젝트에서 이 컴포넌트를 어떻게 사용하는지 확인하세요.</p>
                   </div>
                   <div className="animate-slideDown mt-4">
                     <CodeBlock code={exampleCode} />
