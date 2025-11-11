@@ -9,7 +9,7 @@
     "dev:storybook": "turbo dev --filter=storybook-docs",
     "lint": "turbo lint",
     "lint:fix": "turbo lint -- --fix",
-    "typecheck": "turbo typecheck",
+    "type-check": "turbo type-check",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md,mdx,css,scss,yaml,yml}\" --ignore-path .prettierignore",
     "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md,mdx,css,scss,yaml,yml}\" --ignore-path .prettierignore",
     "clean": "turbo clean && rm -rf node_modules .turbo",

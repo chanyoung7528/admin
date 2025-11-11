@@ -8,7 +8,7 @@
     "build": "storybook build",
     "preview": "serve storybook-static",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit",
+    "type-check": "tsc --noEmit",
     "clean": "rm -rf storybook-static .turbo node_modules/.tmp"
   },
   "dependencies": {
