@@ -22,18 +22,8 @@
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.6",
     "turbo": "^2.6.1"
   },
-  "lint-staged": {
-    "*.{ts,tsx,js,jsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.{json,md,mdx,css,scss,yaml,yml}": [
-      "prettier --write"
-    ]
-  },
-  "packageManager": "pnpm@8.15.6",
+  "packageManager": "pnpm@10.21.0",
   "name": "with-vite"
 }

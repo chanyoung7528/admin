@@ -1,19 +1,18 @@
 {
-  "files": [],
-  "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }],
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@repo/typescript-config/vite.json",
   "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
+    "types": ["vite/client", "node"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@domains/*": ["./src/domains/*"],
-      "@pages/*": ["./src/pages/*"],
-      "@components/*": ["./src/components/*"],
-      "@hooks/*": ["./src/hooks/*"],
-      "@utils/*": ["./src/utils/*"],
-      // shared 패키지 alias
       "@ui/*": ["../../packages/shared/src/components/ui/*"],
       "@lib/*": ["../../packages/shared/src/lib/*"],
-      "@stores/*": ["../../packages/shared/src/stores/*"]
+      "@components/*": ["../../packages/shared/src/components/*"],
+      "@stores/*": ["../../packages/shared/src/stores/*"],
+      "@hooks/*": ["../../packages/shared/src/hooks/*"]
     }
-  }
+  },
+  "include": ["src", "vite.config.ts"]
 }

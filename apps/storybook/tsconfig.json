@@ -1,10 +1,10 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "@repo/typescript-config/vite.json",
   "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.tsbuildinfo",
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
@@ -15,6 +15,5 @@
       "@stores/*": ["../../packages/shared/src/stores/*"]
     }
   },
-  "include": ["src", ".storybook"],
-  "exclude": ["node_modules", "storybook-static"]
+  "include": ["src", ".storybook"]
 }

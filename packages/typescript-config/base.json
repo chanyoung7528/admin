@@ -1,20 +1,41 @@
 {
   "$schema": "https://json.schemastore.org/tsconfig",
   "compilerOptions": {
+    // Language and Environment
     "target": "ES2022",
     "lib": ["ES2022"],
+    "jsx": "preserve",
+
+    // Modules
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "resolveJsonModule": true,
+
+    // Emit
+    "noEmit": true,
+    "declaration": false,
+    "sourceMap": false,
+
+    // Interop Constraints
     "allowJs": true,
-    "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true
+    "verbatimModuleSyntax": true,
+    "allowImportingTsExtensions": true,
+
+    // Type Checking - Strict
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitReturns": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "noUncheckedSideEffectImports": true,
+
+    // Completeness
+    "skipLibCheck": true
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "dist", "build", "storybook-static", ".turbo"]
 }
