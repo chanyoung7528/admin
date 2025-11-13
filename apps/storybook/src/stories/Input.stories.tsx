@@ -1,8 +1,8 @@
+import { Input } from '@repo/shared/components/ui';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Input } from '@repo/shared/components/ui/input';
-import { CustomDocsPage } from '../components/CustomDocsPage';
-import { Mail, Lock, Search, User, Eye, EyeOff, Phone, Calendar, DollarSign, AlertCircle, Check } from 'lucide-react';
+import { AlertCircle, Check, DollarSign, Eye, EyeOff, Lock, Mail, Phone, Search, User } from 'lucide-react';
 import { useState } from 'react';
+import { CustomDocsPage } from '../components/CustomDocsPage';
 
 const meta = {
   title: 'UI Components/Input',
@@ -15,7 +15,7 @@ const meta = {
           componentName="Input"
           description="텍스트 입력을 위한 기본 Input 컴포넌트입니다. 다양한 타입과 아이콘을 지원합니다."
           installationDeps={['clsx', 'tailwind-merge']}
-          implementationCode={`import { Input } from "@/components/ui/input";
+          implementationCode={`import { Input } from "@components/ui/input";
 
 export default function Example() {
   return (

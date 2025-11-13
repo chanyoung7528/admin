@@ -1,5 +1,5 @@
+import { Button } from '@repo/shared/components/ui';
 import { useState } from 'react';
-import { Button } from '@ui/button';
 import { useSendReply } from '../hooks';
 
 export default function InquiryReplyForm({ inquiryId }: { inquiryId: string }) {

@@ -1,7 +1,7 @@
-import { type ReactNode } from 'react';
 import { Link, useLocation } from '@tanstack/react-router';
-import { ChevronRight } from 'lucide-react';
+import { Badge } from '@ui/badge';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@ui/collapsible';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@ui/dropdown-menu';
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -13,9 +13,9 @@ import {
   SidebarMenuSubItem,
   useSidebar,
 } from '@ui/sidebar';
-import { Badge } from '@ui/badge';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@ui/dropdown-menu';
-import type { NavCollapsible, NavItem, NavLink, NavGroup as NavGroupProps } from '../../../types/sidebar';
+import { ChevronRight } from 'lucide-react';
+import { type ReactNode } from 'react';
+import type { NavCollapsible, NavGroup as NavGroupProps, NavItem, NavLink } from '../../../types/sidebar';
 
 export function NavGroup({ title, items }: NavGroupProps) {
   const { state, isMobile } = useSidebar();

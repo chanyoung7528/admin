@@ -1,5 +1,5 @@
+import { getCookie, removeCookie, setCookie } from '@lib/cookies';
 import { create } from 'zustand';
-import { getCookie, setCookie, removeCookie } from '@repo/shared/lib/cookies';
 
 const ACCESS_TOKEN = 'thisisjustarandomstring';
 

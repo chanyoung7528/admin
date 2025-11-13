@@ -1,8 +1,8 @@
+import { Avatar, AvatarFallback, AvatarImage, Badge } from '@repo/shared/components/ui';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Avatar, AvatarFallback, AvatarImage } from '@repo/shared/components/ui/avatar';
 import { CustomDocsPage } from '../components/CustomDocsPage';
-import { Badge } from '@repo/shared/components/ui/badge';
-import { User, Crown, Check, MoreVertical, Mail, Phone } from 'lucide-react';
+
+import { Check, Crown, Mail, MoreVertical, Phone, User } from 'lucide-react';
 
 const meta = {
   title: 'UI Components/Avatar',
@@ -19,7 +19,7 @@ const meta = {
   Avatar,
   AvatarFallback,
   AvatarImage,
-} from "@/components/ui/avatar";
+} from "@components/ui/avatar";
 
 export default function Example() {
   return (

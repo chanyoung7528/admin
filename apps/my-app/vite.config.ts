@@ -1,9 +1,9 @@
-import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
-import { visualizer } from 'rollup-plugin-visualizer';
+import react from '@vitejs/plugin-react';
 import path from 'path';
+import { visualizer } from 'rollup-plugin-visualizer';
+import { defineConfig } from 'vite';
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -28,13 +28,23 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      // shared 패키지의 alias (my-app에서 shared를 import할 때)
+      // shared 패키지의 alias (구체적인 것부터 먼저)
+      '@repo/shared/components/ui': path.resolve(__dirname, '../../packages/shared/src/components/ui'),
+      '@repo/shared/components': path.resolve(__dirname, '../../packages/shared/src/components'),
+      '@repo/shared/ui': path.resolve(__dirname, '../../packages/shared/src/components/ui'),
+      '@repo/shared/lib': path.resolve(__dirname, '../../packages/shared/src/lib'),
+      '@repo/shared/hooks': path.resolve(__dirname, '../../packages/shared/src/hooks'),
+      '@repo/shared/stores': path.resolve(__dirname, '../../packages/shared/src/stores'),
+      '@repo/shared': path.resolve(__dirname, '../../packages/shared/src'),
+
+      // shared 패키지 내부에서 사용하는 alias들 (shared vite.config.ts와 동일)
       '@ui': path.resolve(__dirname, '../../packages/shared/src/components/ui'),
       '@lib': path.resolve(__dirname, '../../packages/shared/src/lib'),
       '@hooks': path.resolve(__dirname, '../../packages/shared/src/hooks'),
       '@components': path.resolve(__dirname, '../../packages/shared/src/components'),
       '@stores': path.resolve(__dirname, '../../packages/shared/src/stores'),
-      // my-app 자체의 alias
+
+      // my-app 자체의 alias (마지막에)
       '@': path.resolve(__dirname, './src'),
     },
   },

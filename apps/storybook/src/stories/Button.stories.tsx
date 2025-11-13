@@ -1,7 +1,7 @@
+import { Button } from '@repo/shared/components/ui';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Button } from '@repo/shared/components/ui/button';
+import { AlertCircle, ArrowRight, Check, ChevronRight, Download, Edit, Loader2, Mail, Plus, Search, Settings, Trash2, Upload } from 'lucide-react';
 import { CustomDocsPage } from '../components/CustomDocsPage';
-import { Mail, Download, Plus, Trash2, Edit, Search, Settings, ChevronRight, Loader2, Check, AlertCircle, ArrowRight, Upload } from 'lucide-react';
 
 const meta = {
   title: 'UI Components/Button',
@@ -15,7 +15,7 @@ const meta = {
           description="다양한 스타일과 크기를 지원하는 버튼 컴포넌트입니다. 아이콘, 로딩 상태 등을 포함할 수 있습니다."
           installationDeps={['@radix-ui/react-slot', 'class-variance-authority', 'clsx', 'tailwind-merge']}
           implementationCode={`// 기본 Button 컴포넌트 사용
-import { Button } from "@/components/ui/button";
+import { Button } from "@components/ui/button";
 import { Mail } from "lucide-react";
 
 export default function Example() {

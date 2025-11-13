@@ -10,10 +10,14 @@
       "@components/*": ["./src/components/*"],
       "@hooks/*": ["./src/hooks/*"],
       "@utils/*": ["./src/utils/*"],
-      // shared 패키지 alias
-      "@ui/*": ["../../packages/shared/src/components/ui/*"],
-      "@lib/*": ["../../packages/shared/src/lib/*"],
-      "@stores/*": ["../../packages/shared/src/stores/*"]
+      // shared 패키지 alias (구체적인 것부터 먼저)
+      "@repo/shared/components/ui": ["../../packages/shared/src/components/ui"],
+      "@repo/shared/components/*": ["../../packages/shared/src/components/*"],
+      "@repo/shared/ui/*": ["../../packages/shared/src/components/ui/*"],
+      "@repo/shared/lib/*": ["../../packages/shared/src/lib/*"],
+      "@repo/shared/hooks/*": ["../../packages/shared/src/hooks/*"],
+      "@repo/shared/stores/*": ["../../packages/shared/src/stores/*"],
+      "@repo/shared/*": ["../../packages/shared/src/*"]
     }
   }
 }

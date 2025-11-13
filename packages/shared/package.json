@@ -5,7 +5,9 @@
     "./globals.css": "./src/styles/globals.css",
     "./lib/*": "./src/lib/*.ts",
     "./utils/*": "./src/lib/utils/*.ts",
-    "./components/*": "./src/components/*.tsx",
+    "./components/ui": "./src/components/ui/index.ts",
+    "./components/layouts": "./src/components/layouts/index.ts",
+    "./components/*": "./src/components/*",
     "./hooks/*": "./src/hooks/*.ts",
     "./stores/*": "./src/stores/*.ts",
     "./types/*": "./src/types/*.ts"

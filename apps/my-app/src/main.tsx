@@ -1,8 +1,19 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { createRouter, RouterProvider } from '@tanstack/react-router';
+import { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import { RouterProvider, createRouter } from '@tanstack/react-router';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { routeTree } from './routeTree.gen';
+
+// 개발 모드에서만 DevTools를 동적으로 로드
+const ReactQueryDevtools =
+  import.meta.env.MODE === 'development'
+    ? lazy(() =>
+        import('@tanstack/react-query-devtools').then(res => ({
+          default: res.ReactQueryDevtools,
+        }))
+      )
+    : () => null;
 
 // Set up QueryClient
 const queryClient = new QueryClient({
@@ -18,12 +29,18 @@ const queryClient = new QueryClient({
 const router = createRouter({
   routeTree,
   defaultPreload: 'intent',
+  context: {
+    queryClient,
+  },
 });
 
 // Register things for typesafety
 declare module '@tanstack/react-router' {
   interface Register {
     router: typeof router;
+  }
+  interface RouterContext {
+    queryClient: QueryClient;
   }
 }
 
@@ -34,15 +51,9 @@ if (!rootElement.innerHTML) {
   root.render(
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
+      <Suspense fallback={null}>
+        <ReactQueryDevtools />
+      </Suspense>
     </QueryClientProvider>
   );
-}
-
-// 개발 도구는 동적 import로 로드 (프로덕션 빌드에서 제외됨)
-if (import.meta.env.MODE === 'development') {
-  import('@tanstack/react-query-devtools').then(({ ReactQueryDevtools }) => {
-    const devToolRoot = document.createElement('div');
-    document.body.appendChild(devToolRoot);
-    ReactDOM.createRoot(devToolRoot).render(<ReactQueryDevtools />);
-  });
 }
