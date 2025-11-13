@@ -323,6 +323,9 @@ const config: StorybookConfig = {
       '@shared': resolve(__dirname, '../../../packages/shared/src'),
     };
 
+    // React 중복 방지 (중요!)
+    config.resolve.dedupe = ['react', 'react-dom'];
+
     // 빌드 최적화 설정 (청크 분리)
     config.build = config.build || {};
     config.build.rollupOptions = config.build.rollupOptions || {};
@@ -487,6 +490,17 @@ Storybook 빌드 시 청크가 효과적으로 분리됩니다:
 
 **참고**: `storybook-vendor`가 크지만 이는 정상입니다. Storybook은 개발/문서화 도구이므로 프로덕션 번들에는 포함되지 않습니다.
 
+### React 중복 방지
+
+Storybook 배포 시 `Cannot read properties of undefined (reading 'useLayoutEffect')` 에러를 방지하기 위해 **React dedupe 설정**이 필수입니다:
+
+```typescript
+// .storybook/main.ts
+config.resolve.dedupe = ['react', 'react-dom'];
+```
+
+이 설정은 여러 청크에서 React가 중복으로 로드되는 것을 방지합니다.
+
 ---
 
 ## 🔧 문제 해결
@@ -526,6 +540,20 @@ pnpm install
 # 다시 빌드
 pnpm run build:my-app
 ```
+
+### Storybook 배포 시 React 에러
+
+**에러**: `Cannot read properties of undefined (reading 'useLayoutEffect')`
+
+**원인**: React 모듈이 여러 청크에서 중복으로 로드됨
+
+**해결**:
+```typescript
+// apps/storybook/.storybook/main.ts
+config.resolve.dedupe = ['react', 'react-dom'];
+```
+
+이 설정은 Vite가 React와 React DOM을 단일 인스턴스로 유지하도록 합니다.
 
 ---
 

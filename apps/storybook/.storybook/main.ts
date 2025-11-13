@@ -58,6 +58,9 @@ const config: StorybookConfig = {
     // 파일 확장자 해결 설정
     config.resolve.extensions = ['.mjs', '.js', '.mts', '.ts', '.jsx', '.tsx', '.json'];
 
+    // React 중복 방지 (중요!)
+    config.resolve.dedupe = ['react', 'react-dom'];
+
     // 빌드 최적화 설정
     config.build = config.build || {};
     config.build.rollupOptions = config.build.rollupOptions || {};
