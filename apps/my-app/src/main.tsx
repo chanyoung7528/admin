@@ -1,3 +1,4 @@
+import { ThemeProvider } from '@repo/shared/components/context';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { lazy, Suspense } from 'react';
@@ -50,10 +51,12 @@ if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-      <Suspense fallback={null}>
-        <ReactQueryDevtools />
-      </Suspense>
+      <ThemeProvider>
+        <RouterProvider router={router} />
+        <Suspense fallback={null}>
+          <ReactQueryDevtools />
+        </Suspense>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }
