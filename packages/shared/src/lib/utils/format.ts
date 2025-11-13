@@ -1,5 +1,5 @@
 // Date formatting
-export function formatDate(date: Date | string, format = 'YYYY-MM-DD'): string {
+export function formatDate(date: Date | string, _format = 'YYYY-MM-DD'): string {
   const d = typeof date === 'string' ? new Date(date) : date;
   // TODO: Implement proper date formatting or use date-fns
   return d.toISOString().split('T')[0];

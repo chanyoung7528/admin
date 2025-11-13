@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "storybook dev -p 6006",
     "build": "storybook build",
-    "preview": "serve storybook-static"
+    "preview": "serve storybook-static",
+    "lint": "eslint .",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf storybook-static .turbo node_modules/.tmp"
   },
   "dependencies": {
     "@repo/shared": "workspace:*",
@@ -18,6 +21,8 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.2",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
     "@storybook/addon-essentials": "^8.5.0",
     "@storybook/addon-interactions": "^8.5.0",
     "@storybook/addon-links": "^8.5.0",

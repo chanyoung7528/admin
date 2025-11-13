@@ -12,7 +12,7 @@ function MindInvoicePage() {
         <p className="text-muted-foreground">MY MIND 계산서를 출력합니다</p>
       </div>
 
-      <div className="rounded-lg border bg-card p-6">
+      <div className="bg-card rounded-lg border p-6">
         <h2 className="mb-4 text-lg font-semibold">계산서 목록</h2>
         <p className="text-muted-foreground">계산서 목록 구현 예정</p>
       </div>

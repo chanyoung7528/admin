@@ -1,7 +1,7 @@
 {
-  "extends": "@repo/typescript-config/base.json",
+  "extends": "@repo/typescript-config/react.json",
   "include": ["."],
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "eslint.config.js"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {

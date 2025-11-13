@@ -80,19 +80,19 @@ export const Default: Story = {
       <TabsContent value="tab1">
         <div className="rounded-lg border p-4">
           <h3 className="mb-2 font-semibold">Tab 1 Content</h3>
-          <p className="text-sm text-muted-foreground">첫 번째 탭의 내용입니다.</p>
+          <p className="text-muted-foreground text-sm">첫 번째 탭의 내용입니다.</p>
         </div>
       </TabsContent>
       <TabsContent value="tab2">
         <div className="rounded-lg border p-4">
           <h3 className="mb-2 font-semibold">Tab 2 Content</h3>
-          <p className="text-sm text-muted-foreground">두 번째 탭의 내용입니다.</p>
+          <p className="text-muted-foreground text-sm">두 번째 탭의 내용입니다.</p>
         </div>
       </TabsContent>
       <TabsContent value="tab3">
         <div className="rounded-lg border p-4">
           <h3 className="mb-2 font-semibold">Tab 3 Content</h3>
-          <p className="text-sm text-muted-foreground">세 번째 탭의 내용입니다.</p>
+          <p className="text-muted-foreground text-sm">세 번째 탭의 내용입니다.</p>
         </div>
       </TabsContent>
     </Tabs>
@@ -119,19 +119,19 @@ export const WithIcons: Story = {
       <TabsContent value="home" className="space-y-4">
         <div className="rounded-lg border p-6">
           <h3 className="mb-2 text-lg font-semibold">대시보드</h3>
-          <p className="text-sm text-muted-foreground">전체 시스템 현황을 확인하세요.</p>
+          <p className="text-muted-foreground text-sm">전체 시스템 현황을 확인하세요.</p>
         </div>
       </TabsContent>
       <TabsContent value="users" className="space-y-4">
         <div className="rounded-lg border p-6">
           <h3 className="mb-2 text-lg font-semibold">사용자 관리</h3>
-          <p className="text-sm text-muted-foreground">사용자 목록과 권한을 관리합니다.</p>
+          <p className="text-muted-foreground text-sm">사용자 목록과 권한을 관리합니다.</p>
         </div>
       </TabsContent>
       <TabsContent value="settings" className="space-y-4">
         <div className="rounded-lg border p-6">
           <h3 className="mb-2 text-lg font-semibold">시스템 설정</h3>
-          <p className="text-sm text-muted-foreground">시스템 환경을 설정합니다.</p>
+          <p className="text-muted-foreground text-sm">시스템 환경을 설정합니다.</p>
         </div>
       </TabsContent>
     </Tabs>
@@ -165,19 +165,19 @@ export const WithBadges: Story = {
       <TabsContent value="all">
         <div className="rounded-lg border p-4">
           <h3 className="mb-2 font-semibold">전체 알림 (24)</h3>
-          <p className="text-sm text-muted-foreground">모든 알림을 확인할 수 있습니다.</p>
+          <p className="text-muted-foreground text-sm">모든 알림을 확인할 수 있습니다.</p>
         </div>
       </TabsContent>
       <TabsContent value="unread">
         <div className="rounded-lg border p-4">
           <h3 className="mb-2 font-semibold">읽지 않은 알림 (5)</h3>
-          <p className="text-sm text-muted-foreground">아직 확인하지 않은 알림입니다.</p>
+          <p className="text-muted-foreground text-sm">아직 확인하지 않은 알림입니다.</p>
         </div>
       </TabsContent>
       <TabsContent value="archived">
         <div className="rounded-lg border p-4">
           <h3 className="mb-2 font-semibold">보관된 알림 (12)</h3>
-          <p className="text-sm text-muted-foreground">보관 처리된 알림 목록입니다.</p>
+          <p className="text-muted-foreground text-sm">보관 처리된 알림 목록입니다.</p>
         </div>
       </TabsContent>
     </Tabs>
@@ -254,7 +254,7 @@ export const ProfileSettings: Story = {
       </TabsList>
 
       <TabsContent value="profile" className="space-y-4">
-        <div className="rounded-lg border bg-card p-6">
+        <div className="bg-card rounded-lg border p-6">
           <h3 className="mb-4 text-lg font-semibold">프로필 정보</h3>
           <div className="space-y-4">
             <div>
@@ -271,14 +271,14 @@ export const ProfileSettings: Story = {
             </div>
             <div className="flex justify-end gap-2">
               <button className="rounded-md border px-4 py-2 text-sm">취소</button>
-              <button className="rounded-md bg-primary px-4 py-2 text-sm text-primary-foreground">저장</button>
+              <button className="bg-primary text-primary-foreground rounded-md px-4 py-2 text-sm">저장</button>
             </div>
           </div>
         </div>
       </TabsContent>
 
       <TabsContent value="account" className="space-y-4">
-        <div className="rounded-lg border bg-card p-6">
+        <div className="bg-card rounded-lg border p-6">
           <h3 className="mb-4 text-lg font-semibold">계정 설정</h3>
           <div className="space-y-4">
             <div>
@@ -306,7 +306,7 @@ export const ProfileSettings: Story = {
       </TabsContent>
 
       <TabsContent value="notifications" className="space-y-4">
-        <div className="rounded-lg border bg-card p-6">
+        <div className="bg-card rounded-lg border p-6">
           <h3 className="mb-4 text-lg font-semibold">알림 설정</h3>
           <div className="space-y-4">
             {[
@@ -318,7 +318,7 @@ export const ProfileSettings: Story = {
               <div key={i} className="flex items-center justify-between">
                 <div>
                   <p className="font-medium">{item.label}</p>
-                  <p className="text-sm text-muted-foreground">{item.desc}</p>
+                  <p className="text-muted-foreground text-sm">{item.desc}</p>
                 </div>
                 <input type="checkbox" className="h-4 w-4" defaultChecked={i < 2} />
               </div>
@@ -328,7 +328,7 @@ export const ProfileSettings: Story = {
       </TabsContent>
 
       <TabsContent value="billing" className="space-y-4">
-        <div className="rounded-lg border bg-card p-6">
+        <div className="bg-card rounded-lg border p-6">
           <h3 className="mb-4 text-lg font-semibold">결제 정보</h3>
           <div className="space-y-4">
             <div>
@@ -339,11 +339,11 @@ export const ProfileSettings: Story = {
                   <Badge>활성</Badge>
                 </div>
                 <p className="text-2xl font-bold">₩29,900 / 월</p>
-                <p className="mt-2 text-sm text-muted-foreground">다음 결제일: 2024.12.01</p>
+                <p className="text-muted-foreground mt-2 text-sm">다음 결제일: 2024.12.01</p>
               </div>
             </div>
             <div>
-              <button className="w-full rounded-md border px-4 py-2 text-sm hover:bg-accent">플랜 변경</button>
+              <button className="hover:bg-accent w-full rounded-md border px-4 py-2 text-sm">플랜 변경</button>
             </div>
           </div>
         </div>
@@ -385,8 +385,8 @@ export const Dashboard: Story = {
             { label: '주문 수', value: '1,234', change: '+8.2%' },
             { label: '신규 고객', value: '89', change: '+23.1%' },
           ].map((stat, i) => (
-            <div key={i} className="rounded-lg border bg-card p-6">
-              <p className="text-sm text-muted-foreground">{stat.label}</p>
+            <div key={i} className="bg-card rounded-lg border p-6">
+              <p className="text-muted-foreground text-sm">{stat.label}</p>
               <p className="mt-2 text-2xl font-bold">{stat.value}</p>
               <p className="mt-1 text-sm text-green-600">{stat.change}</p>
             </div>
@@ -395,7 +395,7 @@ export const Dashboard: Story = {
       </TabsContent>
 
       <TabsContent value="orders" className="space-y-4">
-        <div className="rounded-lg border bg-card">
+        <div className="bg-card rounded-lg border">
           <div className="border-b p-4">
             <h3 className="font-semibold">최근 주문</h3>
           </div>
@@ -405,7 +405,7 @@ export const Dashboard: Story = {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="font-medium">주문 #{i}234</p>
-                    <p className="text-sm text-muted-foreground">2시간 전</p>
+                    <p className="text-muted-foreground text-sm">2시간 전</p>
                   </div>
                   <Badge>배송 중</Badge>
                 </div>
@@ -416,16 +416,16 @@ export const Dashboard: Story = {
       </TabsContent>
 
       <TabsContent value="products" className="space-y-4">
-        <div className="rounded-lg border bg-card p-6">
+        <div className="bg-card rounded-lg border p-6">
           <h3 className="mb-4 font-semibold">제품 관리</h3>
-          <p className="text-sm text-muted-foreground">제품 목록과 재고를 관리합니다.</p>
+          <p className="text-muted-foreground text-sm">제품 목록과 재고를 관리합니다.</p>
         </div>
       </TabsContent>
 
       <TabsContent value="customers" className="space-y-4">
-        <div className="rounded-lg border bg-card p-6">
+        <div className="bg-card rounded-lg border p-6">
           <h3 className="mb-4 font-semibold">고객 관리</h3>
-          <p className="text-sm text-muted-foreground">고객 정보와 활동을 확인합니다.</p>
+          <p className="text-muted-foreground text-sm">고객 정보와 활동을 확인합니다.</p>
         </div>
       </TabsContent>
     </Tabs>
@@ -446,9 +446,9 @@ export const DocumentViewer: Story = {
       </TabsList>
 
       <TabsContent value="preview" className="space-y-4">
-        <div className="rounded-lg border bg-card p-8">
+        <div className="bg-card rounded-lg border p-8">
           <h1 className="mb-4 text-3xl font-bold">문서 제목</h1>
-          <p className="mb-4 text-muted-foreground">이것은 문서의 미리보기입니다. 렌더링된 결과를 확인할 수 있습니다.</p>
+          <p className="text-muted-foreground mb-4">이것은 문서의 미리보기입니다. 렌더링된 결과를 확인할 수 있습니다.</p>
           <h2 className="mb-2 text-xl font-semibold">섹션 1</h2>
           <p className="text-muted-foreground">첫 번째 섹션의 내용입니다.</p>
         </div>
@@ -466,8 +466,8 @@ export const DocumentViewer: Story = {
       </TabsContent>
 
       <TabsContent value="raw" className="space-y-4">
-        <div className="rounded-lg border bg-card p-6">
-          <p className="font-mono text-sm text-muted-foreground">
+        <div className="bg-card rounded-lg border p-6">
+          <p className="text-muted-foreground font-mono text-sm">
             # 문서 제목
             <br />
             <br />

@@ -1,6 +1,6 @@
 export function InsightDashboard() {
   return (
-    <div className="rounded-lg border bg-card p-6">
+    <div className="bg-card rounded-lg border p-6">
       <h2 className="mb-4 text-lg font-semibold">사용자 Insight 분석</h2>
       <p className="text-muted-foreground mb-6">사용자 행동 패턴과 트렌드를 분석하여 인사이트를 제공합니다</p>
 
@@ -24,13 +24,13 @@ export function InsightDashboard() {
       </div>
 
       {/* 사용자 행동 분석 차트 */}
-      <div className="mb-6 rounded-lg border bg-background p-4">
+      <div className="bg-background mb-6 rounded-lg border p-4">
         <h3 className="mb-3 text-sm font-semibold">시간대별 이용 패턴</h3>
-        <div className="flex h-48 items-center justify-center text-muted-foreground">📊 시간대별 사용자 활동 차트 (구현 예정)</div>
+        <div className="text-muted-foreground flex h-48 items-center justify-center">📊 시간대별 사용자 활동 차트 (구현 예정)</div>
       </div>
 
       {/* 서비스별 선호도 */}
-      <div className="rounded-lg border bg-background p-4">
+      <div className="bg-background rounded-lg border p-4">
         <h3 className="mb-3 text-sm font-semibold">서비스별 선호도</h3>
         <div className="space-y-3">
           {[
@@ -43,7 +43,7 @@ export function InsightDashboard() {
                 <span className="font-medium">{item.service}</span>
                 <span className="text-muted-foreground">{item.usage}%</span>
               </div>
-              <div className="h-2 overflow-hidden rounded-full bg-secondary">
+              <div className="bg-secondary h-2 overflow-hidden rounded-full">
                 <div className={`h-full ${item.color}`} style={{ width: `${item.usage}%` }}></div>
               </div>
             </div>

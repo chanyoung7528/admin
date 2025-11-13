@@ -11,10 +11,10 @@ export function MonitoringPanel({ service, refreshInterval = 60000 }: Monitoring
   }[service];
 
   return (
-    <div className="rounded-lg border bg-card p-6">
+    <div className="bg-card rounded-lg border p-6">
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-lg font-semibold">{serviceLabel} 모니터링</h2>
-        <span className="text-xs text-muted-foreground">자동 새로고침: {refreshInterval / 1000}초</span>
+        <span className="text-muted-foreground text-xs">자동 새로고침: {refreshInterval / 1000}초</span>
       </div>
 
       <p className="text-muted-foreground mb-6">{serviceLabel} 서비스의 실시간 시스템 상태를 모니터링합니다</p>
@@ -50,18 +50,18 @@ export function MonitoringPanel({ service, refreshInterval = 60000 }: Monitoring
       </div>
 
       {/* 상세 로그 영역 */}
-      <div className="mt-6 rounded-lg border bg-background p-4">
+      <div className="bg-background mt-6 rounded-lg border p-4">
         <h3 className="mb-3 text-sm font-semibold">최근 이벤트</h3>
         <div className="space-y-2 text-xs">
-          <div className="flex items-center gap-2 text-muted-foreground">
+          <div className="text-muted-foreground flex items-center gap-2">
             <span className="text-green-600">✓</span>
             <span>11:23:45 - {serviceLabel} 시스템 정상 작동 중</span>
           </div>
-          <div className="flex items-center gap-2 text-muted-foreground">
+          <div className="text-muted-foreground flex items-center gap-2">
             <span className="text-yellow-600">⚠</span>
             <span>11:20:12 - API 응답 시간 증가 감지</span>
           </div>
-          <div className="flex items-center gap-2 text-muted-foreground">
+          <div className="text-muted-foreground flex items-center gap-2">
             <span className="text-green-600">✓</span>
             <span>11:15:33 - 정기 백업 완료</span>
           </div>
