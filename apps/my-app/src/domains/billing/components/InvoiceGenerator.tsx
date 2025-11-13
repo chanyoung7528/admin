@@ -1,5 +1,5 @@
+import { Button } from '@repo/shared/components/ui';
 import { useState } from 'react';
-import { Button } from '@ui/button';
 
 export default function InvoiceGenerator() {
   const [isGenerating, setIsGenerating] = useState(false);

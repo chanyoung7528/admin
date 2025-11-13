@@ -1,10 +1,10 @@
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from '@ui/sidebar';
-// import { AppTitle } from './app-title'
-import { sidebarData } from '@lib/sidebarData';
-import { TeamSwitcher } from './TeamSwitcher';
+import { useLayout } from '@shared/components/context/LayoutProvider';
+import { sidebarData } from '@shared/lib/sidebarData';
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from '@shared/ui/sidebar';
+import type { NavGroup as NavGroupType } from '../../../types/sidebar';
 import { NavGroup } from './NavGroup';
 import { NavUser } from './NavUser';
-import { useLayout } from '@components/context/LayoutProvider';
+import { TeamSwitcher } from './TeamSwitcher';
 
 export function AppSidebar() {
   const { collapsible, variant } = useLayout();
@@ -12,13 +12,9 @@ export function AppSidebar() {
     <Sidebar collapsible={collapsible} variant={variant}>
       <SidebarHeader>
         <TeamSwitcher teams={sidebarData.teams} />
-
-        {/* Replace <TeamSwitch /> with the following <AppTitle />
-         /* if you want to use the normal app title instead of TeamSwitch dropdown */}
-        {/* <AppTitle /> */}
       </SidebarHeader>
       <SidebarContent>
-        {sidebarData.navGroups.map(props => (
+        {sidebarData.navGroups.map((props: NavGroupType) => (
           <NavGroup key={props.title} {...props} />
         ))}
       </SidebarContent>

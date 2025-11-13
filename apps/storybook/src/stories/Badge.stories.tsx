@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import { Badge } from '@repo/shared/components/ui/badge';
+import type { Meta, StoryObj } from '@storybook/react';
+import { AlertCircle, Check, Clock, Crown, Info, Shield, Star, TrendingDown, TrendingUp, X, Zap } from 'lucide-react';
 import { CustomDocsPage } from '../components/CustomDocsPage';
-import { Check, X, Clock, AlertCircle, Info, TrendingUp, TrendingDown, Star, Zap, Shield, Crown } from 'lucide-react';
 
 const meta = {
   title: 'UI Components/Badge',
@@ -14,7 +14,7 @@ const meta = {
           componentName="Badge"
           description="상태, 카테고리, 라벨 등을 표시하는 Badge 컴포넌트입니다."
           installationDeps={['@radix-ui/react-slot', 'class-variance-authority', 'clsx', 'tailwind-merge']}
-          implementationCode={`import { Badge } from "@/components/ui/badge";
+          implementationCode={`import { Badge } from "@components/ui/badge";
 
 export default function Example() {
   return (

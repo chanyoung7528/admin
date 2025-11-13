@@ -1,8 +1,7 @@
+import { Badge, Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/shared/components/ui';
 import type { Meta, StoryObj } from '@storybook/react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/shared/components/ui/tabs';
+import { BarChart3, Bell, CreditCard, FileText, Home, Package, Settings, ShoppingCart, User, Users } from 'lucide-react';
 import { CustomDocsPage } from '../components/CustomDocsPage';
-import { Badge } from '@repo/shared/components/ui/badge';
-import { User, Settings, Bell, CreditCard, BarChart3, Package, ShoppingCart, Users, Home, FileText } from 'lucide-react';
 
 const meta = {
   title: 'UI Components/Tabs',
@@ -20,7 +19,7 @@ const meta = {
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "@/components/ui/tabs";
+} from "@components/ui/tabs";
 
 export default function Example() {
   return (

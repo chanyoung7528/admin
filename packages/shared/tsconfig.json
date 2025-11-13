@@ -5,13 +5,13 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "@repo/shared/*": ["./src/*"],
-      "@ui/*": ["./src/components/ui/*"],
-      "@lib/*": ["./src/lib/*"],
-      "@hooks/*": ["./src/hooks/*"],
-      "@components/*": ["./src/components/*"],
-      "@stores/*": ["./src/stores/*"]
+      "@shared/*": ["./src/*"],
+      "@shared/ui/*": ["./src/components/ui/*"],
+      "@shared/components/*": ["./src/components/*"],
+      "@shared/lib/*": ["./src/lib/*"],
+      "@shared/hooks/*": ["./src/hooks/*"],
+      "@shared/stores/*": ["./src/stores/*"],
+      "@shared/assets/*": ["./src/assets/*"]
     }
   }
 }

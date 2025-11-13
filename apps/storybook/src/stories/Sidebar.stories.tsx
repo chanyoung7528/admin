@@ -1,4 +1,3 @@
-import type { Meta, StoryObj } from '@storybook/react';
 import {
   Sidebar,
   SidebarContent,
@@ -14,9 +13,10 @@ import {
   SidebarProvider,
   SidebarRail,
   SidebarTrigger,
-} from '@repo/shared/components/ui/sidebar';
+} from '@repo/shared/components/ui';
+import type { Meta, StoryObj } from '@storybook/react';
+import { BarChart, FileText, HelpCircle, Home, Settings, Users } from 'lucide-react';
 import { CustomDocsPage } from '../components/CustomDocsPage';
-import { Home, Settings, Users, FileText, BarChart, HelpCircle } from 'lucide-react';
 
 const meta = {
   title: 'UI Components/Sidebar',
@@ -52,7 +52,7 @@ import {
   SidebarMenuItem,
   SidebarProvider,
   SidebarTrigger,
-} from "@/components/ui/sidebar";
+} from "@components/ui/sidebar";
 
 function AppSidebar() {
   return (

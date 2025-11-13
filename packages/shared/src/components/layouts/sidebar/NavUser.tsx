@@ -1,5 +1,4 @@
-import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Sparkles } from 'lucide-react';
-import { Avatar, AvatarFallback, AvatarImage } from '@ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@shared/components/ui/avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,10 +7,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@ui/dropdown-menu';
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@ui/sidebar';
+} from '@shared/components/ui/dropdown-menu';
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@shared/components/ui/sidebar';
+import useDialogState from '@shared/hooks/useDialogState';
+import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Sparkles } from 'lucide-react';
 import { SignOutDialog } from './SignOutDialog';
-import useDialogState from '@hooks/useDialogState';
 
 type NavUserProps = {
   user: {

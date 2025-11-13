@@ -1,5 +1,5 @@
+import { useAuthStore } from '@shared/stores/useAuthStore';
 import { useNavigate } from '@tanstack/react-router';
-import { useAuthStore } from '@stores/useAuthStore';
 import { ConfirmDialog } from './ConfirmDialog';
 
 interface SignOutDialogProps {

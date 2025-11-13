@@ -1,19 +1,61 @@
 {
-  "files": [],
-  "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }],
   "compilerOptions": {
+    "target": "ES2022",
+    "useDefineForClassFields": true,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "types": ["vite/client", "node"],
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    /* Path Aliases - my-app 내부 경로 */
     "baseUrl": ".",
     "paths": {
+      // my-app 자체 alias (src 폴더 기반)
       "@/*": ["./src/*"],
       "@domains/*": ["./src/domains/*"],
       "@pages/*": ["./src/pages/*"],
       "@components/*": ["./src/components/*"],
       "@hooks/*": ["./src/hooks/*"],
       "@utils/*": ["./src/utils/*"],
-      // shared 패키지 alias
-      "@ui/*": ["../../packages/shared/src/components/ui/*"],
-      "@lib/*": ["../../packages/shared/src/lib/*"],
-      "@stores/*": ["../../packages/shared/src/stores/*"]
-    }
-  }
+
+      // shared 패키지 가져오기 (구체적인 것부터)
+      "@repo/shared/components/ui": ["../../packages/shared/src/components/ui"],
+      "@repo/shared/components/context": ["../../packages/shared/src/components/context"],
+      "@repo/shared/components/layouts": ["../../packages/shared/src/components/layouts"],
+      "@repo/shared/components/*": ["../../packages/shared/src/components/*"],
+      "@repo/shared/lib/*": ["../../packages/shared/src/lib/*"],
+      "@repo/shared/hooks/*": ["../../packages/shared/src/hooks/*"],
+      "@repo/shared/stores/*": ["../../packages/shared/src/stores/*"],
+      "@repo/shared/assets/*": ["../../packages/shared/src/assets/*"],
+      "@repo/shared/*": ["../../packages/shared/src/*"],
+
+      // shared 패키지 내부에서 사용하는 alias (빌드시 resolve용)
+      "@shared/*": ["../../packages/shared/src/*"],
+      "@shared/ui/*": ["../../packages/shared/src/components/ui/*"],
+      "@shared/components/*": ["../../packages/shared/src/components/*"],
+      "@shared/lib/*": ["../../packages/shared/src/lib/*"],
+      "@shared/hooks/*": ["../../packages/shared/src/hooks/*"],
+      "@shared/stores/*": ["../../packages/shared/src/stores/*"],
+      "@shared/assets/*": ["../../packages/shared/src/assets/*"]
+    },
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": true
+  },
+  "include": ["src", "vite.config.ts"],
+  "exclude": ["node_modules", "dist"]
 }

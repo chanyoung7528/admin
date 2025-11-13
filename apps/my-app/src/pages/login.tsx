@@ -1,6 +1,5 @@
+import { Button, Input } from '@repo/shared/components/ui';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
-import { Button } from '@ui/button';
-import { Input } from '@ui/input';
 
 export const Route = createFileRoute('/login')({
   component: LoginPage,

@@ -1,5 +1,4 @@
 import { createRootRouteWithContext, Outlet } from '@tanstack/react-router';
-import { DefaultDashboardLayout } from '@repo/shared/components/layouts/DefaultDashboardLayout';
 import { lazy, Suspense } from 'react';
 
 // 개발 도구는 동적 임포트 (프로덕션 빌드에서 제외)
@@ -18,7 +17,7 @@ export const Route = createRootRouteWithContext()({
 
 function RootComponent() {
   return (
-    <DefaultDashboardLayout>
+    <>
       <Outlet />
 
       {import.meta.env.MODE === 'development' && (
@@ -26,6 +25,6 @@ function RootComponent() {
           <TanStackRouterDevtools position="bottom-right" />
         </Suspense>
       )}
-    </DefaultDashboardLayout>
+    </>
   );
 }
