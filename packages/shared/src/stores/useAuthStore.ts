@@ -1,4 +1,4 @@
-import { getCookie, removeCookie, setCookie } from '@lib/cookies';
+import { getCookie, removeCookie, setCookie } from '@shared/lib/cookies';
 import { create } from 'zustand';
 
 const ACCESS_TOKEN = 'thisisjustarandomstring';

@@ -1,4 +1,4 @@
-import { getCookie, setCookie } from '@lib/cookies';
+import { getCookie, setCookie } from '@shared/lib/cookies';
 import { createContext, useContext, useState } from 'react';
 
 export type Collapsible = 'offcanvas' | 'icon' | 'none';

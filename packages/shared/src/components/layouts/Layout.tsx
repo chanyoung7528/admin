@@ -1,7 +1,7 @@
-import { LayoutProvider } from '@components/context/LayoutProvider';
-import { cn } from '@lib/utils';
+import { LayoutProvider } from '@shared/components/context/LayoutProvider';
+import { cn } from '@shared/lib/utils';
 import { Outlet } from '@tanstack/react-router';
-import { SidebarInset, SidebarProvider } from '@ui/sidebar';
+import { SidebarInset, SidebarProvider } from '@shared/ui/sidebar';
 import { AppSidebar } from './sidebar/AppSidebar';
 
 export function Layout({ children }: { children: React.ReactNode }) {

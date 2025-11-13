@@ -6,9 +6,9 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@components/ui/alert-dialog';
-import { Button } from '@components/ui/button';
-import { cn } from '@lib/utils';
+} from '@shared/components/ui/alert-dialog';
+import { Button } from '@shared/components/ui/button';
+import { cn } from '@shared/lib/utils';
 
 type ConfirmDialogProps = {
   open: boolean;

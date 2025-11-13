@@ -1,4 +1,4 @@
-import { useAuthStore } from '@stores/useAuthStore';
+import { useAuthStore } from '@shared/stores/useAuthStore';
 import { useNavigate } from '@tanstack/react-router';
 import { ConfirmDialog } from './ConfirmDialog';
 

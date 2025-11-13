@@ -28,21 +28,26 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      // shared 패키지의 alias (구체적인 것부터 먼저)
+      // shared 패키지 가져오기 (구체적인 것부터 먼저)
+      '@repo/shared/globals.css': path.resolve(__dirname, '../../packages/shared/src/styles/globals.css'),
       '@repo/shared/components/ui': path.resolve(__dirname, '../../packages/shared/src/components/ui'),
+      '@repo/shared/components/context': path.resolve(__dirname, '../../packages/shared/src/components/context'),
+      '@repo/shared/components/layouts': path.resolve(__dirname, '../../packages/shared/src/components/layouts'),
       '@repo/shared/components': path.resolve(__dirname, '../../packages/shared/src/components'),
-      '@repo/shared/ui': path.resolve(__dirname, '../../packages/shared/src/components/ui'),
       '@repo/shared/lib': path.resolve(__dirname, '../../packages/shared/src/lib'),
       '@repo/shared/hooks': path.resolve(__dirname, '../../packages/shared/src/hooks'),
       '@repo/shared/stores': path.resolve(__dirname, '../../packages/shared/src/stores'),
+      '@repo/shared/assets': path.resolve(__dirname, '../../packages/shared/src/assets'),
       '@repo/shared': path.resolve(__dirname, '../../packages/shared/src'),
 
-      // shared 패키지 내부에서 사용하는 alias들 (shared vite.config.ts와 동일)
-      '@ui': path.resolve(__dirname, '../../packages/shared/src/components/ui'),
-      '@lib': path.resolve(__dirname, '../../packages/shared/src/lib'),
-      '@hooks': path.resolve(__dirname, '../../packages/shared/src/hooks'),
-      '@components': path.resolve(__dirname, '../../packages/shared/src/components'),
-      '@stores': path.resolve(__dirname, '../../packages/shared/src/stores'),
+      // shared 패키지 내부에서 사용하는 alias (빌드시 resolve용)
+      '@shared/ui': path.resolve(__dirname, '../../packages/shared/src/components/ui'),
+      '@shared/components': path.resolve(__dirname, '../../packages/shared/src/components'),
+      '@shared/lib': path.resolve(__dirname, '../../packages/shared/src/lib'),
+      '@shared/hooks': path.resolve(__dirname, '../../packages/shared/src/hooks'),
+      '@shared/stores': path.resolve(__dirname, '../../packages/shared/src/stores'),
+      '@shared/assets': path.resolve(__dirname, '../../packages/shared/src/assets'),
+      '@shared': path.resolve(__dirname, '../../packages/shared/src'),
 
       // my-app 자체의 alias (마지막에)
       '@': path.resolve(__dirname, './src'),
