@@ -9,301 +9,339 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './pages/__root'
-import { Route as TestRouteImport } from './pages/test'
-import { Route as LoginRouteImport } from './pages/login'
-import { Route as AboutRouteImport } from './pages/about'
-import { Route as IndexRouteImport } from './pages/index'
-import { Route as ReportIndexRouteImport } from './pages/report/index'
-import { Route as MonitoringIndexRouteImport } from './pages/monitoring/index'
-import { Route as InquiryIndexRouteImport } from './pages/inquiry/index'
-import { Route as UserRegisterRouteImport } from './pages/user/register'
-import { Route as UserMessageRouteImport } from './pages/user/message'
-import { Route as UserListRouteImport } from './pages/user/list'
-import { Route as UserInsightRouteImport } from './pages/user/insight'
-import { Route as MyMindUsageRouteImport } from './pages/my-mind/usage'
-import { Route as MyMindSettlementRouteImport } from './pages/my-mind/settlement'
-import { Route as MyMindReportRouteImport } from './pages/my-mind/report'
-import { Route as MyMindMonitoringRouteImport } from './pages/my-mind/monitoring'
-import { Route as MyMindInvoiceRouteImport } from './pages/my-mind/invoice'
-import { Route as MyMindInquiryRouteImport } from './pages/my-mind/inquiry'
-import { Route as MyMindDashboardRouteImport } from './pages/my-mind/dashboard'
-import { Route as MyMindContractRouteImport } from './pages/my-mind/contract'
-import { Route as MyFoodSettlementRouteImport } from './pages/my-food/settlement'
-import { Route as MyFoodReportRouteImport } from './pages/my-food/report'
-import { Route as MyFoodOrderRouteImport } from './pages/my-food/order'
-import { Route as MyFoodMonitoringRouteImport } from './pages/my-food/monitoring'
-import { Route as MyFoodInvoiceRouteImport } from './pages/my-food/invoice'
-import { Route as MyFoodInquiryRouteImport } from './pages/my-food/inquiry'
-import { Route as MyFoodDeliveryRouteImport } from './pages/my-food/delivery'
-import { Route as MyFoodDashboardRouteImport } from './pages/my-food/dashboard'
-import { Route as MyBodySettlementRouteImport } from './pages/my-body/settlement'
-import { Route as MyBodyReportRouteImport } from './pages/my-body/report'
-import { Route as MyBodyMonitoringRouteImport } from './pages/my-body/monitoring'
-import { Route as MyBodyDashboardRouteImport } from './pages/my-body/dashboard'
+import { Route as PublicRouteImport } from './pages/_public'
+import { Route as AuthenticatedRouteImport } from './pages/_authenticated'
+import { Route as AuthenticatedIndexRouteImport } from './pages/_authenticated/index'
+import { Route as PublicTestRouteImport } from './pages/_public/test'
+import { Route as PublicLoginRouteImport } from './pages/_public/login'
+import { Route as PublicAboutRouteImport } from './pages/_public/about'
+import { Route as AuthenticatedReportIndexRouteImport } from './pages/_authenticated/report/index'
+import { Route as AuthenticatedMonitoringIndexRouteImport } from './pages/_authenticated/monitoring/index'
+import { Route as AuthenticatedInquiryIndexRouteImport } from './pages/_authenticated/inquiry/index'
+import { Route as AuthenticatedUserRegisterRouteImport } from './pages/_authenticated/user/register'
+import { Route as AuthenticatedUserMessageRouteImport } from './pages/_authenticated/user/message'
+import { Route as AuthenticatedUserListRouteImport } from './pages/_authenticated/user/list'
+import { Route as AuthenticatedUserInsightRouteImport } from './pages/_authenticated/user/insight'
+import { Route as AuthenticatedMyMindUsageRouteImport } from './pages/_authenticated/my-mind/usage'
+import { Route as AuthenticatedMyMindSettlementRouteImport } from './pages/_authenticated/my-mind/settlement'
+import { Route as AuthenticatedMyMindReportRouteImport } from './pages/_authenticated/my-mind/report'
+import { Route as AuthenticatedMyMindMonitoringRouteImport } from './pages/_authenticated/my-mind/monitoring'
+import { Route as AuthenticatedMyMindInvoiceRouteImport } from './pages/_authenticated/my-mind/invoice'
+import { Route as AuthenticatedMyMindInquiryRouteImport } from './pages/_authenticated/my-mind/inquiry'
+import { Route as AuthenticatedMyMindDashboardRouteImport } from './pages/_authenticated/my-mind/dashboard'
+import { Route as AuthenticatedMyMindContractRouteImport } from './pages/_authenticated/my-mind/contract'
+import { Route as AuthenticatedMyFoodSettlementRouteImport } from './pages/_authenticated/my-food/settlement'
+import { Route as AuthenticatedMyFoodReportRouteImport } from './pages/_authenticated/my-food/report'
+import { Route as AuthenticatedMyFoodOrderRouteImport } from './pages/_authenticated/my-food/order'
+import { Route as AuthenticatedMyFoodMonitoringRouteImport } from './pages/_authenticated/my-food/monitoring'
+import { Route as AuthenticatedMyFoodInvoiceRouteImport } from './pages/_authenticated/my-food/invoice'
+import { Route as AuthenticatedMyFoodInquiryRouteImport } from './pages/_authenticated/my-food/inquiry'
+import { Route as AuthenticatedMyFoodDeliveryRouteImport } from './pages/_authenticated/my-food/delivery'
+import { Route as AuthenticatedMyFoodDashboardRouteImport } from './pages/_authenticated/my-food/dashboard'
+import { Route as AuthenticatedMyBodySettlementRouteImport } from './pages/_authenticated/my-body/settlement'
+import { Route as AuthenticatedMyBodyReportRouteImport } from './pages/_authenticated/my-body/report'
+import { Route as AuthenticatedMyBodyMonitoringRouteImport } from './pages/_authenticated/my-body/monitoring'
+import { Route as AuthenticatedMyBodyDashboardRouteImport } from './pages/_authenticated/my-body/dashboard'
 
-const TestRoute = TestRouteImport.update({
-  id: '/test',
-  path: '/test',
+const PublicRoute = PublicRouteImport.update({
+  id: '/_public',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
+const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
-const ReportIndexRoute = ReportIndexRouteImport.update({
-  id: '/report/',
-  path: '/report/',
-  getParentRoute: () => rootRouteImport,
+const PublicTestRoute = PublicTestRouteImport.update({
+  id: '/test',
+  path: '/test',
+  getParentRoute: () => PublicRoute,
 } as any)
-const MonitoringIndexRoute = MonitoringIndexRouteImport.update({
-  id: '/monitoring/',
-  path: '/monitoring/',
-  getParentRoute: () => rootRouteImport,
+const PublicLoginRoute = PublicLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => PublicRoute,
 } as any)
-const InquiryIndexRoute = InquiryIndexRouteImport.update({
-  id: '/inquiry/',
-  path: '/inquiry/',
-  getParentRoute: () => rootRouteImport,
+const PublicAboutRoute = PublicAboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => PublicRoute,
 } as any)
-const UserRegisterRoute = UserRegisterRouteImport.update({
-  id: '/user/register',
-  path: '/user/register',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const UserMessageRoute = UserMessageRouteImport.update({
-  id: '/user/message',
-  path: '/user/message',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const UserListRoute = UserListRouteImport.update({
+const AuthenticatedReportIndexRoute =
+  AuthenticatedReportIndexRouteImport.update({
+    id: '/report/',
+    path: '/report/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedMonitoringIndexRoute =
+  AuthenticatedMonitoringIndexRouteImport.update({
+    id: '/monitoring/',
+    path: '/monitoring/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedInquiryIndexRoute =
+  AuthenticatedInquiryIndexRouteImport.update({
+    id: '/inquiry/',
+    path: '/inquiry/',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedUserRegisterRoute =
+  AuthenticatedUserRegisterRouteImport.update({
+    id: '/user/register',
+    path: '/user/register',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedUserMessageRoute =
+  AuthenticatedUserMessageRouteImport.update({
+    id: '/user/message',
+    path: '/user/message',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedUserListRoute = AuthenticatedUserListRouteImport.update({
   id: '/user/list',
   path: '/user/list',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
-const UserInsightRoute = UserInsightRouteImport.update({
-  id: '/user/insight',
-  path: '/user/insight',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MyMindUsageRoute = MyMindUsageRouteImport.update({
-  id: '/my-mind/usage',
-  path: '/my-mind/usage',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MyMindSettlementRoute = MyMindSettlementRouteImport.update({
-  id: '/my-mind/settlement',
-  path: '/my-mind/settlement',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MyMindReportRoute = MyMindReportRouteImport.update({
-  id: '/my-mind/report',
-  path: '/my-mind/report',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MyMindMonitoringRoute = MyMindMonitoringRouteImport.update({
-  id: '/my-mind/monitoring',
-  path: '/my-mind/monitoring',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MyMindInvoiceRoute = MyMindInvoiceRouteImport.update({
-  id: '/my-mind/invoice',
-  path: '/my-mind/invoice',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MyMindInquiryRoute = MyMindInquiryRouteImport.update({
-  id: '/my-mind/inquiry',
-  path: '/my-mind/inquiry',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MyMindDashboardRoute = MyMindDashboardRouteImport.update({
-  id: '/my-mind/dashboard',
-  path: '/my-mind/dashboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MyMindContractRoute = MyMindContractRouteImport.update({
-  id: '/my-mind/contract',
-  path: '/my-mind/contract',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MyFoodSettlementRoute = MyFoodSettlementRouteImport.update({
-  id: '/my-food/settlement',
-  path: '/my-food/settlement',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MyFoodReportRoute = MyFoodReportRouteImport.update({
-  id: '/my-food/report',
-  path: '/my-food/report',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MyFoodOrderRoute = MyFoodOrderRouteImport.update({
-  id: '/my-food/order',
-  path: '/my-food/order',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MyFoodMonitoringRoute = MyFoodMonitoringRouteImport.update({
-  id: '/my-food/monitoring',
-  path: '/my-food/monitoring',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MyFoodInvoiceRoute = MyFoodInvoiceRouteImport.update({
-  id: '/my-food/invoice',
-  path: '/my-food/invoice',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MyFoodInquiryRoute = MyFoodInquiryRouteImport.update({
-  id: '/my-food/inquiry',
-  path: '/my-food/inquiry',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MyFoodDeliveryRoute = MyFoodDeliveryRouteImport.update({
-  id: '/my-food/delivery',
-  path: '/my-food/delivery',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MyFoodDashboardRoute = MyFoodDashboardRouteImport.update({
-  id: '/my-food/dashboard',
-  path: '/my-food/dashboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MyBodySettlementRoute = MyBodySettlementRouteImport.update({
-  id: '/my-body/settlement',
-  path: '/my-body/settlement',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MyBodyReportRoute = MyBodyReportRouteImport.update({
-  id: '/my-body/report',
-  path: '/my-body/report',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MyBodyMonitoringRoute = MyBodyMonitoringRouteImport.update({
-  id: '/my-body/monitoring',
-  path: '/my-body/monitoring',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MyBodyDashboardRoute = MyBodyDashboardRouteImport.update({
-  id: '/my-body/dashboard',
-  path: '/my-body/dashboard',
-  getParentRoute: () => rootRouteImport,
-} as any)
+const AuthenticatedUserInsightRoute =
+  AuthenticatedUserInsightRouteImport.update({
+    id: '/user/insight',
+    path: '/user/insight',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedMyMindUsageRoute =
+  AuthenticatedMyMindUsageRouteImport.update({
+    id: '/my-mind/usage',
+    path: '/my-mind/usage',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedMyMindSettlementRoute =
+  AuthenticatedMyMindSettlementRouteImport.update({
+    id: '/my-mind/settlement',
+    path: '/my-mind/settlement',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedMyMindReportRoute =
+  AuthenticatedMyMindReportRouteImport.update({
+    id: '/my-mind/report',
+    path: '/my-mind/report',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedMyMindMonitoringRoute =
+  AuthenticatedMyMindMonitoringRouteImport.update({
+    id: '/my-mind/monitoring',
+    path: '/my-mind/monitoring',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedMyMindInvoiceRoute =
+  AuthenticatedMyMindInvoiceRouteImport.update({
+    id: '/my-mind/invoice',
+    path: '/my-mind/invoice',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedMyMindInquiryRoute =
+  AuthenticatedMyMindInquiryRouteImport.update({
+    id: '/my-mind/inquiry',
+    path: '/my-mind/inquiry',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedMyMindDashboardRoute =
+  AuthenticatedMyMindDashboardRouteImport.update({
+    id: '/my-mind/dashboard',
+    path: '/my-mind/dashboard',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedMyMindContractRoute =
+  AuthenticatedMyMindContractRouteImport.update({
+    id: '/my-mind/contract',
+    path: '/my-mind/contract',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedMyFoodSettlementRoute =
+  AuthenticatedMyFoodSettlementRouteImport.update({
+    id: '/my-food/settlement',
+    path: '/my-food/settlement',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedMyFoodReportRoute =
+  AuthenticatedMyFoodReportRouteImport.update({
+    id: '/my-food/report',
+    path: '/my-food/report',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedMyFoodOrderRoute =
+  AuthenticatedMyFoodOrderRouteImport.update({
+    id: '/my-food/order',
+    path: '/my-food/order',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedMyFoodMonitoringRoute =
+  AuthenticatedMyFoodMonitoringRouteImport.update({
+    id: '/my-food/monitoring',
+    path: '/my-food/monitoring',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedMyFoodInvoiceRoute =
+  AuthenticatedMyFoodInvoiceRouteImport.update({
+    id: '/my-food/invoice',
+    path: '/my-food/invoice',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedMyFoodInquiryRoute =
+  AuthenticatedMyFoodInquiryRouteImport.update({
+    id: '/my-food/inquiry',
+    path: '/my-food/inquiry',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedMyFoodDeliveryRoute =
+  AuthenticatedMyFoodDeliveryRouteImport.update({
+    id: '/my-food/delivery',
+    path: '/my-food/delivery',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedMyFoodDashboardRoute =
+  AuthenticatedMyFoodDashboardRouteImport.update({
+    id: '/my-food/dashboard',
+    path: '/my-food/dashboard',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedMyBodySettlementRoute =
+  AuthenticatedMyBodySettlementRouteImport.update({
+    id: '/my-body/settlement',
+    path: '/my-body/settlement',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedMyBodyReportRoute =
+  AuthenticatedMyBodyReportRouteImport.update({
+    id: '/my-body/report',
+    path: '/my-body/report',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedMyBodyMonitoringRoute =
+  AuthenticatedMyBodyMonitoringRouteImport.update({
+    id: '/my-body/monitoring',
+    path: '/my-body/monitoring',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedMyBodyDashboardRoute =
+  AuthenticatedMyBodyDashboardRouteImport.update({
+    id: '/my-body/dashboard',
+    path: '/my-body/dashboard',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/login': typeof LoginRoute
-  '/test': typeof TestRoute
-  '/my-body/dashboard': typeof MyBodyDashboardRoute
-  '/my-body/monitoring': typeof MyBodyMonitoringRoute
-  '/my-body/report': typeof MyBodyReportRoute
-  '/my-body/settlement': typeof MyBodySettlementRoute
-  '/my-food/dashboard': typeof MyFoodDashboardRoute
-  '/my-food/delivery': typeof MyFoodDeliveryRoute
-  '/my-food/inquiry': typeof MyFoodInquiryRoute
-  '/my-food/invoice': typeof MyFoodInvoiceRoute
-  '/my-food/monitoring': typeof MyFoodMonitoringRoute
-  '/my-food/order': typeof MyFoodOrderRoute
-  '/my-food/report': typeof MyFoodReportRoute
-  '/my-food/settlement': typeof MyFoodSettlementRoute
-  '/my-mind/contract': typeof MyMindContractRoute
-  '/my-mind/dashboard': typeof MyMindDashboardRoute
-  '/my-mind/inquiry': typeof MyMindInquiryRoute
-  '/my-mind/invoice': typeof MyMindInvoiceRoute
-  '/my-mind/monitoring': typeof MyMindMonitoringRoute
-  '/my-mind/report': typeof MyMindReportRoute
-  '/my-mind/settlement': typeof MyMindSettlementRoute
-  '/my-mind/usage': typeof MyMindUsageRoute
-  '/user/insight': typeof UserInsightRoute
-  '/user/list': typeof UserListRoute
-  '/user/message': typeof UserMessageRoute
-  '/user/register': typeof UserRegisterRoute
-  '/inquiry': typeof InquiryIndexRoute
-  '/monitoring': typeof MonitoringIndexRoute
-  '/report': typeof ReportIndexRoute
+  '/about': typeof PublicAboutRoute
+  '/login': typeof PublicLoginRoute
+  '/test': typeof PublicTestRoute
+  '/': typeof AuthenticatedIndexRoute
+  '/my-body/dashboard': typeof AuthenticatedMyBodyDashboardRoute
+  '/my-body/monitoring': typeof AuthenticatedMyBodyMonitoringRoute
+  '/my-body/report': typeof AuthenticatedMyBodyReportRoute
+  '/my-body/settlement': typeof AuthenticatedMyBodySettlementRoute
+  '/my-food/dashboard': typeof AuthenticatedMyFoodDashboardRoute
+  '/my-food/delivery': typeof AuthenticatedMyFoodDeliveryRoute
+  '/my-food/inquiry': typeof AuthenticatedMyFoodInquiryRoute
+  '/my-food/invoice': typeof AuthenticatedMyFoodInvoiceRoute
+  '/my-food/monitoring': typeof AuthenticatedMyFoodMonitoringRoute
+  '/my-food/order': typeof AuthenticatedMyFoodOrderRoute
+  '/my-food/report': typeof AuthenticatedMyFoodReportRoute
+  '/my-food/settlement': typeof AuthenticatedMyFoodSettlementRoute
+  '/my-mind/contract': typeof AuthenticatedMyMindContractRoute
+  '/my-mind/dashboard': typeof AuthenticatedMyMindDashboardRoute
+  '/my-mind/inquiry': typeof AuthenticatedMyMindInquiryRoute
+  '/my-mind/invoice': typeof AuthenticatedMyMindInvoiceRoute
+  '/my-mind/monitoring': typeof AuthenticatedMyMindMonitoringRoute
+  '/my-mind/report': typeof AuthenticatedMyMindReportRoute
+  '/my-mind/settlement': typeof AuthenticatedMyMindSettlementRoute
+  '/my-mind/usage': typeof AuthenticatedMyMindUsageRoute
+  '/user/insight': typeof AuthenticatedUserInsightRoute
+  '/user/list': typeof AuthenticatedUserListRoute
+  '/user/message': typeof AuthenticatedUserMessageRoute
+  '/user/register': typeof AuthenticatedUserRegisterRoute
+  '/inquiry': typeof AuthenticatedInquiryIndexRoute
+  '/monitoring': typeof AuthenticatedMonitoringIndexRoute
+  '/report': typeof AuthenticatedReportIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/login': typeof LoginRoute
-  '/test': typeof TestRoute
-  '/my-body/dashboard': typeof MyBodyDashboardRoute
-  '/my-body/monitoring': typeof MyBodyMonitoringRoute
-  '/my-body/report': typeof MyBodyReportRoute
-  '/my-body/settlement': typeof MyBodySettlementRoute
-  '/my-food/dashboard': typeof MyFoodDashboardRoute
-  '/my-food/delivery': typeof MyFoodDeliveryRoute
-  '/my-food/inquiry': typeof MyFoodInquiryRoute
-  '/my-food/invoice': typeof MyFoodInvoiceRoute
-  '/my-food/monitoring': typeof MyFoodMonitoringRoute
-  '/my-food/order': typeof MyFoodOrderRoute
-  '/my-food/report': typeof MyFoodReportRoute
-  '/my-food/settlement': typeof MyFoodSettlementRoute
-  '/my-mind/contract': typeof MyMindContractRoute
-  '/my-mind/dashboard': typeof MyMindDashboardRoute
-  '/my-mind/inquiry': typeof MyMindInquiryRoute
-  '/my-mind/invoice': typeof MyMindInvoiceRoute
-  '/my-mind/monitoring': typeof MyMindMonitoringRoute
-  '/my-mind/report': typeof MyMindReportRoute
-  '/my-mind/settlement': typeof MyMindSettlementRoute
-  '/my-mind/usage': typeof MyMindUsageRoute
-  '/user/insight': typeof UserInsightRoute
-  '/user/list': typeof UserListRoute
-  '/user/message': typeof UserMessageRoute
-  '/user/register': typeof UserRegisterRoute
-  '/inquiry': typeof InquiryIndexRoute
-  '/monitoring': typeof MonitoringIndexRoute
-  '/report': typeof ReportIndexRoute
+  '/about': typeof PublicAboutRoute
+  '/login': typeof PublicLoginRoute
+  '/test': typeof PublicTestRoute
+  '/': typeof AuthenticatedIndexRoute
+  '/my-body/dashboard': typeof AuthenticatedMyBodyDashboardRoute
+  '/my-body/monitoring': typeof AuthenticatedMyBodyMonitoringRoute
+  '/my-body/report': typeof AuthenticatedMyBodyReportRoute
+  '/my-body/settlement': typeof AuthenticatedMyBodySettlementRoute
+  '/my-food/dashboard': typeof AuthenticatedMyFoodDashboardRoute
+  '/my-food/delivery': typeof AuthenticatedMyFoodDeliveryRoute
+  '/my-food/inquiry': typeof AuthenticatedMyFoodInquiryRoute
+  '/my-food/invoice': typeof AuthenticatedMyFoodInvoiceRoute
+  '/my-food/monitoring': typeof AuthenticatedMyFoodMonitoringRoute
+  '/my-food/order': typeof AuthenticatedMyFoodOrderRoute
+  '/my-food/report': typeof AuthenticatedMyFoodReportRoute
+  '/my-food/settlement': typeof AuthenticatedMyFoodSettlementRoute
+  '/my-mind/contract': typeof AuthenticatedMyMindContractRoute
+  '/my-mind/dashboard': typeof AuthenticatedMyMindDashboardRoute
+  '/my-mind/inquiry': typeof AuthenticatedMyMindInquiryRoute
+  '/my-mind/invoice': typeof AuthenticatedMyMindInvoiceRoute
+  '/my-mind/monitoring': typeof AuthenticatedMyMindMonitoringRoute
+  '/my-mind/report': typeof AuthenticatedMyMindReportRoute
+  '/my-mind/settlement': typeof AuthenticatedMyMindSettlementRoute
+  '/my-mind/usage': typeof AuthenticatedMyMindUsageRoute
+  '/user/insight': typeof AuthenticatedUserInsightRoute
+  '/user/list': typeof AuthenticatedUserListRoute
+  '/user/message': typeof AuthenticatedUserMessageRoute
+  '/user/register': typeof AuthenticatedUserRegisterRoute
+  '/inquiry': typeof AuthenticatedInquiryIndexRoute
+  '/monitoring': typeof AuthenticatedMonitoringIndexRoute
+  '/report': typeof AuthenticatedReportIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
-  '/login': typeof LoginRoute
-  '/test': typeof TestRoute
-  '/my-body/dashboard': typeof MyBodyDashboardRoute
-  '/my-body/monitoring': typeof MyBodyMonitoringRoute
-  '/my-body/report': typeof MyBodyReportRoute
-  '/my-body/settlement': typeof MyBodySettlementRoute
-  '/my-food/dashboard': typeof MyFoodDashboardRoute
-  '/my-food/delivery': typeof MyFoodDeliveryRoute
-  '/my-food/inquiry': typeof MyFoodInquiryRoute
-  '/my-food/invoice': typeof MyFoodInvoiceRoute
-  '/my-food/monitoring': typeof MyFoodMonitoringRoute
-  '/my-food/order': typeof MyFoodOrderRoute
-  '/my-food/report': typeof MyFoodReportRoute
-  '/my-food/settlement': typeof MyFoodSettlementRoute
-  '/my-mind/contract': typeof MyMindContractRoute
-  '/my-mind/dashboard': typeof MyMindDashboardRoute
-  '/my-mind/inquiry': typeof MyMindInquiryRoute
-  '/my-mind/invoice': typeof MyMindInvoiceRoute
-  '/my-mind/monitoring': typeof MyMindMonitoringRoute
-  '/my-mind/report': typeof MyMindReportRoute
-  '/my-mind/settlement': typeof MyMindSettlementRoute
-  '/my-mind/usage': typeof MyMindUsageRoute
-  '/user/insight': typeof UserInsightRoute
-  '/user/list': typeof UserListRoute
-  '/user/message': typeof UserMessageRoute
-  '/user/register': typeof UserRegisterRoute
-  '/inquiry/': typeof InquiryIndexRoute
-  '/monitoring/': typeof MonitoringIndexRoute
-  '/report/': typeof ReportIndexRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/_public': typeof PublicRouteWithChildren
+  '/_public/about': typeof PublicAboutRoute
+  '/_public/login': typeof PublicLoginRoute
+  '/_public/test': typeof PublicTestRoute
+  '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/my-body/dashboard': typeof AuthenticatedMyBodyDashboardRoute
+  '/_authenticated/my-body/monitoring': typeof AuthenticatedMyBodyMonitoringRoute
+  '/_authenticated/my-body/report': typeof AuthenticatedMyBodyReportRoute
+  '/_authenticated/my-body/settlement': typeof AuthenticatedMyBodySettlementRoute
+  '/_authenticated/my-food/dashboard': typeof AuthenticatedMyFoodDashboardRoute
+  '/_authenticated/my-food/delivery': typeof AuthenticatedMyFoodDeliveryRoute
+  '/_authenticated/my-food/inquiry': typeof AuthenticatedMyFoodInquiryRoute
+  '/_authenticated/my-food/invoice': typeof AuthenticatedMyFoodInvoiceRoute
+  '/_authenticated/my-food/monitoring': typeof AuthenticatedMyFoodMonitoringRoute
+  '/_authenticated/my-food/order': typeof AuthenticatedMyFoodOrderRoute
+  '/_authenticated/my-food/report': typeof AuthenticatedMyFoodReportRoute
+  '/_authenticated/my-food/settlement': typeof AuthenticatedMyFoodSettlementRoute
+  '/_authenticated/my-mind/contract': typeof AuthenticatedMyMindContractRoute
+  '/_authenticated/my-mind/dashboard': typeof AuthenticatedMyMindDashboardRoute
+  '/_authenticated/my-mind/inquiry': typeof AuthenticatedMyMindInquiryRoute
+  '/_authenticated/my-mind/invoice': typeof AuthenticatedMyMindInvoiceRoute
+  '/_authenticated/my-mind/monitoring': typeof AuthenticatedMyMindMonitoringRoute
+  '/_authenticated/my-mind/report': typeof AuthenticatedMyMindReportRoute
+  '/_authenticated/my-mind/settlement': typeof AuthenticatedMyMindSettlementRoute
+  '/_authenticated/my-mind/usage': typeof AuthenticatedMyMindUsageRoute
+  '/_authenticated/user/insight': typeof AuthenticatedUserInsightRoute
+  '/_authenticated/user/list': typeof AuthenticatedUserListRoute
+  '/_authenticated/user/message': typeof AuthenticatedUserMessageRoute
+  '/_authenticated/user/register': typeof AuthenticatedUserRegisterRoute
+  '/_authenticated/inquiry/': typeof AuthenticatedInquiryIndexRoute
+  '/_authenticated/monitoring/': typeof AuthenticatedMonitoringIndexRoute
+  '/_authenticated/report/': typeof AuthenticatedReportIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/'
     | '/about'
     | '/login'
     | '/test'
+    | '/'
     | '/my-body/dashboard'
     | '/my-body/monitoring'
     | '/my-body/report'
@@ -333,10 +371,10 @@ export interface FileRouteTypes {
     | '/report'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
     | '/about'
     | '/login'
     | '/test'
+    | '/'
     | '/my-body/dashboard'
     | '/my-body/monitoring'
     | '/my-body/report'
@@ -366,327 +404,366 @@ export interface FileRouteTypes {
     | '/report'
   id:
     | '__root__'
-    | '/'
-    | '/about'
-    | '/login'
-    | '/test'
-    | '/my-body/dashboard'
-    | '/my-body/monitoring'
-    | '/my-body/report'
-    | '/my-body/settlement'
-    | '/my-food/dashboard'
-    | '/my-food/delivery'
-    | '/my-food/inquiry'
-    | '/my-food/invoice'
-    | '/my-food/monitoring'
-    | '/my-food/order'
-    | '/my-food/report'
-    | '/my-food/settlement'
-    | '/my-mind/contract'
-    | '/my-mind/dashboard'
-    | '/my-mind/inquiry'
-    | '/my-mind/invoice'
-    | '/my-mind/monitoring'
-    | '/my-mind/report'
-    | '/my-mind/settlement'
-    | '/my-mind/usage'
-    | '/user/insight'
-    | '/user/list'
-    | '/user/message'
-    | '/user/register'
-    | '/inquiry/'
-    | '/monitoring/'
-    | '/report/'
+    | '/_authenticated'
+    | '/_public'
+    | '/_public/about'
+    | '/_public/login'
+    | '/_public/test'
+    | '/_authenticated/'
+    | '/_authenticated/my-body/dashboard'
+    | '/_authenticated/my-body/monitoring'
+    | '/_authenticated/my-body/report'
+    | '/_authenticated/my-body/settlement'
+    | '/_authenticated/my-food/dashboard'
+    | '/_authenticated/my-food/delivery'
+    | '/_authenticated/my-food/inquiry'
+    | '/_authenticated/my-food/invoice'
+    | '/_authenticated/my-food/monitoring'
+    | '/_authenticated/my-food/order'
+    | '/_authenticated/my-food/report'
+    | '/_authenticated/my-food/settlement'
+    | '/_authenticated/my-mind/contract'
+    | '/_authenticated/my-mind/dashboard'
+    | '/_authenticated/my-mind/inquiry'
+    | '/_authenticated/my-mind/invoice'
+    | '/_authenticated/my-mind/monitoring'
+    | '/_authenticated/my-mind/report'
+    | '/_authenticated/my-mind/settlement'
+    | '/_authenticated/my-mind/usage'
+    | '/_authenticated/user/insight'
+    | '/_authenticated/user/list'
+    | '/_authenticated/user/message'
+    | '/_authenticated/user/register'
+    | '/_authenticated/inquiry/'
+    | '/_authenticated/monitoring/'
+    | '/_authenticated/report/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
-  LoginRoute: typeof LoginRoute
-  TestRoute: typeof TestRoute
-  MyBodyDashboardRoute: typeof MyBodyDashboardRoute
-  MyBodyMonitoringRoute: typeof MyBodyMonitoringRoute
-  MyBodyReportRoute: typeof MyBodyReportRoute
-  MyBodySettlementRoute: typeof MyBodySettlementRoute
-  MyFoodDashboardRoute: typeof MyFoodDashboardRoute
-  MyFoodDeliveryRoute: typeof MyFoodDeliveryRoute
-  MyFoodInquiryRoute: typeof MyFoodInquiryRoute
-  MyFoodInvoiceRoute: typeof MyFoodInvoiceRoute
-  MyFoodMonitoringRoute: typeof MyFoodMonitoringRoute
-  MyFoodOrderRoute: typeof MyFoodOrderRoute
-  MyFoodReportRoute: typeof MyFoodReportRoute
-  MyFoodSettlementRoute: typeof MyFoodSettlementRoute
-  MyMindContractRoute: typeof MyMindContractRoute
-  MyMindDashboardRoute: typeof MyMindDashboardRoute
-  MyMindInquiryRoute: typeof MyMindInquiryRoute
-  MyMindInvoiceRoute: typeof MyMindInvoiceRoute
-  MyMindMonitoringRoute: typeof MyMindMonitoringRoute
-  MyMindReportRoute: typeof MyMindReportRoute
-  MyMindSettlementRoute: typeof MyMindSettlementRoute
-  MyMindUsageRoute: typeof MyMindUsageRoute
-  UserInsightRoute: typeof UserInsightRoute
-  UserListRoute: typeof UserListRoute
-  UserMessageRoute: typeof UserMessageRoute
-  UserRegisterRoute: typeof UserRegisterRoute
-  InquiryIndexRoute: typeof InquiryIndexRoute
-  MonitoringIndexRoute: typeof MonitoringIndexRoute
-  ReportIndexRoute: typeof ReportIndexRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
+  PublicRoute: typeof PublicRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/test': {
-      id: '/test'
-      path: '/test'
-      fullPath: '/test'
-      preLoaderRoute: typeof TestRouteImport
+    '/_public': {
+      id: '/_public'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof PublicRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthenticatedRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
+    '/_authenticated/': {
+      id: '/_authenticated/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/report/': {
-      id: '/report/'
+    '/_public/test': {
+      id: '/_public/test'
+      path: '/test'
+      fullPath: '/test'
+      preLoaderRoute: typeof PublicTestRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/login': {
+      id: '/_public/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof PublicLoginRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_public/about': {
+      id: '/_public/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof PublicAboutRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_authenticated/report/': {
+      id: '/_authenticated/report/'
       path: '/report'
       fullPath: '/report'
-      preLoaderRoute: typeof ReportIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedReportIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/monitoring/': {
-      id: '/monitoring/'
+    '/_authenticated/monitoring/': {
+      id: '/_authenticated/monitoring/'
       path: '/monitoring'
       fullPath: '/monitoring'
-      preLoaderRoute: typeof MonitoringIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedMonitoringIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/inquiry/': {
-      id: '/inquiry/'
+    '/_authenticated/inquiry/': {
+      id: '/_authenticated/inquiry/'
       path: '/inquiry'
       fullPath: '/inquiry'
-      preLoaderRoute: typeof InquiryIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedInquiryIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/user/register': {
-      id: '/user/register'
+    '/_authenticated/user/register': {
+      id: '/_authenticated/user/register'
       path: '/user/register'
       fullPath: '/user/register'
-      preLoaderRoute: typeof UserRegisterRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedUserRegisterRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/user/message': {
-      id: '/user/message'
+    '/_authenticated/user/message': {
+      id: '/_authenticated/user/message'
       path: '/user/message'
       fullPath: '/user/message'
-      preLoaderRoute: typeof UserMessageRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedUserMessageRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/user/list': {
-      id: '/user/list'
+    '/_authenticated/user/list': {
+      id: '/_authenticated/user/list'
       path: '/user/list'
       fullPath: '/user/list'
-      preLoaderRoute: typeof UserListRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedUserListRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/user/insight': {
-      id: '/user/insight'
+    '/_authenticated/user/insight': {
+      id: '/_authenticated/user/insight'
       path: '/user/insight'
       fullPath: '/user/insight'
-      preLoaderRoute: typeof UserInsightRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedUserInsightRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/my-mind/usage': {
-      id: '/my-mind/usage'
+    '/_authenticated/my-mind/usage': {
+      id: '/_authenticated/my-mind/usage'
       path: '/my-mind/usage'
       fullPath: '/my-mind/usage'
-      preLoaderRoute: typeof MyMindUsageRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedMyMindUsageRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/my-mind/settlement': {
-      id: '/my-mind/settlement'
+    '/_authenticated/my-mind/settlement': {
+      id: '/_authenticated/my-mind/settlement'
       path: '/my-mind/settlement'
       fullPath: '/my-mind/settlement'
-      preLoaderRoute: typeof MyMindSettlementRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedMyMindSettlementRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/my-mind/report': {
-      id: '/my-mind/report'
+    '/_authenticated/my-mind/report': {
+      id: '/_authenticated/my-mind/report'
       path: '/my-mind/report'
       fullPath: '/my-mind/report'
-      preLoaderRoute: typeof MyMindReportRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedMyMindReportRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/my-mind/monitoring': {
-      id: '/my-mind/monitoring'
+    '/_authenticated/my-mind/monitoring': {
+      id: '/_authenticated/my-mind/monitoring'
       path: '/my-mind/monitoring'
       fullPath: '/my-mind/monitoring'
-      preLoaderRoute: typeof MyMindMonitoringRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedMyMindMonitoringRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/my-mind/invoice': {
-      id: '/my-mind/invoice'
+    '/_authenticated/my-mind/invoice': {
+      id: '/_authenticated/my-mind/invoice'
       path: '/my-mind/invoice'
       fullPath: '/my-mind/invoice'
-      preLoaderRoute: typeof MyMindInvoiceRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedMyMindInvoiceRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/my-mind/inquiry': {
-      id: '/my-mind/inquiry'
+    '/_authenticated/my-mind/inquiry': {
+      id: '/_authenticated/my-mind/inquiry'
       path: '/my-mind/inquiry'
       fullPath: '/my-mind/inquiry'
-      preLoaderRoute: typeof MyMindInquiryRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedMyMindInquiryRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/my-mind/dashboard': {
-      id: '/my-mind/dashboard'
+    '/_authenticated/my-mind/dashboard': {
+      id: '/_authenticated/my-mind/dashboard'
       path: '/my-mind/dashboard'
       fullPath: '/my-mind/dashboard'
-      preLoaderRoute: typeof MyMindDashboardRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedMyMindDashboardRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/my-mind/contract': {
-      id: '/my-mind/contract'
+    '/_authenticated/my-mind/contract': {
+      id: '/_authenticated/my-mind/contract'
       path: '/my-mind/contract'
       fullPath: '/my-mind/contract'
-      preLoaderRoute: typeof MyMindContractRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedMyMindContractRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/my-food/settlement': {
-      id: '/my-food/settlement'
+    '/_authenticated/my-food/settlement': {
+      id: '/_authenticated/my-food/settlement'
       path: '/my-food/settlement'
       fullPath: '/my-food/settlement'
-      preLoaderRoute: typeof MyFoodSettlementRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedMyFoodSettlementRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/my-food/report': {
-      id: '/my-food/report'
+    '/_authenticated/my-food/report': {
+      id: '/_authenticated/my-food/report'
       path: '/my-food/report'
       fullPath: '/my-food/report'
-      preLoaderRoute: typeof MyFoodReportRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedMyFoodReportRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/my-food/order': {
-      id: '/my-food/order'
+    '/_authenticated/my-food/order': {
+      id: '/_authenticated/my-food/order'
       path: '/my-food/order'
       fullPath: '/my-food/order'
-      preLoaderRoute: typeof MyFoodOrderRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedMyFoodOrderRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/my-food/monitoring': {
-      id: '/my-food/monitoring'
+    '/_authenticated/my-food/monitoring': {
+      id: '/_authenticated/my-food/monitoring'
       path: '/my-food/monitoring'
       fullPath: '/my-food/monitoring'
-      preLoaderRoute: typeof MyFoodMonitoringRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedMyFoodMonitoringRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/my-food/invoice': {
-      id: '/my-food/invoice'
+    '/_authenticated/my-food/invoice': {
+      id: '/_authenticated/my-food/invoice'
       path: '/my-food/invoice'
       fullPath: '/my-food/invoice'
-      preLoaderRoute: typeof MyFoodInvoiceRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedMyFoodInvoiceRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/my-food/inquiry': {
-      id: '/my-food/inquiry'
+    '/_authenticated/my-food/inquiry': {
+      id: '/_authenticated/my-food/inquiry'
       path: '/my-food/inquiry'
       fullPath: '/my-food/inquiry'
-      preLoaderRoute: typeof MyFoodInquiryRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedMyFoodInquiryRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/my-food/delivery': {
-      id: '/my-food/delivery'
+    '/_authenticated/my-food/delivery': {
+      id: '/_authenticated/my-food/delivery'
       path: '/my-food/delivery'
       fullPath: '/my-food/delivery'
-      preLoaderRoute: typeof MyFoodDeliveryRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedMyFoodDeliveryRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/my-food/dashboard': {
-      id: '/my-food/dashboard'
+    '/_authenticated/my-food/dashboard': {
+      id: '/_authenticated/my-food/dashboard'
       path: '/my-food/dashboard'
       fullPath: '/my-food/dashboard'
-      preLoaderRoute: typeof MyFoodDashboardRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedMyFoodDashboardRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/my-body/settlement': {
-      id: '/my-body/settlement'
+    '/_authenticated/my-body/settlement': {
+      id: '/_authenticated/my-body/settlement'
       path: '/my-body/settlement'
       fullPath: '/my-body/settlement'
-      preLoaderRoute: typeof MyBodySettlementRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedMyBodySettlementRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/my-body/report': {
-      id: '/my-body/report'
+    '/_authenticated/my-body/report': {
+      id: '/_authenticated/my-body/report'
       path: '/my-body/report'
       fullPath: '/my-body/report'
-      preLoaderRoute: typeof MyBodyReportRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedMyBodyReportRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/my-body/monitoring': {
-      id: '/my-body/monitoring'
+    '/_authenticated/my-body/monitoring': {
+      id: '/_authenticated/my-body/monitoring'
       path: '/my-body/monitoring'
       fullPath: '/my-body/monitoring'
-      preLoaderRoute: typeof MyBodyMonitoringRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedMyBodyMonitoringRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
-    '/my-body/dashboard': {
-      id: '/my-body/dashboard'
+    '/_authenticated/my-body/dashboard': {
+      id: '/_authenticated/my-body/dashboard'
       path: '/my-body/dashboard'
       fullPath: '/my-body/dashboard'
-      preLoaderRoute: typeof MyBodyDashboardRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof AuthenticatedMyBodyDashboardRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
   }
 }
 
+interface AuthenticatedRouteChildren {
+  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedMyBodyDashboardRoute: typeof AuthenticatedMyBodyDashboardRoute
+  AuthenticatedMyBodyMonitoringRoute: typeof AuthenticatedMyBodyMonitoringRoute
+  AuthenticatedMyBodyReportRoute: typeof AuthenticatedMyBodyReportRoute
+  AuthenticatedMyBodySettlementRoute: typeof AuthenticatedMyBodySettlementRoute
+  AuthenticatedMyFoodDashboardRoute: typeof AuthenticatedMyFoodDashboardRoute
+  AuthenticatedMyFoodDeliveryRoute: typeof AuthenticatedMyFoodDeliveryRoute
+  AuthenticatedMyFoodInquiryRoute: typeof AuthenticatedMyFoodInquiryRoute
+  AuthenticatedMyFoodInvoiceRoute: typeof AuthenticatedMyFoodInvoiceRoute
+  AuthenticatedMyFoodMonitoringRoute: typeof AuthenticatedMyFoodMonitoringRoute
+  AuthenticatedMyFoodOrderRoute: typeof AuthenticatedMyFoodOrderRoute
+  AuthenticatedMyFoodReportRoute: typeof AuthenticatedMyFoodReportRoute
+  AuthenticatedMyFoodSettlementRoute: typeof AuthenticatedMyFoodSettlementRoute
+  AuthenticatedMyMindContractRoute: typeof AuthenticatedMyMindContractRoute
+  AuthenticatedMyMindDashboardRoute: typeof AuthenticatedMyMindDashboardRoute
+  AuthenticatedMyMindInquiryRoute: typeof AuthenticatedMyMindInquiryRoute
+  AuthenticatedMyMindInvoiceRoute: typeof AuthenticatedMyMindInvoiceRoute
+  AuthenticatedMyMindMonitoringRoute: typeof AuthenticatedMyMindMonitoringRoute
+  AuthenticatedMyMindReportRoute: typeof AuthenticatedMyMindReportRoute
+  AuthenticatedMyMindSettlementRoute: typeof AuthenticatedMyMindSettlementRoute
+  AuthenticatedMyMindUsageRoute: typeof AuthenticatedMyMindUsageRoute
+  AuthenticatedUserInsightRoute: typeof AuthenticatedUserInsightRoute
+  AuthenticatedUserListRoute: typeof AuthenticatedUserListRoute
+  AuthenticatedUserMessageRoute: typeof AuthenticatedUserMessageRoute
+  AuthenticatedUserRegisterRoute: typeof AuthenticatedUserRegisterRoute
+  AuthenticatedInquiryIndexRoute: typeof AuthenticatedInquiryIndexRoute
+  AuthenticatedMonitoringIndexRoute: typeof AuthenticatedMonitoringIndexRoute
+  AuthenticatedReportIndexRoute: typeof AuthenticatedReportIndexRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+  AuthenticatedMyBodyDashboardRoute: AuthenticatedMyBodyDashboardRoute,
+  AuthenticatedMyBodyMonitoringRoute: AuthenticatedMyBodyMonitoringRoute,
+  AuthenticatedMyBodyReportRoute: AuthenticatedMyBodyReportRoute,
+  AuthenticatedMyBodySettlementRoute: AuthenticatedMyBodySettlementRoute,
+  AuthenticatedMyFoodDashboardRoute: AuthenticatedMyFoodDashboardRoute,
+  AuthenticatedMyFoodDeliveryRoute: AuthenticatedMyFoodDeliveryRoute,
+  AuthenticatedMyFoodInquiryRoute: AuthenticatedMyFoodInquiryRoute,
+  AuthenticatedMyFoodInvoiceRoute: AuthenticatedMyFoodInvoiceRoute,
+  AuthenticatedMyFoodMonitoringRoute: AuthenticatedMyFoodMonitoringRoute,
+  AuthenticatedMyFoodOrderRoute: AuthenticatedMyFoodOrderRoute,
+  AuthenticatedMyFoodReportRoute: AuthenticatedMyFoodReportRoute,
+  AuthenticatedMyFoodSettlementRoute: AuthenticatedMyFoodSettlementRoute,
+  AuthenticatedMyMindContractRoute: AuthenticatedMyMindContractRoute,
+  AuthenticatedMyMindDashboardRoute: AuthenticatedMyMindDashboardRoute,
+  AuthenticatedMyMindInquiryRoute: AuthenticatedMyMindInquiryRoute,
+  AuthenticatedMyMindInvoiceRoute: AuthenticatedMyMindInvoiceRoute,
+  AuthenticatedMyMindMonitoringRoute: AuthenticatedMyMindMonitoringRoute,
+  AuthenticatedMyMindReportRoute: AuthenticatedMyMindReportRoute,
+  AuthenticatedMyMindSettlementRoute: AuthenticatedMyMindSettlementRoute,
+  AuthenticatedMyMindUsageRoute: AuthenticatedMyMindUsageRoute,
+  AuthenticatedUserInsightRoute: AuthenticatedUserInsightRoute,
+  AuthenticatedUserListRoute: AuthenticatedUserListRoute,
+  AuthenticatedUserMessageRoute: AuthenticatedUserMessageRoute,
+  AuthenticatedUserRegisterRoute: AuthenticatedUserRegisterRoute,
+  AuthenticatedInquiryIndexRoute: AuthenticatedInquiryIndexRoute,
+  AuthenticatedMonitoringIndexRoute: AuthenticatedMonitoringIndexRoute,
+  AuthenticatedReportIndexRoute: AuthenticatedReportIndexRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
+
+interface PublicRouteChildren {
+  PublicAboutRoute: typeof PublicAboutRoute
+  PublicLoginRoute: typeof PublicLoginRoute
+  PublicTestRoute: typeof PublicTestRoute
+}
+
+const PublicRouteChildren: PublicRouteChildren = {
+  PublicAboutRoute: PublicAboutRoute,
+  PublicLoginRoute: PublicLoginRoute,
+  PublicTestRoute: PublicTestRoute,
+}
+
+const PublicRouteWithChildren =
+  PublicRoute._addFileChildren(PublicRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
-  LoginRoute: LoginRoute,
-  TestRoute: TestRoute,
-  MyBodyDashboardRoute: MyBodyDashboardRoute,
-  MyBodyMonitoringRoute: MyBodyMonitoringRoute,
-  MyBodyReportRoute: MyBodyReportRoute,
-  MyBodySettlementRoute: MyBodySettlementRoute,
-  MyFoodDashboardRoute: MyFoodDashboardRoute,
-  MyFoodDeliveryRoute: MyFoodDeliveryRoute,
-  MyFoodInquiryRoute: MyFoodInquiryRoute,
-  MyFoodInvoiceRoute: MyFoodInvoiceRoute,
-  MyFoodMonitoringRoute: MyFoodMonitoringRoute,
-  MyFoodOrderRoute: MyFoodOrderRoute,
-  MyFoodReportRoute: MyFoodReportRoute,
-  MyFoodSettlementRoute: MyFoodSettlementRoute,
-  MyMindContractRoute: MyMindContractRoute,
-  MyMindDashboardRoute: MyMindDashboardRoute,
-  MyMindInquiryRoute: MyMindInquiryRoute,
-  MyMindInvoiceRoute: MyMindInvoiceRoute,
-  MyMindMonitoringRoute: MyMindMonitoringRoute,
-  MyMindReportRoute: MyMindReportRoute,
-  MyMindSettlementRoute: MyMindSettlementRoute,
-  MyMindUsageRoute: MyMindUsageRoute,
-  UserInsightRoute: UserInsightRoute,
-  UserListRoute: UserListRoute,
-  UserMessageRoute: UserMessageRoute,
-  UserRegisterRoute: UserRegisterRoute,
-  InquiryIndexRoute: InquiryIndexRoute,
-  MonitoringIndexRoute: MonitoringIndexRoute,
-  ReportIndexRoute: ReportIndexRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
+  PublicRoute: PublicRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
