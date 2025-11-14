@@ -1,6 +1,6 @@
+import { Header } from '@/domains/dashboard/components/Header';
 import { Layout } from '@repo/shared/components/layouts';
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router';
-
 // 인증이 필요한 모든 페이지의 레이아웃
 export const Route = createFileRoute('/_authenticated')({
   // 인증 체크 로직
@@ -23,6 +23,7 @@ export const Route = createFileRoute('/_authenticated')({
 function AuthenticatedLayout() {
   return (
     <Layout>
+      <Header />
       <Outlet />
     </Layout>
   );
