@@ -204,13 +204,13 @@ importers:
         specifier: ^4.17.21
         version: 4.17.21
       react:
-        specifier: ^19.0.0
+        specifier: ^19.2.0
         version: 19.2.0
       react-datepicker:
         specifier: ^8.2.0
         version: 8.9.0(react-dom@19.2.0)(react@19.2.0)
       react-dom:
-        specifier: ^19.0.0
+        specifier: ^19.2.0
         version: 19.2.0(react@19.2.0)
     devDependencies:
       '@repo/eslint-config':
