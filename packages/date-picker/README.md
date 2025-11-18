@@ -29,11 +29,11 @@ date-fns는 react-datepicker의 로케일 시스템에만 최소한으로 사용
 ## 설치
 
 ```bash
-pnpm add repo-date-picker
+pnpm add @repo/date-picker
 # or
-npm install repo-date-picker
+npm install @repo/date-picker
 # or
-yarn add repo-date-picker
+yarn add @repo/date-picker
 ```
 
 ## Peer Dependencies

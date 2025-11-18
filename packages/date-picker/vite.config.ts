@@ -34,7 +34,10 @@ export default defineConfig({
           'lodash-es': '_',
         },
         assetFileNames: assetInfo => {
-          if (assetInfo.name === 'style.css') return 'date-picker.css';
+          // 모든 CSS 파일을 date-picker.css로 통일
+          if (assetInfo.name?.endsWith('.css')) {
+            return 'date-picker.css';
+          }
           return assetInfo.name ?? 'assets/[name][extname]';
         },
       },

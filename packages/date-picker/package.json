@@ -1,6 +1,6 @@
 {
   "name": "@repo/date-picker",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "React DatePicker component with dayjs integration",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -12,7 +12,8 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
-    "./styles.css": "./dist/date-picker.css"
+    "./styles.css": "./dist/date-picker.css",
+    "./style.css": "./dist/date-picker.css"
   },
   "files": [
     "dist",
