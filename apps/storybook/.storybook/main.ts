@@ -33,6 +33,12 @@ const config: StorybookConfig = {
     config.resolve.alias = {
       ...config.resolve.alias,
 
+      // React 중복 방지를 위한 명시적 alias (최우선)
+      react: resolve(__dirname, '../../../node_modules/react'),
+      'react-dom': resolve(__dirname, '../../../node_modules/react-dom'),
+      'react/jsx-runtime': resolve(__dirname, '../../../node_modules/react/jsx-runtime'),
+      'react/jsx-dev-runtime': resolve(__dirname, '../../../node_modules/react/jsx-dev-runtime'),
+
       // date-picker 패키지
       '@repo/date-picker': resolve(__dirname, '../../../packages/date-picker/src'),
       '@repo/date-picker/styles.css': resolve(__dirname, '../../../packages/date-picker/src/styles.css'),
@@ -63,41 +69,80 @@ const config: StorybookConfig = {
     config.resolve.extensions = ['.mjs', '.js', '.mts', '.ts', '.jsx', '.tsx', '.json'];
 
     // React 중복 방지 (중요!)
-    config.resolve.dedupe = ['react', 'react-dom', 'react/jsx-runtime'];
+    config.resolve.dedupe = ['react', 'react-dom', 'react/jsx-runtime', 'react/jsx-dev-runtime'];
 
-    // 의존성 최적화 설정
+    // 의존성 최적화 설정 (개발 모드)
     config.optimizeDeps = config.optimizeDeps || {};
-    config.optimizeDeps.include = [...(config.optimizeDeps.include || []), 'react', 'react-dom', 'react/jsx-runtime', 'dayjs', 'react-datepicker'];
+    config.optimizeDeps.include = [
+      ...(config.optimizeDeps.include || []),
+      'react',
+      'react-dom',
+      'react/jsx-runtime',
+      'react/jsx-dev-runtime',
+      'dayjs',
+      'react-datepicker',
+    ];
     config.optimizeDeps.exclude = [...(config.optimizeDeps.exclude || [])];
+
+    // ESBuild 옵션으로 React alias 보장
+    config.optimizeDeps.esbuildOptions = {
+      ...(config.optimizeDeps.esbuildOptions || {}),
+      alias: {
+        react: resolve(__dirname, '../../../node_modules/react'),
+        'react-dom': resolve(__dirname, '../../../node_modules/react-dom'),
+      },
+    };
 
     // 빌드 최적화 설정
     config.build = config.build || {};
     config.build.rollupOptions = config.build.rollupOptions || {};
+
+    // React를 외부 모듈로 표시하지 않도록 설정
+    config.build.rollupOptions.external = [];
+
     config.build.rollupOptions.output = {
       ...config.build.rollupOptions.output,
       manualChunks: id => {
-        // React 및 React DOM을 별도 청크로 분리
-        if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) {
+        // React 및 React DOM을 별도 청크로 분리 (최우선 - 단일 인스턴스 보장)
+        // 더 엄격한 조건으로 React만 정확하게 매칭
+        const normalizedId = id.replace(/\\/g, '/');
+
+        // React 코어 (node_modules/react/index.js 등)
+        if (
+          normalizedId.includes('/node_modules/react/') &&
+          !normalizedId.includes('/node_modules/react-dom/') &&
+          !normalizedId.includes('/node_modules/react-')
+        ) {
+          return 'react-vendor';
+        }
+
+        // React-DOM
+        if (normalizedId.includes('/node_modules/react-dom/')) {
+          return 'react-vendor';
+        }
+
+        // Scheduler (React에서 사용)
+        if (normalizedId.includes('/node_modules/scheduler/')) {
           return 'react-vendor';
         }
 
         // Radix UI 컴포넌트를 별도 청크로 분리
-        if (id.includes('node_modules/@radix-ui/')) {
+        if (normalizedId.includes('/node_modules/@radix-ui/')) {
           return 'radix-vendor';
         }
 
         // Lucide 아이콘을 별도 청크로 분리
-        if (id.includes('node_modules/lucide-react/')) {
+        if (normalizedId.includes('/node_modules/lucide-react/')) {
           return 'lucide-vendor';
         }
 
         // Storybook 관련 패키지
-        if (id.includes('node_modules/@storybook/')) {
+        if (normalizedId.includes('/node_modules/@storybook/')) {
           return 'storybook-vendor';
         }
 
         // 기타 큰 node_modules 패키지
-        if (id.includes('node_modules/')) {
+        if (normalizedId.includes('/node_modules/')) {
           return 'vendor';
         }
       },

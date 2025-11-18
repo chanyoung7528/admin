@@ -1,0 +1,76 @@
+
+> storybook-docs@0.0.0 build /Users/mz01-chansm/Desktop/side-project/admin/apps/storybook
+> storybook build
+
+@storybook/core v8.6.14
+
+info => Cleaning outputDir: storybook-static
+info => Loading presets
+info => Building manager..
+info => Manager built ([38;2;181;126;229m152 ms[39m)
+info => Building preview..
+WARN No story files found for the specified pattern: src/**/*.mdx
+info Using tsconfig paths for react-docgen
+vite v7.2.2 building client environment for production...
+transforming...
+
+./sb-common-assets/nunito-sans-regular.woff2 referenced in ./sb-common-assets/nunito-sans-regular.woff2 didn't resolve at build time, it will remain unchanged to be resolved at runtime
+
+./sb-common-assets/nunito-sans-italic.woff2 referenced in ./sb-common-assets/nunito-sans-italic.woff2 didn't resolve at build time, it will remain unchanged to be resolved at runtime
+
+./sb-common-assets/nunito-sans-bold.woff2 referenced in ./sb-common-assets/nunito-sans-bold.woff2 didn't resolve at build time, it will remain unchanged to be resolved at runtime
+
+./sb-common-assets/nunito-sans-bold-italic.woff2 referenced in ./sb-common-assets/nunito-sans-bold-italic.woff2 didn't resolve at build time, it will remain unchanged to be resolved at runtime
+../../node_modules/.pnpm/@radix-ui+react-tabs@1.1.13_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-tabs/dist/index.mjs (1:0): Module level directives cause errors when bundled, "use client" in "../../node_modules/.pnpm/@radix-ui+react-tabs@1.1.13_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-tabs/dist/index.mjs" was ignored.
+../../node_modules/.pnpm/@radix-ui+react-roving-focus@1.1.11_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-roving-focus/dist/index.mjs (1:0): Module level directives cause errors when bundled, "use client" in "../../node_modules/.pnpm/@radix-ui+react-roving-focus@1.1.11_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-roving-focus/dist/index.mjs" was ignored.
+../../node_modules/.pnpm/@radix-ui+react-presence@1.1.5_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-presence/dist/index.mjs (1:0): Module level directives cause errors when bundled, "use client" in "../../node_modules/.pnpm/@radix-ui+react-presence@1.1.5_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-presence/dist/index.mjs" was ignored.
+../../node_modules/.pnpm/@radix-ui+react-avatar@1.1.11_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-avatar/dist/index.mjs (1:0): Module level directives cause errors when bundled, "use client" in "../../node_modules/.pnpm/@radix-ui+react-avatar@1.1.11_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-avatar/dist/index.mjs" was ignored.
+../../node_modules/.pnpm/@radix-ui+react-alert-dialog@1.1.15_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-alert-dialog/dist/index.mjs (1:0): Module level directives cause errors when bundled, "use client" in "../../node_modules/.pnpm/@radix-ui+react-alert-dialog@1.1.15_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-alert-dialog/dist/index.mjs" was ignored.
+../../packages/shared/src/components/ui/sheet.tsx (1:0): Error when using sourcemap for reporting an error: Can't resolve original location of error.
+../../packages/shared/src/components/ui/sheet.tsx (1:0): Module level directives cause errors when bundled, "use client" in "../../packages/shared/src/components/ui/sheet.tsx" was ignored.
+../../node_modules/.pnpm/@radix-ui+react-collapsible@1.1.12_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-collapsible/dist/index.mjs (1:0): Module level directives cause errors when bundled, "use client" in "../../node_modules/.pnpm/@radix-ui+react-collapsible@1.1.12_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-collapsible/dist/index.mjs" was ignored.
+../../node_modules/.pnpm/react-error-boundary@6.0.0_react@19.2.0/node_modules/react-error-boundary/dist/react-error-boundary.js (1:0): Module level directives cause errors when bundled, "use client" in "../../node_modules/.pnpm/react-error-boundary@6.0.0_react@19.2.0/node_modules/react-error-boundary/dist/react-error-boundary.js" was ignored.
+../../node_modules/.pnpm/@radix-ui+react-collection@1.1.7_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-collection/dist/index.mjs (1:0): Module level directives cause errors when bundled, "use client" in "../../node_modules/.pnpm/@radix-ui+react-collection@1.1.7_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-collection/dist/index.mjs" was ignored.
+../../node_modules/.pnpm/@radix-ui+react-dialog@1.1.15_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-dialog/dist/index.mjs (1:0): Module level directives cause errors when bundled, "use client" in "../../node_modules/.pnpm/@radix-ui+react-dialog@1.1.15_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-dialog/dist/index.mjs" was ignored.
+../../node_modules/.pnpm/@radix-ui+react-dropdown-menu@2.1.16_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-dropdown-menu/dist/index.mjs (1:0): Module level directives cause errors when bundled, "use client" in "../../node_modules/.pnpm/@radix-ui+react-dropdown-menu@2.1.16_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-dropdown-menu/dist/index.mjs" was ignored.
+../../node_modules/.pnpm/@radix-ui+react-tooltip@1.2.8_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-tooltip/dist/index.mjs (1:0): Module level directives cause errors when bundled, "use client" in "../../node_modules/.pnpm/@radix-ui+react-tooltip@1.2.8_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-tooltip/dist/index.mjs" was ignored.
+../../node_modules/.pnpm/@radix-ui+react-focus-scope@1.1.7_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-focus-scope/dist/index.mjs (1:0): Module level directives cause errors when bundled, "use client" in "../../node_modules/.pnpm/@radix-ui+react-focus-scope@1.1.7_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-focus-scope/dist/index.mjs" was ignored.
+../../node_modules/.pnpm/@radix-ui+react-dismissable-layer@1.1.11_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-dismissable-layer/dist/index.mjs (1:0): Module level directives cause errors when bundled, "use client" in "../../node_modules/.pnpm/@radix-ui+react-dismissable-layer@1.1.11_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-dismissable-layer/dist/index.mjs" was ignored.
+../../node_modules/.pnpm/@radix-ui+react-focus-guards@1.1.3_@types+react@19.2.2_react@19.2.0/node_modules/@radix-ui/react-focus-guards/dist/index.mjs (1:0): Module level directives cause errors when bundled, "use client" in "../../node_modules/.pnpm/@radix-ui+react-focus-guards@1.1.3_@types+react@19.2.2_react@19.2.0/node_modules/@radix-ui/react-focus-guards/dist/index.mjs" was ignored.
+../../node_modules/.pnpm/@radix-ui+react-portal@1.1.9_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-portal/dist/index.mjs (1:0): Module level directives cause errors when bundled, "use client" in "../../node_modules/.pnpm/@radix-ui+react-portal@1.1.9_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-portal/dist/index.mjs" was ignored.
+../../node_modules/.pnpm/@radix-ui+react-menu@2.1.16_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-menu/dist/index.mjs (1:0): Module level directives cause errors when bundled, "use client" in "../../node_modules/.pnpm/@radix-ui+react-menu@2.1.16_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-menu/dist/index.mjs" was ignored.
+../../packages/shared/src/components/ui/sidebar.tsx (1:0): Error when using sourcemap for reporting an error: Can't resolve original location of error.
+../../packages/shared/src/components/ui/sidebar.tsx (1:0): Module level directives cause errors when bundled, "use client" in "../../packages/shared/src/components/ui/sidebar.tsx" was ignored.
+../../node_modules/.pnpm/@radix-ui+react-popper@1.2.8_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-popper/dist/index.mjs (1:0): Module level directives cause errors when bundled, "use client" in "../../node_modules/.pnpm/@radix-ui+react-popper@1.2.8_@types+react-dom@19.2.2_@types+react@19.2.2_react-dom@19.2.0_react@19.2.0/node_modules/@radix-ui/react-popper/dist/index.mjs" was ignored.
+✓ 2821 modules transformed.
+../../node_modules/.pnpm/@storybook+core@8.6.14_storybook@8.6.14/node_modules/@storybook/core/dist/preview/runtime.js (3683:15): Use of eval in "../../node_modules/.pnpm/@storybook+core@8.6.14_storybook@8.6.14/node_modules/@storybook/core/dist/preview/runtime.js" is strongly discouraged as it poses security risks and may cause issues with minification.
+../../node_modules/.pnpm/@storybook+core@8.6.14_storybook@8.6.14/node_modules/@storybook/core/dist/preview/runtime.js (3685:16): Use of eval in "../../node_modules/.pnpm/@storybook+core@8.6.14_storybook@8.6.14/node_modules/@storybook/core/dist/preview/runtime.js" is strongly discouraged as it poses security risks and may cause issues with minification.
+rendering chunks...
+computing gzip size...
+storybook-static/iframe.html                                    18.29 kB │ gzip:   5.21 kB
+storybook-static/assets/styles-DKM3LmM0.css                     11.57 kB │ gzip:   1.89 kB
+storybook-static/assets/vendor-BV0tCIjR.css                     21.99 kB │ gzip:   3.09 kB
+storybook-static/assets/preview-W5uOg--K.css                    76.13 kB │ gzip:  13.30 kB
+storybook-static/assets/preview-o31Xvshy.js                      0.26 kB │ gzip:   0.19 kB
+storybook-static/assets/badge-C1bGxiwy.js                        1.44 kB │ gzip:   0.71 kB
+storybook-static/assets/iframe-BdA1cck9.js                       4.74 kB │ gzip:   1.43 kB
+storybook-static/assets/DateRangePicker-FFxDtU-m.js              9.85 kB │ gzip:   2.93 kB
+storybook-static/assets/lucide-vendor-F7DIWC38.js               12.03 kB │ gzip:   4.65 kB
+storybook-static/assets/CustomDocsPage-gUYJ7XYz.js              12.31 kB │ gzip:   3.84 kB
+storybook-static/assets/ErrorBoundary.stories-C7-fmLNW.js       20.24 kB │ gzip:   4.70 kB
+storybook-static/assets/Button.stories-CBEaczYt.js              23.20 kB │ gzip:   4.24 kB
+storybook-static/assets/Badge.stories-DTpxUdFI.js               24.11 kB │ gzip:   4.69 kB
+storybook-static/assets/sidebar-BNd88mkR.js                     24.20 kB │ gzip:   6.25 kB
+storybook-static/assets/DatePicker.stories-ByonKm2O.js          24.67 kB │ gzip:   5.51 kB
+storybook-static/assets/Avatar.stories-BB2nDKZf.js              25.58 kB │ gzip:   4.76 kB
+storybook-static/assets/Input.stories-BZU5Xliy.js               27.77 kB │ gzip:   4.20 kB
+storybook-static/assets/Sidebar.stories-BSOcFi-0.js             28.45 kB │ gzip:   3.32 kB
+storybook-static/assets/DateRangePicker.stories-BDnTJHqg.js     30.13 kB │ gzip:   6.44 kB
+storybook-static/assets/Tabs.stories-y5hUw929.js                31.59 kB │ gzip:   5.27 kB
+storybook-static/assets/radix-vendor-CA-up0XO.js                43.29 kB │ gzip:  13.89 kB
+storybook-static/assets/react-vendor-iJxhV42v.js               193.58 kB │ gzip:  60.75 kB
+storybook-static/assets/vendor-_x47nYYk.js                     269.94 kB │ gzip:  75.72 kB
+storybook-static/assets/storybook-vendor-B_wYqis-.js         2,355.38 kB │ gzip: 644.13 kB
+✓ built in 5.47s
+info => Preview built ([38;2;181;126;229m6.56 s[39m)
+info => Output directory: /Users/mz01-chansm/Desktop/side-project/admin/apps/storybook/storybook-static
