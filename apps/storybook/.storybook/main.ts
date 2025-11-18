@@ -33,6 +33,10 @@ const config: StorybookConfig = {
     config.resolve.alias = {
       ...config.resolve.alias,
 
+      // date-picker 패키지
+      '@repo/date-picker': resolve(__dirname, '../../../packages/date-picker/src'),
+      '@repo/date-picker/styles.css': resolve(__dirname, '../../../packages/date-picker/src/styles.css'),
+
       // shared 패키지 가져오기 (구체적인 것부터 먼저)
       '@repo/shared/globals.css': resolve(__dirname, '../../../packages/shared/src/styles/globals.css'),
       '@repo/shared/components/ui': resolve(__dirname, '../../../packages/shared/src/components/ui'),

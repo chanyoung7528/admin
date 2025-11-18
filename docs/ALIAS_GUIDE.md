@@ -508,17 +508,14 @@ config.resolve.dedupe = ['react', 'react-dom'];
 ### 빌드 시 alias를 찾을 수 없는 경우
 
 1. **TypeScript 설정 확인**
-
    - `tsconfig.json`의 `paths` 설정이 올바른지 확인
    - 더 구체적인 경로가 먼저 나열되어 있는지 확인
 
 2. **Vite 설정 확인**
-
    - `vite.config.ts`의 `resolve.alias` 설정 확인
    - 경로가 `path.resolve()`로 절대 경로로 변환되는지 확인
 
 3. **package.json exports 확인 (shared 패키지)**
-
    - 필요한 경로가 `exports`에 명시되어 있는지 확인
 
 4. **개발 서버 재시작**
@@ -548,6 +545,7 @@ pnpm run build:my-app
 **원인**: React 모듈이 여러 청크에서 중복으로 로드됨
 
 **해결**:
+
 ```typescript
 // apps/storybook/.storybook/main.ts
 config.resolve.dedupe = ['react', 'react-dom'];
