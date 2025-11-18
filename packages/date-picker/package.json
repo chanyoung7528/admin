@@ -31,14 +31,16 @@
   "author": "KIM",
   "license": "MIT",
   "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
     "lint": "eslint \"**/*.{ts,tsx}\"",
     "type-check": "tsc --noEmit",
     "clean": "rm -rf dist .turbo node_modules",
     "prepublishOnly": "pnpm run build"
   },
   "peerDependencies": {
-    "react": "^18.0.0 || ^19.0.0",
-    "react-dom": "^18.0.0 || ^19.0.0"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "dependencies": {
     "date-fns": "^4.1.0",
