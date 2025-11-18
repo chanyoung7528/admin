@@ -1,5 +1,5 @@
 {
-  "name": "@repo-date-picker",
+  "name": "@repo/date-picker",
   "version": "1.0.1",
   "description": "React DatePicker component with dayjs integration",
   "type": "module",

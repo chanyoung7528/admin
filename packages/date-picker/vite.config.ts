@@ -9,10 +9,12 @@ export default defineConfig({
     react(),
     dts({
       insertTypesEntry: true,
-      include: ['src'],
+      include: ['src/**/*.ts', 'src/**/*.tsx'],
+      exclude: ['src/**/*.stories.ts', 'src/**/*.stories.tsx', 'src/**/*.test.ts', 'src/**/*.test.tsx'],
     }),
   ],
   build: {
+    outDir: 'dist',
     lib: {
       entry: path.resolve(__dirname, 'src/index.ts'),
       name: 'DatePicker',
@@ -20,16 +22,26 @@ export default defineConfig({
       fileName: format => `index.${format === 'es' ? 'js' : 'cjs'}`,
     },
     rollupOptions: {
-      external: ['react', 'react-dom', 'react/jsx-runtime'],
+      external: ['react', 'react-dom', 'react/jsx-runtime', 'dayjs', 'date-fns', 'react-datepicker', 'lodash-es', 'date-fns/locale/en-US'],
       output: {
         globals: {
           react: 'React',
           'react-dom': 'ReactDOM',
           'react/jsx-runtime': 'react/jsx-runtime',
+          dayjs: 'dayjs',
+          'date-fns': 'dateFns',
+          'react-datepicker': 'ReactDatePicker',
+          'lodash-es': '_',
+        },
+        assetFileNames: assetInfo => {
+          if (assetInfo.name === 'style.css') return 'date-picker.css';
+          return assetInfo.name ?? 'assets/[name][extname]';
         },
       },
     },
     cssCodeSplit: false,
+    sourcemap: true,
+    emptyOutDir: true,
   },
   resolve: {
     alias: {

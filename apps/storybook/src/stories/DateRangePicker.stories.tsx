@@ -16,10 +16,10 @@ const meta = {
         <CustomDocsPage
           componentName="DateRangePicker"
           description="dayjs 기반의 날짜 범위 선택 컴포넌트입니다. react-datepicker를 래핑하여 시작일과 종료일을 선택할 수 있으며, 일관된 날짜 처리와 커스텀 스타일을 제공합니다."
-          installationDeps={['repo-date-picker', 'dayjs']}
+          installationDeps={['@repo/date-picker', 'dayjs']}
           implementationCode={`// DateRangePicker 컴포넌트 사용
-import { DateRangePicker } from "repo-date-picker";
-import "repo-date-picker/styles.css";
+import { DateRangePicker } from "@repo/date-picker";
+import "@repo/date-picker/styles.css";
 import { useState } from "react";
 
 export default function Example() {
