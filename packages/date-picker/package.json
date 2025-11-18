@@ -38,9 +38,11 @@
     "clean": "rm -rf dist .turbo node_modules",
     "prepublishOnly": "pnpm run build"
   },
-  "dependencies": {
+  "peerDependencies": {
     "react": "^19.2.0",
-    "react-dom": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "dependencies": {
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
     "lodash-es": "^4.17.21",
@@ -53,6 +55,8 @@
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
     "@vitejs/plugin-react-swc": "^4.2.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "typescript": "~5.9.3",
     "vite": "^7.2.2",
     "vite-plugin-dts": "^4.3.0"
