@@ -1,18 +1,10 @@
 import react from '@vitejs/plugin-react-swc';
 import path from 'path';
 import { defineConfig } from 'vite';
-import dts from 'vite-plugin-dts';
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    dts({
-      insertTypesEntry: true,
-      include: ['src/**/*.ts', 'src/**/*.tsx'],
-      exclude: ['src/**/*.stories.ts', 'src/**/*.stories.tsx', 'src/**/*.test.ts', 'src/**/*.test.tsx'],
-    }),
-  ],
+  plugins: [react()],
   build: {
     outDir: 'dist',
     lib: {
