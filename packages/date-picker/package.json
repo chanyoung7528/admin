@@ -28,7 +28,7 @@
     "date",
     "calendar"
   ],
-  "author": "김찬영",
+  "author": "KIM",
   "license": "MIT",
   "scripts": {
     "dev": "vite",

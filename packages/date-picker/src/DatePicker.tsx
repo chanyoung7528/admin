@@ -1,5 +1,5 @@
 /**
- * @author 김찬영
+ * @author KIM
  * @description 공통 Date picker
  *
  * 1. Create : 사용하고자 하는 곳에서 DatePicker 호출
