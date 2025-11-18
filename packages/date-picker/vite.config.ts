@@ -22,7 +22,17 @@ export default defineConfig({
       fileName: format => `index.${format === 'es' ? 'js' : 'cjs'}`,
     },
     rollupOptions: {
-      external: ['react', 'react-dom', 'react/jsx-runtime', 'dayjs', 'date-fns', 'react-datepicker', 'lodash-es', 'date-fns/locale/en-US'],
+      external: [
+        'react',
+        'react-dom',
+        'react/jsx-runtime',
+        'dayjs',
+        'date-fns',
+        'date-fns/locale/en-US',
+        'react-datepicker',
+        'react-datepicker/dist/react-datepicker.css',
+        'lodash-es',
+      ],
       output: {
         globals: {
           react: 'React',

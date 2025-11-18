@@ -63,7 +63,12 @@ const config: StorybookConfig = {
     config.resolve.extensions = ['.mjs', '.js', '.mts', '.ts', '.jsx', '.tsx', '.json'];
 
     // React 중복 방지 (중요!)
-    config.resolve.dedupe = ['react', 'react-dom'];
+    config.resolve.dedupe = ['react', 'react-dom', 'react/jsx-runtime'];
+
+    // 의존성 최적화 설정
+    config.optimizeDeps = config.optimizeDeps || {};
+    config.optimizeDeps.include = [...(config.optimizeDeps.include || []), 'react', 'react-dom', 'react/jsx-runtime', 'dayjs', 'react-datepicker'];
+    config.optimizeDeps.exclude = [...(config.optimizeDeps.exclude || [])];
 
     // 빌드 최적화 설정
     config.build = config.build || {};

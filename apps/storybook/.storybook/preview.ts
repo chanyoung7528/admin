@@ -1,3 +1,4 @@
+import '@repo/date-picker/styles.css';
 import '@repo/shared/globals.css';
 import type { Preview } from '@storybook/react';
 
