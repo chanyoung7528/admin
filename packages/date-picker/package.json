@@ -38,11 +38,9 @@
     "clean": "rm -rf dist .turbo node_modules",
     "prepublishOnly": "pnpm run build"
   },
-  "peerDependencies": {
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
-  },
   "dependencies": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
     "lodash-es": "^4.17.21",
