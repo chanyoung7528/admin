@@ -12,6 +12,8 @@
     }
   },
   "scripts": {
+    "build": "cd ckeditor5 && npm install && npm run build",
+    "postinstall": "npm run build",
     "lint": "eslint **/*.{ts,tsx}",
     "generate:component": "turbo gen react-component"
   },
