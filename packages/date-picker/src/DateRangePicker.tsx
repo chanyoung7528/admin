@@ -22,6 +22,36 @@ import type { DateRangePickerProps } from './types';
 // react-datepicker는 date-fns 로케일이 필요하지만, 날짜 처리는 dayjs로 통일
 registerLocale('enUS', enUS);
 
+// CustomInput을 컴포넌트 외부로 선언
+interface CustomInputProps extends React.HTMLProps<HTMLInputElement> {
+  width?: number | 'full';
+  openDate: boolean;
+  endDate: Date | null;
+  disabled: boolean;
+  onOpenToggle: () => void;
+  onInputClick: () => void;
+}
+
+const CustomInputComponent = forwardRef<HTMLInputElement, CustomInputProps>(
+  ({ width, openDate, endDate, disabled, onOpenToggle, onInputClick, ...props }, ref) => {
+    const widthClass = width === 'full' ? 'full' : '';
+    const widthStyle = typeof width === 'number' ? { width: `${width}px`, flexShrink: 0 } : {};
+
+    return (
+      <div onClick={onOpenToggle} style={widthStyle}>
+        <div
+          className={`date_picker_wrap ${widthClass} ${openDate ? 'open' : ''} ${endDate ? 'dateuse' : ''} ${disabled ? 'disabled' : ''}`}
+          onClick={onInputClick}
+        >
+          <input readOnly ref={ref} {...props} />
+        </div>
+      </div>
+    );
+  }
+);
+
+CustomInputComponent.displayName = 'CustomInput';
+
 /**
  * DateRangePicker 컴포넌트
  * react-datepicker를 기반으로 한 커스텀 날짜 범위 선택 컴포넌트
@@ -122,39 +152,26 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
     }
   };
 
+  // Sync with external defaultDate prop when it changes
+  /* eslint-disable react-hooks/set-state-in-effect */
   useEffect(() => {
     if (!defaultDate?.startDate || !defaultDate?.endDate) {
       resetInitDate();
     } else {
-      setStartDate(dayjs(defaultDate.startDate).toDate());
-      setEndDate(dayjs(defaultDate.endDate).toDate());
-      isDefaultDate && setCurrentDate([dayjs(defaultDate.startDate).toDate(), dayjs(defaultDate.endDate).toDate()]);
+      const newStartDate = dayjs(defaultDate.startDate).toDate();
+      const newEndDate = dayjs(defaultDate.endDate).toDate();
+      setStartDate(newStartDate);
+      setEndDate(newEndDate);
+      if (defaultDate.startDate && defaultDate.endDate) {
+        setCurrentDate([newStartDate, newEndDate]);
+      }
     }
-  }, [defaultDate, resetInitDate, isDefaultDate]);
+  }, [defaultDate?.startDate, defaultDate?.endDate, resetInitDate]);
+  /* eslint-enable react-hooks/set-state-in-effect */
 
-  const CustomInput = forwardRef<HTMLInputElement, React.HTMLProps<HTMLInputElement>>((props, ref) => {
-    // width 처리: number면 px, 'full'이면 클래스, 그 외는 기본
-    const widthClass = width === 'full' ? 'full' : '';
-    const widthStyle = typeof width === 'number' ? { width: `${width}px`, flexShrink: 0 } : {};
-
-    return (
-      <div
-        onClick={() => {
-          setOpenDate(!openDate);
-        }}
-        style={widthStyle}
-      >
-        <div
-          className={`date_picker_wrap ${widthClass} ${openDate ? 'open' : ''} ${endDate ? 'dateuse' : ''} ${disabled ? 'disabled' : ''}`}
-          onClick={inputClickOut}
-        >
-          <input readOnly ref={ref} {...props} />
-        </div>
-      </div>
-    );
-  });
-
-  CustomInput.displayName = 'CustomInput';
+  const handleOpenToggle = useCallback(() => {
+    setOpenDate(!openDate);
+  }, [openDate]);
 
   return (
     <ReactDatePicker
@@ -200,7 +217,16 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
       locale="enUS"
       onClickOutside={clickOutDefault}
       selectsRange
-      customInput={<CustomInput />}
+      customInput={
+        <CustomInputComponent
+          width={width}
+          openDate={openDate}
+          endDate={endDate}
+          disabled={disabled}
+          onOpenToggle={handleOpenToggle}
+          onInputClick={inputClickOut}
+        />
+      }
       onChange={onChange}
       disabled={disabled}
     >

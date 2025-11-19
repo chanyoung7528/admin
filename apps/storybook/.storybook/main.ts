@@ -28,6 +28,17 @@ const config: StorybookConfig = {
     config.plugins = config.plugins || [];
     config.plugins.push(tailwindcss());
 
+    // CKEditor 빌드 경고 무시
+    config.build = config.build || {};
+    config.build.rollupOptions = config.build.rollupOptions || {};
+    config.build.rollupOptions.onwarn = (warning, warn) => {
+      // CKEditor 관련 경고 무시
+      if (warning.message.includes('ckeditor5-custom-build')) {
+        return;
+      }
+      warn(warning);
+    };
+
     // shared 패키지의 alias 추가
     config.resolve = config.resolve || {};
     config.resolve.alias = {
@@ -42,6 +53,9 @@ const config: StorybookConfig = {
       // date-picker 패키지
       '@repo/date-picker': resolve(__dirname, '../../../packages/date-picker/src'),
       '@repo/date-picker/styles.css': resolve(__dirname, '../../../packages/date-picker/src/styles.css'),
+
+      // editor 패키지
+      '@repo/editor': resolve(__dirname, '../../../packages/editor/src'),
 
       // shared 패키지 가져오기 (구체적인 것부터 먼저)
       '@repo/shared/globals.css': resolve(__dirname, '../../../packages/shared/src/styles/globals.css'),
@@ -82,7 +96,7 @@ const config: StorybookConfig = {
       'dayjs',
       'react-datepicker',
     ];
-    config.optimizeDeps.exclude = [...(config.optimizeDeps.exclude || [])];
+    config.optimizeDeps.exclude = [...(config.optimizeDeps.exclude || []), 'ckeditor5-custom-build', '@ckeditor/ckeditor5-react'];
 
     // ESBuild 옵션으로 React alias 보장
     config.optimizeDeps.esbuildOptions = {
@@ -93,10 +107,7 @@ const config: StorybookConfig = {
       },
     };
 
-    // 빌드 최적화 설정
-    config.build = config.build || {};
-    config.build.rollupOptions = config.build.rollupOptions || {};
-
+    // 빌드 최적화 설정은 이미 위에서 설정됨
     // React를 외부 모듈로 표시하지 않도록 설정
     config.build.rollupOptions.external = [];
 

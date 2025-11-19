@@ -11,7 +11,7 @@
 import { enUS } from 'date-fns/locale/en-US';
 import dayjs from 'dayjs';
 import { range } from 'lodash-es';
-import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import ReactDatePicker, { registerLocale } from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -22,6 +22,36 @@ import { changeTimeServer } from './utils';
 
 // react-datepicker는 date-fns 로케일이 필요하지만, 날짜 처리는 dayjs로 통일
 registerLocale('enUS', enUS);
+
+// CustomInput을 컴포넌트 외부로 선언
+interface CustomInputProps extends React.HTMLProps<HTMLInputElement> {
+  width?: number | 'full';
+  openDate: boolean;
+  selectedDate: Date | null;
+  disabled: boolean;
+  onOpenToggle: () => void;
+  onInputClick: () => void;
+}
+
+const CustomInputComponent = forwardRef<HTMLInputElement, CustomInputProps>(
+  ({ width, openDate, selectedDate, disabled, onOpenToggle, onInputClick, ...props }, ref) => {
+    const widthClass = width === 'full' ? 'full' : '';
+    const widthStyle = typeof width === 'number' ? { width: `${width}px`, flexShrink: 0 } : {};
+
+    return (
+      <div onClick={onOpenToggle} style={widthStyle}>
+        <div
+          className={`date_picker_wrap ${widthClass} ${openDate ? 'open' : ''} ${selectedDate ? 'dateuse' : ''} ${disabled ? 'disabled' : ''}`}
+          onClick={onInputClick}
+        >
+          <input readOnly ref={ref} {...props} />
+        </div>
+      </div>
+    );
+  }
+);
+
+CustomInputComponent.displayName = 'CustomInput';
 
 /**
  * DatePicker 컴포넌트
@@ -41,6 +71,8 @@ export const DatePicker: React.FC<DatePickerProps> = ({ onChangePickerDate, defa
   const calendar = useRef<ReactDatePicker>(null);
 
   useEffect(() => {
+    // Sync with external defaultDate prop when it changes
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setSelectedDate(defaultDate ? dayjs(defaultDate).toDate() : null);
   }, [defaultDate]);
 
@@ -89,29 +121,9 @@ export const DatePicker: React.FC<DatePickerProps> = ({ onChangePickerDate, defa
     }
   };
 
-  const CustomInput = forwardRef<HTMLInputElement, React.HTMLProps<HTMLInputElement>>((props, ref) => {
-    // width 처리: number면 px, 'full'이면 클래스, 그 외는 기본
-    const widthClass = width === 'full' ? 'full' : '';
-    const widthStyle = typeof width === 'number' ? { width: `${width}px`, flexShrink: 0 } : {};
-
-    return (
-      <div
-        onClick={() => {
-          setOpenDate(!openDate);
-        }}
-        style={widthStyle}
-      >
-        <div
-          className={`date_picker_wrap ${widthClass} ${openDate ? 'open' : ''} ${selectedDate ? 'dateuse' : ''} ${disabled ? 'disabled' : ''}`}
-          onClick={inputClickOut}
-        >
-          <input readOnly ref={ref} {...props} />
-        </div>
-      </div>
-    );
-  });
-
-  CustomInput.displayName = 'CustomInput';
+  const handleOpenToggle = useCallback(() => {
+    setOpenDate(!openDate);
+  }, [openDate]);
 
   return (
     <ReactDatePicker
@@ -153,7 +165,16 @@ export const DatePicker: React.FC<DatePickerProps> = ({ onChangePickerDate, defa
       dateFormat="yyyy-MM-dd"
       placeholderText={placeholderText}
       locale="enUS"
-      customInput={<CustomInput />}
+      customInput={
+        <CustomInputComponent
+          width={width}
+          openDate={openDate}
+          selectedDate={selectedDate}
+          disabled={disabled}
+          onOpenToggle={handleOpenToggle}
+          onInputClick={inputClickOut}
+        />
+      }
       onClickOutside={clickOutDefault}
       onChange={onChange}
       disabled={disabled}

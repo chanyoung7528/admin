@@ -35,3 +35,11 @@ pnpm build
 
 - CKEditor5 빌드 파일은 git에 커밋되지 않으며, 설치 시 자동으로 생성됩니다.
 - 빌드 시간이 약 5-10초 소요됩니다.
+
+## Vercel 배포
+
+Vercel 배포 시 자동으로 CKEditor 빌드가 실행됩니다:
+
+1. `pnpm install` 실행 → `postinstall` 스크립트가 CKEditor 빌드
+2. Storybook 빌드 시 `ckeditor5-custom-build`를 Vite 최적화에서 제외
+3. 빌드 파일 (~7.3MB)은 gitignore되어 있어 배포 시 자동 생성됨

@@ -12,9 +12,9 @@
 
     */
 
-// @ts-ignore - CKEditor custom build
+// @ts-expect-error - CKEditor custom build
 import { CKEditor as Editor } from '@ckeditor/ckeditor5-react';
-// @ts-ignore - CKEditor custom build
+// @ts-expect-error - CKEditor custom build
 import ClassicEditor from 'ckeditor5-custom-build/build/ckeditor';
 import './styles.css';
 
@@ -100,28 +100,23 @@ const CKEditor = ({ data, onEditorChange, tableName, placeholder }: EditorProps)
   const uploadAdapter = (loader: any) => {
     return {
       upload: async () => {
-        return new Promise(async (resolve, reject) => {
-          loader.file.then(async (file: File) => {
-            if (!tableName) return;
-            const fileList = [file] as File[];
-            try {
-              const response: any = [{ key: 'test' }];
-              if (!response) return;
-              const { key } = response[0];
-              const exTime = 86400;
-              // const { data: src } = await api.get(`/common/s3/prv/get-url?key=${key ?? ''}&expireSecondTime=${exTime}`)
-              // @ts-ignore - process env access
-              const bucketName = (typeof process !== 'undefined' && process.env?.NEXT_PUBLIC_S3_BUCKET_NAME) || 'default-bucket';
-              const src = `https://${bucketName}.s3.ap-northeast-2.amazonaws.com/${key}`;
-              resolve({
-                default: src,
-                key,
-              });
-            } catch (error) {
-              reject(error);
-            }
-          });
-        });
+        const _file = await loader.file; // TODO: Use file for actual upload
+        if (!tableName) {
+          throw new Error('Table name is required');
+        }
+        const response: any = [{ key: 'test' }];
+        if (!response) {
+          throw new Error('No response from upload');
+        }
+        const { key } = response[0];
+        // const { data: src } = await api.get(`/common/s3/prv/get-url?key=${key ?? ''}&expireSecondTime=${exTime}`)
+        // @ts-expect-error - process env access
+        const bucketName = (typeof process !== 'undefined' && process.env?.NEXT_PUBLIC_S3_BUCKET_NAME) || 'default-bucket';
+        const src = `https://${bucketName}.s3.ap-northeast-2.amazonaws.com/${key}`;
+        return {
+          default: src,
+          key,
+        };
       },
     };
   };
