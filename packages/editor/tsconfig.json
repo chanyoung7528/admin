@@ -1,0 +1,16 @@
+{
+  "extends": "@repo/typescript-config/react.json",
+  "include": ["src", "src/**/*.d.ts"],
+  "exclude": ["node_modules", "dist", "eslint.config.js"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "outDir": "./dist",
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "skipLibCheck": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}
