@@ -30,9 +30,6 @@ importers:
       '@repo/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@repo/editor':
-        specifier: workspace:*
-        version: link:../../packages/editor
       '@repo/shared':
         specifier: workspace:*
         version: link:../../packages/shared
