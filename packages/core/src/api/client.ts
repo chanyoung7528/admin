@@ -1,11 +1,13 @@
 import axios from 'axios';
+import { env } from '../config';
 
 // Axios 인스턴스 생성
 export const apiClient = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
-  timeout: 10000,
+  baseURL: env.apiBaseUrl,
+  timeout: env.apiTimeout,
   headers: {
     'Content-Type': 'application/json',
+    'Accept-Language': env.apiAcceptLanguage,
   },
 });
 

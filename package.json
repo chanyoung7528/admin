@@ -3,6 +3,8 @@
   "scripts": {
     "build": "turbo build",
     "build:my-app": "turbo build --filter=my-app",
+    "build:dev": "pnpm --filter my-app run build:dev",
+    "build:prd": "pnpm --filter my-app run build:prd",
     "build:storybook": "turbo build --filter=storybook-docs",
     "dev": "turbo dev",
     "dev:my-app": "turbo dev --filter=my-app",
