@@ -31,7 +31,6 @@
   "author": "KIM",
   "license": "MIT",
   "scripts": {
-    "dev": "vite",
     "build": "vite build && tsc --emitDeclarationOnly",
     "lint": "eslint \"**/*.{ts,tsx}\"",
     "type-check": "tsc --noEmit",

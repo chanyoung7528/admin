@@ -1,7 +1,4 @@
-/*
-    author: 김찬영
-    description: 공통 CKEDIOTR5
-
+/* 
     1. Create : 사용하고자 하는 곳에서
     =>  const CKEditor = useMemo(() => dynamic(() => import('editor/CKEditor'), { ssr: false }), []) 정의
     => <CKEditor isEditorReady={isEditorReady} /> 컴포넌트화 시킴
@@ -12,7 +9,6 @@
 
     */
 
-// @ts-expect-error - CKEditor custom build
 import { CKEditor as Editor } from '@ckeditor/ckeditor5-react';
 // @ts-expect-error - CKEditor custom build
 import ClassicEditor from 'ckeditor5-custom-build/build/ckeditor';
@@ -101,6 +97,7 @@ const CKEditor = ({ data, onEditorChange, tableName, placeholder }: EditorProps)
     return {
       upload: async () => {
         const _file = await loader.file; // TODO: Use file for actual upload
+        console.log('🚀 ~ uploadAdapter ~ _file:', _file);
         if (!tableName) {
           throw new Error('Table name is required');
         }
@@ -110,9 +107,8 @@ const CKEditor = ({ data, onEditorChange, tableName, placeholder }: EditorProps)
         }
         const { key } = response[0];
         // const { data: src } = await api.get(`/common/s3/prv/get-url?key=${key ?? ''}&expireSecondTime=${exTime}`)
-        // @ts-expect-error - process env access
-        const bucketName = (typeof process !== 'undefined' && process.env?.NEXT_PUBLIC_S3_BUCKET_NAME) || 'default-bucket';
-        const src = `https://${bucketName}.s3.ap-northeast-2.amazonaws.com/${key}`;
+
+        const src = '';
         return {
           default: src,
           key,
@@ -135,6 +131,7 @@ const CKEditor = ({ data, onEditorChange, tableName, placeholder }: EditorProps)
         editor={ClassicEditor}
         data={data || ''}
         onChange={(event: any, editor: any) => {
+          console.log('🚀 ~ onChange ~ event:', event);
           const data = editor?.getData();
           onEditorChange(data);
         }}

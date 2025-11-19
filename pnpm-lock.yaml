@@ -30,6 +30,9 @@ importers:
       '@repo/core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@repo/editor':
+        specifier: workspace:*
+        version: link:../../packages/editor
       '@repo/shared':
         specifier: workspace:*
         version: link:../../packages/shared
@@ -103,9 +106,6 @@ importers:
       '@repo/date-picker':
         specifier: workspace:*
         version: link:../../packages/date-picker
-      '@repo/editor':
-        specifier: workspace:*
-        version: link:../../packages/editor
       '@repo/shared':
         specifier: workspace:*
         version: link:../../packages/shared
@@ -1496,8 +1496,6 @@ packages:
       '@ckeditor/ckeditor5-engine': 47.2.0
       '@ckeditor/ckeditor5-utils': 47.2.0
       es-toolkit: 1.39.5
-    transitivePeerDependencies:
-      - supports-color
     dev: false
 
   /@ckeditor/ckeditor5-widget@47.2.0:
