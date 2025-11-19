@@ -2,10 +2,10 @@ import { z } from 'zod';
 
 const rawEnv = {
   mode: import.meta.env.MODE,
-  apiBaseUrl: import.meta.env.VITE_API_BASE_URL,
-  apiTimeout: import.meta.env.VITE_API_TIMEOUT,
-  apiAcceptLanguage: import.meta.env.VITE_API_ACCEPT_LANGUAGE,
-  featureDebug: import.meta.env.VITE_FEATURE_DEBUG,
+  apiBaseUrl: import.meta.env.VITE_API_BASE_URL || '/api',
+  apiTimeout: import.meta.env.VITE_API_TIMEOUT || '30000',
+  apiAcceptLanguage: import.meta.env.VITE_API_ACCEPT_LANGUAGE || 'ko-KR',
+  featureDebug: import.meta.env.VITE_FEATURE_DEBUG || 'false',
 };
 
 const envSchema = z.object({
