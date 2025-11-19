@@ -1,0 +1,591 @@
+/* CKEditor Custom Styles */
+
+/* CKEditor Content Styles */
+.ck-content {
+  line-height: 1.5;
+  overflow: hidden;
+}
+
+.ck-content ul,
+.ck-content ol,
+.ck-content li {
+  list-style: inherit;
+  list-style-position: inside;
+}
+
+.ck-content ul ul,
+.ck-content ul ol,
+.ck-content ol ul,
+.ck-content ol ol {
+  padding-left: 1.2em;
+}
+
+.ck-content i {
+  display: inherit !important;
+  font-style: italic;
+}
+
+.ck-content .table {
+  margin: 0.9em;
+}
+
+/* Editor UI Styles */
+.editor {
+  position: relative;
+  border: 1px solid var(--navy100, #e5e7eb);
+  border-radius: 4px;
+}
+
+.editor_file {
+  padding-top: 26px;
+}
+
+.editor_settings {
+  margin-top: 30px;
+}
+
+.editor_settings .editor_settings_title {
+  min-width: 144px;
+}
+
+.editor_settings .radiogroup {
+  display: flex;
+  align-items: center;
+}
+
+.editor_settings .radiogroup .item {
+  margin-left: 20px;
+}
+
+.editor_settings .radiogroup .item:first-child {
+  margin-left: 0;
+}
+
+.editor_view {
+  min-height: 100px;
+  margin-bottom: 30px;
+  color: var(--typo800, #1f2937);
+}
+
+/* CKEditor Logo 제거 */
+.ck-powered-by {
+  display: none !important;
+  width: 0;
+  background: none;
+}
+
+.ck-balloon-panel.ck-powered-by-balloon {
+  border-color: transparent !important;
+}
+
+/* CKEditor Custom Styles */
+.editor .ck .ck-editor__main .ck-content.ck-editor__editable {
+  min-height: 311px;
+  max-height: 311px;
+  padding: 10px 24px 20px;
+  display: block;
+  border: 0;
+  background: none;
+  line-height: 1.5;
+  box-shadow: none;
+}
+
+.editor .ck .ck-editor__top .ck-sticky-panel .ck-toolbar {
+  height: 52px;
+  border: 0;
+  border-bottom: 1px solid var(--navy50, #f3f4f6);
+}
+
+.editor .ck .ck-placeholder {
+  font-family:
+    'Pretendard',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+}
+
+.editor .ck .ck-placeholder::before {
+  color: var(--navy200, #9ca3af);
+}
+
+/* Design Note Variant */
+.editor.design_note {
+  border: 0;
+  border-top: 1px solid var(--navy50, #f3f4f6);
+}
+
+.editor.design_note .ck .ck-editor__top .ck-sticky-panel .ck-toolbar {
+  height: 73px;
+}
+
+.editor.design_note .ck .ck-editor__main .ck-content.ck-editor__editable {
+  padding: 14px 0 0;
+  min-height: 200px;
+  max-height: 60vh;
+}
+
+/* CKEditor 5 Content Styles (v38.1.1) */
+:root {
+  --ck-color-image-caption-background: hsl(0, 0%, 97%);
+  --ck-color-image-caption-text: hsl(0, 0%, 20%);
+  --ck-color-mention-background: hsla(341, 100%, 30%, 0.1);
+  --ck-color-mention-text: hsl(341, 100%, 30%);
+  --ck-color-table-caption-background: hsl(0, 0%, 97%);
+  --ck-color-table-caption-text: hsl(0, 0%, 20%);
+  --ck-highlight-marker-blue: hsl(201, 97%, 72%);
+  --ck-highlight-marker-green: hsl(120, 93%, 68%);
+  --ck-highlight-marker-pink: hsl(345, 96%, 73%);
+  --ck-highlight-marker-yellow: hsl(60, 97%, 73%);
+  --ck-highlight-pen-green: hsl(112, 100%, 27%);
+  --ck-highlight-pen-red: hsl(0, 85%, 49%);
+  --ck-image-style-spacing: 1.5em;
+  --ck-inline-image-style-spacing: calc(var(--ck-image-style-spacing) / 2);
+  --ck-todo-list-checkmark-size: 16px;
+}
+
+/* Table Caption */
+.ck-content .table > figcaption {
+  display: table-caption;
+  caption-side: top;
+  word-break: break-word;
+  text-align: center;
+  color: var(--ck-color-table-caption-text);
+  background-color: var(--ck-color-table-caption-background);
+  padding: 0.6em;
+  font-size: 0.75em;
+  outline-offset: -1px;
+}
+
+/* Table Styles */
+.ck-content .table {
+  display: table;
+  margin: 0.9em !important;
+}
+
+.ck-content .table table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px double hsl(0, 0%, 70%);
+}
+
+.ck-content .table table td,
+.ck-content .table table th {
+  min-width: 2em;
+  padding: 0.4em;
+  border: 1px solid hsl(0, 0%, 75%);
+}
+
+.ck-content .table table th {
+  font-weight: bold;
+  background: hsla(0, 0%, 0%, 5%);
+}
+
+.ck-content[dir='rtl'] .table th {
+  text-align: right;
+}
+
+.ck-content[dir='ltr'] .table th {
+  text-align: left;
+}
+
+/* Table Column Resize */
+.ck-content .table .ck-table-resized {
+  table-layout: fixed;
+}
+
+.ck-content .table table {
+  overflow: hidden;
+}
+
+.ck-content .table td,
+.ck-content .table th {
+  overflow-wrap: break-word;
+  position: relative;
+}
+
+/* Page Break */
+.ck-content .page-break {
+  position: relative;
+  clear: both;
+  padding: 5px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ck-content .page-break::after {
+  content: '';
+  position: absolute;
+  border-bottom: 2px dashed hsl(0, 0%, 77%);
+  width: 100%;
+}
+
+.ck-content .page-break__label {
+  position: relative;
+  z-index: 1;
+  padding: 0.3em 0.6em;
+  display: block;
+  text-transform: uppercase;
+  border: 1px solid hsl(0, 0%, 77%);
+  border-radius: 2px;
+  font-family: Helvetica, Arial, Tahoma, Verdana, sans-serif;
+  font-size: 0.75em;
+  font-weight: bold;
+  color: hsl(0, 0%, 20%);
+  background: hsl(0, 0%, 100%);
+  box-shadow: 2px 2px 1px hsla(0, 0%, 0%, 0.15);
+  user-select: none;
+}
+
+/* Media Embed */
+.ck-content .media {
+  clear: both;
+  margin: 0.9em 0;
+  display: block;
+  min-width: 15em;
+}
+
+/* Todo List */
+.ck-content .todo-list {
+  list-style: none;
+}
+
+.ck-content .todo-list li {
+  margin-bottom: 5px;
+}
+
+.ck-content .todo-list li .todo-list {
+  margin-top: 5px;
+}
+
+.ck-content .todo-list .todo-list__label > input {
+  display: inline-block;
+  position: relative;
+  width: var(--ck-todo-list-checkmark-size);
+  height: var(--ck-todo-list-checkmark-size);
+  vertical-align: middle;
+  border: 0;
+  left: -25px;
+  margin-right: -15px;
+  right: 0;
+  margin-left: 0;
+}
+
+.ck-content .todo-list .todo-list__label > input::before {
+  display: block;
+  position: absolute;
+  box-sizing: border-box;
+  content: '';
+  width: 100%;
+  height: 100%;
+  border: 1px solid hsl(0, 0%, 20%);
+  border-radius: 2px;
+  transition:
+    250ms ease-in-out box-shadow,
+    250ms ease-in-out background,
+    250ms ease-in-out border;
+}
+
+.ck-content .todo-list .todo-list__label > input::after {
+  display: block;
+  position: absolute;
+  box-sizing: content-box;
+  pointer-events: none;
+  content: '';
+  left: calc(var(--ck-todo-list-checkmark-size) / 3);
+  top: calc(var(--ck-todo-list-checkmark-size) / 5.3);
+  width: calc(var(--ck-todo-list-checkmark-size) / 5.3);
+  height: calc(var(--ck-todo-list-checkmark-size) / 2.6);
+  border-style: solid;
+  border-color: transparent;
+  border-width: 0 calc(var(--ck-todo-list-checkmark-size) / 8) calc(var(--ck-todo-list-checkmark-size) / 8) 0;
+  transform: rotate(45deg);
+}
+
+.ck-content .todo-list .todo-list__label > input[checked]::before {
+  background: hsl(126, 64%, 41%);
+  border-color: hsl(126, 64%, 41%);
+}
+
+.ck-content .todo-list .todo-list__label > input[checked]::after {
+  border-color: hsl(0, 0%, 100%);
+}
+
+.ck-content .todo-list .todo-list__label .todo-list__label__description {
+  vertical-align: middle;
+}
+
+/* Image Styles */
+.ck-content .image {
+  display: table;
+  clear: both;
+  text-align: center;
+  margin: 0.9em auto;
+  min-width: 50px;
+}
+
+.ck-content .image img {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  min-width: 100%;
+}
+
+.ck-content .image-inline {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: flex-start;
+}
+
+.ck-content .image-inline picture {
+  display: flex;
+}
+
+.ck-content .image-inline picture,
+.ck-content .image-inline img {
+  flex-grow: 1;
+  flex-shrink: 1;
+  max-width: 100%;
+}
+
+/* Image Caption */
+.ck-content .image > figcaption {
+  display: table-caption;
+  caption-side: bottom;
+  word-break: break-word;
+  color: var(--ck-color-image-caption-text);
+  background-color: var(--ck-color-image-caption-background);
+  padding: 0.6em;
+  font-size: 0.75em;
+  outline-offset: -1px;
+}
+
+/* Image Resize */
+.ck-content .image.image_resized {
+  max-width: 100%;
+  display: block;
+  box-sizing: border-box;
+}
+
+.ck-content .image.image_resized img {
+  width: 100%;
+}
+
+.ck-content .image.image_resized > figcaption {
+  display: block;
+}
+
+/* Highlight */
+.ck-content .marker-yellow {
+  background-color: var(--ck-highlight-marker-yellow);
+}
+
+.ck-content .marker-green {
+  background-color: var(--ck-highlight-marker-green);
+}
+
+.ck-content .marker-pink {
+  background-color: var(--ck-highlight-marker-pink);
+}
+
+.ck-content .marker-blue {
+  background-color: var(--ck-highlight-marker-blue);
+}
+
+.ck-content .pen-red {
+  color: var(--ck-highlight-pen-red);
+  background-color: transparent;
+}
+
+.ck-content .pen-green {
+  color: var(--ck-highlight-pen-green);
+  background-color: transparent;
+}
+
+/* List Styles */
+.ck-content ol {
+  list-style-type: decimal;
+}
+
+.ck-content ol ol {
+  list-style-type: lower-latin;
+}
+
+.ck-content ol ol ol {
+  list-style-type: lower-roman;
+}
+
+.ck-content ol ol ol ol {
+  list-style-type: upper-latin;
+}
+
+.ck-content ol ol ol ol ol {
+  list-style-type: upper-roman;
+}
+
+.ck-content ul {
+  list-style-type: disc;
+}
+
+.ck-content ul ul {
+  list-style-type: circle;
+}
+
+.ck-content ul ul ul {
+  list-style-type: square;
+}
+
+.ck-content ul ul ul ul {
+  list-style-type: square;
+}
+
+/* Image Alignment Styles */
+.ck-content .image-style-block-align-left,
+.ck-content .image-style-block-align-right {
+  max-width: calc(100% - var(--ck-image-style-spacing));
+}
+
+.ck-content .image-style-align-left,
+.ck-content .image-style-align-right {
+  clear: none;
+}
+
+.ck-content .image-style-side {
+  float: right;
+  margin-left: var(--ck-image-style-spacing);
+  max-width: 50%;
+}
+
+.ck-content .image-style-align-left {
+  float: left;
+  margin-right: var(--ck-image-style-spacing);
+}
+
+.ck-content .image-style-align-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ck-content .image-style-align-right {
+  float: right;
+  margin-left: var(--ck-image-style-spacing);
+}
+
+.ck-content .image-style-block-align-right {
+  margin-right: 0;
+  margin-left: auto;
+}
+
+.ck-content .image-style-block-align-left {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.ck-content p + .image-style-align-left,
+.ck-content p + .image-style-align-right,
+.ck-content p + .image-style-side {
+  margin-top: 0;
+}
+
+.ck-content .image-inline.image-style-align-left,
+.ck-content .image-inline.image-style-align-right {
+  margin-top: var(--ck-inline-image-style-spacing);
+  margin-bottom: var(--ck-inline-image-style-spacing);
+}
+
+.ck-content .image-inline.image-style-align-left {
+  margin-right: var(--ck-inline-image-style-spacing);
+}
+
+.ck-content .image-inline.image-style-align-right {
+  margin-left: var(--ck-inline-image-style-spacing);
+}
+
+/* Code */
+.ck-content code {
+  background-color: hsla(0, 0%, 78%, 0.3);
+  padding: 0.15em;
+  border-radius: 2px;
+}
+
+/* Blockquote */
+.ck-content blockquote {
+  overflow: hidden;
+  padding-right: 1.5em;
+  padding-left: 1.5em;
+  margin-left: 0;
+  margin-right: 0;
+  font-style: italic;
+  border-left: solid 5px hsl(0, 0%, 80%);
+}
+
+.ck-content[dir='rtl'] blockquote {
+  border-left: 0;
+  border-right: solid 5px hsl(0, 0%, 80%);
+}
+
+/* Font Size */
+.ck-content .text-tiny {
+  font-size: 0.7em;
+}
+
+.ck-content .text-small {
+  font-size: 0.85em;
+}
+
+.ck-content .text-big {
+  font-size: 1.4em;
+}
+
+.ck-content .text-huge {
+  font-size: 1.8em;
+}
+
+/* Mention */
+.ck-content .mention {
+  background: var(--ck-color-mention-background);
+  color: var(--ck-color-mention-text);
+}
+
+/* Horizontal Line */
+.ck-content hr {
+  margin: 15px 0;
+  height: 4px;
+  background: hsl(0, 0%, 87%);
+  border: 0;
+}
+
+/* Code Block */
+.ck-content pre {
+  padding: 1em;
+  color: hsl(0, 0%, 20.8%);
+  background: hsla(0, 0%, 78%, 0.3);
+  border: 1px solid hsl(0, 0%, 77%);
+  border-radius: 2px;
+  text-align: left;
+  direction: ltr;
+  tab-size: 4;
+  white-space: pre-wrap;
+  font-style: normal;
+  min-width: 200px;
+}
+
+.ck-content pre code {
+  background: unset;
+  padding: 0;
+  border-radius: 0;
+}
+
+/* Print Styles */
+@media print {
+  .ck-content .page-break {
+    padding: 0;
+  }
+
+  .ck-content .page-break::after {
+    display: none;
+  }
+}

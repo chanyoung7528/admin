@@ -41,6 +41,11 @@ lerna-debug.log*
 *.tsbuildinfo
 tsconfig.tsbuildinfo
 
+# CKEditor Build (auto-generated)
+packages/editor/ckeditor5/build
+packages/editor/ckeditor5/node_modules
+packages/editor/ckeditor5/package-lock.json
+
 # IDE
 .vscode/*
 !.vscode/settings.json

@@ -28,8 +28,11 @@
     "turbo": "^2.6.1"
   },
   "lint-staged": {
-    "apps/**/*.{ts,tsx,js,jsx}": [
+    "apps/my-app/**/*.{ts,tsx,js,jsx}": [
       "bash -c 'cd apps/my-app && pnpm eslint --fix'",
+      "prettier --write"
+    ],
+    "apps/storybook/**/*.{ts,tsx,js,jsx}": [
       "prettier --write"
     ],
     "packages/**/*.{ts,tsx,js,jsx}": [
