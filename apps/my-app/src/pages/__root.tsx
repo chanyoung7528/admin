@@ -1,16 +1,16 @@
+import { env } from '@repo/core/config';
 import { ErrorBoundary } from '@repo/shared/components/ui';
 import { createRootRouteWithContext, Outlet, useRouter } from '@tanstack/react-router';
 import { lazy, Suspense } from 'react';
 
 // 개발 도구는 동적 임포트 (프로덕션 빌드에서 제외)
-const TanStackRouterDevtools =
-  import.meta.env.MODE === 'development'
-    ? lazy(() =>
-        import('@tanstack/react-router-devtools').then(res => ({
-          default: res.TanStackRouterDevtools,
-        }))
-      )
-    : () => null;
+const TanStackRouterDevtools = env.isDebug
+  ? lazy(() =>
+      import('@tanstack/react-router-devtools').then(res => ({
+        default: res.TanStackRouterDevtools,
+      }))
+    )
+  : () => null;
 
 export const Route = createRootRouteWithContext()({
   component: RootComponent,
@@ -38,7 +38,7 @@ function RootComponent() {
     >
       <Outlet />
 
-      {import.meta.env.MODE === 'development' && (
+      {env.isDebug && (
         <Suspense fallback={null}>
           <TanStackRouterDevtools position="bottom-right" />
         </Suspense>
