@@ -107,7 +107,6 @@ const config: StorybookConfig = {
       },
     };
 
-    // 빌드 최적화 설정은 이미 위에서 설정됨
     // React를 외부 모듈로 표시하지 않도록 설정
     config.build.rollupOptions.external = [];
 
