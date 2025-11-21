@@ -1,8 +1,11 @@
-import axios from 'axios';
+import axios, { type AxiosError, type InternalAxiosRequestConfig } from 'axios';
 import { env } from '../config';
 
-// Axios 인스턴스 생성
-export const apiClient = axios.create({
+/**
+ * Axios 기반 API 클라이언트
+ * @see https://axios-http.com/docs/intro
+ */
+export const api = axios.create({
   baseURL: env.apiBaseUrl,
   timeout: env.apiTimeout,
   headers: {
@@ -12,24 +15,23 @@ export const apiClient = axios.create({
 });
 
 // Request 인터셉터
-apiClient.interceptors.request.use(
-  config => {
-    // TODO: Add auth token
+api.interceptors.request.use(
+  (config: InternalAxiosRequestConfig) => {
     const token = localStorage.getItem('accessToken');
-    if (token) {
+    if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
-  error => Promise.reject(error)
+  (error: AxiosError) => Promise.reject(error)
 );
 
 // Response 인터셉터
-apiClient.interceptors.response.use(
+api.interceptors.response.use(
   response => response.data,
-  error => {
+  (error: AxiosError) => {
     // TODO: Handle error (401, 403, etc.)
-    if (error.response?.status === 401) {
+    if (error.response?.status === 401 && typeof window !== 'undefined') {
       // Redirect to login
       window.location.href = '/login';
     }

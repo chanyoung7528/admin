@@ -117,13 +117,13 @@ VITE_API_BASE_URL=https://api.example.com
 ### API 호출
 
 ```typescript
-import { apiClient } from '@/core/api';
+import { api } from '@/core/api';
 
 // GET 요청
-const data = await apiClient.get('/users');
+const data = await api.get('/users');
 
 // POST 요청
-const result = await apiClient.post('/users', { name: 'John' });
+const result = await api.post('/users', { name: 'John' });
 ```
 
 ### TanStack Query 사용
@@ -135,7 +135,7 @@ export function useUsersQuery() {
   return useQuery({
     queryKey: ['users'],
     queryFn: async () => {
-      const data = await apiClient.get('/users');
+      const data = await api.get('/users');
       return data;
     },
   });

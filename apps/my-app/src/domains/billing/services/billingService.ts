@@ -1,6 +1,6 @@
 // B2B 정산 내역 조회
 export async function getB2BSettlement() {
-  // TODO: Implement API call with apiClient from @repo/core/api
+  // TODO: Implement API call with api from @repo/core/api
   return [];
 }
 

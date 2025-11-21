@@ -11,3 +11,8 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+
+declare module 'cookie-store' {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  export const cookieStore: any;
+}

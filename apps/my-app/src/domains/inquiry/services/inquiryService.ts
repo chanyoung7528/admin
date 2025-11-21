@@ -1,6 +1,6 @@
 // 문의 목록 조회
 export async function getInquiries() {
-  // TODO: Implement API call with apiClient from @repo/core/api
+  // TODO: Implement API call with api from @repo/core/api
   return [
     {
       id: '1',
