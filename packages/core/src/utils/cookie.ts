@@ -4,7 +4,7 @@ import { cookieStore as polyfill } from 'cookie-store';
  * CookieStore API 타입 정의
  * @see https://developer.mozilla.org/en-US/docs/Web/API/Cookie_Store_API
  */
-export type CookieSameSite = 'Strict' | 'Lax' | 'None';
+export type CookieSameSite = 'strict' | 'lax' | 'none';
 
 export interface CookieListItem {
   name: string;
