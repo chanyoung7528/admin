@@ -1,6 +1,7 @@
-import { type Direction } from '@shared/components/context/DirectionProvider';
 import { cn } from '@shared/lib/utils';
 import { type SVGProps } from 'react';
+
+type Direction = 'ltr' | 'rtl';
 
 type IconDirProps = SVGProps<SVGSVGElement> & {
   dir: Direction;

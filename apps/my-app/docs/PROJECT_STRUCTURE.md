@@ -173,7 +173,7 @@ Backend API
 ```typescript
 // 1. Service: src/domains/user/services/userService.ts
 export async function getUserList() {
-  return apiClient.get("/users");
+  return api.get("/users");
 }
 
 // 2. Hook: src/domains/user/hooks/useUsersQuery.ts
@@ -231,7 +231,7 @@ function NewDomainPage() {
 // 1. Service 정의
 // src/domains/user/services/userService.ts
 export async function getUserById(id: string) {
-  return apiClient.get(`/users/${id}`);
+  return api.get(`/users/${id}`);
 }
 
 // 2. Hook 정의
@@ -255,7 +255,7 @@ export default function UserDetail({ userId }: { userId: string }) {
 
 ```typescript
 // src/core/api/client.ts
-apiClient.interceptors.request.use(config => {
+api.interceptors.request.use(config => {
   const token = localStorage.getItem('accessToken');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -264,7 +264,7 @@ apiClient.interceptors.request.use(config => {
 });
 
 // src/core/api/client.ts
-apiClient.interceptors.response.use(
+api.interceptors.response.use(
   response => response.data,
   error => {
     if (error.response?.status === 401) {
