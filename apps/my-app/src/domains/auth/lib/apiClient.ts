@@ -1,6 +1,5 @@
-import { api } from '@repo/core/api';
+import { api, setupInterceptors } from '@repo/core/api';
 import { cookie } from '@repo/core/utils';
-import type { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import type { PendingRetryTask, RetryableRequestConfig } from '../types';
 import { ACCESS_TOKEN_COOKIE_KEY } from '../types';
 import { clearRequestTracking, trackRequest } from './requestTracker';
@@ -48,52 +47,35 @@ async function processRetryQueue() {
 }
 
 /**
- * API 클라이언트에 인증 및 추적 인터셉터 설정
- * - 요청 시 Authorization 헤더 추가 및 로딩 추적 시작
- * - 응답 시 로딩 추적 종료
- * - 401 응답 시 토큰 갱신 후 재시도
+ * 인증 클라이언트 초기화 (브라우저 환경에서 한 번만 실행)
  */
-function setupInterceptors() {
-  // Request Interceptor
-  api.interceptors.request.use(
-    async (config: InternalAxiosRequestConfig) => {
-      const retryableConfig = config as RetryableRequestConfig;
+export function ensureAuthClient() {
+  if (typeof window === 'undefined' || isClientInitialized) {
+    return;
+  }
 
-      // 요청 추적 시작
-      trackRequest(retryableConfig);
+  isClientInitialized = true;
 
-      const token = await cookie.get(ACCESS_TOKEN_COOKIE_KEY);
-      if (token && config.headers) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
-      return config;
+  setupInterceptors({
+    getAuthToken: async () => cookie.get(ACCESS_TOKEN_COOKIE_KEY),
+
+    onRequest: config => {
+      trackRequest(config as RetryableRequestConfig);
     },
-    (error: AxiosError) => {
+
+    onResponse: response => {
+      clearRequestTracking(response.config as RetryableRequestConfig);
+    },
+
+    onError: error => {
       const config = error.config as RetryableRequestConfig;
       if (config) {
         clearRequestTracking(config);
       }
-      return Promise.reject(error);
-    }
-  );
-
-  // Response Interceptor
-  api.interceptors.response.use(
-    response => {
-      const config = response.config as RetryableRequestConfig;
-      clearRequestTracking(config);
-      return response;
     },
-    async (error: AxiosError) => {
+
+    onUnauthorized: async error => {
       const originalRequest = error.config as RetryableRequestConfig | undefined;
-
-      if (originalRequest) {
-        clearRequestTracking(originalRequest);
-      }
-
-      if (error.response?.status !== 401 || typeof window === 'undefined') {
-        return Promise.reject(error);
-      }
 
       if (!originalRequest || originalRequest._retry || originalRequest.url?.includes('/auth/refresh')) {
         await handleForcedLogout();
@@ -109,18 +91,6 @@ function setupInterceptors() {
 
       await handleForcedLogout();
       return Promise.reject(error);
-    }
-  );
-}
-
-/**
- * 인증 클라이언트 초기화 (브라우저 환경에서 한 번만 실행)
- */
-export function ensureAuthClient() {
-  if (typeof window === 'undefined' || isClientInitialized) {
-    return;
-  }
-
-  isClientInitialized = true;
-  setupInterceptors();
+    },
+  });
 }

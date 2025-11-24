@@ -1,4 +1,5 @@
 import { useAuth } from '@/domains/auth/hooks/useAuth';
+import { api } from '@repo/core/api';
 import { Button, Input } from '@repo/shared/components/ui';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 
@@ -14,12 +15,14 @@ function LoginPage() {
     e.preventDefault();
 
     // TODO: 실제 로그인 API 호출
-    // const { token } = await loginAPI({ email, password });
+    const { result } = await api.post('/auth/token', { userName: 'congenial@naver.com', password: 'mz2025!!', sessionToken: 'test' });
+
+    console.log('Test Result', result);
 
     // 임시: 토큰을 auth store에 저장
     await setTokens({
-      accessToken: 'demo-access-token',
-      refreshToken: 'demo-refresh-token',
+      accessToken: result.accessToken ?? 'demo-access-token',
+      refreshToken: result.refreshToken ?? 'demo-refresh-token',
     });
 
     // 로그인 후 대시보드로 이동

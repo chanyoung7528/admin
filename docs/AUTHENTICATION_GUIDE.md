@@ -40,15 +40,17 @@ root.render(...);
 
 ### 2.2 API 클라이언트 및 인터셉터
 
-`apiClient.ts`는 `@repo/core/api`를 확장하여 인증과 로딩 추적 기능을 통합합니다.
+`@repo/core/api`의 중앙 집중식 인터셉터 설정 기능을 활용하여 인증과 로딩 추적을 통합 관리합니다.
 
-- **Request Interceptor**:
-  - `trackRequest()` 호출로 로딩 타이머 시작
-  - `Authorization` 헤더에 Access Token 주입
-- **Response Interceptor**:
-  - 성공/실패 여부와 관계없이 `clearRequestTracking()`으로 로딩 타이머 정리
-  - **401 Unauthorized**: `requestTokenRefresh()`로 토큰 갱신 시도 후 원래 요청 재시도 (`pendingRetryQueue` 활용)
-  - 갱신 실패 시 `handleForcedLogout()`으로 강제 로그아웃
+- **`@repo/core/api`**: 기본 Axios 인스턴스와 인터셉터 주입 함수(`setupInterceptors`)를 제공합니다.
+- **`apps/my-app/.../apiClient.ts`**: `setupInterceptors`를 호출하여 앱 전용 로직을 주입합니다.
+
+**주입되는 로직:**
+
+1.  **getAuthToken**: 쿠키에서 Access Token을 조회하여 헤더에 자동 주입합니다.
+2.  **onRequest**: 요청 시작 시 `trackRequest()`를 호출하여 로딩 추적을 시작합니다.
+3.  **onResponse / onError**: 응답 완료 시 `clearRequestTracking()`으로 로딩 추적을 종료합니다.
+4.  **onUnauthorized**: 401 에러 발생 시 토큰 갱신 로직을 수행하고 재시도 큐(`pendingRetryQueue`)를 처리합니다.
 
 ### 2.3 토큰 갱신 및 동기화
 
