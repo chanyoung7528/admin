@@ -1,12 +1,10 @@
-import { getCookie, removeCookie, setCookie } from '@repo/shared/lib/cookies';
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
 type Theme = 'dark' | 'light' | 'system';
 type ResolvedTheme = Exclude<Theme, 'system'>;
 
 const DEFAULT_THEME = 'system';
-const THEME_COOKIE_NAME = 'vite-ui-theme';
-const THEME_COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 year
+const THEME_STORAGE_KEY = 'vite-ui-theme';
 
 type ThemeProviderProps = {
   children: React.ReactNode;
@@ -32,8 +30,8 @@ const initialState: ThemeProviderState = {
 
 const ThemeContext = createContext<ThemeProviderState>(initialState);
 
-export function ThemeProvider({ children, defaultTheme = DEFAULT_THEME, storageKey = THEME_COOKIE_NAME, ...props }: ThemeProviderProps) {
-  const [theme, _setTheme] = useState<Theme>(() => (getCookie(storageKey) as Theme) || defaultTheme);
+export function ThemeProvider({ children, defaultTheme = DEFAULT_THEME, storageKey = THEME_STORAGE_KEY, ...props }: ThemeProviderProps) {
+  const [theme, _setTheme] = useState<Theme>(() => (localStorage.getItem(storageKey) as Theme) || defaultTheme);
 
   // Optimized: Memoize the resolved theme calculation to prevent unnecessary re-computations
   const resolvedTheme = useMemo((): ResolvedTheme => {
@@ -67,12 +65,12 @@ export function ThemeProvider({ children, defaultTheme = DEFAULT_THEME, storageK
   }, [theme, resolvedTheme]);
 
   const setTheme = (theme: Theme) => {
-    setCookie(storageKey, theme, THEME_COOKIE_MAX_AGE);
+    localStorage.setItem(storageKey, theme);
     _setTheme(theme);
   };
 
   const resetTheme = () => {
-    removeCookie(storageKey);
+    localStorage.removeItem(storageKey);
     _setTheme(DEFAULT_THEME);
   };
 

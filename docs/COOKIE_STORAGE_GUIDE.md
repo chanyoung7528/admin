@@ -21,7 +21,7 @@ await cookie.set('token', 'abc123', {
   expires: new Date(Date.now() + 3600000), // 1시간
   path: '/',
   secure: true,
-  sameSite: 'Strict',
+  sameSite: 'strict',
 });
 
 // 쿠키 조회
@@ -42,7 +42,7 @@ const allCookies = await cookie.getAll();
 | `path`     | `string`                      | 경로 (기본값: `/`)                 |
 | `domain`   | `string \| null`              | 도메인                             |
 | `secure`   | `boolean`                     | HTTPS 전용 여부                    |
-| `sameSite` | `'Strict' \| 'Lax' \| 'None'` | SameSite 정책                      |
+| `sameSite` | `'strict' \| 'lax' \| 'none'` | SameSite 정책                      |
 
 ### 브라우저 호환성
 
