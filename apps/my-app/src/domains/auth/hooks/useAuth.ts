@@ -139,16 +139,14 @@ function overrideApiRequest() {
   const boundRequest = api.request.bind(api);
   originalApiRequest = boundRequest;
 
-  const trackedRequest: typeof api.request = config => {
+  api.request = (config => {
     const normalizedConfig = (config ?? {}) as RetryableRequestConfig;
     trackRequest(normalizedConfig);
 
     return boundRequest(normalizedConfig).finally(() => {
       clearRequestTracking(normalizedConfig);
     });
-  };
-
-  api.request = trackedRequest;
+  }) as typeof api.request;
 }
 
 function enqueueRequestRetry(config: RetryableRequestConfig) {
