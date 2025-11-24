@@ -52,9 +52,6 @@ import { formatDate } from '@repo/shared/lib/date';
 // shared 패키지의 hooks
 import { useIsMobile } from '@repo/shared/hooks/useIsMobile';
 
-// shared 패키지의 stores
-import { useAuthStore } from '@repo/shared/stores/useAuthStore';
-
 // shared 패키지의 assets
 import { IconCustom } from '@repo/shared/assets/custom';
 ```
@@ -83,7 +80,6 @@ import { IconCustom } from '@repo/shared/assets/custom';
       "@repo/shared/components/*": ["../../packages/shared/src/components/*"],
       "@repo/shared/lib/*": ["../../packages/shared/src/lib/*"],
       "@repo/shared/hooks/*": ["../../packages/shared/src/hooks/*"],
-      "@repo/shared/stores/*": ["../../packages/shared/src/stores/*"],
       "@repo/shared/assets/*": ["../../packages/shared/src/assets/*"],
       "@repo/shared/*": ["../../packages/shared/src/*"],
 
@@ -93,7 +89,6 @@ import { IconCustom } from '@repo/shared/assets/custom';
       "@shared/components/*": ["../../packages/shared/src/components/*"],
       "@shared/lib/*": ["../../packages/shared/src/lib/*"],
       "@shared/hooks/*": ["../../packages/shared/src/hooks/*"],
-      "@shared/stores/*": ["../../packages/shared/src/stores/*"],
       "@shared/assets/*": ["../../packages/shared/src/assets/*"]
     }
   }
@@ -116,7 +111,6 @@ export default defineConfig({
       '@repo/shared/components': path.resolve(__dirname, '../../packages/shared/src/components'),
       '@repo/shared/lib': path.resolve(__dirname, '../../packages/shared/src/lib'),
       '@repo/shared/hooks': path.resolve(__dirname, '../../packages/shared/src/hooks'),
-      '@repo/shared/stores': path.resolve(__dirname, '../../packages/shared/src/stores'),
       '@repo/shared/assets': path.resolve(__dirname, '../../packages/shared/src/assets'),
       '@repo/shared': path.resolve(__dirname, '../../packages/shared/src'),
 
@@ -125,7 +119,6 @@ export default defineConfig({
       '@shared/components': path.resolve(__dirname, '../../packages/shared/src/components'),
       '@shared/lib': path.resolve(__dirname, '../../packages/shared/src/lib'),
       '@shared/hooks': path.resolve(__dirname, '../../packages/shared/src/hooks'),
-      '@shared/stores': path.resolve(__dirname, '../../packages/shared/src/stores'),
       '@shared/assets': path.resolve(__dirname, '../../packages/shared/src/assets'),
       '@shared': path.resolve(__dirname, '../../packages/shared/src'),
 
@@ -165,9 +158,6 @@ import { formatDate } from '@shared/lib/date';
 // Hooks
 import { useIsMobile } from '@shared/hooks/useIsMobile';
 
-// Stores
-import { useAuthStore } from '@shared/stores/useAuthStore';
-
 // Assets
 import { IconCustom } from '@shared/assets/custom';
 ```
@@ -186,7 +176,6 @@ import { IconCustom } from '@shared/assets/custom';
       "@shared/components/*": ["./src/components/*"],
       "@shared/lib/*": ["./src/lib/*"],
       "@shared/hooks/*": ["./src/hooks/*"],
-      "@shared/stores/*": ["./src/stores/*"],
       "@shared/assets/*": ["./src/assets/*"]
     }
   }
@@ -206,7 +195,6 @@ export default defineConfig({
       '@shared/components': path.resolve(__dirname, './src/components'),
       '@shared/lib': path.resolve(__dirname, './src/lib'),
       '@shared/hooks': path.resolve(__dirname, './src/hooks'),
-      '@shared/stores': path.resolve(__dirname, './src/stores'),
       '@shared/assets': path.resolve(__dirname, './src/assets'),
       '@shared': path.resolve(__dirname, './src'),
     },
@@ -227,7 +215,6 @@ export default defineConfig({
     "./components/context": "./src/components/context/index.ts",
     "./components/*": "./src/components/*",
     "./hooks/*": "./src/hooks/*.ts",
-    "./stores/*": "./src/stores/*.ts",
     "./types/*": "./src/types/*.ts"
   }
 }
@@ -271,7 +258,6 @@ import { CustomDocsPage } from '@/components/CustomDocsPage';
       "@repo/shared/components/*": ["../../packages/shared/src/components/*"],
       "@repo/shared/lib/*": ["../../packages/shared/src/lib/*"],
       "@repo/shared/hooks/*": ["../../packages/shared/src/hooks/*"],
-      "@repo/shared/stores/*": ["../../packages/shared/src/stores/*"],
       "@repo/shared/assets/*": ["../../packages/shared/src/assets/*"],
       "@repo/shared/*": ["../../packages/shared/src/*"],
 
@@ -281,7 +267,6 @@ import { CustomDocsPage } from '@/components/CustomDocsPage';
       "@shared/components/*": ["../../packages/shared/src/components/*"],
       "@shared/lib/*": ["../../packages/shared/src/lib/*"],
       "@shared/hooks/*": ["../../packages/shared/src/hooks/*"],
-      "@shared/stores/*": ["../../packages/shared/src/stores/*"],
       "@shared/assets/*": ["../../packages/shared/src/assets/*"]
     }
   }
@@ -309,7 +294,6 @@ const config: StorybookConfig = {
       '@repo/shared/components': resolve(__dirname, '../../../packages/shared/src/components'),
       '@repo/shared/lib': resolve(__dirname, '../../../packages/shared/src/lib'),
       '@repo/shared/hooks': resolve(__dirname, '../../../packages/shared/src/hooks'),
-      '@repo/shared/stores': resolve(__dirname, '../../../packages/shared/src/stores'),
       '@repo/shared/assets': resolve(__dirname, '../../../packages/shared/src/assets'),
       '@repo/shared': resolve(__dirname, '../../../packages/shared/src'),
 
@@ -318,7 +302,6 @@ const config: StorybookConfig = {
       '@shared/components': resolve(__dirname, '../../../packages/shared/src/components'),
       '@shared/lib': resolve(__dirname, '../../../packages/shared/src/lib'),
       '@shared/hooks': resolve(__dirname, '../../../packages/shared/src/hooks'),
-      '@shared/stores': resolve(__dirname, '../../../packages/shared/src/stores'),
       '@shared/assets': resolve(__dirname, '../../../packages/shared/src/assets'),
       '@shared': resolve(__dirname, '../../../packages/shared/src'),
     };

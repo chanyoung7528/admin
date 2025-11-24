@@ -1,4 +1,4 @@
-import axios, { type AxiosError, type InternalAxiosRequestConfig } from 'axios';
+import axios, { type AxiosError } from 'axios';
 import { env } from '../config';
 
 /**
@@ -14,25 +14,12 @@ export const api = axios.create({
   },
 });
 
-// Request 인터셉터
-api.interceptors.request.use(
-  (config: InternalAxiosRequestConfig) => {
-    const token = localStorage.getItem('accessToken');
-    if (token && config.headers) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error: AxiosError) => Promise.reject(error)
-);
-
 // Response 인터셉터
 api.interceptors.response.use(
   response => response.data,
   (error: AxiosError) => {
     // TODO: Handle error (401, 403, etc.)
     if (error.response?.status === 401 && typeof window !== 'undefined') {
-      // Redirect to login
       window.location.href = '/login';
     }
     return Promise.reject(error);

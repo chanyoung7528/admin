@@ -250,44 +250,56 @@ export const Route = createFileRoute('/_public/login')({
 ### 1. Auth Store 생성 (Zustand)
 
 ```typescript
-// src/stores/useAuthStore.ts
+// apps/my-app/src/domains/auth/stores/useAuthStore.ts
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
 
-interface AuthState {
-  token: string | null;
-  user: User | null;
-  isAuthenticated: boolean;
-  login: (token: string, user: User) => void;
-  logout: () => void;
-}
-
-export const useAuthStore = create<AuthState>()(
-  persist(
-    set => ({
-      token: null,
+export const useAuthStore = create<AuthState>()(set => ({
+  user: null,
+  accessToken: '',
+  refreshToken: '',
+  setUser: user =>
+    set(state => ({
+      ...state,
+      user,
+    })),
+  setTokens: tokens =>
+    set(state => ({
+      ...state,
+      accessToken: tokens.accessToken,
+      refreshToken: tokens.refreshToken,
+    })),
+  reset: () =>
+    set({
       user: null,
-      isAuthenticated: false,
-      login: (token, user) => set({ token, user, isAuthenticated: true }),
-      logout: () => set({ token: null, user: null, isAuthenticated: false }),
+      accessToken: '',
+      refreshToken: '',
     }),
-    {
-      name: 'auth-storage',
-    }
-  )
-);
+}));
 ```
 
 ### 2. `_authenticated.tsx`에서 사용
 
 ```typescript
-import { useAuthStore } from '@/stores/useAuthStore';
+import { ACCESS_TOKEN_COOKIE_KEY, REFRESH_TOKEN_COOKIE_KEY, useAuth } from '@/domains/auth/hooks/useAuth';
+import { cookie } from '@repo/core/utils';
+import { useAuthStore } from '@/domains/auth/stores/useAuthStore';
 
 export const Route = createFileRoute('/_authenticated')({
   beforeLoad: async ({ location }) => {
-    const { isAuthenticated } = useAuthStore.getState();
+    if (typeof window === 'undefined') return;
 
-    if (!isAuthenticated) {
+    if (!useAuthStore.getState().accessToken) {
+      const [accessToken, refreshToken] = await Promise.all([cookie.get(ACCESS_TOKEN_COOKIE_KEY), cookie.get(REFRESH_TOKEN_COOKIE_KEY)]);
+
+      if (accessToken || refreshToken) {
+        useAuthStore.getState().setTokens({
+          accessToken: accessToken ?? '',
+          refreshToken: refreshToken ?? '',
+        });
+      }
+    }
+
+    if (!useAuthStore.getState().accessToken) {
       throw redirect({
         to: '/login',
         search: { redirect: location.href },
@@ -302,21 +314,19 @@ export const Route = createFileRoute('/_authenticated')({
 
 ```typescript
 // pages/_public/login.tsx
-import { useAuthStore } from '@/stores/useAuthStore';
+import { useAuth } from '@/domains/auth/hooks/useAuth';
 import { useNavigate, useSearch } from '@tanstack/react-router';
 
 function LoginPage() {
   const navigate = useNavigate();
   const search = useSearch({ from: '/_public/login' });
-  const login = useAuthStore((state) => state.login);
+  const { setTokens } = useAuth();
 
-  const handleLogin = async (credentials) => {
-    const { token, user } = await loginAPI(credentials);
+  const handleLogin = async (credentials: LoginPayload) => {
+    const { accessToken, refreshToken } = await loginAPI(credentials);
 
-    // Store에 저장
-    login(token, user);
+    await setTokens({ accessToken, refreshToken });
 
-    // 원래 가려던 페이지로 이동
     navigate({ to: search.redirect || '/' });
   };
 

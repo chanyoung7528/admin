@@ -33,7 +33,6 @@
       "@repo/shared/components/*": ["../../packages/shared/src/components/*"],
       "@repo/shared/lib/*": ["../../packages/shared/src/lib/*"],
       "@repo/shared/hooks/*": ["../../packages/shared/src/hooks/*"],
-      "@repo/shared/stores/*": ["../../packages/shared/src/stores/*"],
       "@repo/shared/assets/*": ["../../packages/shared/src/assets/*"],
       "@repo/shared/*": ["../../packages/shared/src/*"],
 
@@ -43,7 +42,6 @@
       "@shared/components/*": ["../../packages/shared/src/components/*"],
       "@shared/lib/*": ["../../packages/shared/src/lib/*"],
       "@shared/hooks/*": ["../../packages/shared/src/hooks/*"],
-      "@shared/stores/*": ["../../packages/shared/src/stores/*"],
       "@shared/assets/*": ["../../packages/shared/src/assets/*"]
     }
   },
