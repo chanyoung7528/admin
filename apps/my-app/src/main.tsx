@@ -1,5 +1,5 @@
-import { initializeAuthSession } from '@/domains/auth/hooks/useAuth';
 import { ensureAuthClient } from '@/domains/auth/lib/apiClient';
+import { initializeAuthSession } from '@/domains/auth/lib/tokenManager';
 import { env } from '@repo/core/config';
 import { ThemeProvider } from '@repo/shared/components/context';
 import { QueryClientProvider } from '@tanstack/react-query';
