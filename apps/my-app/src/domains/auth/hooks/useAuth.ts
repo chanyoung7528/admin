@@ -1,5 +1,4 @@
 import { useNavigate } from '@tanstack/react-router';
-import { useCallback } from 'react';
 import { clearPersistedSession, persistTokens } from '../lib/tokenManager';
 import { useAuthStore } from '../stores/useAuthStore';
 import type { AuthTokens } from '../types';
@@ -14,17 +13,17 @@ export function useAuth() {
   const refreshToken = useAuthStore(state => state.refreshToken);
   const setUser = useAuthStore(state => state.setUser);
 
-  const setTokens = useCallback(async (tokens: AuthTokens) => {
+  const setTokens = async (tokens: AuthTokens) => {
     await persistTokens(tokens);
-  }, []);
+  };
 
-  const signOut = useCallback(async () => {
+  const signOut = async () => {
     await clearPersistedSession();
     navigate({
       to: '/login',
       replace: true,
     });
-  }, [navigate]);
+  };
 
   return {
     user,
