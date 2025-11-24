@@ -1,4 +1,5 @@
 import { initializeAuthSession } from '@/domains/auth/hooks/useAuth';
+import { ensureAuthClient } from '@/domains/auth/lib/apiClient';
 import { env } from '@repo/core/config';
 import { ThemeProvider } from '@repo/shared/components/context';
 import { QueryClientProvider } from '@tanstack/react-query';
@@ -18,6 +19,7 @@ const ReactQueryDevtools = env.isDebug
   : () => null;
 
 async function bootstrap() {
+  ensureAuthClient();
   await initializeAuthSession();
 
   const rootElement = document.getElementById('root')!;

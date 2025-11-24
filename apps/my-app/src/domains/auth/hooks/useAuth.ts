@@ -4,9 +4,6 @@ import { clearPersistedSession, persistTokens } from '../lib/tokenManager';
 import type { AuthTokens } from '../stores/useAuthStore';
 import { useAuthStore } from '../stores/useAuthStore';
 
-// 라이브러리 초기화 (사이드 이펙트)
-import '../lib/apiClient';
-
 export { initializeAuthSession } from '../lib/tokenManager';
 export { ACCESS_TOKEN_COOKIE_KEY, REFRESH_TOKEN_COOKIE_KEY } from '../types';
 
