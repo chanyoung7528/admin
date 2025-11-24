@@ -58,8 +58,7 @@ class CookieManager {
     if (typeof window !== 'undefined' && 'cookieStore' in window) {
       return window.cookieStore as unknown as CookieStore;
     }
-    // Polyfill은 동적으로 import하거나 fallback 로직 사용
-    throw new Error('CookieStore API is not available');
+    throw new Error('CookieStore API is not available. Make sure to import cookie-store polyfill.');
   }
 
   async get(name: string): Promise<string | null> {

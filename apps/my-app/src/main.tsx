@@ -4,6 +4,7 @@ import { env } from '@repo/core/config';
 import { ThemeProvider } from '@repo/shared/components/context';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { RouterProvider } from '@tanstack/react-router';
+import 'cookie-store';
 import { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
