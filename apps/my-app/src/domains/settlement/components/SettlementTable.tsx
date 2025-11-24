@@ -1,3 +1,7 @@
+import { DataTable } from '@shared/components/data-table';
+import { settlementColumns } from '../columns';
+import { type Settlement } from '../types';
+
 interface SettlementTableProps {
   service: 'BODY' | 'FOOD' | 'MIND';
 }
@@ -10,13 +14,13 @@ export function SettlementTable({ service }: SettlementTableProps) {
   }[service];
 
   // 샘플 데이터
-  const settlements = [
+  const settlements: Settlement[] = [
     {
       id: 'ST-2025-001',
       site: '강남 헬스케어',
       amount: 3500000,
       period: '2025-10',
-      status: '완료',
+      status: 'completed',
       date: '2025-11-05',
     },
     {
@@ -24,7 +28,7 @@ export function SettlementTable({ service }: SettlementTableProps) {
       site: '서초 웰니스',
       amount: 2800000,
       period: '2025-10',
-      status: '대기',
+      status: 'pending',
       date: '2025-11-03',
     },
     {
@@ -32,10 +36,15 @@ export function SettlementTable({ service }: SettlementTableProps) {
       site: '판교 케어센터',
       amount: 4200000,
       period: '2025-10',
-      status: '완료',
+      status: 'completed',
       date: '2025-11-01',
     },
   ];
+
+  // 요약 통계 계산
+  const totalAmount = settlements.reduce((sum, s) => sum + s.amount, 0);
+  const completedCount = settlements.filter(s => s.status === 'completed').length;
+  const pendingCount = settlements.filter(s => s.status === 'pending').length;
 
   return (
     <div className="bg-card rounded-lg border p-6">
@@ -50,55 +59,42 @@ export function SettlementTable({ service }: SettlementTableProps) {
       <div className="mb-6 grid gap-4 md:grid-cols-3">
         <div className="bg-background rounded-lg p-4">
           <p className="text-muted-foreground text-sm">총 정산 금액</p>
-          <p className="mt-1 text-2xl font-bold">₩10.5M</p>
+          <p className="mt-1 text-2xl font-bold">
+            {new Intl.NumberFormat('ko-KR', {
+              style: 'currency',
+              currency: 'KRW',
+              notation: 'compact',
+              maximumFractionDigits: 1,
+            }).format(totalAmount)}
+          </p>
         </div>
         <div className="bg-background rounded-lg p-4">
           <p className="text-muted-foreground text-sm">정산 완료</p>
-          <p className="mt-1 text-2xl font-bold">2건</p>
+          <p className="mt-1 text-2xl font-bold">{completedCount}건</p>
         </div>
         <div className="bg-background rounded-lg p-4">
           <p className="text-muted-foreground text-sm">정산 대기</p>
-          <p className="mt-1 text-2xl font-bold">1건</p>
+          <p className="mt-1 text-2xl font-bold">{pendingCount}건</p>
         </div>
       </div>
 
       {/* 정산 테이블 */}
-      <div className="overflow-hidden rounded-lg border">
-        <table className="w-full">
-          <thead className="bg-muted">
-            <tr>
-              <th className="px-4 py-3 text-left text-sm font-medium">정산 ID</th>
-              <th className="px-4 py-3 text-left text-sm font-medium">Site명</th>
-              <th className="px-4 py-3 text-left text-sm font-medium">정산 기간</th>
-              <th className="px-4 py-3 text-right text-sm font-medium">정산 금액</th>
-              <th className="px-4 py-3 text-left text-sm font-medium">처리일</th>
-              <th className="px-4 py-3 text-center text-sm font-medium">상태</th>
-            </tr>
-          </thead>
-          <tbody>
-            {settlements.map(settlement => (
-              <tr key={settlement.id} className="hover:bg-muted/50 border-t">
-                <td className="px-4 py-3 text-sm font-medium">{settlement.id}</td>
-                <td className="px-4 py-3 text-sm">{settlement.site}</td>
-                <td className="px-4 py-3 text-sm">{settlement.period}</td>
-                <td className="px-4 py-3 text-right text-sm font-medium">₩{settlement.amount.toLocaleString()}</td>
-                <td className="px-4 py-3 text-sm">{settlement.date}</td>
-                <td className="px-4 py-3 text-center">
-                  <span
-                    className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${
-                      settlement.status === '완료'
-                        ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
-                        : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
-                    }`}
-                  >
-                    {settlement.status}
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <DataTable
+        columns={settlementColumns}
+        data={settlements}
+        searchPlaceholder="정산 검색..."
+        filters={[
+          {
+            columnId: 'status',
+            title: '상태',
+            options: [
+              { label: '완료', value: 'completed' },
+              { label: '대기', value: 'pending' },
+            ],
+          },
+        ]}
+        emptyMessage="정산 내역이 없습니다."
+      />
     </div>
   );
 }
