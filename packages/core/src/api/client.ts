@@ -1,11 +1,11 @@
-import axios, { type AxiosError, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios';
+import axios, { type AxiosError, type AxiosRequestConfig, type AxiosResponse, type InternalAxiosRequestConfig } from 'axios';
 import { env } from '../config';
 
 /**
- * Axios 기반 API 클라이언트
+ * Axios 기반 API 클라이언트 (내부용)
  * @see https://axios-http.com/docs/intro
  */
-export const api = axios.create({
+const axiosInstance = axios.create({
   baseURL: env.apiBaseUrl,
   timeout: env.apiTimeout,
   headers: {
@@ -13,6 +13,19 @@ export const api = axios.create({
     'Accept-Language': env.apiAcceptLanguage,
   },
 });
+
+/**
+ * 타입 안전한 API 클라이언트
+ * 인터셉터에서 response.data를 반환하므로 타입도 그에 맞게 조정
+ */
+export const api = {
+  get: <T = any>(url: string, config?: AxiosRequestConfig) => axiosInstance.get<T>(url, config) as Promise<T>,
+  post: <T = any>(url: string, data?: any, config?: AxiosRequestConfig) => axiosInstance.post<T>(url, data, config) as Promise<T>,
+  put: <T = any>(url: string, data?: any, config?: AxiosRequestConfig) => axiosInstance.put<T>(url, data, config) as Promise<T>,
+  patch: <T = any>(url: string, data?: any, config?: AxiosRequestConfig) => axiosInstance.patch<T>(url, data, config) as Promise<T>,
+  delete: <T = any>(url: string, config?: AxiosRequestConfig) => axiosInstance.delete<T>(url, config) as Promise<T>,
+  request: <T = any>(config: AxiosRequestConfig) => axiosInstance.request<T>(config) as Promise<T>,
+};
 
 export interface ApiInterceptorConfig {
   onRequest?: (config: InternalAxiosRequestConfig) => void;
@@ -28,7 +41,7 @@ export interface ApiInterceptorConfig {
  */
 export const setupInterceptors = (config: ApiInterceptorConfig) => {
   // Request Interceptor
-  api.interceptors.request.use(
+  axiosInstance.interceptors.request.use(
     async reqConfig => {
       config.onRequest?.(reqConfig);
 
@@ -47,7 +60,7 @@ export const setupInterceptors = (config: ApiInterceptorConfig) => {
   );
 
   // Response Interceptor
-  api.interceptors.response.use(
+  axiosInstance.interceptors.response.use(
     response => {
       config.onResponse?.(response);
       return response.data;

@@ -25,7 +25,7 @@ registerLocale('enUS', enUS);
 
 // CustomInput을 컴포넌트 외부로 선언
 interface CustomInputProps extends React.HTMLProps<HTMLInputElement> {
-  width?: number | 'full';
+  width?: number | 'default' | 'full';
   openDate: boolean;
   selectedDate: Date | null;
   disabled: boolean;

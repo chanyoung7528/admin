@@ -15,7 +15,11 @@ function LoginPage() {
     e.preventDefault();
 
     // TODO: 실제 로그인 API 호출
-    const { result } = await api.post('/auth/token', { userName: 'congenial@naver.com', password: 'mz2025!!', sessionToken: 'test' });
+    const result = await api.post<{ accessToken: string; refreshToken: string }>('/auth/token', {
+      userName: 'congenial@naver.com',
+      password: 'mz2025!!',
+      sessionToken: 'test',
+    });
 
     console.log('Test Result', result);
 

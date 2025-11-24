@@ -12,5 +12,5 @@ export interface RefreshAuthResponse extends AuthTokens {
  */
 export async function refreshAuthToken(refreshToken: string): Promise<RefreshAuthResponse> {
   const res = await api.post<RefreshAuthResponse>('/auth/refresh', { refreshToken });
-  return res.data;
+  return res;
 }
