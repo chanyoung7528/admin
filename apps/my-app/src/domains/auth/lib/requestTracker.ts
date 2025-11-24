@@ -1,7 +1,6 @@
 import { useFullPageLoadingStore } from '@repo/shared/hooks/useFullPageLoadingStore';
 import type { RequestTimerEntry, RetryableRequestConfig } from '../types';
-
-const SLOW_REQUEST_THRESHOLD = 300;
+import { AUTH_CONFIG } from '../types';
 
 let requestSequence = 0;
 const requestTimers = new Map<number, RequestTimerEntry>();
@@ -24,7 +23,7 @@ export function trackRequest(config: RetryableRequestConfig) {
     }
     entry.visible = true;
     useFullPageLoadingStore.getState().show(requestId);
-  }, SLOW_REQUEST_THRESHOLD);
+  }, AUTH_CONFIG.SLOW_REQUEST_THRESHOLD);
 
   requestTimers.set(requestId, { timeoutId, visible: false });
 }

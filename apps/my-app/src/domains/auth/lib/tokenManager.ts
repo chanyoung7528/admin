@@ -1,12 +1,10 @@
 import { router } from '@/router';
 import { cookie } from '@repo/core/utils';
 import { refreshAuthToken } from '../services/authService';
-import type { AuthTokens, AuthUser } from '../stores/useAuthStore';
 import { useAuthStore } from '../stores/useAuthStore';
-import { ACCESS_TOKEN_COOKIE_KEY, REFRESH_TOKEN_COOKIE_KEY } from '../types';
+import type { AuthTokens } from '../types';
+import { ACCESS_TOKEN_COOKIE_KEY, AUTH_CONFIG, REFRESH_TOKEN_COOKIE_KEY } from '../types';
 import { getCookieSecurityOptions } from '../utils/cookieHelpers';
-
-const MAX_REFRESH_ATTEMPTS = 3;
 
 let refreshPromise: Promise<AuthTokens | null> | null = null;
 let hasHydratedTokens = false;
@@ -69,12 +67,14 @@ export async function handleForcedLogout() {
 async function executeRefreshAttempt(): Promise<AuthTokens | null> {
   const { refreshToken } = useAuthStore.getState();
   if (!refreshToken) {
+    console.warn('토큰 갱신 실패: refreshToken 없음');
     return null;
   }
 
   try {
     const response = await refreshAuthToken(refreshToken);
     if (!response?.accessToken || !response?.refreshToken) {
+      console.error('토큰 갱신 실패: 응답 데이터 누락');
       return null;
     }
 
@@ -86,11 +86,12 @@ async function executeRefreshAttempt(): Promise<AuthTokens | null> {
     await persistTokens(tokens);
 
     if (response.user) {
-      useAuthStore.getState().setUser(response.user as AuthUser);
+      useAuthStore.getState().setUser(response.user);
     }
 
     return tokens;
-  } catch {
+  } catch (error) {
+    console.error('토큰 갱신 중 에러:', error);
     return null;
   }
 }
@@ -101,12 +102,16 @@ async function executeRefreshAttempt(): Promise<AuthTokens | null> {
 export async function requestTokenRefresh(): Promise<AuthTokens | null> {
   if (!refreshPromise) {
     refreshPromise = (async () => {
-      for (let attempt = 0; attempt < MAX_REFRESH_ATTEMPTS; attempt += 1) {
+      for (let attempt = 0; attempt < AUTH_CONFIG.MAX_REFRESH_ATTEMPTS; attempt += 1) {
         const tokens = await executeRefreshAttempt();
         if (tokens) {
           return tokens;
         }
+        if (attempt < AUTH_CONFIG.MAX_REFRESH_ATTEMPTS - 1) {
+          console.warn(`토큰 갱신 실패 (시도 ${attempt + 1}/${AUTH_CONFIG.MAX_REFRESH_ATTEMPTS})`);
+        }
       }
+      console.error('토큰 갱신 최대 재시도 횟수 초과');
       return null;
     })().finally(() => {
       refreshPromise = null;

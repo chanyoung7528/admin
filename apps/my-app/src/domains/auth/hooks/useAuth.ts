@@ -1,14 +1,11 @@
 import { useNavigate } from '@tanstack/react-router';
 import { useCallback } from 'react';
 import { clearPersistedSession, persistTokens } from '../lib/tokenManager';
-import type { AuthTokens } from '../stores/useAuthStore';
 import { useAuthStore } from '../stores/useAuthStore';
-
-export { initializeAuthSession } from '../lib/tokenManager';
-export { ACCESS_TOKEN_COOKIE_KEY, REFRESH_TOKEN_COOKIE_KEY } from '../types';
+import type { AuthTokens } from '../types';
 
 /**
- * 인증 관련 기능을 제공하는 훅
+ * 인증 상태 및 액션을 제공하는 훅
  */
 export function useAuth() {
   const navigate = useNavigate();
@@ -38,3 +35,8 @@ export function useAuth() {
     signOut,
   };
 }
+
+// 재export
+export { initializeAuthSession } from '../lib/tokenManager';
+export { ACCESS_TOKEN_COOKIE_KEY, REFRESH_TOKEN_COOKIE_KEY } from '../types';
+export type { AuthTokens, AuthUser } from '../types';

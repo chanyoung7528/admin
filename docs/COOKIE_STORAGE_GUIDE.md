@@ -2,11 +2,12 @@
 
 `@repo/core` 패키지의 쿠키 및 스토리지 관리 유틸리티 사용 가이드입니다.
 
+> **Note**: API 클라이언트와 인증 관련 내용은 [인증 가이드](./AUTHENTICATION_GUIDE.md)를 참고하세요.
+
 ## 📦 설치
 
 ```typescript
 import { cookie, localStore, sessionStore } from '@repo/core/utils';
-import { api } from '@repo/core/api';
 ```
 
 ## 🍪 Cookie 유틸리티
@@ -92,35 +93,9 @@ const data = sessionStore.get('tempData');
 
 ---
 
-## 🌐 API Client
-
-Axios 기반 HTTP 클라이언트 ([Axios 문서](https://axios-http.com/docs/intro))
-
-### 기본 사용법
-
-```typescript
-// GET 요청
-const users = await api.get('/users');
-
-// POST 요청
-await api.post('/users', { name: 'New User' });
-
-// PUT/PATCH/DELETE
-await api.put('/users/1', { name: 'Updated' });
-await api.delete('/users/1');
-```
-
-### 자동 기능
-
-- ✅ 인증 토큰 자동 추가 (`Authorization: Bearer {token}`)
-- ✅ 401 에러 시 로그인 페이지 리다이렉트
-- ✅ 응답 데이터 자동 추출 (`response.data`)
-
----
-
 ## 📚 추가 문서
 
 - [Cookie Store API 명세](https://wicg.github.io/cookie-store/)
 - [Web Storage API 명세](https://html.spec.whatwg.org/multipage/webstorage.html)
-- [Axios 공식 문서](https://axios-http.com/)
-- [프로젝트 구조 가이드](/docs/ALIAS_GUIDE.md)
+- [인증 가이드](./AUTHENTICATION_GUIDE.md) - API 클라이언트 및 인증 시스템
+- [프로젝트 구조 가이드](./ALIAS_GUIDE.md)

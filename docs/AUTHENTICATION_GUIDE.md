@@ -1,6 +1,8 @@
-# 🔐 인증 & 라우팅 통합 가이드
+# 🔐 인증 시스템 가이드
 
-> **Note**: 인증 상태 관리, TanStack Router 연동, Axios 인터셉터, API 요청 추적을 포함한 통합 가이드입니다.
+인증 상태 관리, TanStack Router 연동, Axios 인터셉터, API 요청 추적을 포함한 통합 가이드입니다.
+
+> **관련 문서**: [Cookie & Storage 유틸리티](./COOKIE_STORAGE_GUIDE.md)
 
 ---
 
@@ -10,10 +12,11 @@
 | ------------------ | ---------------------------------------------------- | ------------------------------------------------------------------------------------ |
 | **부트스트랩**     | `apps/my-app/src/main.tsx`                           | `ensureAuthClient()`로 인터셉터 설정 후 `initializeAuthSession()`으로 쿠키 상태 복원 |
 | **라우터 가드**    | `apps/my-app/src/pages/_authenticated.tsx`           | `beforeLoad`에서 토큰 유무 검사 및 `/login` 리다이렉트                               |
-| **전역 훅**        | `apps/my-app/src/domains/auth/hooks/useAuth.ts`      | UI 컴포넌트용 인증 상태 및 액션(`signOut` 등) 제공                                   |
-| **토큰 관리**      | `apps/my-app/src/domains/auth/lib/tokenManager.ts`   | 쿠키 ↔ Zustand 동기화, 토큰 재발급 로직, 강제 로그아웃                              |
-| **API 클라이언트** | `apps/my-app/src/domains/auth/lib/apiClient.ts`      | Axios 인터셉터 설정 (토큰 주입, 401 재시도, 로딩 추적)                               |
+| **전역 훅**        | `apps/my-app/src/domains/auth/hooks/useAuth.ts`      | UI 컴포넌트용 인증 상태 및 액션 제공                                                 |
+| **토큰 관리**      | `apps/my-app/src/domains/auth/lib/tokenManager.ts`   | 쿠키 ↔ Zustand 동기화, 토큰 재발급, 강제 로그아웃                                   |
+| **API 클라이언트** | `apps/my-app/src/domains/auth/lib/apiClient.ts`      | Axios 인터셉터 설정 (토큰 주입, 401 재시도)                                          |
 | **요청 추적**      | `apps/my-app/src/domains/auth/lib/requestTracker.ts` | 300ms 이상 지연 요청 감지 및 전역 로딩 UI 제어                                       |
+| **타입/상수**      | `apps/my-app/src/domains/auth/types.ts`              | 타입 정의 및 설정 상수 관리                                                          |
 
 ---
 
@@ -51,18 +54,18 @@ root.render(...);
 
 `tokenManager.ts`는 쿠키와 Zustand 상태를 일치시키는 역할을 합니다.
 
-- **`persistTokens(tokens)`**: 토큰 발급/갱신 시 쿠키와 스토어에 동시 저장.
+- **`persistTokens(tokens)`**: 토큰 발급/갱신 시 쿠키와 스토어에 동시 저장
 - **`requestTokenRefresh()`**:
   - 중복 호출 방지 (Promise Singleton 패턴)
-  - 최대 3회 재시도
-  - 성공 시 `persistTokens` 호출, 실패 시 `null` 반환
+  - 최대 3회 재시도 (`AUTH_CONFIG.MAX_REFRESH_ATTEMPTS`)
+  - 실패 시 로깅 및 `null` 반환
 
-### 2.4 느린 요청 추적 (UX)
+### 2.4 느린 요청 추적 (UX 개선)
 
-`requestTracker.ts`는 API 요청이 300ms 이상 걸릴 경우에만 전역 로딩 인디케이터를 표시합니다.
+`requestTracker.ts`는 API 요청이 일정 시간 이상 걸릴 경우에만 전역 로딩 인디케이터를 표시합니다.
 
-- **작동 방식**: 요청 시작 시 `setTimeout` 설정 -> 300ms 내 응답 오면 `clearTimeout` -> 시간 초과 시 로딩 UI 표시.
-- **장점**: 빠른 응답에는 깜빡임(Flicker) 없는 쾌적한 UX 제공.
+- **작동 방식**: 요청 시작 시 `setTimeout` 설정 → 임계값(`AUTH_CONFIG.SLOW_REQUEST_THRESHOLD`) 내 응답 오면 `clearTimeout` → 시간 초과 시 로딩 UI 표시
+- **장점**: 빠른 응답에는 깜빡임(Flicker) 없는 쾌적한 UX 제공
 
 ---
 
@@ -83,26 +86,49 @@ TanStack Router의 `beforeLoad`와 파일 기반 라우팅을 활용합니다.
 
 ### 로그아웃 처리
 
-항상 `useAuth().signOut()`을 사용하세요. 이 훅은 다음 작업을 수행합니다:
+항상 `useAuth().signOut()`을 사용하세요:
 
-1.  쿠키 삭제 (`clearPersistedSession`)
-2.  스토어 초기화
-3.  `/login` 리다이렉트
+```typescript
+const { signOut } = useAuth();
 
-### API 요청 작성
+await signOut(); // 쿠키 삭제 → 스토어 초기화 → /login 리다이렉트
+```
 
-별도의 설정 없이 `@repo/core/api`를 사용하면 자동으로 토큰이 주입되고 401 처리가 됩니다.
+### API 요청
+
+`@repo/core/api`를 사용하면 자동으로 토큰이 주입되고 401 처리가 됩니다:
 
 ```typescript
 import { api } from '@repo/core/api';
 
-// 자동으로 Authorization 헤더 추가됨
-await api.get('/users/me');
+await api.get('/users/me'); // Authorization 헤더 자동 추가
+await api.post('/users', { name: 'New User' });
 ```
 
-### 쿠키 보안
+### 설정 커스터마이징
 
-`utils/cookieHelpers.ts`에서 보안 옵션(`Secure`, `SameSite`, `HttpOnly` 호환 설정 등)을 중앙 관리합니다. 배포 환경에 맞춰 해당 파일을 수정하세요.
+**인증 설정** (`types.ts`):
+
+```typescript
+export const AUTH_CONFIG = {
+  MAX_REFRESH_ATTEMPTS: 3, // 토큰 갱신 최대 재시도 횟수
+  SLOW_REQUEST_THRESHOLD: 300, // 로딩 UI 표시 임계값 (ms)
+} as const;
+```
+
+**쿠키 보안** (`utils/cookieHelpers.ts`):
+
+```typescript
+// HTTPS 환경에서만 Secure 활성화
+export function getCookieSecurityOptions() {
+  const isHttps = window.location.protocol === 'https:';
+  return {
+    sameSite: 'strict' as const,
+    secure: isHttps,
+    path: '/',
+  };
+}
+```
 
 ---
 

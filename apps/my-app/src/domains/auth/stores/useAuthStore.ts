@@ -1,16 +1,5 @@
 import { create } from 'zustand';
-
-export interface AuthUser {
-  accountNo: string;
-  email: string;
-  role: string[];
-  exp: number;
-}
-
-export type AuthTokens = {
-  accessToken: string;
-  refreshToken: string;
-};
+import type { AuthTokens, AuthUser } from '../types';
 
 interface AuthState {
   user: AuthUser | null;
