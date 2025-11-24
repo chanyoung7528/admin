@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite --mode dev",
+    "dev": "vite --mode dev --port 5050 --host",
     "build": "tsc -b && vite build",
     "build:dev": "tsc -b && vite build --mode dev",
     "build:prd": "tsc -b && vite build --mode prd",
@@ -22,6 +22,7 @@
     "@tanstack/react-router": "^1.135.2",
     "@tanstack/react-router-devtools": "^1.135.2",
     "axios": "^1.13.2",
+    "cookie-store": "4.0.0-next.4",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "zustand": "^5.0.8"
