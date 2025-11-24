@@ -1,5 +1,3 @@
-import { cookieStore as polyfill } from 'cookie-store';
-
 /**
  * CookieStore API 타입 정의
  * @see https://developer.mozilla.org/en-US/docs/Web/API/Cookie_Store_API
@@ -60,7 +58,8 @@ class CookieManager {
     if (typeof window !== 'undefined' && 'cookieStore' in window) {
       return window.cookieStore as unknown as CookieStore;
     }
-    return polyfill as unknown as CookieStore;
+    // Polyfill은 동적으로 import하거나 fallback 로직 사용
+    throw new Error('CookieStore API is not available');
   }
 
   async get(name: string): Promise<string | null> {

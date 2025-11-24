@@ -12,8 +12,8 @@ interface RefreshAuthResponse {
  * TODO: Replace `/auth/refresh` with actual refresh API once backend is ready.
  */
 export async function refreshAuthToken(refreshToken: string): Promise<RefreshAuthResponse> {
-  const { data } = await api.post<RefreshAuthResponse>('/auth/refresh', {
+  const res = await api.post<RefreshAuthResponse>('/auth/refresh', {
     refreshToken,
   });
-  return data;
+  return res.data;
 }
