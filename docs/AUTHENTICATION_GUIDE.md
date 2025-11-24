@@ -6,15 +6,15 @@
 
 ## 1. 시스템 맵
 
-| 계층           | 파일                                                               | 역할                                                                                   |
-| -------------- | ------------------------------------------------------------------ | -------------------------------------------------------------------------------------- |
-| 라우터 가드    | `apps/my-app/src/pages/_authenticated.tsx`                         | `beforeLoad`에서 인증 상태 확인 후 `/login` 리다이렉트                                 |
-| 퍼블릭 진입점  | `apps/my-app/src/pages/_public/login.tsx`                          | 로그인 폼 + access/refresh 토큰 발급/저장                                              |
-| 전역 훅        | `apps/my-app/src/domains/auth/hooks/useAuth.ts`                    | CookieStore 기반 토큰 동기화, API 요청/응답 인터셉터, 토큰 저장·재발급·로그아웃 제공   |
-| 전역 스토어    | `apps/my-app/src/domains/auth/stores/useAuthStore.ts`              | 토큰·사용자 상태 보관 (쿠키 I/O 없음, `useAuth`에서 관리)                              |
-| 로그아웃 UI    | `packages/shared/src/components/layouts/sidebar/SignOutDialog.tsx` | 확인 다이얼로그. `useAuth().signOut()` 콜백을 받아 실제 로직에 위임                    |
-| API 클라이언트 | `packages/core/src/api/client.ts`                                  | 공통 Axios 인스턴스. 요청 인터셉터는 `useAuth`에서, 응답 인터셉터는 core 레벨에서 관리 |
-| 스토리지 유틸  | `packages/core/src/utils/{cookie,storage}.ts`                      | Cookie Store API + SSR 안전한 local/session storage 래퍼                               |
+| 계층           | 파일                                                               | 역할                                                                                  |
+| -------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------- |
+| 라우터 가드    | `apps/my-app/src/pages/_authenticated.tsx`                         | `beforeLoad`에서 인증 상태 확인 후 `/login` 리다이렉트                                |
+| 퍼블릭 진입점  | `apps/my-app/src/pages/_public/login.tsx`                          | 로그인 폼 + access/refresh 토큰 발급/저장                                             |
+| 전역 훅        | `apps/my-app/src/domains/auth/hooks/useAuth.ts`                    | CookieStore 기반 토큰 동기화, API 요청/응답 인터셉터, 토큰 저장·재발급·로그아웃 제공  |
+| 전역 스토어    | `apps/my-app/src/domains/auth/stores/useAuthStore.ts`              | 토큰·사용자 상태 보관 (쿠키 I/O 없음, `useAuth`에서 관리)                             |
+| 로그아웃 UI    | `packages/shared/src/components/layouts/sidebar/SignOutDialog.tsx` | 확인 다이얼로그. `useAuth().signOut()` 콜백을 받아 실제 로직에 위임                   |
+| API 클라이언트 | `packages/core/src/api/client.ts`                                  | 공통 Axios 인스턴스. core는 JSON 언랩만 담당, 인증·401·로딩 처리는 `useAuth`가 일원화 |
+| 스토리지 유틸  | `packages/core/src/utils/{cookie,storage}.ts`                      | Cookie Store API + SSR 안전한 local/session storage 래퍼                              |
 
 ---
 
@@ -39,7 +39,7 @@ export const Route = createFileRoute('/_authenticated')({
 });
 ```
 
-- `checkAuth()`는 전역 store와 CookieStore(`cookie.get`)를 동기화해 accessToken 존재 여부를 확인합니다.
+- `checkAuth()`는 `initializeAuthSession()`으로 미리 동기화된 Zustand 상태만 확인합니다.
 - `typeof window === 'undefined'` 시 바로 false를 반환해 SSR/프리렌더 환경에서도 안전합니다.
 - `redirect` 시 `search.redirect`를 넘겨 로그인 이후 원래 페이지로 복귀할 수 있는 구조가 이미 마련되어 있습니다.
 
@@ -63,59 +63,62 @@ const handleLogin = async (e: React.FormEvent) => {
 
 ### 2.3 Zustand 기반 전역 상태
 
-```24:68:apps/my-app/src/domains/auth/hooks/useAuth.ts
-const ACCESS_TOKEN_COOKIE_KEY = 'auth_access_token';
-const REFRESH_TOKEN_COOKIE_KEY = 'auth_refresh_token';
+```24:140:apps/my-app/src/domains/auth/hooks/useAuth.ts
+export async function initializeAuthSession() {
+  if (hasHydratedTokens || typeof window === 'undefined') {
+    return;
+  }
 
-let isClientInitialized = false;
-
-function ensureAuthClient() {
-  if (isClientInitialized) return;
-  isClientInitialized = true;
-
-  api.interceptors.request.use(async config => {
-    const token = await cookie.get(ACCESS_TOKEN_COOKIE_KEY);
-    if (token && config.headers) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
-    return config;
+  const [savedAccess, savedRefresh] = await Promise.all([cookie.get(ACCESS_TOKEN_COOKIE_KEY), cookie.get(REFRESH_TOKEN_COOKIE_KEY)]);
+  useAuthStore.getState().setTokens({
+    accessToken: savedAccess ?? '',
+    refreshToken: savedRefresh ?? '',
   });
+
+  hasHydratedTokens = true;
 }
 
 export function useAuth() {
   const navigate = useNavigate();
-  const { user, accessToken, refreshToken, setUser, setTokens, reset } = useAuthStore();
+  const user = useAuthStore(state => state.user);
+  const accessToken = useAuthStore(state => state.accessToken);
+  const refreshToken = useAuthStore(state => state.refreshToken);
+  const setUser = useAuthStore(state => state.setUser);
 
-  const loadTokens = useCallback(async () => {
-    const [savedAccess, savedRefresh] = await Promise.all([cookie.get(ACCESS_TOKEN_COOKIE_KEY), cookie.get(REFRESH_TOKEN_COOKIE_KEY)]);
-    setTokens({ accessToken: savedAccess ?? '', refreshToken: savedRefresh ?? '' });
-  }, [setTokens]);
-
-  const persistTokens = useCallback(async tokens => {
-    const cookieOptions = { sameSite: 'strict', secure: window.location.protocol === 'https:', path: '/' as const };
+  const persistTokens = useCallback(async (tokens: AuthTokens) => {
+    const cookieOptions = getCookieSecurityOptions();
     await Promise.all([
       cookie.set(ACCESS_TOKEN_COOKIE_KEY, tokens.accessToken, cookieOptions),
       cookie.set(REFRESH_TOKEN_COOKIE_KEY, tokens.refreshToken, cookieOptions),
     ]);
-    setTokens(tokens);
-  }, [setTokens]);
+    useAuthStore.getState().setTokens(tokens);
+  }, []);
 
   const signOut = useCallback(async () => {
-    await Promise.all([cookie.remove(ACCESS_TOKEN_COOKIE_KEY), cookie.remove(REFRESH_TOKEN_COOKIE_KEY)]);
-    reset();
+    await clearPersistedSession();
     navigate({ to: '/login', replace: true });
-  }, [navigate, reset]);
+  }, [navigate]);
 
-  return { user, accessToken, refreshToken, setUser, setTokens: persistTokens, loadTokens, signOut };
+  return {
+    user,
+    accessToken,
+    refreshToken,
+    setUser,
+    setTokens: persistTokens,
+    signOut,
+  };
 }
 ```
 
+- `initializeAuthSession()`을 앱 부트스트랩 구간에서 한 번만 호출해 쿠키 → Zustand 동기화를 끝낸 뒤, 나머지 레이어는 스토어만 참조합니다.
 - CookieStore I/O, API 요청/응답 인터셉터, 토큰 재발급, 로그아웃 등 부수 효과는 모두 `useAuth` 훅에 집중됩니다.
 - 쿠키는 `SameSite=strict`, HTTPS 환경에서만 `secure` 옵션을 주도록 하여 기본적인 XSRF 대비책을 적용합니다.
 
 ### 2.4 토큰 재발급 & Axios 응답 인터셉터
 
-```64:135:apps/my-app/src/domains/auth/hooks/useAuth.ts
+```85:150:apps/my-app/src/domains/auth/hooks/useAuth.ts
+const MAX_REFRESH_ATTEMPTS = 3;
+
 api.interceptors.response.use(
   response => response,
   async error => {
@@ -123,7 +126,7 @@ api.interceptors.response.use(
       return Promise.reject(error);
     }
 
-    const originalRequest = error.config;
+    const originalRequest = error.config as RetryableRequestConfig | undefined;
     if (!originalRequest || originalRequest._retry || originalRequest.url?.includes('/auth/refresh')) {
       await handleForcedLogout();
       return Promise.reject(error);
@@ -133,7 +136,7 @@ api.interceptors.response.use(
     if (refreshedTokens && originalRequest.headers) {
       originalRequest._retry = true;
       originalRequest.headers.Authorization = `Bearer ${refreshedTokens.accessToken}`;
-      return api.request(originalRequest);
+      return enqueueRequestRetry(originalRequest);
     }
 
     await handleForcedLogout();
@@ -142,10 +145,10 @@ api.interceptors.response.use(
 );
 ```
 
-- 401 응답이면 `refreshAuthToken` 서비스를 통해 토큰을 재발급하고, 한 번만 retry 합니다.
-- refresh 실패나 `/auth/refresh` 자체가 401이면 쿠키/스토어를 비우고 `/login`으로 강제 이동합니다.
-- refresh 중복 호출을 막기 위해 `refreshPromise`를 재사용합니다.
-- Zustand 스토어는 순수 상태만 보관하며, 토큰 동기화는 `useAuth().loadTokens()`로 처리합니다.
+- `requestTokenRefresh()`는 최대 3회까지 재발급을 시도하며, `refreshPromise`로 동시 호출을 묶습니다.
+- 재발급 성공 시 쿠키·Zustand를 동시에 업데이트하고 대기 중이던 API 요청은 `enqueueRequestRetry` 큐를 통해 순차 재시도합니다.
+- 재발급 실패 혹은 `/auth/refresh` 401 시에는 세션을 정리한 뒤 TanStack Router `router.navigate`로 `/login` 리다이렉트하며, 직전 위치를 `search.redirect`에 보존합니다.
+- 요청/응답 인터셉터는 core `api` 인스턴스와 동일하게 공유되므로 모든 도메인 서비스가 동일한 인증 흐름을 따릅니다.
 
 ### 2.4 로그아웃 처리
 
@@ -165,18 +168,24 @@ api.interceptors.request.use(async config => {
 ```
 
 - 토큰 조회도 CookieStore를 통일해 단일 소스를 유지합니다.
-- 401 응답 시에는 여전히 `window.location.href = '/login'`을 사용하므로 향후 Router 기반 리다이렉트로 교체하는 것이 좋습니다.
+- 401 응답 시에는 core 레벨에서 아무 작업도 하지 않고, `useAuth`가 Router 기반 재시도/로그아웃을 전담합니다.
+
+### 2.6 전체 페이지 로딩 UI
+
+- `packages/shared/src/hooks/useFullPageLoadingStore.ts`가 300ms 이상 응답이 지연된 요청을 추적하고, `packages/shared/src/components/ui/full-page-loading.tsx`가 `__root` 레이아웃 최상단에 포털 형태로 렌더됩니다.
+- 모든 Axios 요청은 `useAuth`에서 오버라이드한 `api.request`를 통과하며, 각 요청마다 타이머를 부착해 지연 여부를 판단합니다.
+- 지연 구간에 진입한 요청이 하나라도 존재하면 반투명 오버레이 + 회전 아이콘이 노출되고, 해당 요청이 완료되면 즉시 해제됩니다.
 
 ---
 
 ## 3. 토큰 저장 지점 비교
 
-| 구분           | 키                                        | 저장소      | 작성 위치                       | 소비 위치                          | 설명                               |
-| -------------- | ----------------------------------------- | ----------- | ------------------------------- | ---------------------------------- | ---------------------------------- |
-| 라우터 가드    | `auth_access_token`                       | CookieStore | `_public/login.tsx` → `useAuth` | `_authenticated.tsx` → `checkAuth` | `useAuth().loadTokens()`로 동기화  |
-| API 클라이언트 | `auth_access_token`                       | CookieStore | `useAuth` (요청 인터셉터 주입)  | `@repo/core/api/client`            | Authorization 헤더 자동 주입       |
-| 로그아웃 액션  | `auth_access_token`, `auth_refresh_token` | CookieStore | `useAuth().signOut()`           | `Layout` → `SignOutDialog`         | 두 토큰 모두 삭제 후 `/login` 이동 |
-| 리프레시 토큰  | `auth_refresh_token`                      | CookieStore | `_public/login.tsx` → `useAuth` | 추후 refresh API (미구현)          | 향후 토큰 재발급 시 활용 예정      |
+| 구분           | 키                                        | 저장소      | 작성 위치                       | 소비 위치                          | 설명                                                           |
+| -------------- | ----------------------------------------- | ----------- | ------------------------------- | ---------------------------------- | -------------------------------------------------------------- |
+| 라우터 가드    | `auth_access_token`                       | CookieStore | `_public/login.tsx` → `useAuth` | `_authenticated.tsx` → `checkAuth` | 부트스트랩 시 `initializeAuthSession()`으로 쿠키→스토어 동기화 |
+| API 클라이언트 | `auth_access_token`                       | CookieStore | `useAuth` (요청 인터셉터 주입)  | `@repo/core/api/client`            | Authorization 헤더 자동 주입                                   |
+| 로그아웃 액션  | `auth_access_token`, `auth_refresh_token` | CookieStore | `useAuth().signOut()`           | `Layout` → `SignOutDialog`         | 두 토큰 모두 삭제 후 `/login` 이동                             |
+| 리프레시 토큰  | `auth_refresh_token`                      | CookieStore | `_public/login.tsx` → `useAuth` | 추후 refresh API (미구현)          | 향후 토큰 재발급 시 활용 예정                                  |
 
 **결론:** accessToken/refreshToken을 CookieStore로 일원화하면서 라우터·API·로그아웃이 `useAuth` 하나로 묶였습니다.
 
@@ -186,19 +195,19 @@ api.interceptors.request.use(async config => {
 
 1. **토큰 재발급 미구현**
    - _영향_: accessToken 만료 시 사용자가 즉시 로그아웃되며, refreshToken이 있어도 활용되지 않음.
-   - _권장_: refresh API를 연동하고 `setTokens`/`loadTokens` 흐름에서 양쪽 토큰을 동시에 갱신.
+   - _권장_: refresh API를 연동하고 `setTokens`/`initializeAuthSession` 흐름에서 양쪽 토큰을 동시에 갱신.
 
 2. **CookieStore 비동기 의존**
    - _영향_: 모든 토큰 작업이 Promise 기반이라 초기 hydrate가 완료되기 전까지 flash 상태가 발생할 수 있음.
-   - _권장_: `loadTokens()`를 라우터 가드, 앱 부트스트랩 구간에서 미리 await하여 초기 깜빡임을 줄이고, 로딩 UI를 제공.
+   - _권장_: `main.tsx` 부트스트랩에서 `initializeAuthSession()`을 await하여 초기 깜빡임을 줄이고, 필요 시 로딩 UI를 제공.
 
 3. **JWT 파싱 미구현**
    - _영향_: 만료 시간·권한 기반 라우팅이 불가능.
    - _권장_: `jwt-decode` 등으로 `AuthUser`를 세팅하고, `exp` 기반 자동 로그아웃/리프레시를 준비.
 
-4. **401 처리 방식**
-   - _영향_: 하드 리로드로 인해 React Query 캐시가 모두 삭제되고 UX 저하.
-   - _권장_: `router.navigate({ to: '/login', search: { redirect: router.latestLocation.href } })`로 교체.
+4. **401 처리 파이프라인**
+   - _현황_: core 401 리다이렉트는 제거됐으며, `useAuth`가 Router 기반 강제 이동 + 요청 큐 재시도를 담당.
+   - _주의_: Router 인스턴스가 아직 초기화되지 않은 환경(테스트, Storybook)에서는 `window.location.href` 폴백이 동작하도록 예외 처리를 유지.
 
 5. **로그아웃 후 UI 재활용 문제**
    - _영향_: `useAuthStore`를 구독하지 않는 컴포넌트는 갱신되지 않음.
@@ -213,7 +222,7 @@ api.interceptors.request.use(async config => {
 2. **경량 Zustand 스토어**
    - 스토어는 순수 상태(`user`, `accessToken`, `refreshToken`)와 동기식 세터만 노출하고, CookieStore I/O·비동기 처리는 `useAuth`에서 담당합니다.
 3. **라우터 가드 개선**
-   - `checkAuth()` 내부에서 CookieStore를 직접 읽어 Zustand에 반영하고, SSR 환경 (`typeof window === 'undefined'`)에서는 즉시 false를 반환합니다.
+   - `checkAuth()`는 CookieStore를 직접 읽지 않고 `useAuthStore` 상태만 확인하도록 단순화하고, SSR 환경 (`typeof window === 'undefined'`)에서는 즉시 false를 반환합니다.
 4. **Axios 인터셉터 정비**
    - `useAuth`에서 api 요청 인터셉터를 주입하고, 401 시 TanStack Router의 `router.navigate`를 사용하는 방향으로 확장합니다.
 5. **로그인 페이지 개선**

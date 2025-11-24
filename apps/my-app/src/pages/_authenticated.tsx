@@ -1,7 +1,6 @@
-import { ACCESS_TOKEN_COOKIE_KEY, REFRESH_TOKEN_COOKIE_KEY, useAuth } from '@/domains/auth/hooks/useAuth';
+import { useAuth } from '@/domains/auth/hooks/useAuth';
 import { useAuthStore } from '@/domains/auth/stores/useAuthStore';
 import { Header } from '@/domains/dashboard/components/Header';
-import { cookie } from '@repo/core/utils';
 import { Layout } from '@repo/shared/components/layouts';
 import { ErrorBoundary } from '@repo/shared/components/ui';
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router';
@@ -62,19 +61,6 @@ async function checkAuth(): Promise<boolean> {
     return false;
   }
 
-  const authState = useAuthStore.getState();
-  if (authState.accessToken) {
-    return true;
-  }
-
-  const [accessToken, refreshToken] = await Promise.all([cookie.get(ACCESS_TOKEN_COOKIE_KEY), cookie.get(REFRESH_TOKEN_COOKIE_KEY)]);
-
-  if (accessToken || refreshToken) {
-    useAuthStore.getState().setTokens({
-      accessToken: accessToken ?? '',
-      refreshToken: refreshToken ?? '',
-    });
-  }
-
-  return !!(accessToken ?? useAuthStore.getState().accessToken);
+  const { accessToken } = useAuthStore.getState();
+  return Boolean(accessToken);
 }

@@ -17,11 +17,5 @@ export const api = axios.create({
 // Response 인터셉터
 api.interceptors.response.use(
   response => response.data,
-  (error: AxiosError) => {
-    // TODO: Handle error (401, 403, etc.)
-    if (error.response?.status === 401 && typeof window !== 'undefined') {
-      window.location.href = '/login';
-    }
-    return Promise.reject(error);
-  }
+  (error: AxiosError) => Promise.reject(error)
 );

@@ -280,24 +280,12 @@ export const useAuthStore = create<AuthState>()(set => ({
 ### 2. `_authenticated.tsx`에서 사용
 
 ```typescript
-import { ACCESS_TOKEN_COOKIE_KEY, REFRESH_TOKEN_COOKIE_KEY, useAuth } from '@/domains/auth/hooks/useAuth';
-import { cookie } from '@repo/core/utils';
+import { useAuth } from '@/domains/auth/hooks/useAuth';
 import { useAuthStore } from '@/domains/auth/stores/useAuthStore';
 
 export const Route = createFileRoute('/_authenticated')({
   beforeLoad: async ({ location }) => {
     if (typeof window === 'undefined') return;
-
-    if (!useAuthStore.getState().accessToken) {
-      const [accessToken, refreshToken] = await Promise.all([cookie.get(ACCESS_TOKEN_COOKIE_KEY), cookie.get(REFRESH_TOKEN_COOKIE_KEY)]);
-
-      if (accessToken || refreshToken) {
-        useAuthStore.getState().setTokens({
-          accessToken: accessToken ?? '',
-          refreshToken: refreshToken ?? '',
-        });
-      }
-    }
 
     if (!useAuthStore.getState().accessToken) {
       throw redirect({

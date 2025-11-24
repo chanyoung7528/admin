@@ -1,5 +1,5 @@
 import { env } from '@repo/core/config';
-import { ErrorBoundary } from '@repo/shared/components/ui';
+import { ErrorBoundary, FullPageLoading } from '@repo/shared/components/ui';
 import { createRootRouteWithContext, Outlet, useRouter } from '@tanstack/react-router';
 import { lazy, Suspense } from 'react';
 
@@ -37,6 +37,7 @@ function RootComponent() {
       }}
     >
       <Outlet />
+      <FullPageLoading />
 
       {env.isDebug && (
         <Suspense fallback={null}>
