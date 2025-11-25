@@ -1,3 +1,4 @@
+import { faker } from '@faker-js/faker';
 import { type Settlement } from '../types';
 
 export interface GetSettlementsParams {
@@ -8,53 +9,64 @@ export interface GetSettlementsParams {
   filter?: string;
 }
 
-export interface GetSettlementsParams {
-  page?: number;
-  pageSize?: number;
-  status?: string[];
-  service?: 'BODY' | 'FOOD' | 'MIND';
-  filter?: string;
-}
+// Faker seed 고정으로 일관된 데이터 생성
+faker.seed(12345);
+
+// 확장된 30개 이상의 센터명(사이트) 추가
+const extendedSites = [
+  '강남 헬스케어',
+  '서초 웰니스',
+  '판교 케어센터',
+  '삼성 메디컬',
+  '역삼 웰빙센터',
+  '신사 클리닉',
+  '압구정 센터',
+  '청담 헬스',
+  '도곡 웰니스',
+  '대치 메디컬',
+  '여의도 건강센터',
+  '광화문 헬스케어',
+  '마포 힐링팜',
+  '잠실 피트니스',
+  '논현 리커버리',
+  '수원 메디웰',
+  '분당 하트케어',
+  '동작 밸런스',
+  '구로 메디업',
+  '시청 웰메디',
+  '선릉 리셋센터',
+  '목동 케어힐',
+  '건대 코어웰',
+  '삼성 메디라운지',
+  '부산 해운대 클리닉',
+  '광주 피트케어',
+  '대전 뉴라이프',
+  '울산 메디밸런스',
+  '일산 프라임케어',
+  '인천 센터힐',
+  '노원 메디클럽',
+  '동탄 헬스플러스',
+  '천안 센트럴케어',
+  '구리 힐링센터',
+];
+
+// 1000개의 Settlement 데이터 생성 (id는 faker uuid 사용으로 유니크하게!)
+export const settlements = Array.from({ length: 1000 }, (_, index) => {
+  const statuses: Settlement['status'][] = ['completed', 'pending'];
+  return {
+    id: `ST-${index + 1}`, // uuid 스타일로 최대한 중복 없이!
+    site: faker.helpers.arrayElement(extendedSites),
+    amount: faker.number.int({ min: 2000000, max: 8000000 }),
+    period: faker.date.between({ from: '2025-01-01', to: '2025-12-31' }).toISOString().slice(0, 7),
+    status: faker.helpers.arrayElement(statuses),
+    date: faker.date.between({ from: '2025-01-01', to: '2025-12-31' }).toISOString().slice(0, 10),
+  } satisfies Settlement;
+});
 
 /**
- * Settlement 목록 조회 (JSON:API 형식)
- *
- * Note: 현재는 주석 처리 (apiClient 미구현)
- * JSON:API 형식 예시:
- * - https://jsonapi.org/
- * - GET /settlements?page[number]=1&page[size]=10&filter[status]=completed,pending
- * - Response: { data: [...], meta: { total, page, pageSize }, links: {...} }
+ * Settlement 목록 조회 (클라이언트 사이드 필터링)
  */
-
-export async function getSettlements(_params?: GetSettlementsParams) {
-  // TODO: apiClient 구현 후 활성화
-  // const { page = 1, pageSize = 10, status, service, filter } = params || {};
-  // const queryParams = new URLSearchParams();
-  // queryParams.append('page[number]', page.toString());
-  // queryParams.append('page[size]', pageSize.toString());
-  // if (status && status.length > 0) queryParams.append('filter[status]', status.join(','));
-  // if (service) queryParams.append('filter[service]', service);
-  // if (filter) queryParams.append('filter[search]', filter);
-  // const response = await apiClient.get<JsonApiResponse>(`/settlements?${queryParams.toString()}`);
-  // return transformResponse(response.data);
-
-  throw new Error('Not implemented - use getMockSettlements instead');
-}
-
-/**
- * Settlement 단일 조회 (JSON:API 형식)
- *
- * Note: 현재는 주석 처리 (apiClient 미구현)
- */
-export async function getSettlement(_id: string) {
-  // TODO: apiClient 구현 후 활성화
-  throw new Error('Not implemented');
-}
-
-/**
- * Mock 데이터를 JSON:API 형식으로 반환 (개발/테스트용)
- */
-export async function getMockSettlements(params?: GetSettlementsParams): Promise<{
+export async function getSettlements(params?: GetSettlementsParams): Promise<{
   settlements: Settlement[];
   total: number;
   page: number;
@@ -62,69 +74,39 @@ export async function getMockSettlements(params?: GetSettlementsParams): Promise
 }> {
   const { page = 1, pageSize = 10, status, filter } = params || {};
 
-  // Mock 데이터
-  let mockData: Settlement[] = [
-    {
-      id: 'ST-2025-001',
-      site: '강남 헬스케어',
-      amount: 3500000,
-      period: '2025-10',
-      status: 'completed',
-      date: '2025-11-05',
-    },
-    {
-      id: 'ST-2025-002',
-      site: '서초 웰니스',
-      amount: 2800000,
-      period: '2025-10',
-      status: 'pending',
-      date: '2025-11-03',
-    },
-    {
-      id: 'ST-2025-003',
-      site: '판교 케어센터',
-      amount: 4200000,
-      period: '2025-10',
-      status: 'completed',
-      date: '2025-11-01',
-    },
-    {
-      id: 'ST-2025-004',
-      site: '삼성 메디컬',
-      amount: 5100000,
-      period: '2025-10',
-      status: 'pending',
-      date: '2025-11-07',
-    },
-    {
-      id: 'ST-2025-005',
-      site: '역삼 웰빙센터',
-      amount: 3900000,
-      period: '2025-10',
-      status: 'completed',
-      date: '2025-11-02',
-    },
-  ];
-
   // 필터 적용
+  let filteredData = [...settlements];
+
   if (status && status.length > 0) {
-    mockData = mockData.filter(item => status.includes(item.status));
+    filteredData = filteredData.filter(item => status.includes(item.status));
   }
 
   if (filter) {
     const searchLower = filter.toLowerCase();
-    mockData = mockData.filter(item => item.id.toLowerCase().includes(searchLower) || item.site.toLowerCase().includes(searchLower));
+    filteredData = filteredData.filter(item => item.id.toLowerCase().includes(searchLower) || item.site.toLowerCase().includes(searchLower));
   }
 
   // 페이지네이션 적용
+  const total = filteredData.length;
   const startIndex = (page - 1) * pageSize;
   const endIndex = startIndex + pageSize;
-  const paginatedData = mockData.slice(startIndex, endIndex);
+  const paginatedData = filteredData.slice(startIndex, endIndex);
 
-  return Promise.resolve({
+  // 네트워크 지연 시뮬레이션
+  await new Promise(resolve => setTimeout(resolve, 300));
+
+  return {
     settlements: paginatedData,
-    total: mockData.length,
+    total,
     page,
     pageSize,
-  });
+  };
+}
+
+/**
+ * Settlement 단일 조회
+ */
+export async function getSettlement(id: string): Promise<Settlement | undefined> {
+  await new Promise(resolve => setTimeout(resolve, 200));
+  return settlements.find(s => s.id === id);
 }

@@ -6,16 +6,28 @@ export const settlementColumns: ColumnDef<Settlement>[] = [
     accessorKey: 'id',
     header: '정산 ID',
     cell: ({ row }) => <div className="font-medium">{row.getValue('id')}</div>,
+    size: 120,
+    meta: {
+      className: 'w-[120px]',
+    },
   },
   {
     accessorKey: 'site',
     header: 'Site명',
     cell: ({ row }) => <div>{row.getValue('site')}</div>,
+    size: 300,
+    meta: {
+      className: 'w-[300px]',
+    },
   },
   {
     accessorKey: 'period',
     header: '정산 기간',
     cell: ({ row }) => <div>{row.getValue('period')}</div>,
+    size: 180,
+    meta: {
+      className: 'w-[180px]',
+    },
   },
   {
     accessorKey: 'amount',
@@ -26,17 +38,25 @@ export const settlementColumns: ColumnDef<Settlement>[] = [
         style: 'currency',
         currency: 'KRW',
       }).format(amount);
-      return <div className="text-right font-medium">{formatted}</div>;
+      return <div className="font-medium">{formatted}</div>;
+    },
+    size: 150,
+    meta: {
+      className: 'w-[150px]',
     },
   },
   {
     accessorKey: 'date',
     header: '처리일',
     cell: ({ row }) => <div>{row.getValue('date')}</div>,
+    size: 120,
+    meta: {
+      className: 'w-[120px]',
+    },
   },
   {
     accessorKey: 'status',
-    header: '상태',
+    header: () => <div className="text-center">상태</div>,
     cell: ({ row }) => {
       const status = row.getValue('status') as Settlement['status'];
       return (
@@ -55,6 +75,10 @@ export const settlementColumns: ColumnDef<Settlement>[] = [
     },
     filterFn: (row, id, value) => {
       return value.includes(row.getValue(id));
+    },
+    size: 100,
+    meta: {
+      className: 'w-[100px]',
     },
   },
 ];

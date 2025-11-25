@@ -1,5 +1,6 @@
 import type { ColumnFiltersState, OnChangeFn, PaginationState } from '@tanstack/react-table';
 import { useMemo, useState } from 'react';
+// useEffect를 제거했습니다.
 
 type SearchRecord = Record<string, unknown>;
 
@@ -65,18 +66,27 @@ export function useTableUrlState(params: UseTableUrlStateParams): UseTableUrlSta
   const trimGlobal = globalFilterCfg?.trim ?? true;
 
   // Build initial column filters from the current search params
-  const initialColumnFilters: ColumnFiltersState = useMemo(() => {
+  // 이것이 이제 columnFilters의 유일한 출처(Source of Truth)입니다.
+  const columnFilters: ColumnFiltersState = useMemo(() => {
     const collected: ColumnFiltersState = [];
     for (const cfg of columnFiltersCfg) {
       const raw = (search as SearchRecord)[cfg.searchKey];
       const deserialize = cfg.deserialize ?? ((v: unknown) => v);
-      if (cfg.type === 'string') {
+
+      // raw 값이 null, undefined, 빈 문자열이 아닌 경우에만 필터를 추가합니다.
+      if (raw === null || raw === undefined || (typeof raw === 'string' && raw.trim() === '')) {
+        continue;
+      }
+
+      if (cfg.type === 'string' || cfg.type === undefined) {
         const value = (deserialize(raw) as string) ?? '';
         if (typeof value === 'string' && value.trim() !== '') {
           collected.push({ id: cfg.columnId, value });
         }
-      } else {
-        // default to array type
+      } else if (cfg.type === 'array') {
+        // 배열 타입은 쉼표 등으로 구분된 문자열로 URL에 들어오므로,
+        // deserializer가 배열로 변환하는 역할을 해야 합니다.
+        // 예: 'completed,pending' -> ['completed', 'pending']
         const value = (deserialize(raw) as unknown[]) ?? [];
         if (Array.isArray(value) && value.length > 0) {
           collected.push({ id: cfg.columnId, value });
@@ -86,7 +96,9 @@ export function useTableUrlState(params: UseTableUrlStateParams): UseTableUrlSta
     return collected;
   }, [columnFiltersCfg, search]);
 
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(initialColumnFilters);
+  // ----------------------------------------------------
+  // 기존의 columnFilters 로컬 상태 및 동기화 useEffect 제거
+  // ----------------------------------------------------
 
   const pagination: PaginationState = useMemo(() => {
     const rawPage = (search as SearchRecord)[pageKey];
@@ -131,19 +143,23 @@ export function useTableUrlState(params: UseTableUrlStateParams): UseTableUrlSta
     : undefined;
 
   const onColumnFiltersChange: OnChangeFn<ColumnFiltersState> = updater => {
+    // columnFilters는 이제 URL에서 파생된 값이므로, updater를 사용하여 다음 상태를 계산합니다.
     const next = typeof updater === 'function' ? updater(columnFilters) : updater;
-    setColumnFilters(next);
+    // [❌ 제거] setColumnFilters(next); 로컬 상태 업데이트를 제거했습니다.
 
     const patch: Record<string, unknown> = {};
 
     for (const cfg of columnFiltersCfg) {
       const found = next.find(f => f.id === cfg.columnId);
       const serialize = cfg.serialize ?? ((v: unknown) => v);
-      if (cfg.type === 'string') {
+
+      if (cfg.type === 'string' || cfg.type === undefined) {
         const value = typeof found?.value === 'string' ? (found.value as string) : '';
+        // 값이 없으면 undefined로 설정하여 URL에서 제거
         patch[cfg.searchKey] = value.trim() !== '' ? serialize(value) : undefined;
-      } else {
+      } else if (cfg.type === 'array') {
         const value = Array.isArray(found?.value) ? (found!.value as unknown[]) : [];
+        // 값이 없으면 undefined로 설정하여 URL에서 제거
         patch[cfg.searchKey] = value.length > 0 ? serialize(value) : undefined;
       }
     }
@@ -151,7 +167,7 @@ export function useTableUrlState(params: UseTableUrlStateParams): UseTableUrlSta
     navigate({
       search: prev => ({
         ...(prev as SearchRecord),
-        [pageKey]: undefined,
+        [pageKey]: undefined, // 필터가 변경되면 1페이지로 리셋
         ...patch,
       }),
     });

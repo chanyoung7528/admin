@@ -1,4 +1,5 @@
 import { cn } from '@shared/lib/utils';
+import { Skeleton } from '@shared/ui/skeleton';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@shared/ui/table';
 import {
   type ColumnDef,
@@ -23,6 +24,7 @@ import { DataTableToolbar } from './toolbar';
 
 // Custom meta type extension
 declare module '@tanstack/react-table' {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   interface ColumnMeta<TData, TValue> {
     className?: string;
     thClassName?: string;
@@ -30,7 +32,7 @@ declare module '@tanstack/react-table' {
   }
 }
 
-interface DataTableProps<TData, TValue> {
+export interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   // Search & Filter
@@ -71,8 +73,11 @@ interface DataTableProps<TData, TValue> {
   showPagination?: boolean;
   emptyMessage?: string;
   className?: string;
+  // Loading
+  isLoading?: boolean;
   // Callbacks
   ensurePageInRange?: (pageCount: number) => void;
+  instanceId?: string;
 }
 
 export function DataTable<TData, TValue>({
@@ -100,7 +105,9 @@ export function DataTable<TData, TValue>({
   showPagination = true,
   emptyMessage = 'No results.',
   className,
+  isLoading = false,
   ensurePageInRange,
+  instanceId,
 }: DataTableProps<TData, TValue>) {
   // Local state (uncontrolled mode)
   const [localSorting, setLocalSorting] = useState<SortingState>([]);
@@ -124,7 +131,7 @@ export function DataTable<TData, TValue>({
       globalFilter: controlledGlobalFilter ?? localGlobalFilter,
       pagination: controlledPagination ?? localPagination,
     },
-    pageCount: pageCount,
+    pageCount: pageCount ?? -1, // -1은 알 수 없음을 의미
     manualPagination: !!onPaginationChange,
     enableRowSelection,
     onRowSelectionChange: onRowSelectionChange ?? setLocalRowSelection,
@@ -143,6 +150,9 @@ export function DataTable<TData, TValue>({
   });
 
   const tablePageCount = table.getPageCount();
+  const rowModel = table.getRowModel();
+  const rows = rowModel.rows;
+  const hasRows = rows.length > 0;
 
   useEffect(() => {
     if (ensurePageInRange) {
@@ -150,6 +160,10 @@ export function DataTable<TData, TValue>({
     }
   }, [tablePageCount, ensurePageInRange]);
 
+  // data 변경 시 pagination 강제 리렌더링을 위한 key
+  // pageIndex, pageCount, data.length가 변경되면 pagination 컴포넌트가 리마운트됨
+  const currentPaginationState = controlledPagination ?? localPagination;
+  const paginationKey = `${currentPaginationState.pageIndex}-${currentPaginationState.pageSize}-${pageCount ?? 'unknown'}-${data.length}`;
   return (
     <div
       className={cn(
@@ -158,7 +172,7 @@ export function DataTable<TData, TValue>({
         className
       )}
     >
-      {showToolbar && <DataTableToolbar table={table} searchPlaceholder={searchPlaceholder} searchKey={searchKey} filters={filters} />}
+      {showToolbar && <DataTableToolbar instanceId={instanceId} table={table} searchPlaceholder={searchPlaceholder} searchKey={searchKey} filters={filters} />}
       <div className="overflow-hidden rounded-md border">
         <Table>
           <TableHeader>
@@ -178,9 +192,20 @@ export function DataTable<TData, TValue>({
               </TableRow>
             ))}
           </TableHeader>
-          <TableBody>
-            {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map(row => (
+          <TableBody className="min-h-[400px]">
+            {isLoading ? (
+              // 스켈레톤 로딩 UI
+              Array.from({ length: currentPaginationState.pageSize }).map((_, index) => (
+                <TableRow key={`skeleton-${index}`}>
+                  {columns.map((column, colIndex) => (
+                    <TableCell key={`skeleton-${index}-${colIndex}`} className={cn(column.meta?.className, column.meta?.tdClassName)}>
+                      <Skeleton className="h-4 w-full" />
+                    </TableCell>
+                  ))}
+                </TableRow>
+              ))
+            ) : hasRows ? (
+              rows.map(row => (
                 <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
                   {row.getVisibleCells().map(cell => (
                     <TableCell key={cell.id} className={cn(cell.column.columnDef.meta?.className, cell.column.columnDef.meta?.tdClassName)}>
@@ -191,7 +216,7 @@ export function DataTable<TData, TValue>({
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={columns.length} className="h-24 text-center">
+                <TableCell colSpan={columns.length} className="h-[400px] text-center">
                   {emptyMessage}
                 </TableCell>
               </TableRow>
@@ -199,7 +224,7 @@ export function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      {showPagination && <DataTablePagination table={table} className="mt-auto" />}
+      {showPagination && <DataTablePagination key={paginationKey} table={table} className="mt-auto" />}
     </div>
   );
 }

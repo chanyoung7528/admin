@@ -1,15 +1,10 @@
 import { DataTable } from '@shared/components/data-table';
-import { type NavigateFn, useTableUrlState } from '@shared/components/data-table';
-import { useEffect, useState } from 'react';
-import { settlementColumns } from '../columns';
-import { useSettlements } from '../hooks';
+import { useSettlementTable } from '../hooks';
 import { type Settlement } from '../types';
 
 interface SettlementTableProps {
   service: 'BODY' | 'FOOD' | 'MIND';
 }
-
-type SearchRecord = Record<string, unknown>;
 
 export function SettlementTable({ service }: SettlementTableProps) {
   const serviceLabel = {
@@ -18,59 +13,15 @@ export function SettlementTable({ service }: SettlementTableProps) {
     MIND: 'MY MIND',
   }[service];
 
-  // URL 상태 관리 (간단한 버전 - 실제로는 @tanstack/react-router 사용)
-  const [searchParams, setSearchParams] = useState<SearchRecord>({
-    page: 1,
-    pageSize: 10,
-    status: [],
-    filter: '',
-  });
-
-  // URL 상태 동기화를 위한 navigate 함수
-  const navigate: NavigateFn = ({ search }) => {
-    if (typeof search === 'function') {
-      setSearchParams(prev => {
-        const result = search(prev);
-        return { ...prev, ...result };
-      });
-    } else if (search !== true) {
-      setSearchParams(prev => ({ ...prev, ...search }));
-    }
-  };
-
-  const { globalFilter, onGlobalFilterChange, columnFilters, onColumnFiltersChange, pagination, onPaginationChange, ensurePageInRange } = useTableUrlState({
-    search: searchParams,
-    navigate,
-    pagination: { defaultPage: 1, defaultPageSize: 10 },
-    globalFilter: { enabled: true, key: 'filter' },
-    columnFilters: [{ columnId: 'status', searchKey: 'status', type: 'array' }],
-  });
-
-  // API 데이터 조회
-  const { data, isLoading, isError } = useSettlements({
-    page: pagination.pageIndex + 1,
-    pageSize: pagination.pageSize,
-    status: columnFilters.find(f => f.id === 'status')?.value as string[] | undefined,
-    service,
-    filter: globalFilter,
-  });
-
-  const settlements = data?.settlements || [];
-  const totalCount = data?.total || 0;
-  const pageCount = Math.ceil(totalCount / pagination.pageSize);
-
-  // 페이지 범위 확인
-  useEffect(() => {
-    ensurePageInRange(pageCount);
-  }, [pageCount, ensurePageInRange]);
+  const { tableProps, data, isError, isLoading } = useSettlementTable({ service });
 
   // 요약 통계 계산
-  const totalAmount = settlements.reduce((sum: number, s: Settlement) => sum + s.amount, 0);
-  const completedCount = settlements.filter((s: Settlement) => s.status === 'completed').length;
-  const pendingCount = settlements.filter((s: Settlement) => s.status === 'pending').length;
+  const totalAmount = data.reduce((sum: number, s: Settlement) => sum + s.amount, 0);
+  const completedCount = data.filter((s: Settlement) => s.status === 'completed').length;
+  const pendingCount = data.filter((s: Settlement) => s.status === 'pending').length;
 
   return (
-    <div className="bg-card rounded-lg border p-6">
+    <div className="bg-card p-6">
       <div className="mb-4 flex items-center justify-between">
         <h2 className="text-lg font-semibold">{serviceLabel} 정산 내역</h2>
         <button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-md px-4 py-2 text-sm">정산 엑셀 다운로드</button>
@@ -111,36 +62,7 @@ export function SettlementTable({ service }: SettlementTableProps) {
       )}
 
       {/* 정산 테이블 */}
-      <DataTable
-        columns={settlementColumns}
-        data={settlements}
-        pagination={pagination}
-        onPaginationChange={onPaginationChange}
-        pageCount={pageCount}
-        columnFilters={columnFilters}
-        onColumnFiltersChange={onColumnFiltersChange}
-        globalFilter={globalFilter}
-        onGlobalFilterChange={onGlobalFilterChange}
-        ensurePageInRange={ensurePageInRange}
-        searchPlaceholder="정산 ID 또는 Site명 검색..."
-        filters={[
-          {
-            columnId: 'status',
-            title: '상태',
-            options: [
-              { label: '완료', value: 'completed' },
-              { label: '대기', value: 'pending' },
-            ],
-          },
-        ]}
-        emptyMessage={isLoading ? '로딩 중...' : '정산 내역이 없습니다.'}
-        globalFilterFn={(row, _columnId, filterValue) => {
-          const id = String(row.getValue('id')).toLowerCase();
-          const site = String(row.getValue('site')).toLowerCase();
-          const searchValue = String(filterValue).toLowerCase();
-          return id.includes(searchValue) || site.includes(searchValue);
-        }}
-      />
+      <DataTable {...tableProps} />
     </div>
   );
 }

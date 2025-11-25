@@ -1,0 +1,199 @@
+import { useNavigate, useSearch } from '@tanstack/react-router';
+import type { ColumnDef, ColumnFiltersState, PaginationState } from '@tanstack/react-table';
+import debounce from 'lodash-es/debounce';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import type { DataTableProps } from './data-table';
+import { useTableInstanceKey } from './use-table-instance-key';
+import { type NavigateFn, useTableUrlState } from './use-table-url-state';
+
+interface FilterConfig {
+  columnId: string;
+  searchKey: string;
+  type?: 'string' | 'array';
+}
+
+interface UseDataTableControllerParams<TData, TValue> {
+  tableId: string;
+  columns: ColumnDef<TData, TValue>[];
+  useQueryHook: (params: any) => {
+    data: TData[] | undefined;
+    total?: number;
+    isLoading: boolean;
+    isError: boolean;
+  };
+  queryParams?: (urlState: { pagination: PaginationState; columnFilters: ColumnFiltersState; globalFilter?: string }) => any;
+  filterConfigs?: FilterConfig[];
+  searchPlaceholder?: string;
+  emptyMessage?: string;
+  globalFilterFn?: (row: any, columnId: string, filterValue: any) => boolean;
+  renderFilters?: (columnFilters: ColumnFiltersState) => DataTableProps<TData, TValue>['filters'];
+  defaultPageSize?: number;
+  /** 검색어 디바운스 시간 (ms). 기본값: 500ms */
+  searchDebounceMs?: number;
+}
+
+interface UseDataTableControllerReturn<TData, TValue> {
+  tableProps: DataTableProps<TData, TValue>;
+  data: TData[];
+  isLoading: boolean;
+  isError: boolean;
+  pagination: PaginationState;
+  columnFilters: ColumnFiltersState;
+  globalFilter?: string;
+}
+
+export function useDataTableController<TData, TValue>({
+  tableId,
+  columns,
+  useQueryHook,
+  queryParams,
+  filterConfigs = [],
+  searchPlaceholder = '검색...',
+  emptyMessage = '데이터가 없습니다.',
+  globalFilterFn,
+  renderFilters,
+  defaultPageSize = 10,
+  searchDebounceMs = 500,
+}: UseDataTableControllerParams<TData, TValue>): UseDataTableControllerReturn<TData, TValue> {
+  const routerNavigate = useNavigate();
+  const searchParams = useSearch({ strict: false });
+
+  const navigate: NavigateFn = ({ search }) => {
+    if (typeof search === 'function') {
+      const result = search(searchParams);
+      void routerNavigate({
+        search: result as never,
+      });
+    } else if (search !== true) {
+      void routerNavigate({
+        search: search as never,
+      });
+    }
+  };
+
+  const { globalFilter, onGlobalFilterChange, columnFilters, onColumnFiltersChange, pagination, onPaginationChange, ensurePageInRange } = useTableUrlState({
+    search: searchParams,
+    navigate,
+    pagination: { defaultPage: 1, defaultPageSize },
+    globalFilter: { enabled: true, key: 'filter' },
+    columnFilters: filterConfigs,
+  });
+
+  // 검색어를 위한 로컬 상태 (즉시 UI 업데이트용)
+  const [debouncedGlobalFilter, setDebouncedGlobalFilter] = useState(globalFilter);
+  const [isSearching, setIsSearching] = useState(false);
+  const isInitialMount = useRef(true);
+
+  // 디바운스된 업데이트 함수
+  const debouncedUpdate = useRef(
+    debounce((value: string | undefined) => {
+      setDebouncedGlobalFilter(value);
+      setIsSearching(false);
+    }, searchDebounceMs)
+  ).current;
+
+  // globalFilter 변경 시 디바운스 적용
+  useEffect(() => {
+    // 초기 마운트 시에는 디바운스 없이 즉시 설정
+    if (isInitialMount.current) {
+      setDebouncedGlobalFilter(globalFilter);
+      isInitialMount.current = false;
+      return;
+    }
+
+    if (globalFilter !== debouncedGlobalFilter) {
+      setIsSearching(true);
+      debouncedUpdate(globalFilter);
+    }
+
+    return () => {
+      debouncedUpdate.cancel();
+    };
+  }, [globalFilter, debouncedGlobalFilter, debouncedUpdate]);
+
+  const apiParams = useMemo(() => {
+    if (queryParams) {
+      return queryParams({ pagination, columnFilters, globalFilter: debouncedGlobalFilter });
+    }
+    return {
+      page: pagination.pageIndex + 1,
+      pageSize: pagination.pageSize,
+      filter: debouncedGlobalFilter && debouncedGlobalFilter.trim() !== '' ? debouncedGlobalFilter : undefined,
+    };
+  }, [pagination, columnFilters, debouncedGlobalFilter, queryParams]);
+
+  const queryResult = useQueryHook(apiParams);
+  const { data: rawData, total, isLoading, isError } = queryResult;
+
+  const data = useMemo(() => (Array.isArray(rawData) ? rawData : []), [rawData]);
+
+  const tableInstanceKey = useTableInstanceKey({
+    tableId,
+    pagination,
+    columnFilters,
+    globalFilter: debouncedGlobalFilter,
+  });
+
+  const pageCount = total && total > 0 ? Math.ceil(total / pagination.pageSize) : undefined;
+
+  useEffect(() => {
+    if (pageCount) {
+      ensurePageInRange(pageCount);
+    }
+  }, [pageCount, ensurePageInRange]);
+
+  // 검색 중이거나 API 로딩 중일 때 로딩 표시
+  const effectiveIsLoading = isLoading || isSearching;
+
+  const tableProps = useMemo(
+    () =>
+      ({
+        key: tableInstanceKey,
+        instanceId: tableId,
+        columns,
+        data,
+        pagination,
+        onPaginationChange,
+        pageCount,
+        columnFilters,
+        onColumnFiltersChange,
+        globalFilter,
+        onGlobalFilterChange,
+        ensurePageInRange,
+        searchPlaceholder,
+        filters: renderFilters?.(columnFilters),
+        emptyMessage: effectiveIsLoading ? '로딩 중...' : emptyMessage,
+        isLoading: effectiveIsLoading,
+        globalFilterFn,
+      }) as DataTableProps<TData, TValue>,
+    [
+      tableInstanceKey,
+      tableId,
+      columns,
+      data,
+      pagination,
+      onPaginationChange,
+      pageCount,
+      columnFilters,
+      onColumnFiltersChange,
+      globalFilter,
+      onGlobalFilterChange,
+      ensurePageInRange,
+      searchPlaceholder,
+      renderFilters,
+      emptyMessage,
+      effectiveIsLoading,
+      globalFilterFn,
+    ]
+  );
+
+  return {
+    tableProps,
+    data,
+    isLoading: effectiveIsLoading,
+    isError,
+    pagination,
+    columnFilters,
+    globalFilter,
+  };
+}

@@ -1,8 +1,18 @@
-import { createFileRoute } from '@tanstack/react-router';
 import { SettlementTable } from '@/domains/settlement/components';
+import { createFileRoute } from '@tanstack/react-router';
+import { z } from 'zod';
+
+// Search params 스키마 정의
+const settlementSearchSchema = z.object({
+  page: z.number().int().positive().catch(1),
+  pageSize: z.number().int().positive().catch(10),
+  status: z.array(z.string()).catch([]),
+  filter: z.string().catch(''),
+});
 
 export const Route = createFileRoute('/_authenticated/my-body/settlement')({
   component: BodySettlementPage,
+  validateSearch: settlementSearchSchema,
 });
 
 function BodySettlementPage() {
