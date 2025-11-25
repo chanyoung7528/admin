@@ -10,7 +10,6 @@
       "@shared/components/*": ["./src/components/*"],
       "@shared/lib/*": ["./src/lib/*"],
       "@shared/hooks/*": ["./src/hooks/*"],
-      "@shared/stores/*": ["./src/stores/*"],
       "@shared/assets/*": ["./src/assets/*"]
     }
   }

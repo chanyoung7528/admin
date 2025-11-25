@@ -1,3 +1,4 @@
+import { useAuth } from '@/domains/auth/hooks/useAuth';
 import { Button, Input } from '@repo/shared/components/ui';
 import { createFileRoute, useNavigate } from '@tanstack/react-router';
 
@@ -7,15 +8,17 @@ export const Route = createFileRoute('/_public/login')({
 
 function LoginPage() {
   const navigate = useNavigate();
+  const { setTokens } = useAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
     // TODO: 실제 로그인 API 호출
     // const { token } = await loginAPI({ email, password });
+    const mockToken = 'demo-token-from-new-auth-store';
 
-    // 임시: localStorage에 토큰 저장
-    localStorage.setItem('auth_token', 'demo-token');
+    // 네이티브 Cookie Store API를 사용하여 토큰 저장 및 상태 업데이트
+    await setTokens(mockToken);
 
     // 로그인 후 대시보드로 이동
     navigate({ to: '/' });

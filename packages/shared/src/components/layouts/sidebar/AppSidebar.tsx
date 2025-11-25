@@ -6,7 +6,11 @@ import { NavGroup } from './NavGroup';
 import { NavUser } from './NavUser';
 import { TeamSwitcher } from './TeamSwitcher';
 
-export function AppSidebar() {
+interface AppSidebarProps {
+  onSignOut?: () => void | Promise<void>;
+}
+
+export function AppSidebar({ onSignOut }: AppSidebarProps) {
   const { collapsible, variant } = useLayout();
   return (
     <Sidebar collapsible={collapsible} variant={variant}>
@@ -19,7 +23,7 @@ export function AppSidebar() {
         ))}
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={sidebarData.user} />
+        <NavUser user={sidebarData.user} onSignOut={onSignOut} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

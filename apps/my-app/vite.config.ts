@@ -36,7 +36,6 @@ export default defineConfig({
       '@repo/shared/components': path.resolve(__dirname, '../../packages/shared/src/components'),
       '@repo/shared/lib': path.resolve(__dirname, '../../packages/shared/src/lib'),
       '@repo/shared/hooks': path.resolve(__dirname, '../../packages/shared/src/hooks'),
-      '@repo/shared/stores': path.resolve(__dirname, '../../packages/shared/src/stores'),
       '@repo/shared/assets': path.resolve(__dirname, '../../packages/shared/src/assets'),
       '@repo/shared': path.resolve(__dirname, '../../packages/shared/src'),
 
@@ -45,7 +44,6 @@ export default defineConfig({
       '@shared/components': path.resolve(__dirname, '../../packages/shared/src/components'),
       '@shared/lib': path.resolve(__dirname, '../../packages/shared/src/lib'),
       '@shared/hooks': path.resolve(__dirname, '../../packages/shared/src/hooks'),
-      '@shared/stores': path.resolve(__dirname, '../../packages/shared/src/stores'),
       '@shared/assets': path.resolve(__dirname, '../../packages/shared/src/assets'),
       '@shared': path.resolve(__dirname, '../../packages/shared/src'),
 

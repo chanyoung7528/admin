@@ -4,11 +4,16 @@ import { SidebarInset, SidebarProvider } from '@shared/ui/sidebar';
 import { Outlet } from '@tanstack/react-router';
 import { AppSidebar } from './sidebar/AppSidebar';
 
-export function Layout({ children }: { children: React.ReactNode }) {
+interface LayoutProps {
+  children: React.ReactNode;
+  onSignOut?: () => void | Promise<void>;
+}
+
+export function Layout({ children, onSignOut }: LayoutProps) {
   return (
     <LayoutProvider>
       <SidebarProvider>
-        <AppSidebar />
+        <AppSidebar onSignOut={onSignOut} />
         <SidebarInset
           className={cn(
             // Set content container, so we can use container queries

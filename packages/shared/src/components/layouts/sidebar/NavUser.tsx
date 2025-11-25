@@ -19,9 +19,10 @@ type NavUserProps = {
     email: string;
     avatar: string;
   };
+  onSignOut?: () => void | Promise<void>;
 };
 
-export function NavUser({ user }: NavUserProps) {
+export function NavUser({ user, onSignOut }: NavUserProps) {
   const { isMobile } = useSidebar();
   const [open, setOpen] = useDialogState();
 
@@ -93,7 +94,7 @@ export function NavUser({ user }: NavUserProps) {
         </SidebarMenuItem>
       </SidebarMenu>
 
-      <SignOutDialog open={!!open} onOpenChange={setOpen} />
+      <SignOutDialog open={!!open} onOpenChange={setOpen} onConfirm={onSignOut} />
     </>
   );
 }
