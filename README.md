@@ -384,7 +384,7 @@ describe('DashboardView', () => {
 
 | 분류          | 기술                         |
 | ------------- | ---------------------------- |
-| **Framework** | Next.js 15 (App Router)      |
+| **Framework** | Vite + React                 |
 | **Language**  | TypeScript                   |
 | **Routing**   | TanStack Router (File-based) |
 | **State**     | TanStack Query, Zustand      |

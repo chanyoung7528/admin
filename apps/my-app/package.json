@@ -24,7 +24,6 @@
     "@tanstack/react-table": "^8.21.3",
     "@types/uuid": "^11.0.0",
     "axios": "^1.13.2",
-    "cookie-store": "4.0.0-next.4",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "uuid": "^13.0.0",
