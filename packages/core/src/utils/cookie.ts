@@ -1,10 +1,8 @@
-import { cookieStore as polyfill } from 'cookie-store';
-
 /**
  * CookieStore API 타입 정의
  * @see https://developer.mozilla.org/en-US/docs/Web/API/Cookie_Store_API
  */
-export type CookieSameSite = 'Strict' | 'Lax' | 'None';
+export type CookieSameSite = 'strict' | 'lax' | 'none';
 
 export interface CookieListItem {
   name: string;
@@ -60,7 +58,7 @@ class CookieManager {
     if (typeof window !== 'undefined' && 'cookieStore' in window) {
       return window.cookieStore as unknown as CookieStore;
     }
-    return polyfill as unknown as CookieStore;
+    throw new Error('CookieStore API is not available. Make sure to import cookie-store polyfill.');
   }
 
   async get(name: string): Promise<string | null> {

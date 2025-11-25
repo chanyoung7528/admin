@@ -14,7 +14,11 @@ import {
 import useDialogState from '@shared/hooks/useDialogState';
 import { Link } from '@tanstack/react-router';
 
-export function ProfileDropdown() {
+interface ProfileDropdownProps {
+  onSignOut?: () => void | Promise<void>;
+}
+
+export function ProfileDropdown({ onSignOut }: ProfileDropdownProps) {
   const [open, setOpen] = useDialogState();
 
   return (
@@ -65,7 +69,7 @@ export function ProfileDropdown() {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <SignOutDialog open={!!open} onOpenChange={setOpen} />
+      <SignOutDialog open={!!open} onOpenChange={setOpen} onConfirm={onSignOut} />
     </>
   );
 }

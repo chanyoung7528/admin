@@ -24,7 +24,7 @@ export interface DatePickerProps {
    * - 'full': 100%
    * @default 'default'
    */
-  width?: number | 'full';
+  width?: number | 'default' | 'full';
 
   /**
    * placeholder 텍스트
@@ -71,7 +71,7 @@ export interface DateRangePickerProps {
    * - 'full': 100%
    * @default 'default'
    */
-  width?: number | 'full';
+  width?: number | 'default' | 'full';
 
   /**
    * placeholder 텍스트
