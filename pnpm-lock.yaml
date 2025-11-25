@@ -51,9 +51,6 @@ importers:
       axios:
         specifier: ^1.13.2
         version: 1.13.2
-      cookie-store:
-        specifier: 4.0.0-next.4
-        version: 4.0.0-next.4
       react:
         specifier: ^19.2.0
         version: 19.2.0
@@ -4842,11 +4839,6 @@ packages:
 
   /cookie-es@2.0.0:
     resolution: {integrity: sha512-RAj4E421UYRgqokKUmotqAwuplYw15qtdXfY+hGzgCJ/MBjCVZcSoHK/kH9kocfjRjcDME7IiDWR/1WX1TM2Pg==}
-
-  /cookie-store@4.0.0-next.4:
-    resolution: {integrity: sha512-RVcIK13cCiAa+rsxAbFhrIThn1eBcgt9WTyLq539zMafDnhdGb6u/O5JdMTC3/pcJVqqHJmctiWxAYPpwT/fxw==}
-    engines: {node: '>= 14'}
-    dev: false
 
   /cross-spawn@7.0.6:
     resolution: {integrity: sha512-uV2QOWP2nWzsy2aMp8aRibhi9dlzF5Hgh5SHaB9OiTGEyDTiJJyx0uy51QXdyWbtAHNua4XJzUKca3OzKUd3vA==}

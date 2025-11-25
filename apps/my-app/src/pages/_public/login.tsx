@@ -8,7 +8,7 @@ export const Route = createFileRoute('/_public/login')({
 
 function LoginPage() {
   const navigate = useNavigate();
-  const { setTokens } = useAuth();
+  const { signIn } = useAuth();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,7 +18,7 @@ function LoginPage() {
     const mockAccessToken = 'demo-access-token';
     const mockRefreshToken = 'demo-refresh-token';
 
-    setTokens(mockAccessToken, mockRefreshToken);
+    signIn({ accessToken: mockAccessToken, refreshToken: mockRefreshToken });
 
     // 로그인 후 대시보드로 이동
     navigate({ to: '/' });

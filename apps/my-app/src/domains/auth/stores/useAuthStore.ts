@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
 export interface AuthUser {
   [key: string]: unknown;
@@ -9,20 +9,28 @@ interface AuthState {
   user: AuthUser | null;
   accessToken: string | null;
   refreshToken: string | null;
-
-  setTokens: (accessToken: string, refreshToken: string) => void;
-  setUser: (user: AuthUser | null) => void;
-  signOut: () => void;
 }
 
-export const useAuthStore = create<AuthState>()(
+interface AuthActions {
+  setTokens: (tokens: { accessToken: string; refreshToken: string }) => void;
+  setUser: (user: AuthUser | null) => void;
+  clearAuth: () => void;
+}
+
+type AuthStore = AuthState & AuthActions;
+
+const initialState: AuthState = {
+  user: null,
+  accessToken: null,
+  refreshToken: null,
+};
+
+export const useAuthStore = create<AuthStore>()(
   persist(
     set => ({
-      user: null,
-      accessToken: null,
-      refreshToken: null,
+      ...initialState,
 
-      setTokens: (accessToken, refreshToken) => {
+      setTokens: ({ accessToken, refreshToken }) => {
         set({ accessToken, refreshToken });
       },
 
@@ -30,13 +38,13 @@ export const useAuthStore = create<AuthState>()(
         set({ user });
       },
 
-      signOut: () => {
-        set({ accessToken: null, refreshToken: null, user: null });
-        window.location.href = '/';
+      clearAuth: () => {
+        set({ ...initialState });
       },
     }),
     {
       name: 'auth-storage',
+      storage: createJSONStorage(() => localStorage),
       partialize: state => ({
         accessToken: state.accessToken,
         refreshToken: state.refreshToken,
