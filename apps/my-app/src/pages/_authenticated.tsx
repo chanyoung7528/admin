@@ -1,5 +1,5 @@
 import { useAuth } from '@/domains/auth/hooks/useAuth';
-import { useAuthStore } from '@/domains/auth/store/useAuthStore';
+import { useAuthStore } from '@/domains/auth/stores/useAuthStore';
 import { Header } from '@/domains/dashboard/components/Header';
 import { Layout } from '@repo/shared/components/layouts';
 import { ErrorBoundary } from '@repo/shared/components/ui';

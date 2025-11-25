@@ -215,7 +215,6 @@ export default defineConfig({
     "./components/context": "./src/components/context/index.ts",
     "./components/*": "./src/components/*",
     "./hooks/*": "./src/hooks/*.ts",
-    "./stores/*": "./src/stores/*.ts",
     "./types/*": "./src/types/*.ts"
   }
 }
