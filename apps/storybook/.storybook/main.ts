@@ -54,7 +54,6 @@ const config: StorybookConfig = {
       '@repo/shared/components': resolve(__dirname, '../../../packages/shared/src/components'),
       '@repo/shared/lib': resolve(__dirname, '../../../packages/shared/src/lib'),
       '@repo/shared/hooks': resolve(__dirname, '../../../packages/shared/src/hooks'),
-      '@repo/shared/stores': resolve(__dirname, '../../../packages/shared/src/stores'),
       '@repo/shared/assets': resolve(__dirname, '../../../packages/shared/src/assets'),
       '@repo/shared': resolve(__dirname, '../../../packages/shared/src'),
 
@@ -63,7 +62,6 @@ const config: StorybookConfig = {
       '@shared/components': resolve(__dirname, '../../../packages/shared/src/components'),
       '@shared/lib': resolve(__dirname, '../../../packages/shared/src/lib'),
       '@shared/hooks': resolve(__dirname, '../../../packages/shared/src/hooks'),
-      '@shared/stores': resolve(__dirname, '../../../packages/shared/src/stores'),
       '@shared/assets': resolve(__dirname, '../../../packages/shared/src/assets'),
       '@shared': resolve(__dirname, '../../../packages/shared/src'),
     };

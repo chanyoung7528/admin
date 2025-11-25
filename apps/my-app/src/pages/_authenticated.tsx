@@ -1,3 +1,5 @@
+import { useAuth } from '@/domains/auth/hooks/useAuth';
+import { useAuthStore } from '@/domains/auth/store/useAuthStore';
 import { Header } from '@/domains/dashboard/components/Header';
 import { Layout } from '@repo/shared/components/layouts';
 import { ErrorBoundary } from '@repo/shared/components/ui';
@@ -7,8 +9,8 @@ import { createFileRoute, Outlet, redirect } from '@tanstack/react-router';
 export const Route = createFileRoute('/_authenticated')({
   // 인증 체크 로직
   beforeLoad: async ({ location }) => {
-    // TODO: 실제 인증 상태 확인 로직
-    const isAuthenticated = checkAuth();
+    // 인증 상태 확인 (비동기)
+    const isAuthenticated = await checkAuth();
 
     if (!isAuthenticated) {
       throw redirect({
@@ -23,8 +25,10 @@ export const Route = createFileRoute('/_authenticated')({
 });
 
 function AuthenticatedLayout() {
+  const { signOut } = useAuth();
+
   return (
-    <Layout>
+    <Layout onSignOut={signOut}>
       {/* Header는 별도 에러 바운더리로 보호 */}
       <ErrorBoundary
         fallback="minimal"
@@ -52,11 +56,12 @@ function AuthenticatedLayout() {
     </Layout>
   );
 }
+// 인증 상태 체크
+async function checkAuth(): Promise<boolean> {
+  if (typeof window === 'undefined') {
+    return false;
+  }
 
-// 임시 인증 체크 함수 (실제로는 zustand store나 context에서 가져와야 함)
-function checkAuth(): boolean {
-  // localStorage나 cookie에서 토큰 확인
-  // 또는 auth store에서 상태 확인
-  const token = localStorage.getItem('auth_token');
-  return !!token;
+  const { accessToken } = useAuthStore.getState();
+  return Boolean(accessToken);
 }

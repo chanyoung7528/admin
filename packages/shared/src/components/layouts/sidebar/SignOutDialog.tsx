@@ -1,23 +1,14 @@
-import { useAuthStore } from '@shared/stores/useAuthStore';
-import { useNavigate } from '@tanstack/react-router';
 import { ConfirmDialog } from './ConfirmDialog';
 
 interface SignOutDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onConfirm?: () => void | Promise<void>;
 }
 
-export function SignOutDialog({ open, onOpenChange }: SignOutDialogProps) {
-  const navigate = useNavigate();
-  const { auth } = useAuthStore();
-
+export function SignOutDialog({ open, onOpenChange, onConfirm }: SignOutDialogProps) {
   const handleSignOut = () => {
-    auth.reset();
-    // Redirect to login page
-    navigate({
-      to: '/login',
-      replace: true,
-    });
+    Promise.resolve(onConfirm?.()).finally(() => onOpenChange(false));
   };
 
   return (
