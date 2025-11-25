@@ -1,5 +1,5 @@
 import { useAuth } from '@/domains/auth/hooks/useAuth';
-import { useAuthStore } from '@/domains/auth/store/useAuthStore';
+import { useAuthStore } from '@/domains/auth/stores/useAuthStore';
 import { Header } from '@/domains/dashboard/components/Header';
 import { Layout } from '@repo/shared/components/layouts';
 import { ErrorBoundary } from '@repo/shared/components/ui';
@@ -8,11 +8,11 @@ import { createFileRoute, Outlet, redirect } from '@tanstack/react-router';
 // 인증이 필요한 모든 페이지의 레이아웃
 export const Route = createFileRoute('/_authenticated')({
   // 인증 체크 로직
-  beforeLoad: async ({ location }) => {
-    // 인증 상태 확인 (비동기)
-    const isAuthenticated = await checkAuth();
+  beforeLoad: ({ location }) => {
+    // 인증 상태 확인
+    const { accessToken } = useAuthStore.getState();
 
-    if (!isAuthenticated) {
+    if (!accessToken) {
       throw redirect({
         to: '/login',
         search: {
@@ -55,13 +55,4 @@ function AuthenticatedLayout() {
       </ErrorBoundary>
     </Layout>
   );
-}
-// 인증 상태 체크
-async function checkAuth(): Promise<boolean> {
-  if (typeof window === 'undefined') {
-    return false;
-  }
-
-  const { accessToken } = useAuthStore.getState();
-  return Boolean(accessToken);
 }
