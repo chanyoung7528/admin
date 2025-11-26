@@ -120,8 +120,9 @@ export function useDataTableController<TData, TValue>({
 
   // URL에서 정렬 파라미터 읽기
   const sorting = useMemo(() => {
-    const sortBy = searchParams.sortBy as string | undefined;
-    const sortOrder = searchParams.sortOrder as string | undefined;
+    const params = searchParams as Record<string, unknown>;
+    const sortBy = params.sortBy as string | undefined;
+    const sortOrder = params.sortOrder as string | undefined;
     if (sortBy) {
       return [{ id: sortBy, desc: sortOrder === 'desc' }];
     }
