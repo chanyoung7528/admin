@@ -5,8 +5,6 @@ export const useAuth = () => {
   const navigate = useNavigate();
   const { user, accessToken, refreshToken, setTokens, setUser, clearAuth } = useAuthStore();
 
-  const isAuthenticated = Boolean(accessToken);
-
   const signIn = (tokens: { accessToken: string; refreshToken: string }) => {
     setTokens(tokens);
   };
@@ -20,7 +18,6 @@ export const useAuth = () => {
     user,
     accessToken,
     refreshToken,
-    isAuthenticated,
     signIn,
     setTokens,
     setUser,
