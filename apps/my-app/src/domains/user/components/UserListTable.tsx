@@ -1,4 +1,6 @@
 export default function UserListTable() {
+  // 샘플 데이터
+
   return (
     <div className="bg-card rounded-lg border p-6">
       <h2 className="mb-4 text-lg font-semibold">사용자 목록</h2>
