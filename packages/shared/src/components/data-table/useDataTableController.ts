@@ -1,7 +1,7 @@
 import { useNavigate, useSearch } from '@tanstack/react-router';
-import type { ColumnDef, ColumnFiltersState, PaginationState } from '@tanstack/react-table';
+import type { ColumnDef, ColumnFiltersState, PaginationState, SortingState } from '@tanstack/react-table';
 import debounce from 'lodash-es/debounce';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { DataTableProps } from './data-table';
 import { type NavigateFn, useTableUrlState } from './useTableUrlState';
 
@@ -20,7 +20,12 @@ interface UseDataTableControllerParams<TData, TValue> {
     isLoading: boolean;
     isError: boolean;
   };
-  queryParams?: (urlState: { pagination: PaginationState; columnFilters: ColumnFiltersState; globalFilter?: string }) => any;
+  queryParams?: (urlState: {
+    pagination: PaginationState;
+    columnFilters: ColumnFiltersState;
+    globalFilter?: string;
+    sorting?: SortingState;
+  }) => Record<string, unknown>;
   filterConfigs?: FilterConfig[];
   searchPlaceholder?: string;
   emptyMessage?: string;
@@ -57,18 +62,21 @@ export function useDataTableController<TData, TValue>({
   const routerNavigate = useNavigate();
   const searchParams = useSearch({ strict: false });
 
-  const navigate: NavigateFn = ({ search }) => {
-    if (typeof search === 'function') {
-      const result = search(searchParams);
-      void routerNavigate({
-        search: result as never,
-      });
-    } else if (search !== true) {
-      void routerNavigate({
-        search: search as never,
-      });
-    }
-  };
+  const navigate: NavigateFn = useCallback(
+    ({ search }) => {
+      if (typeof search === 'function') {
+        const result = search(searchParams);
+        void routerNavigate({
+          search: result as never,
+        });
+      } else if (search !== true) {
+        void routerNavigate({
+          search: search as never,
+        });
+      }
+    },
+    [routerNavigate, searchParams]
+  );
 
   const { globalFilter, onGlobalFilterChange, columnFilters, onColumnFiltersChange, pagination, onPaginationChange, ensurePageInRange } = useTableUrlState({
     search: searchParams,
@@ -110,16 +118,43 @@ export function useDataTableController<TData, TValue>({
     };
   }, [globalFilter, debouncedGlobalFilter, debouncedUpdate]);
 
+  // URL에서 정렬 파라미터 읽기
+  const sorting = useMemo(() => {
+    const sortBy = searchParams.sortBy as string | undefined;
+    const sortOrder = searchParams.sortOrder as string | undefined;
+    if (sortBy) {
+      return [{ id: sortBy, desc: sortOrder === 'desc' }];
+    }
+    return [];
+  }, [searchParams]);
+
+  // 정렬 변경 핸들러
+  const onSortingChange = useCallback(
+    (updater: SortingState | ((old: SortingState) => SortingState)) => {
+      const newSorting = typeof updater === 'function' ? updater(sorting) : updater;
+      const sortItem = newSorting[0];
+
+      navigate({
+        search: prev => ({
+          ...prev,
+          sortBy: sortItem?.id,
+          sortOrder: sortItem?.desc ? 'desc' : 'asc',
+        }),
+      });
+    },
+    [navigate, sorting]
+  );
+
   const apiParams = useMemo(() => {
     if (queryParams) {
-      return queryParams({ pagination, columnFilters, globalFilter: debouncedGlobalFilter });
+      return queryParams({ pagination, columnFilters, globalFilter: debouncedGlobalFilter, sorting });
     }
     return {
       page: pagination.pageIndex + 1,
       pageSize: pagination.pageSize,
       filter: debouncedGlobalFilter && debouncedGlobalFilter.trim() !== '' ? debouncedGlobalFilter : undefined,
     };
-  }, [pagination, columnFilters, debouncedGlobalFilter, queryParams]);
+  }, [pagination, columnFilters, debouncedGlobalFilter, sorting, queryParams]);
 
   const queryResult = useQueryHook(apiParams);
   const { data: rawData, total, isLoading, isError } = queryResult;
@@ -150,6 +185,8 @@ export function useDataTableController<TData, TValue>({
         onColumnFiltersChange,
         globalFilter,
         onGlobalFilterChange,
+        sorting,
+        onSortingChange,
         ensurePageInRange,
         searchPlaceholder,
         filters: renderFilters?.(columnFilters),
@@ -168,6 +205,8 @@ export function useDataTableController<TData, TValue>({
       onColumnFiltersChange,
       globalFilter,
       onGlobalFilterChange,
+      sorting,
+      onSortingChange,
       ensurePageInRange,
       searchPlaceholder,
       renderFilters,

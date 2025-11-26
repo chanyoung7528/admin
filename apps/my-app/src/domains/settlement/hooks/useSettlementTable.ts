@@ -12,14 +12,19 @@ export function useSettlementTable({ service }: UseSettlementTableParams) {
     tableId: `settlement-${service.toLowerCase()}`,
     columns: settlementColumns,
     useQueryHook: useSettlements,
-    queryParams: ({ pagination, columnFilters, globalFilter }) => {
+    queryParams: ({ pagination, columnFilters, globalFilter, sorting }) => {
       const statusFilter = columnFilters.find(f => f.id === 'status')?.value as string[] | undefined;
+      const sortBy = sorting?.[0]?.id;
+      const sortOrder = sorting?.[0]?.desc ? 'desc' : 'asc';
+
       return {
         page: pagination.pageIndex + 1,
         pageSize: pagination.pageSize,
         status: statusFilter && statusFilter.length > 0 ? statusFilter : undefined,
         service,
         filter: globalFilter && globalFilter.trim() !== '' ? globalFilter : undefined,
+        sortBy: sortBy,
+        sortOrder: sortBy ? sortOrder : undefined,
       };
     },
     filterConfigs: [{ columnId: 'status', searchKey: 'status', type: 'array' }],

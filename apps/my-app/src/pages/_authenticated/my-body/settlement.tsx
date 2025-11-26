@@ -17,7 +17,7 @@ export const Route = createFileRoute('/_authenticated/my-body/settlement')({
 
 function BodySettlementPage() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 px-10">
       <div>
         <h1 className="text-3xl font-bold">MY BODY 정산 관리</h1>
         <p className="text-muted-foreground">MY BODY 서비스 결제 및 정산 내역</p>

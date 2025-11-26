@@ -12,6 +12,8 @@ export function useSettlements(params?: GetSettlementsParams) {
       status: params?.status?.length ? [...params.status].sort().join(',') : undefined,
       service: params?.service,
       filter: params?.filter || undefined,
+      sortBy: params?.sortBy || undefined,
+      sortOrder: params?.sortOrder || undefined,
     },
   ];
 

@@ -7,6 +7,8 @@ export interface GetSettlementsParams {
   status?: string[];
   service?: 'BODY' | 'FOOD' | 'MIND';
   filter?: string;
+  sortBy?: string;
+  sortOrder?: 'asc' | 'desc';
 }
 
 // Faker seed 고정으로 일관된 데이터 생성
@@ -72,7 +74,7 @@ export async function getSettlements(params?: GetSettlementsParams): Promise<{
   page: number;
   pageSize: number;
 }> {
-  const { page = 1, pageSize = 10, status, filter } = params || {};
+  const { page = 1, pageSize = 10, status, filter, sortBy, sortOrder = 'asc' } = params || {};
 
   // 필터 적용
   let filteredData = [...settlements];
@@ -84,6 +86,27 @@ export async function getSettlements(params?: GetSettlementsParams): Promise<{
   if (filter) {
     const searchLower = filter.toLowerCase();
     filteredData = filteredData.filter(item => item.id.toLowerCase().includes(searchLower) || item.site.toLowerCase().includes(searchLower));
+  }
+
+  // 정렬 적용
+  if (sortBy) {
+    filteredData.sort((a, b) => {
+      // description은 정렬 대상에서 제외
+      if (sortBy === 'description') return 0;
+
+      const aValue = a[sortBy as keyof Omit<Settlement, 'description'>];
+      const bValue = b[sortBy as keyof Omit<Settlement, 'description'>];
+
+      // 문자열 또는 숫자 비교
+      let comparison = 0;
+      if (typeof aValue === 'string' && typeof bValue === 'string') {
+        comparison = aValue.localeCompare(bValue);
+      } else if (typeof aValue === 'number' && typeof bValue === 'number') {
+        comparison = aValue - bValue;
+      }
+
+      return sortOrder === 'asc' ? comparison : -comparison;
+    });
   }
 
   // 페이지네이션 적용

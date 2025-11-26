@@ -17,7 +17,7 @@ export const Route = createFileRoute('/_authenticated/my-mind/settlement')({
 
 function MindSettlementPage() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 px-10">
       <div>
         <h1 className="text-3xl font-bold">MY MIND B2B 정산 관리</h1>
         <p className="text-muted-foreground">MY MIND 서비스 B2B 정산 내역</p>

@@ -1,10 +1,16 @@
 import { type ColumnDef } from '@tanstack/react-table';
+import { ArrowUpDown } from 'lucide-react';
 import { type Settlement } from '../types';
 
 export const settlementColumns: ColumnDef<Settlement>[] = [
   {
     accessorKey: 'id',
-    header: '정산 ID',
+    header: ({ column }) => (
+      <button className="hover:text-foreground flex items-center gap-2" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+        정산 ID
+        <ArrowUpDown className="h-4 w-4" />
+      </button>
+    ),
     cell: ({ row }) => <div className="font-medium">{row.getValue('id')}</div>,
     size: 120,
     meta: {
@@ -13,7 +19,12 @@ export const settlementColumns: ColumnDef<Settlement>[] = [
   },
   {
     accessorKey: 'site',
-    header: 'Site명',
+    header: ({ column }) => (
+      <button className="hover:text-foreground flex items-center gap-2" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+        Site명
+        <ArrowUpDown className="h-4 w-4" />
+      </button>
+    ),
     cell: ({ row }) => <div>{row.getValue('site')}</div>,
     size: 200,
     meta: {
@@ -31,7 +42,12 @@ export const settlementColumns: ColumnDef<Settlement>[] = [
   },
   {
     accessorKey: 'amount',
-    header: '정산 금액',
+    header: ({ column }) => (
+      <button className="hover:text-foreground flex items-center gap-2" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+        정산 금액
+        <ArrowUpDown className="h-4 w-4" />
+      </button>
+    ),
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue('amount'));
       const formatted = new Intl.NumberFormat('ko-KR', {
@@ -47,7 +63,12 @@ export const settlementColumns: ColumnDef<Settlement>[] = [
   },
   {
     accessorKey: 'date',
-    header: '처리일',
+    header: ({ column }) => (
+      <button className="hover:text-foreground flex items-center gap-2" onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}>
+        처리일
+        <ArrowUpDown className="h-4 w-4" />
+      </button>
+    ),
     cell: ({ row }) => <div>{row.getValue('date')}</div>,
     size: 120,
     meta: {
@@ -94,6 +115,7 @@ export const settlementColumns: ColumnDef<Settlement>[] = [
         </div>
       );
     },
+    enableSorting: false,
     size: 300,
     meta: {
       className: 'w-[300px]',
