@@ -6,6 +6,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@shared/ui/popover';
 import { Separator } from '@shared/ui/separator';
 import { type Column } from '@tanstack/react-table';
 import { CheckIcon, PlusCircleIcon } from 'lucide-react';
+import { useFacetedFilterState } from './hooks';
 
 type DataTableFacetedFilterProps<TData, TValue> = {
   column?: Column<TData, TValue>;
@@ -26,7 +27,11 @@ export function DataTableFacetedFilter<TData, TValue>({
   selectedValues,
   onSelectedValuesChange,
 }: DataTableFacetedFilterProps<TData, TValue>) {
-  const facets = column?.getFacetedUniqueValues();
+  const { facets, handleOptionSelect, handleClearFilters } = useFacetedFilterState({
+    column,
+    selectedValues,
+    onSelectedValuesChange,
+  });
 
   return (
     <Popover>
@@ -68,20 +73,7 @@ export function DataTableFacetedFilter<TData, TValue>({
               {options.map(option => {
                 const isSelected = selectedValues.has(option.value);
                 return (
-                  <CommandItem
-                    key={option.value}
-                    onSelect={() => {
-                      const newSelectedValues = new Set(selectedValues);
-                      if (isSelected) {
-                        newSelectedValues.delete(option.value);
-                      } else {
-                        newSelectedValues.add(option.value);
-                      }
-                      onSelectedValuesChange(newSelectedValues);
-                      const filterValues = Array.from(newSelectedValues);
-                      column?.setFilterValue(filterValues.length ? filterValues : undefined);
-                    }}
-                  >
+                  <CommandItem key={option.value} onSelect={() => handleOptionSelect(option.value)}>
                     <div
                       className={cn(
                         'border-primary flex size-4 items-center justify-center rounded-sm border',
@@ -103,13 +95,7 @@ export function DataTableFacetedFilter<TData, TValue>({
               <>
                 <CommandSeparator />
                 <CommandGroup>
-                  <CommandItem
-                    onSelect={() => {
-                      onSelectedValuesChange(new Set());
-                      column?.setFilterValue(undefined);
-                    }}
-                    className="justify-center text-center"
-                  >
+                  <CommandItem onSelect={handleClearFilters} className="justify-center text-center">
                     Clear filters
                   </CommandItem>
                 </CommandGroup>

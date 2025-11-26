@@ -3,7 +3,7 @@ import type { ColumnDef, ColumnFiltersState, PaginationState } from '@tanstack/r
 import debounce from 'lodash-es/debounce';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { DataTableProps } from './data-table';
-import { type NavigateFn, useTableUrlState } from './use-table-url-state';
+import { type NavigateFn, useTableUrlState } from './useTableUrlState';
 
 interface FilterConfig {
   columnId: string;

@@ -23,17 +23,23 @@ export function SettlementTable({ service }: SettlementTableProps) {
   return (
     <div className="bg-card p-6">
       <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg font-semibold">{serviceLabel} 정산 내역</h2>
+        <div>
+          <h2 className="text-lg font-semibold">{serviceLabel} 정산 내역</h2>
+          <p className="text-muted-foreground mt-1 text-sm">
+            JSONPlaceholder API로부터 실시간 데이터를 불러옵니다{' '}
+            <a href="https://jsonplaceholder.typicode.com/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+              (API 문서)
+            </a>
+          </p>
+        </div>
         <button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-md px-4 py-2 text-sm">정산 엑셀 다운로드</button>
       </div>
 
-      <p className="text-muted-foreground mb-6">{serviceLabel} 서비스의 Site별 정산 내역을 확인하세요</p>
-
       {/* 요약 통계 */}
       <div className="mb-6 grid gap-4 md:grid-cols-3">
-        <div className="bg-background rounded-lg p-4">
+        <div className="bg-background rounded-lg border p-4 shadow-sm">
           <p className="text-muted-foreground text-sm">총 정산 금액</p>
-          <p className="mt-1 text-2xl font-bold">
+          <p className="mt-2 text-2xl font-bold">
             {isLoading
               ? '...'
               : new Intl.NumberFormat('ko-KR', {
@@ -43,21 +49,32 @@ export function SettlementTable({ service }: SettlementTableProps) {
                   maximumFractionDigits: 1,
                 }).format(totalAmount)}
           </p>
+          <p className="text-muted-foreground mt-1 text-xs">현재 페이지 기준</p>
         </div>
-        <div className="bg-background rounded-lg p-4">
+        <div className="bg-background rounded-lg border p-4 shadow-sm">
           <p className="text-muted-foreground text-sm">정산 완료</p>
-          <p className="mt-1 text-2xl font-bold">{isLoading ? '...' : `${completedCount}건`}</p>
+          <p className="mt-2 text-2xl font-bold text-green-600 dark:text-green-400">{isLoading ? '...' : `${completedCount}건`}</p>
+          <p className="text-muted-foreground mt-1 text-xs">정상 처리됨</p>
         </div>
-        <div className="bg-background rounded-lg p-4">
+        <div className="bg-background rounded-lg border p-4 shadow-sm">
           <p className="text-muted-foreground text-sm">정산 대기</p>
-          <p className="mt-1 text-2xl font-bold">{isLoading ? '...' : `${pendingCount}건`}</p>
+          <p className="mt-2 text-2xl font-bold text-yellow-600 dark:text-yellow-400">{isLoading ? '...' : `${pendingCount}건`}</p>
+          <p className="text-muted-foreground mt-1 text-xs">처리 예정</p>
         </div>
       </div>
 
       {/* 에러 상태 */}
       {isError && (
-        <div className="mb-4 rounded-lg border border-red-500 bg-red-50 p-4 text-sm text-red-800 dark:bg-red-900 dark:text-red-200">
-          데이터를 불러오는데 실패했습니다. 다시 시도해주세요.
+        <div className="mb-4 rounded-lg border border-red-500 bg-red-50 p-4 dark:bg-red-900/20">
+          <div className="flex items-center gap-2">
+            <svg className="h-5 w-5 text-red-600 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div>
+              <p className="text-sm font-medium text-red-800 dark:text-red-200">데이터를 불러오는데 실패했습니다.</p>
+              <p className="text-muted-foreground mt-1 text-xs">API 연결을 확인하고 다시 시도해주세요.</p>
+            </div>
+          </div>
         </div>
       )}
 

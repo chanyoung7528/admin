@@ -10,15 +10,8 @@ import {
   type SortingState,
   type VisibilityState,
   flexRender,
-  getCoreRowModel,
-  getFacetedRowModel,
-  getFacetedUniqueValues,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  useReactTable,
 } from '@tanstack/react-table';
-import { useEffect, useState } from 'react';
+import { useDataTableState } from './hooks';
 import { DataTablePagination } from './pagination';
 import { DataTableToolbar } from './toolbar';
 
@@ -57,7 +50,7 @@ export interface DataTableProps<TData, TValue> {
   // Global filter
   globalFilter?: string;
   onGlobalFilterChange?: OnChangeFn<string>;
-  globalFilterFn?: (row: any, columnId: string, filterValue: any) => boolean;
+  globalFilterFn?: (row: unknown, columnId: string, filterValue: unknown) => boolean;
   // Row selection
   enableRowSelection?: boolean;
   rowSelection?: RowSelectionState;
@@ -109,71 +102,26 @@ export function DataTable<TData, TValue>({
   ensurePageInRange,
   instanceId,
 }: DataTableProps<TData, TValue>) {
-  // Local state (uncontrolled mode)
-  const [localSorting, setLocalSorting] = useState<SortingState>([]);
-  const [localColumnFilters, setLocalColumnFilters] = useState<ColumnFiltersState>([]);
-  const [localGlobalFilter, setLocalGlobalFilter] = useState('');
-  const [localPagination, setLocalPagination] = useState<PaginationState>({
-    pageIndex: 0,
-    pageSize: 10,
-  });
-  const [localRowSelection, setLocalRowSelection] = useState<RowSelectionState>({});
-  const [localColumnVisibility, setLocalColumnVisibility] = useState<VisibilityState>({});
-
-  // 현재 적용된 상태 값 계산 (Controlled ?? Local)
-  const currentSorting = controlledSorting ?? localSorting;
-  const currentColumnVisibility = controlledColumnVisibility ?? localColumnVisibility;
-  const currentRowSelection = controlledRowSelection ?? localRowSelection;
-  const currentColumnFilters = controlledColumnFilters ?? localColumnFilters;
-  const currentGlobalFilter = controlledGlobalFilter ?? localGlobalFilter;
-  const currentPagination = controlledPagination ?? localPagination;
-
-  const table = useReactTable({
-    data,
+  const { table, rows, hasRows, paginationKey, isFiltered, currentPagination } = useDataTableState({
     columns,
-    state: {
-      sorting: currentSorting,
-      columnVisibility: currentColumnVisibility,
-      rowSelection: currentRowSelection,
-      columnFilters: currentColumnFilters,
-      globalFilter: currentGlobalFilter,
-      pagination: currentPagination,
-    },
-    pageCount: pageCount ?? -1, // -1은 알 수 없음을 의미
-    manualPagination: !!onPaginationChange,
+    data,
+    pagination: controlledPagination,
+    onPaginationChange,
+    pageCount,
+    columnFilters: controlledColumnFilters,
+    onColumnFiltersChange,
+    globalFilter: controlledGlobalFilter,
+    onGlobalFilterChange,
+    globalFilterFn,
+    rowSelection: controlledRowSelection,
+    onRowSelectionChange,
+    columnVisibility: controlledColumnVisibility,
+    onColumnVisibilityChange,
+    sorting: controlledSorting,
+    onSortingChange,
     enableRowSelection,
-    onRowSelectionChange: onRowSelectionChange ?? setLocalRowSelection,
-    onSortingChange: onSortingChange ?? setLocalSorting,
-    onColumnVisibilityChange: onColumnVisibilityChange ?? setLocalColumnVisibility,
-    onColumnFiltersChange: onColumnFiltersChange ?? setLocalColumnFilters,
-    onGlobalFilterChange: onGlobalFilterChange ?? setLocalGlobalFilter,
-    onPaginationChange: onPaginationChange ?? setLocalPagination,
-    globalFilterFn: globalFilterFn,
-    getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getFacetedRowModel: getFacetedRowModel(),
-    getFacetedUniqueValues: getFacetedUniqueValues(),
+    ensurePageInRange,
   });
-
-  const tablePageCount = table.getPageCount();
-  const rowModel = table.getRowModel();
-  const rows = rowModel.rows;
-  const hasRows = rows.length > 0;
-
-  useEffect(() => {
-    if (ensurePageInRange) {
-      ensurePageInRange(tablePageCount);
-    }
-  }, [tablePageCount, ensurePageInRange]);
-
-  // data 변경 시 pagination 강제 리렌더링을 위한 key
-  // pageIndex, pageCount, data.length가 변경되면 pagination 컴포넌트가 리마운트됨
-  const paginationKey = `${currentPagination.pageIndex}-${currentPagination.pageSize}-${pageCount ?? 'unknown'}-${data.length}`;
-
-  // 필터 적용 여부 계산
-  const isFiltered = currentColumnFilters.length > 0 || !!currentGlobalFilter;
 
   return (
     <div

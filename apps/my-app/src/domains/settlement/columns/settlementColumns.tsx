@@ -15,18 +15,18 @@ export const settlementColumns: ColumnDef<Settlement>[] = [
     accessorKey: 'site',
     header: 'Site명',
     cell: ({ row }) => <div>{row.getValue('site')}</div>,
-    size: 300,
+    size: 200,
     meta: {
-      className: 'w-[300px]',
+      className: 'w-[200px]',
     },
   },
   {
     accessorKey: 'period',
     header: '정산 기간',
     cell: ({ row }) => <div>{row.getValue('period')}</div>,
-    size: 180,
+    size: 120,
     meta: {
-      className: 'w-[180px]',
+      className: 'w-[120px]',
     },
   },
   {
@@ -79,6 +79,24 @@ export const settlementColumns: ColumnDef<Settlement>[] = [
     size: 100,
     meta: {
       className: 'w-[100px]',
+    },
+  },
+  {
+    accessorKey: 'description',
+    header: '비고',
+    cell: ({ row }) => {
+      const description = row.getValue('description') as string | undefined;
+      if (!description) return <div className="text-muted-foreground text-sm">-</div>;
+      const truncated = description.length > 50 ? `${description.slice(0, 50)}...` : description;
+      return (
+        <div className="text-muted-foreground max-w-[300px] truncate text-sm" title={description}>
+          {truncated}
+        </div>
+      );
+    },
+    size: 300,
+    meta: {
+      className: 'w-[300px]',
     },
   },
 ];
