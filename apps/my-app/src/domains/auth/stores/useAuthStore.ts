@@ -1,9 +1,6 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-
-export interface AuthUser {
-  [key: string]: unknown;
-}
+import type { AuthTokens, AuthUser } from '../utils/types';
 
 interface AuthState {
   user: AuthUser | null;
@@ -12,7 +9,7 @@ interface AuthState {
 }
 
 interface AuthActions {
-  setTokens: (tokens: { accessToken: string; refreshToken: string }) => void;
+  setTokens: (tokens: AuthTokens) => void;
   setUser: (user: AuthUser | null) => void;
   clearAuth: () => void;
 }
