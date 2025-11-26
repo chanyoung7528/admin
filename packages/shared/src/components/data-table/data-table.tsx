@@ -120,16 +120,24 @@ export function DataTable<TData, TValue>({
   const [localRowSelection, setLocalRowSelection] = useState<RowSelectionState>({});
   const [localColumnVisibility, setLocalColumnVisibility] = useState<VisibilityState>({});
 
+  // 현재 적용된 상태 값 계산 (Controlled ?? Local)
+  const currentSorting = controlledSorting ?? localSorting;
+  const currentColumnVisibility = controlledColumnVisibility ?? localColumnVisibility;
+  const currentRowSelection = controlledRowSelection ?? localRowSelection;
+  const currentColumnFilters = controlledColumnFilters ?? localColumnFilters;
+  const currentGlobalFilter = controlledGlobalFilter ?? localGlobalFilter;
+  const currentPagination = controlledPagination ?? localPagination;
+
   const table = useReactTable({
     data,
     columns,
     state: {
-      sorting: controlledSorting ?? localSorting,
-      columnVisibility: controlledColumnVisibility ?? localColumnVisibility,
-      rowSelection: controlledRowSelection ?? localRowSelection,
-      columnFilters: controlledColumnFilters ?? localColumnFilters,
-      globalFilter: controlledGlobalFilter ?? localGlobalFilter,
-      pagination: controlledPagination ?? localPagination,
+      sorting: currentSorting,
+      columnVisibility: currentColumnVisibility,
+      rowSelection: currentRowSelection,
+      columnFilters: currentColumnFilters,
+      globalFilter: currentGlobalFilter,
+      pagination: currentPagination,
     },
     pageCount: pageCount ?? -1, // -1은 알 수 없음을 의미
     manualPagination: !!onPaginationChange,
@@ -162,8 +170,11 @@ export function DataTable<TData, TValue>({
 
   // data 변경 시 pagination 강제 리렌더링을 위한 key
   // pageIndex, pageCount, data.length가 변경되면 pagination 컴포넌트가 리마운트됨
-  const currentPaginationState = controlledPagination ?? localPagination;
-  const paginationKey = `${currentPaginationState.pageIndex}-${currentPaginationState.pageSize}-${pageCount ?? 'unknown'}-${data.length}`;
+  const paginationKey = `${currentPagination.pageIndex}-${currentPagination.pageSize}-${pageCount ?? 'unknown'}-${data.length}`;
+
+  // 필터 적용 여부 계산
+  const isFiltered = currentColumnFilters.length > 0 || !!currentGlobalFilter;
+
   return (
     <div
       className={cn(
@@ -172,7 +183,16 @@ export function DataTable<TData, TValue>({
         className
       )}
     >
-      {showToolbar && <DataTableToolbar instanceId={instanceId} table={table} searchPlaceholder={searchPlaceholder} searchKey={searchKey} filters={filters} />}
+      {showToolbar && (
+        <DataTableToolbar
+          instanceId={instanceId}
+          table={table}
+          searchPlaceholder={searchPlaceholder}
+          searchKey={searchKey}
+          filters={filters}
+          isFiltered={isFiltered}
+        />
+      )}
       <div className="overflow-hidden rounded-md border">
         <Table>
           <TableHeader>
@@ -195,7 +215,7 @@ export function DataTable<TData, TValue>({
           <TableBody className="min-h-[400px]">
             {isLoading ? (
               // 스켈레톤 로딩 UI
-              Array.from({ length: currentPaginationState.pageSize }).map((_, index) => (
+              Array.from({ length: currentPagination.pageSize }).map((_, index) => (
                 <TableRow key={`skeleton-${index}`}>
                   {columns.map((column, colIndex) => (
                     <TableCell key={`skeleton-${index}-${colIndex}`} className={cn(column.meta?.className, column.meta?.tdClassName)}>

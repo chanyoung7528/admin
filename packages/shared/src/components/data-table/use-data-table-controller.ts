@@ -3,7 +3,6 @@ import type { ColumnDef, ColumnFiltersState, PaginationState } from '@tanstack/r
 import debounce from 'lodash-es/debounce';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import type { DataTableProps } from './data-table';
-import { useTableInstanceKey } from './use-table-instance-key';
 import { type NavigateFn, useTableUrlState } from './use-table-url-state';
 
 interface FilterConfig {
@@ -127,13 +126,6 @@ export function useDataTableController<TData, TValue>({
 
   const data = useMemo(() => (Array.isArray(rawData) ? rawData : []), [rawData]);
 
-  const tableInstanceKey = useTableInstanceKey({
-    tableId,
-    pagination,
-    columnFilters,
-    globalFilter: debouncedGlobalFilter,
-  });
-
   const pageCount = total && total > 0 ? Math.ceil(total / pagination.pageSize) : undefined;
 
   useEffect(() => {
@@ -148,7 +140,6 @@ export function useDataTableController<TData, TValue>({
   const tableProps = useMemo(
     () =>
       ({
-        key: tableInstanceKey,
         instanceId: tableId,
         columns,
         data,
@@ -167,7 +158,6 @@ export function useDataTableController<TData, TValue>({
         globalFilterFn,
       }) as DataTableProps<TData, TValue>,
     [
-      tableInstanceKey,
       tableId,
       columns,
       data,

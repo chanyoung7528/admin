@@ -6,7 +6,6 @@ import { Popover, PopoverContent, PopoverTrigger } from '@shared/ui/popover';
 import { Separator } from '@shared/ui/separator';
 import { type Column } from '@tanstack/react-table';
 import { CheckIcon, PlusCircleIcon } from 'lucide-react';
-import { useState } from 'react';
 
 type DataTableFacetedFilterProps<TData, TValue> = {
   column?: Column<TData, TValue>;
@@ -16,14 +15,18 @@ type DataTableFacetedFilterProps<TData, TValue> = {
     value: string;
     icon?: React.ComponentType<{ className?: string }>;
   }[];
+  selectedValues: Set<string>;
+  onSelectedValuesChange: (values: Set<string>) => void;
 };
 
-export function DataTableFacetedFilter<TData, TValue>({ column, title, options }: DataTableFacetedFilterProps<TData, TValue>) {
+export function DataTableFacetedFilter<TData, TValue>({
+  column,
+  title,
+  options,
+  selectedValues,
+  onSelectedValuesChange,
+}: DataTableFacetedFilterProps<TData, TValue>) {
   const facets = column?.getFacetedUniqueValues();
-  const filterValue = column?.getFilterValue() as string[] | undefined;
-
-  // 컴포넌트가 key로 강제 리마운트되므로 항상 최신 filterValue로 초기화됨
-  const [selectedValues, setSelectedValues] = useState<Set<string>>(() => new Set(filterValue));
 
   return (
     <Popover>
@@ -69,21 +72,14 @@ export function DataTableFacetedFilter<TData, TValue>({ column, title, options }
                     key={option.value}
                     onSelect={() => {
                       const newSelectedValues = new Set(selectedValues);
-
                       if (isSelected) {
                         newSelectedValues.delete(option.value);
                       } else {
                         newSelectedValues.add(option.value);
                       }
-
-                      // 로컬 state 먼저 업데이트 (즉각적인 UI 반응)
-                      setSelectedValues(newSelectedValues);
-
-                      // column 필터 업데이트
+                      onSelectedValuesChange(newSelectedValues);
                       const filterValues = Array.from(newSelectedValues);
-                      const newFilterValue = filterValues.length ? filterValues : undefined;
-
-                      column?.setFilterValue(newFilterValue);
+                      column?.setFilterValue(filterValues.length ? filterValues : undefined);
                     }}
                   >
                     <div
@@ -109,7 +105,7 @@ export function DataTableFacetedFilter<TData, TValue>({ column, title, options }
                 <CommandGroup>
                   <CommandItem
                     onSelect={() => {
-                      setSelectedValues(new Set());
+                      onSelectedValuesChange(new Set());
                       column?.setFilterValue(undefined);
                     }}
                     className="justify-center text-center"

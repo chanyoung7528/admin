@@ -28,6 +28,7 @@ type DataTableToolbarProps<TData> = {
   }[];
   searchDebounceMs?: number;
   instanceId?: string;
+  isFiltered?: boolean;
 };
 
 export function DataTableToolbar<TData>({
@@ -37,9 +38,8 @@ export function DataTableToolbar<TData>({
   filters = [],
   searchDebounceMs = 300,
   instanceId = 'data-table',
+  isFiltered: propIsFiltered,
 }: DataTableToolbarProps<TData>) {
-  const isFiltered = table.getState().columnFilters.length > 0 || table.getState().globalFilter;
-
   const inputRef = useRef<HTMLInputElement | null>(null);
   const focusCacheKey = `${instanceId}-${searchKey ?? 'global'}`;
   const cachedFocusState = toolbarFocusCache.get(focusCacheKey);
@@ -53,12 +53,20 @@ export function DataTableToolbar<TData>({
 
   const [localSearchValue, setLocalSearchValue] = useState<string>(cachedFocusState?.localValue ?? initialValue);
   const [shouldKeepFocus, setShouldKeepFocus] = useState<boolean>(cachedFocusState?.shouldKeepFocus ?? false);
+
+  // 각 필터의 selectedValues를 관리하는 state (columnId를 key로 사용)
+  const [filterSelectedValues, setFilterSelectedValues] = useState<Map<string, Set<string>>>(() => {
+    const initialMap = new Map<string, Set<string>>();
+    filters.forEach(filter => {
+      const column = table.getColumn(filter.columnId);
+      const filterValue = column?.getFilterValue() as string[] | undefined;
+      initialMap.set(filter.columnId, new Set(filterValue ?? []));
+    });
+    return initialMap;
+  });
+
   const tableSearchValue = searchKey ? ((table.getColumn(searchKey)?.getFilterValue() as string) ?? '') : (table.getState().globalFilter ?? '');
   const inputValue = shouldKeepFocus ? localSearchValue : tableSearchValue;
-
-  useEffect(() => {
-    toolbarFocusCache.set(focusCacheKey, { shouldKeepFocus, localValue: localSearchValue });
-  }, [focusCacheKey, shouldKeepFocus, localSearchValue]);
 
   const debouncedApplySearch = useMemo(
     () =>
@@ -102,20 +110,32 @@ export function DataTableToolbar<TData>({
   };
 
   const handleReset = () => {
-    debouncedApplySearch.cancel();
-    table.resetColumnFilters();
+    setLocalSearchValue(''); // 그 다음 로컬 값 초기화
+
+    // 4. 검색 필터를 즉시 빈 문자열로 설정 (디바운스 없이 즉시 적용)
     if (searchKey) {
       table.getColumn(searchKey)?.setFilterValue('');
     } else {
       table.setGlobalFilter('');
     }
-    setLocalSearchValue(''); // 로컬 상태도 초기화
-    if (inputRef.current) {
-      inputRef.current.focus();
-      setShouldKeepFocus(true);
-      setLocalSearchValue('');
-    }
+
+    // 5. 모든 faceted 필터의 selectedValues를 빈 Set으로 초기화
+    const newFilterSelectedValues = new Map<string, Set<string>>();
+    filters.forEach(filter => {
+      newFilterSelectedValues.set(filter.columnId, new Set());
+      const column = table.getColumn(filter.columnId);
+      column?.setFilterValue(undefined);
+    });
+    setFilterSelectedValues(newFilterSelectedValues);
+
+    // 6. 테이블 전체 필터 초기화 (안전장치)
+    table.resetColumnFilters();
   };
+
+  // 테이블 상태에서 필터 여부를 직접 계산 (매 렌더마다 최신 값 반영)
+  // prop으로 전달받은 값이 있으면 그것을 사용 (React 상태 동기화 보장)
+  const tableState = table.getState();
+  const isFiltered = propIsFiltered ?? (tableState.columnFilters.length > 0 || !!tableState.globalFilter);
 
   return (
     <div className="flex items-center justify-between">
@@ -134,7 +154,26 @@ export function DataTableToolbar<TData>({
             const column = table.getColumn(filter.columnId);
             if (!column) return null;
 
-            return <DataTableFacetedFilter key={filter.columnId} column={column} title={filter.title} options={filter.options} />;
+            const selectedValues = filterSelectedValues.get(filter.columnId) ?? new Set<string>();
+
+            const handleSelectedValuesChange = (newValues: Set<string>) => {
+              setFilterSelectedValues(prev => {
+                const newMap = new Map(prev);
+                newMap.set(filter.columnId, newValues);
+                return newMap;
+              });
+            };
+
+            return (
+              <DataTableFacetedFilter
+                key={filter.columnId}
+                column={column}
+                title={filter.title}
+                options={filter.options}
+                selectedValues={selectedValues}
+                onSelectedValuesChange={handleSelectedValuesChange}
+              />
+            );
           })}
         </div>
         {isFiltered && (

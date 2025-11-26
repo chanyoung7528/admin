@@ -117,34 +117,125 @@ const { pagination, onPaginationChange, columnFilters, onColumnFiltersChange, gl
 
 ### 2. `useTableInstanceKey`
 
-**역할**: 테이블 인스턴스를 고유하게 식별하는 키 생성
+**역할**: 테이블 인스턴스를 고유하게 식별하는 키를 만들어 **선택적으로** 리마운트를 강제할 수 있습니다.
 
-**왜 필요한가?**
+**언제 필요할까?**
 
-- TanStack Table은 내부 상태를 메모이제이션하여, 데이터가 변경되어도 UI가 갱신되지 않는 문제 발생
-- 필터/검색/페이지가 바뀔 때마다 테이블을 리마운트하여 최신 데이터 반영
+- TanStack Table을 직접 구성하면서 특정 가상 스크롤·차트·3rd party 위젯을 상태 변화에 맞춰 초기화해야 할 때
+- 외부 의존성이 크게 바뀌었지만 내부 캐시가 유지돼 의도치 않은 값이 남아 있을 때
 
-**키 구성 요소**:
+> ⚠️ `useDataTableController`는 필터 팝오버·툴바 포커스를 유지하기 위해 더 이상 이 키를 자동으로 사용하지 않습니다. 기본 `DataTable`은 모든 핵심 상태를 컨트롤 모드로 전달하므로 별도 리마운트 없이도 최신 데이터를 반영합니다. 키가 꼭 필요하다면 Popover 같은 장기 UI를 감싸지 않는 별도 Boundary에만 적용하세요.
 
-- `tableId`: 테이블 식별자 (예: `settlement-mind`)
-- `pagination`: 페이지 인덱스, 페이지 크기
-- `globalFilter`: 검색어
-- `columnFilters`: 컬럼별 필터 (상태 필터 등)
-- `extraDeps`: 추가 의존성 (예: 서비스 타입)
-
-**사용 예시**:
+**사용 예시 (커스텀 테이블을 직접 구성하는 경우)**:
 
 ```tsx
 const tableInstanceKey = useTableInstanceKey({
-  tableId: 'settlement-mind',
+  tableId: 'tasks',
   pagination,
   globalFilter,
   columnFilters,
-  extraDeps: [service], // 서비스 변경 시에도 리마운트
 });
 
-return <DataTable key={tableInstanceKey} {...props} />;
+return <TasksTable key={tableInstanceKey} {...props} />;
 ```
+
+#### 왜 과거에는 목록이 갱신되지 않았나?
+
+- 초창기 구현은 URL → 테이블 상태, 테이블 상태 → URL을 `useState` + `useEffect`로 동기화했습니다. 이중 버퍼 구조 때문에 URL이 먼저 변해도 로컬 상태가 늦게 따라오면 `useReactTable`이 “필터가 안 바뀌었다”고 판단하는 타이밍이 존재했습니다.
+- 이를 우회하려고 `tableInstanceKey`로 전체 `DataTable`을 강제 리마운트했지만, 팝오버 같은 UI 상태가 매번 초기화되는 부작용이 있었습니다.
+- 현재 버전은 `useTableUrlState`가 URL을 단일 소스로 취급하며, `columnFilters`와 `pagination`을 `useMemo`로 계산해 즉시 새로운 참조를 `useReactTable`에 전달합니다. 그래서 키 없이도 목록이 바로 갱신됩니다.
+
+#### 리렌더 vs 리마운트
+
+- **리렌더**: 동일한 컴포넌트 인스턴스가 새 props로 다시 그려집니다. Radix Popover처럼 내부적으로 관리하는 `open` 상태는 그대로 유지됩니다.
+- **리마운트**: `key`가 바뀌면 React가 기존 노드를 언마운트하고 완전히 새 인스턴스를 만듭니다. 모든 훅 상태가 초기화되어 팝오버가 닫히는 문제가 여기서 발생했습니다.
+- 현재는 `tableInstanceKey`를 기본적으로 넘기지 않아 필터 변경 → 데이터 페칭 → `DataTable` 리렌더 흐름만 일어나며, UI 상태는 안정적으로 유지됩니다. 강제 리마운트가 필요하면 해당 Boundary에만 키를 적용하세요.
+
+#### 데이터 흐름 상세 (필터 → 목록 → UI)
+
+1. **필터 선택**  
+   `DataTableFacetedFilter`에서 `column.setFilterValue`를 호출하면 곧바로 `onColumnFiltersChange`가 실행되고, URL Search Params가 업데이트됩니다.
+
+```64:90:packages/shared/src/components/data-table/faceted-filter.tsx
+<CommandItem
+  key={option.value}
+  onSelect={() => {
+    if (isSelected) {
+      selectedValues.delete(option.value);
+    } else {
+      selectedValues.add(option.value);
+    }
+    const filterValues = Array.from(selectedValues);
+    column?.setFilterValue(filterValues.length ? filterValues : undefined);
+  }}
+>
+  {/* ... */}
+</CommandItem>
+```
+
+2. **URL → 테이블 상태**  
+   `useTableUrlState`는 URL을 유일한 진실 공급원(single source of truth)으로 간주하고 `columnFilters`, `pagination`, `globalFilter`를 `useMemo`로 재구성합니다. 검색/필터 값이 달라지면 항상 새로운 참조가 생성되어 TanStack Table state에 주입됩니다.
+
+```70:98:packages/shared/src/components/data-table/use-table-url-state.ts
+const columnFilters: ColumnFiltersState = useMemo(() => {
+  const collected: ColumnFiltersState = [];
+  for (const cfg of columnFiltersCfg) {
+    const raw = (search as SearchRecord)[cfg.searchKey];
+    if (cfg.type === 'array') {
+      const value = (deserialize(raw) as unknown[]) ?? [];
+      if (Array.isArray(value) && value.length > 0) {
+        collected.push({ id: cfg.columnId, value });
+      }
+      continue;
+    }
+    // string 처리 ...
+  }
+  return collected;
+}, [columnFiltersCfg, search]);
+```
+
+3. **React Query 재요청**  
+   `useDataTableController`는 위 상태를 `queryParams`에 전달해 API 파라미터를 만들고, 이 값이 React Query `queryKey`에 포함됩니다. 키가 바뀌었으므로 새 fetch가 발생하고, 응답 데이터가 `data` prop에 들어옵니다.
+
+```114:125:packages/shared/src/components/data-table/use-data-table-controller.ts
+const apiParams = useMemo(() => {
+  if (queryParams) {
+    return queryParams({ pagination, columnFilters, globalFilter: debouncedGlobalFilter });
+  }
+  return {
+    page: pagination.pageIndex + 1,
+    pageSize: pagination.pageSize,
+    filter: debouncedGlobalFilter && debouncedGlobalFilter.trim() !== '' ? debouncedGlobalFilter : undefined,
+  };
+}, [pagination, columnFilters, debouncedGlobalFilter, queryParams]);
+
+const queryResult = useQueryHook(apiParams);
+```
+
+4. **렌더 단계**  
+   `useReactTable`은 `state.columnFilters`와 새 `data`를 기반으로 RowModel을 재계산합니다. 컴포넌트는 리렌더만 수행하므로 Radix Popover, Toolbar 입력 포커스 등 클라이언트 상태는 보존됩니다.
+
+```123:150:packages/shared/src/components/data-table/data-table.tsx
+const table = useReactTable({
+  data,
+  columns,
+  state: {
+    sorting: controlledSorting ?? localSorting,
+    columnVisibility: controlledColumnVisibility ?? localColumnVisibility,
+    rowSelection: controlledRowSelection ?? localRowSelection,
+    columnFilters: controlledColumnFilters ?? localColumnFilters,
+    globalFilter: controlledGlobalFilter ?? localGlobalFilter,
+    pagination: controlledPagination ?? localPagination,
+  },
+  manualPagination: !!onPaginationChange,
+  getCoreRowModel: getCoreRowModel(),
+  getFilteredRowModel: getFilteredRowModel(),
+  getPaginationRowModel: getPaginationRowModel(),
+  // ...
+});
+```
+
+이 모든 과정이 “상태 → 파라미터 → 데이터 → 렌더”로 이어지는 순수 데이터 흐름이기 때문에, 예전처럼 키로 강제 리마운트할 필요가 없습니다. 만약 도메인 특성상 특정 섹션만 완전 초기화가 필요하다면, 해당 Boundary에 한정해 `useTableInstanceKey`를 적용하세요.
 
 ---
 
@@ -158,8 +249,7 @@ return <DataTable key={tableInstanceKey} {...props} />;
 2. 도메인별 `useQueryHook`을 호출하여 API 데이터 페칭
 3. `queryParams` 함수로 테이블 상태를 API 파라미터로 변환
 4. 검색어 입력 시 디바운스 적용 (기본 500ms)
-5. `useTableInstanceKey`로 테이블 리마운트 키 생성
-6. `DataTable` 컴포넌트에 전달할 props 반환
+5. Debounce/포커스 유지 상태를 포함한 `DataTable` props를 메모이제이션하여 반환
 
 **파라미터**:
 | 파라미터 | 타입 | 필수 | 설명 |
@@ -606,9 +696,9 @@ function MindSettlementPage() {
    - ❌ `data={[...settlements]}`
    - ✅ `data={settlements}` (참조 전달)
 
-3. **수동으로 테이블 키 생성 금지**
-   - ❌ `key={service}-${page}-${filter}`
-   - ✅ `key={tableInstanceKey}` (훅 사용)
+3. **불필요한 리마운트 금지**
+   - ❌ `key={service}-${page}-${filter}` (툴바/Popover 상태가 매번 초기화)
+   - ✅ 기본 `DataTable`은 키 없이 사용하고, 꼭 필요할 때만 별도 Boundary에 `useTableInstanceKey`
 
 4. **필터 상태를 로컬에서 관리 금지**
    - ❌ `useState`로 필터 관리 후 URL에 동기화
