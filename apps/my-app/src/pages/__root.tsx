@@ -1,5 +1,6 @@
 import { env } from '@repo/core/config';
-import { ErrorBoundary } from '@repo/shared/components/ui';
+import { ErrorBoundary, LoadingPageOverlay } from '@repo/shared/components/ui';
+import { useIsFetching } from '@tanstack/react-query';
 import { createRootRouteWithContext, Outlet, useRouter } from '@tanstack/react-router';
 import { lazy, Suspense } from 'react';
 
@@ -37,6 +38,8 @@ function RootComponent() {
       }}
     >
       <Outlet />
+
+      {useIsFetching() > 0 && <LoadingPageOverlay />}
 
       {env.isDebug && (
         <Suspense fallback={null}>
