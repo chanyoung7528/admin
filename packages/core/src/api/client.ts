@@ -17,10 +17,8 @@ export const api = axios.create({
 // Request 인터셉터
 api.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    const token = localStorage.getItem('accessToken');
-    if (token && config.headers) {
-      config.headers.Authorization = `Bearer ${token}`;
-    }
+    // TODO: Add auth token
+
     return config;
   },
   (error: AxiosError) => Promise.reject(error)
@@ -28,13 +26,26 @@ api.interceptors.request.use(
 
 // Response 인터셉터
 api.interceptors.response.use(
-  response => response.data,
+  response => response,
   (error: AxiosError) => {
-    // TODO: Handle error (401, 403, etc.)
-    if (error.response?.status === 401 && typeof window !== 'undefined') {
-      // Redirect to login
-      window.location.href = '/login';
+    // OFFLINE
+    if (!error.response) {
+      alert('네트워크 연결을 확인해주세요');
+      return Promise.reject(new Error('NETWORK_ERROR'));
     }
+
+    // 401 토큰 만료
+    if (error.response.status === 401) {
+      // TODO: 리프레시 또는 로그아웃
+      return Promise.reject(error);
+    }
+
+    // 500번대 서버 에러
+    if (error.response.status >= 500) {
+      alert('서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요');
+    }
+
+    // React Query isError
     return Promise.reject(error);
   }
 );
