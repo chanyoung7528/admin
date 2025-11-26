@@ -8,11 +8,14 @@ coverage
 *.lcov
 
 # Production builds
-dist
-build
-storybook-static
-.next
-out
+dist/
+build/
+storybook-static/
+.next/
+out/
+**/dist/
+**/build/
+**/storybook-static/
 
 # Misc
 *.pem
