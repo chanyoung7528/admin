@@ -53,6 +53,7 @@ export function DataTableToolbar<TData>({
 
   const [localSearchValue, setLocalSearchValue] = useState<string>(cachedFocusState?.localValue ?? initialValue);
   const [shouldKeepFocus, setShouldKeepFocus] = useState<boolean>(cachedFocusState?.shouldKeepFocus ?? false);
+  const [isResetting, setIsResetting] = useState<boolean>(false); // Reset 중임을 나타내는 플래그
 
   // 각 필터의 selectedValues를 관리하는 state (columnId를 key로 사용)
   const [filterSelectedValues, setFilterSelectedValues] = useState<Map<string, Set<string>>>(() => {
@@ -66,7 +67,10 @@ export function DataTableToolbar<TData>({
   });
 
   const tableSearchValue = searchKey ? ((table.getColumn(searchKey)?.getFilterValue() as string) ?? '') : (table.getState().globalFilter ?? '');
-  const inputValue = shouldKeepFocus ? localSearchValue : tableSearchValue;
+
+  // Reset 중이거나 포커스 중일 때는 localSearchValue를, 그 외에는 tableSearchValue를 사용
+  // 단, localSearchValue가 빈 문자열이고 tableSearchValue도 빈 문자열이면 동기화된 것으로 간주
+  const inputValue = isResetting || shouldKeepFocus ? localSearchValue : tableSearchValue;
 
   const debouncedApplySearch = useMemo(
     () =>
@@ -105,19 +109,34 @@ export function DataTableToolbar<TData>({
     setLocalSearchValue(tableSearchValue);
   };
 
-  const handleInputBlur = () => {
+  const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    // 팝업 버튼 클릭 등으로 blur가 발생할 때, 다음 포커스가 toolbar 내부라면 유지
+    // relatedTarget: blur 이벤트 발생 시 다음으로 포커스를 받을 요소
+    const relatedTarget = event.relatedTarget as HTMLElement;
+
+    // 다음 포커스가 toolbar 내부(필터 버튼 등)라면 shouldKeepFocus 유지
+    if (relatedTarget && event.currentTarget.closest('.toolbar-container')?.contains(relatedTarget)) {
+      return; // shouldKeepFocus 유지
+    }
+
+    // 그 외의 경우(외부 클릭 등)에만 포커스 해제
     setShouldKeepFocus(false);
   };
 
   const handleReset = () => {
-    setLocalSearchValue(''); // 그 다음 로컬 값 초기화
+    // 1. Reset 플래그 설정 (입력창이 localSearchValue를 보도록 강제)
+    setIsResetting(true);
+    setShouldKeepFocus(true); // Reset 후에도 포커스 유지
 
-    // 4. 검색 필터를 즉시 빈 문자열로 설정 (디바운스 없이 즉시 적용)
-    if (searchKey) {
-      table.getColumn(searchKey)?.setFilterValue('');
-    } else {
-      table.setGlobalFilter('');
-    }
+    // 2. 대기 중이던 디바운스 취소 (이전 검색어는 무시)
+    debouncedApplySearch.cancel();
+
+    // 3. 로컬 검색 상태를 빈 문자열로 설정 (사용자 입력과 동일한 흐름)
+    setLocalSearchValue('');
+
+    // 4. 디바운스 함수를 빈 문자열로 호출 (사용자가 빈 값을 입력한 것처럼)
+    // 이렇게 하면 handleSearchChange와 동일한 경로를 따라 URL이 업데이트됨
+    debouncedApplySearch('');
 
     // 5. 모든 faceted 필터의 selectedValues를 빈 Set으로 초기화
     const newFilterSelectedValues = new Map<string, Set<string>>();
@@ -130,6 +149,16 @@ export function DataTableToolbar<TData>({
 
     // 6. 테이블 전체 필터 초기화 (안전장치)
     table.resetColumnFilters();
+
+    // 7. 입력창에 포커스 설정 (사용자가 바로 입력할 수 있도록)
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+
+    // 8. 디바운스 시간 후 isResetting 해제
+    setTimeout(() => {
+      setIsResetting(false);
+    }, 100);
   };
 
   // 테이블 상태에서 필터 여부를 직접 계산 (매 렌더마다 최신 값 반영)
@@ -138,7 +167,7 @@ export function DataTableToolbar<TData>({
   const isFiltered = propIsFiltered ?? (tableState.columnFilters.length > 0 || !!tableState.globalFilter);
 
   return (
-    <div className="flex items-center justify-between">
+    <div className="toolbar-container flex items-center justify-between">
       <div className="flex flex-1 flex-col-reverse items-start gap-y-2 sm:flex-row sm:items-center sm:space-x-2">
         <Input
           ref={inputRef}
