@@ -19,15 +19,7 @@ export const Route = createRootRouteWithContext()({
 
 function RootComponent() {
   const router = useRouter();
-
-  // 전역 로딩이 필요한 쿼리만 카운트 (disableGlobalLoading meta가 없는 것만)
-  const globalLoadingCount = useIsFetching({
-    predicate: query => {
-      const meta = query.meta as { disableGlobalLoading?: boolean } | undefined;
-
-      return !meta?.disableGlobalLoading;
-    },
-  });
+  const isFetchingPosts = useIsFetching({ queryKey: [''] });
 
   return (
     <ErrorBoundary
@@ -48,7 +40,7 @@ function RootComponent() {
     >
       <Outlet />
 
-      {globalLoadingCount > 0 && <LoadingPageOverlay />}
+      {isFetchingPosts > 0 && <LoadingPageOverlay />}
 
       {env.isDebug && (
         <Suspense fallback={null}>

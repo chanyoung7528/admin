@@ -28,10 +28,6 @@ export function useSettlements(params?: GetSettlementsParams) {
     retry: 2,
     // 새로운 쿼리 키일 때 이전 데이터 유지하지 않음
     placeholderData: undefined,
-    meta: {
-      // 테이블 페칭은 전역 로딩 스피너 표시 안 함
-      disableGlobalLoading: true,
-    },
   });
 
   return {
