@@ -19,6 +19,7 @@ export const Route = createRootRouteWithContext()({
 
 function RootComponent() {
   const router = useRouter();
+  const isFetchingPosts = useIsFetching({ queryKey: [''] });
 
   return (
     <ErrorBoundary
@@ -39,7 +40,7 @@ function RootComponent() {
     >
       <Outlet />
 
-      {useIsFetching() > 0 && <LoadingPageOverlay />}
+      {isFetchingPosts > 0 && <LoadingPageOverlay />}
 
       {env.isDebug && (
         <Suspense fallback={null}>
