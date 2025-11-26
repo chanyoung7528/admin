@@ -1,6 +1,6 @@
 import { useAuth } from '@/domains/auth/hooks/useAuth';
 import { Button, Input } from '@repo/shared/components/ui';
-import { createFileRoute, useNavigate } from '@tanstack/react-router';
+import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_public/login')({
   component: LoginPage,
@@ -9,6 +9,13 @@ export const Route = createFileRoute('/_public/login')({
 function LoginPage() {
   const navigate = useNavigate();
   const { signIn } = useAuth();
+
+  const search = useSearch({ from: '/_public/login' });
+
+  const handleLoginSuccess = () => {
+    const redirectTo = (search as { redirect?: string }).redirect || '/';
+    navigate({ to: redirectTo });
+  };
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,8 +27,7 @@ function LoginPage() {
 
     signIn({ accessToken: mockAccessToken, refreshToken: mockRefreshToken });
 
-    // 로그인 후 대시보드로 이동
-    navigate({ to: '/' });
+    handleLoginSuccess();
   };
 
   return (
