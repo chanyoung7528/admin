@@ -135,7 +135,7 @@ const actionColumns: ColumnDef<User>[] = [
   {
     id: 'actions',
     header: () => <div className="text-center">작업</div>,
-    cell: ({ row }) => (
+    cell: () => (
       <div className="flex items-center justify-center gap-2">
         <button className="hover:text-primary rounded p-1 transition-colors" title="수정">
           <Pencil className="h-4 w-4" />
@@ -232,7 +232,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 // 1. 기본 사용 예제
-export const BasicUsage: Story = {
+export const BasicUsage = {
   render: () => {
     return (
       <div className="w-full space-y-4">
@@ -244,10 +244,10 @@ export const BasicUsage: Story = {
       </div>
     );
   },
-};
+} as unknown as Story;
 
 // 2. 검색 및 필터링
-export const SearchAndFilters: Story = {
+export const SearchAndFilters = {
   render: () => {
     return (
       <div className="w-full space-y-4">
@@ -283,77 +283,79 @@ export const SearchAndFilters: Story = {
       </div>
     );
   },
-};
+} as unknown as Story;
 
 // 3. 실제 사용 예제 (완전한 기능)
-export const FullFeatured: Story = {
-  render: () => {
-    const [data] = useState(sampleUsers);
+function FullFeaturedExample() {
+  const [data] = useState(sampleUsers);
 
-    return (
-      <div className="w-full space-y-4">
-        <div className="bg-card rounded-lg border p-6 shadow-sm">
-          <div className="mb-4 flex items-center justify-between">
-            <div>
-              <h2 className="text-2xl font-semibold">사용자 관리</h2>
-              <p className="text-muted-foreground mt-1 text-sm">전체 사용자 목록을 관리하고 조회할 수 있습니다.</p>
-            </div>
-            <button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-md px-4 py-2 text-sm font-medium">+ 새 사용자</button>
+  return (
+    <div className="w-full space-y-4">
+      <div className="bg-card rounded-lg border p-6 shadow-sm">
+        <div className="mb-4 flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-semibold">사용자 관리</h2>
+            <p className="text-muted-foreground mt-1 text-sm">전체 사용자 목록을 관리하고 조회할 수 있습니다.</p>
           </div>
-
-          {/* 통계 카드 */}
-          <div className="mb-6 grid gap-4 md:grid-cols-3">
-            <div className="bg-background rounded-lg border p-4 shadow-sm">
-              <p className="text-muted-foreground text-sm">전체 사용자</p>
-              <p className="mt-2 text-2xl font-bold">{data.length}</p>
-              <p className="text-muted-foreground mt-1 text-xs">등록된 사용자 수</p>
-            </div>
-            <div className="bg-background rounded-lg border p-4 shadow-sm">
-              <p className="text-muted-foreground text-sm">활성 사용자</p>
-              <p className="mt-2 text-2xl font-bold text-green-600 dark:text-green-400">{data.filter(u => u.status === 'active').length}</p>
-              <p className="text-muted-foreground mt-1 text-xs">현재 활동 중</p>
-            </div>
-            <div className="bg-background rounded-lg border p-4 shadow-sm">
-              <p className="text-muted-foreground text-sm">관리자</p>
-              <p className="mt-2 text-2xl font-bold text-blue-600 dark:text-blue-400">{data.filter(u => u.role === 'admin').length}</p>
-              <p className="text-muted-foreground mt-1 text-xs">관리 권한 보유</p>
-            </div>
-          </div>
-
-          {/* 데이터 테이블 */}
-          <DataTable
-            columns={actionColumns}
-            data={data}
-            searchPlaceholder="이름 또는 이메일 검색..."
-            searchKey="name"
-            filters={[
-              {
-                columnId: 'role',
-                title: '역할',
-                options: [
-                  { label: '관리자', value: 'admin' },
-                  { label: '사용자', value: 'user' },
-                  { label: '게스트', value: 'guest' },
-                ],
-              },
-              {
-                columnId: 'status',
-                title: '상태',
-                options: [
-                  { label: '활성', value: 'active' },
-                  { label: '비활성', value: 'inactive' },
-                ],
-              },
-            ]}
-          />
+          <button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-md px-4 py-2 text-sm font-medium">+ 새 사용자</button>
         </div>
+
+        {/* 통계 카드 */}
+        <div className="mb-6 grid gap-4 md:grid-cols-3">
+          <div className="bg-background rounded-lg border p-4 shadow-sm">
+            <p className="text-muted-foreground text-sm">전체 사용자</p>
+            <p className="mt-2 text-2xl font-bold">{data.length}</p>
+            <p className="text-muted-foreground mt-1 text-xs">등록된 사용자 수</p>
+          </div>
+          <div className="bg-background rounded-lg border p-4 shadow-sm">
+            <p className="text-muted-foreground text-sm">활성 사용자</p>
+            <p className="mt-2 text-2xl font-bold text-green-600 dark:text-green-400">{data.filter(u => u.status === 'active').length}</p>
+            <p className="text-muted-foreground mt-1 text-xs">현재 활동 중</p>
+          </div>
+          <div className="bg-background rounded-lg border p-4 shadow-sm">
+            <p className="text-muted-foreground text-sm">관리자</p>
+            <p className="mt-2 text-2xl font-bold text-blue-600 dark:text-blue-400">{data.filter(u => u.role === 'admin').length}</p>
+            <p className="text-muted-foreground mt-1 text-xs">관리 권한 보유</p>
+          </div>
+        </div>
+
+        {/* 데이터 테이블 */}
+        <DataTable
+          columns={actionColumns}
+          data={data}
+          searchPlaceholder="이름 또는 이메일 검색..."
+          searchKey="name"
+          filters={[
+            {
+              columnId: 'role',
+              title: '역할',
+              options: [
+                { label: '관리자', value: 'admin' },
+                { label: '사용자', value: 'user' },
+                { label: '게스트', value: 'guest' },
+              ],
+            },
+            {
+              columnId: 'status',
+              title: '상태',
+              options: [
+                { label: '활성', value: 'active' },
+                { label: '비활성', value: 'inactive' },
+              ],
+            },
+          ]}
+        />
       </div>
-    );
-  },
-};
+    </div>
+  );
+}
+
+export const FullFeatured = {
+  render: () => <FullFeaturedExample />,
+} as unknown as Story;
 
 // 4. 로딩 상태
-export const LoadingState: Story = {
+export const LoadingState = {
   render: () => {
     return (
       <div className="w-full space-y-4">
@@ -365,10 +367,10 @@ export const LoadingState: Story = {
       </div>
     );
   },
-};
+} as unknown as Story;
 
 // 5. 빈 상태
-export const EmptyState: Story = {
+export const EmptyState = {
   render: () => {
     return (
       <div className="w-full space-y-4">
@@ -380,10 +382,10 @@ export const EmptyState: Story = {
       </div>
     );
   },
-};
+} as unknown as Story;
 
 // 6. 커스텀 페이지 크기
-export const CustomPageSize: Story = {
+export const CustomPageSize = {
   render: () => {
     return (
       <div className="w-full space-y-4">
@@ -395,4 +397,4 @@ export const CustomPageSize: Story = {
       </div>
     );
   },
-};
+} as unknown as Story;
