@@ -6,7 +6,7 @@ export interface AuthTokens {
 
 // 인증 토큰 API 응답
 export interface AuthTokenResponse {
-  result?: AuthTokens;
+  result: AuthTokens;
 }
 
 // 인증된 사용자 정보
