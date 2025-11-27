@@ -31,6 +31,9 @@ importers:
 
   apps/my-app:
     dependencies:
+      '@hookform/resolvers':
+        specifier: ^5.2.2
+        version: 5.2.2(react-hook-form@7.66.1)
       '@repo/core':
         specifier: workspace:*
         version: link:../../packages/core
@@ -67,6 +70,9 @@ importers:
       react-dom:
         specifier: ^19.2.0
         version: 19.2.0(react@19.2.0)
+      react-hook-form:
+        specifier: ^7.66.1
+        version: 7.66.1(react@19.2.0)
       zod:
         specifier: ^4.1.12
         version: 4.1.12
@@ -1889,6 +1895,15 @@ packages:
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
     dev: false
 
+  /@hookform/resolvers@5.2.2(react-hook-form@7.66.1):
+    resolution: {integrity: sha512-A/IxlMLShx3KjV/HeTcTfaMxdwy690+L/ZADoeaTltLx+CVuzkeVIPuybK3jrRfw7YZnmdKsVVHAlEPIAEUNlA==}
+    peerDependencies:
+      react-hook-form: ^7.55.0
+    dependencies:
+      '@standard-schema/utils': 0.3.0
+      react-hook-form: 7.66.1(react@19.2.0)
+    dev: false
+
   /@humanfs/core@0.19.1:
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
     engines: {node: '>=18.18.0'}
@@ -3139,6 +3154,10 @@ packages:
     transitivePeerDependencies:
       - '@types/node'
     dev: true
+
+  /@standard-schema/utils@0.3.0:
+    resolution: {integrity: sha512-e7Mew686owMaPJVNNLs55PUvgz371nKgwsc4vxE49zsODpJEnxgxRo2y/OKrqueavXgZNMDVj3DdHFlaSAeU8g==}
+    dev: false
 
   /@storybook/addon-actions@8.6.14(storybook@8.6.14):
     resolution: {integrity: sha512-mDQxylxGGCQSK7tJPkD144J8jWh9IU9ziJMHfB84PKpI/V5ZgqMDnpr2bssTrUaGDqU5e1/z8KcRF+Melhs9pQ==}
@@ -7131,6 +7150,15 @@ packages:
       react: ^19.2.0
     dependencies:
       '@babel/runtime': 7.28.4
+      react: 19.2.0
+    dev: false
+
+  /react-hook-form@7.66.1(react@19.2.0):
+    resolution: {integrity: sha512-2KnjpgG2Rhbi+CIiIBQQ9Df6sMGH5ExNyFl4Hw9qO7pIqMBR8Bvu9RQyjl3JM4vehzCh9soiNUM/xYMswb2EiA==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      react: ^19.2.0
+    dependencies:
       react: 19.2.0
     dev: false
 

@@ -1,4 +1,4 @@
-import { useAuth } from '@/domains/auth/hooks/useAuth';
+import { useLogout } from '@/domains/auth/hooks/useLogout';
 import { useAuthStore } from '@/domains/auth/stores/useAuthStore';
 import { Header } from '@/domains/dashboard/components/Header';
 import { Layout } from '@repo/shared/components/layouts';
@@ -10,9 +10,9 @@ export const Route = createFileRoute('/_authenticated')({
   // 인증 체크 로직
   beforeLoad: ({ location }) => {
     // 인증 상태 확인
-    const { accessToken } = useAuthStore.getState();
+    const { isAuthenticated } = useAuthStore.getState();
 
-    if (!accessToken) {
+    if (!isAuthenticated) {
       throw redirect({
         to: '/login',
         search: {
@@ -25,10 +25,10 @@ export const Route = createFileRoute('/_authenticated')({
 });
 
 function AuthenticatedLayout() {
-  const { signOut } = useAuth();
+  const { logout } = useLogout();
 
   return (
-    <Layout onSignOut={signOut}>
+    <Layout onSignOut={logout}>
       {/* Header는 별도 에러 바운더리로 보호 */}
       <ErrorBoundary
         fallback="minimal"

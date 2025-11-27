@@ -6,6 +6,10 @@ import { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import { routeTree } from './routeTree.gen';
+import { setupApiClient } from './setupApiClient';
+
+// API Initialization
+setupApiClient();
 
 // 개발 모드에서만 DevTools를 동적으로 로드
 const ReactQueryDevtools = env.isDebug
@@ -20,8 +24,12 @@ const ReactQueryDevtools = env.isDebug
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 5, // 5 minutes
+      retry: 1,
       refetchOnWindowFocus: false,
+      throwOnError: true,
+      networkMode: 'online',
+      staleTime: 1000 * 60 * 5, // 5 minutes
+      gcTime: 1000 * 60 * 30, // 30 minutes
     },
   },
 });
