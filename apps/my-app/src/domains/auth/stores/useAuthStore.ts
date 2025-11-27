@@ -6,6 +6,7 @@ interface AuthState {
   user: AuthUser | null;
   accessToken: string | null;
   refreshToken: string | null;
+  isAuthenticated: boolean;
 }
 
 interface AuthActions {
@@ -20,6 +21,7 @@ const initialState: AuthState = {
   user: null,
   accessToken: null,
   refreshToken: null,
+  isAuthenticated: false,
 };
 
 export const useAuthStore = create<AuthStore>()(
@@ -28,7 +30,7 @@ export const useAuthStore = create<AuthStore>()(
       ...initialState,
 
       setTokens: ({ accessToken, refreshToken }) => {
-        set({ accessToken, refreshToken });
+        set({ accessToken, refreshToken, isAuthenticated: Boolean(accessToken) });
       },
 
       setUser: user => {
@@ -45,6 +47,7 @@ export const useAuthStore = create<AuthStore>()(
       partialize: state => ({
         accessToken: state.accessToken,
         refreshToken: state.refreshToken,
+        isAuthenticated: state.isAuthenticated,
       }),
     }
   )

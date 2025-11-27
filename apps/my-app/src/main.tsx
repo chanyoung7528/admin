@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
+import './domains/auth/utils/setupApiClient';
 import './index.css';
 import { routeTree } from './routeTree.gen';
 

@@ -1,1 +1,1 @@
-export { postAuthToken, postAuthRefreshToken } from './authService';
+export * from './authService';
