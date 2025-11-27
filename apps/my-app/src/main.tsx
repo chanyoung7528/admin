@@ -4,9 +4,12 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
-import './domains/auth/utils/setupApiClient';
 import './index.css';
 import { routeTree } from './routeTree.gen';
+import { setupApiClient } from './setupApiClient';
+
+// API Initialization
+setupApiClient();
 
 // 개발 모드에서만 DevTools를 동적으로 로드
 const ReactQueryDevtools = env.isDebug

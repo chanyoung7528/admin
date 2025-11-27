@@ -8,7 +8,33 @@ export type MaybePromise<T> = T | Promise<T>;
  */
 export interface ApiAuthTokens {
   accessToken: string;
-  refreshToken?: string | null;
+  refreshToken: string;
+}
+
+/**
+ * 인증 에러 코드 (인증 관련만 포함)
+ */
+export const AUTH_ERROR_CODES = {
+  MISSING_REFRESH_TOKEN: 'MISSING_REFRESH_TOKEN',
+  MISSING_REFRESH_HANDLER: 'MISSING_REFRESH_HANDLER',
+  REFRESH_FAILED: 'REFRESH_FAILED',
+  INVALID_CREDENTIALS: 'INVALID_CREDENTIALS',
+  UNAUTHORIZED: 'UNAUTHORIZED',
+} as const;
+
+export type AuthErrorCode = (typeof AUTH_ERROR_CODES)[keyof typeof AUTH_ERROR_CODES];
+
+/**
+ * 인증 에러 클래스 (인증 실패만 표현)
+ */
+export class AuthError extends Error {
+  constructor(
+    public code: AuthErrorCode,
+    message?: string
+  ) {
+    super(message || code);
+    this.name = 'AuthError';
+  }
 }
 
 /**

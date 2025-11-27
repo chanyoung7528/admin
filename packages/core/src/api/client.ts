@@ -1,6 +1,6 @@
 import axios, { type AxiosError, type InternalAxiosRequestConfig } from 'axios';
 import { env } from '../config';
-import { getApiAuthProvider, type ApiAuthProvider, type ApiAuthTokens, type MaybePromise } from './auth';
+import { AUTH_ERROR_CODES, AuthError, getApiAuthProvider, type ApiAuthProvider, type ApiAuthTokens, type MaybePromise } from './auth';
 
 // Axios Request Config 확장
 declare module 'axios' {
@@ -76,11 +76,11 @@ async function queueTokenRefresh(provider: ApiAuthProvider): Promise<ApiAuthToke
 async function runRefresh(provider: ApiAuthProvider): Promise<ApiAuthTokens | null> {
   const refreshToken = await resolveProviderValue(provider.getRefreshToken);
   if (!refreshToken) {
-    throw new Error('MISSING_REFRESH_TOKEN');
+    throw new AuthError(AUTH_ERROR_CODES.MISSING_REFRESH_TOKEN);
   }
 
   if (!provider.refreshTokens) {
-    throw new Error('MISSING_REFRESH_HANDLER');
+    throw new AuthError(AUTH_ERROR_CODES.MISSING_REFRESH_HANDLER);
   }
 
   const tokens = await provider.refreshTokens(refreshToken);
@@ -124,7 +124,7 @@ api.interceptors.response.use(
   async (error: AxiosError) => {
     // 네트워크 연결 오류
     if (!error.response) {
-      alert('네트워크 연결을 확인해주세요');
+      alert('NETWORK_ERROR');
       return Promise.reject(new Error('NETWORK_ERROR'));
     }
 
@@ -149,15 +149,16 @@ api.interceptors.response.use(
         originalRequest._retry ||
         originalRequest.url?.includes('/auth/refresh-token')
       ) {
-        provider?.onAuthFailure?.(error);
-        return Promise.reject(error);
+        const authError = new AuthError(AUTH_ERROR_CODES.UNAUTHORIZED);
+        provider?.onAuthFailure?.(authError);
+        return Promise.reject(authError);
       }
 
       try {
         // 토큰 갱신 (중복 요청 시 큐에서 대기)
         const tokens = await queueTokenRefresh(provider);
         if (!tokens?.accessToken) {
-          throw error;
+          throw new AuthError(AUTH_ERROR_CODES.REFRESH_FAILED);
         }
 
         // 원본 요청 재시도
@@ -174,8 +175,10 @@ api.interceptors.response.use(
     // 500번대 서버 에러
     if (status >= 500) {
       alert('서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요');
+      return Promise.reject(new Error('SERVER_ERROR'));
     }
 
+    // 그 외 모든 에러는 그대로 throw (Error Boundary가 처리)
     return Promise.reject(error);
   }
 );

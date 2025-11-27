@@ -32,12 +32,8 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
   const { loginAsync, isLoading, isError, error } = useLogin();
 
   const onSubmit = async (data: LoginFormValues) => {
-    try {
-      await loginAsync(data);
-      onSuccess();
-    } catch (err) {
-      console.error('로그인 실패:', err);
-    }
+    await loginAsync(data);
+    onSuccess();
   };
 
   return (

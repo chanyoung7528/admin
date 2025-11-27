@@ -1,11 +1,14 @@
 import { useMutation } from '@tanstack/react-query';
-import { issueSessionTokens } from '../services/authService';
+import { createAuthStoreAdapter, issueSessionTokens } from '../services/authService';
+import { useAuthStore } from '../stores/useAuthStore';
 import type { LoginPayload } from '../utils/types';
 
 export function useLogin() {
+  const authStore = createAuthStoreAdapter(useAuthStore);
+
   const mutation = useMutation({
     mutationFn: async (payload: LoginPayload) => {
-      const tokens = await issueSessionTokens(payload);
+      const tokens = await issueSessionTokens(payload, authStore);
       return tokens;
     },
   });
@@ -17,5 +20,6 @@ export function useLogin() {
     isError: mutation.isError,
     error: mutation.error,
     isSuccess: mutation.isSuccess,
+    reset: mutation.reset,
   };
 }
