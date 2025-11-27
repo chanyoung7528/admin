@@ -1,6 +1,6 @@
 import axios, { type AxiosError, type InternalAxiosRequestConfig } from 'axios';
 import { env } from '../config';
-import { AUTH_ERROR_CODES, AuthError, getApiAuthProvider, type ApiAuthProvider, type ApiAuthTokens, type MaybePromise } from './auth';
+import { AUTH_ERROR_CODES, AuthError, getAuthConfig, type AuthTokens } from './auth';
 
 // Axios Request Config 확장
 declare module 'axios' {
@@ -25,90 +25,21 @@ export const api = axios.create({
 /**
  * 토큰 갱신 Promise (중복 요청 방지)
  */
-let refreshPromise: Promise<ApiAuthTokens | null> | null = null;
-
-/**
- * Authorization 헤더 포맷 정규화
- * @param token - 액세스 토큰
- */
-function formatAuthHeader(token: string): string {
-  const trimmed = token.trim();
-  if (trimmed.toLowerCase().startsWith('bearer ')) {
-    return `Bearer ${trimmed.slice(7).trim()}`;
-  }
-  return `Bearer ${trimmed}`;
-}
-
-/**
- * 프로바이더 값 안전하게 resolve
- * @param resolver - 동기/비동기 값 반환 함수
- */
-async function resolveProviderValue<T>(resolver?: () => MaybePromise<T | null | undefined>): Promise<T | null> {
-  if (!resolver) {
-    return null;
-  }
-
-  try {
-    const value = await resolver();
-    return value ?? null;
-  } catch {
-    return null;
-  }
-}
-
-/**
- * 토큰 갱신 큐 관리 (동시 다발적 401 응답 시 단 한 번만 갱신)
- * @param provider - 인증 프로바이더
- */
-async function queueTokenRefresh(provider: ApiAuthProvider): Promise<ApiAuthTokens | null> {
-  if (!refreshPromise) {
-    refreshPromise = runRefresh(provider).finally(() => {
-      refreshPromise = null;
-    });
-  }
-  return refreshPromise;
-}
-
-/**
- * 실제 토큰 갱신 실행
- * @param provider - 인증 프로바이더
- */
-async function runRefresh(provider: ApiAuthProvider): Promise<ApiAuthTokens | null> {
-  const refreshToken = await resolveProviderValue(provider.getRefreshToken);
-  if (!refreshToken) {
-    throw new AuthError(AUTH_ERROR_CODES.MISSING_REFRESH_TOKEN);
-  }
-
-  if (!provider.refreshTokens) {
-    throw new AuthError(AUTH_ERROR_CODES.MISSING_REFRESH_HANDLER);
-  }
-
-  const tokens = await provider.refreshTokens(refreshToken);
-  if (tokens?.accessToken) {
-    provider.onTokensUpdated?.(tokens);
-  }
-
-  return tokens ?? null;
-}
+let refreshPromise: Promise<AuthTokens> | null = null;
 
 /**
  * Request 인터셉터: 액세스 토큰 주입
  */
 api.interceptors.request.use(
-  async (config: InternalAxiosRequestConfig) => {
-    // skipAuth 옵션이 true이면 토큰 주입 건너뜀
-    if (config.skipAuth) {
-      return config;
-    }
+  (config: InternalAxiosRequestConfig) => {
+    if (config.skipAuth) return config;
 
-    const provider = getApiAuthProvider();
-    if (!provider?.getAccessToken) {
-      return config;
-    }
+    const config_ = getAuthConfig();
+    if (!config_) return config;
 
-    const token = await resolveProviderValue(provider.getAccessToken);
-    if (token) {
-      config.headers.Authorization = formatAuthHeader(token);
+    const { accessToken } = config_.store.getState();
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
     }
 
     return config;
@@ -124,61 +55,68 @@ api.interceptors.response.use(
   async (error: AxiosError) => {
     // 네트워크 연결 오류
     if (!error.response) {
-      alert('NETWORK_ERROR');
-      return Promise.reject(new Error('NETWORK_ERROR'));
+      const config = getAuthConfig();
+      const networkError = new Error('NETWORK_ERROR');
+      if (config?.onError) {
+        config.onError(networkError);
+      } else {
+        alert('네트워크 연결을 확인해주세요.');
+      }
+      return Promise.reject(networkError);
     }
 
     const status = error.response.status;
     const originalRequest = error.config as (InternalAxiosRequestConfig & { _retry?: boolean }) | undefined;
 
-    // 401 Unauthorized 처리
-    if (status === 401) {
-      // skipAuth로 요청한 경우 401 처리 안 함 (로그인 API 등)
-      if (originalRequest?.skipAuth) {
-        return Promise.reject(error);
+    // 401 Unauthorized - 토큰 갱신 시도
+    if (status === 401 && originalRequest && !originalRequest._retry && !originalRequest.skipAuth) {
+      const config = getAuthConfig();
+      if (!config) {
+        return Promise.reject(new AuthError(AUTH_ERROR_CODES.UNAUTHORIZED));
       }
 
-      const provider = getApiAuthProvider();
+      const { refreshToken } = config.store.getState();
 
-      // 프로바이더 미설정, 재시도 완료, 또는 리프레시 토큰 엔드포인트인 경우
-      if (
-        !provider ||
-        !provider.refreshTokens ||
-        !provider.getRefreshToken ||
-        !originalRequest ||
-        originalRequest._retry ||
-        originalRequest.url?.includes('/auth/refresh-token')
-      ) {
-        const authError = new AuthError(AUTH_ERROR_CODES.UNAUTHORIZED);
-        provider?.onAuthFailure?.(authError);
-        return Promise.reject(authError);
+      // 리프레시 토큰이 없거나 리프레시 API 자체가 401인 경우
+      if (!refreshToken || originalRequest.url?.includes('/auth/refresh-token')) {
+        config.onAuthFailure();
+        return Promise.reject(new AuthError(AUTH_ERROR_CODES.UNAUTHORIZED));
       }
 
       try {
-        // 토큰 갱신 (중복 요청 시 큐에서 대기)
-        const tokens = await queueTokenRefresh(provider);
-        if (!tokens?.accessToken) {
-          throw new AuthError(AUTH_ERROR_CODES.REFRESH_FAILED);
+        // 동시 다발적 401 시 하나의 갱신 요청만 실행
+        if (!refreshPromise) {
+          refreshPromise = config.refreshTokens(refreshToken).finally(() => {
+            refreshPromise = null;
+          });
         }
+
+        const tokens = await refreshPromise;
+        config.store.getState().setTokens(tokens);
 
         // 원본 요청 재시도
         originalRequest._retry = true;
-        originalRequest.headers.Authorization = formatAuthHeader(tokens.accessToken);
-
+        originalRequest.headers.Authorization = `Bearer ${tokens.accessToken}`;
         return api(originalRequest);
-      } catch (refreshError) {
-        provider.onAuthFailure?.(refreshError);
-        return Promise.reject(refreshError);
+      } catch {
+        config.onAuthFailure();
+        return Promise.reject(new AuthError(AUTH_ERROR_CODES.REFRESH_FAILED));
       }
     }
 
     // 500번대 서버 에러
     if (status >= 500) {
-      alert('서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요');
-      return Promise.reject(new Error('SERVER_ERROR'));
+      const config = getAuthConfig();
+      const serverError = new Error('SERVER_ERROR');
+      if (config?.onError) {
+        config.onError(serverError);
+      } else {
+        alert('서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.');
+      }
+      return Promise.reject(serverError);
     }
 
-    // 그 외 모든 에러는 그대로 throw (Error Boundary가 처리)
+    // 그 외 에러는 그대로 전달
     return Promise.reject(error);
   }
 );

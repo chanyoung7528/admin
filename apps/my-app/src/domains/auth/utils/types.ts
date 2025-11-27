@@ -1,8 +1,4 @@
-// 인증 토큰 쌍
-export interface AuthTokens {
-  accessToken: string;
-  refreshToken: string;
-}
+import type { AuthTokens } from '@repo/core/api';
 
 // 인증 토큰 API 응답
 export interface AuthTokenResponse {
@@ -20,7 +16,5 @@ export interface LoginPayload {
   password: string;
 }
 
-// 리프레시 토큰 요청 페이로드
-export interface RefreshTokenPayload {
-  refreshToken: string;
-}
+// Core의 AuthTokens를 재export
+export type { AuthTokens };
