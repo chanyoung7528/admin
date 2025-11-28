@@ -1,4 +1,4 @@
-import { BarChart3, Command, LayoutDashboard, TrendingUp } from 'lucide-react';
+import { BarChart3, BookText, Command, LayoutDashboard, TrendingUp } from 'lucide-react';
 import type { SidebarData } from '../types/sidebar';
 
 export const sidebarData: SidebarData = {
@@ -34,6 +34,20 @@ export const sidebarData: SidebarData = {
             {
               title: 'Data Table',
               url: '/my-food/settlement',
+            },
+          ],
+        },
+        {
+          title: 'Form',
+          icon: BookText,
+          items: [
+            {
+              title: 'Form 조회',
+              url: '/my-food/form-view',
+            },
+            {
+              title: 'Form 등록',
+              url: '/my-food/form',
             },
           ],
         },
