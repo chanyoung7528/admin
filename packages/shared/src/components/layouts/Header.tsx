@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react';
 
 type HeaderProps = React.HTMLAttributes<HTMLElement> & {
   fixed?: boolean;
-  ref?: React.Ref<HTMLElement>;
 };
 
 export function Header({ className, fixed, children, ...props }: HeaderProps) {
