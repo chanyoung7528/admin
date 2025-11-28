@@ -1,7 +1,7 @@
-import config from '@repo/eslint-config';
+import { reactConfig } from '@repo/eslint-config/react';
 
 export default [
-  ...config,
+  ...reactConfig,
   {
     ignores: ['dist/**', 'build/**', 'comparison-results/**', '.next/**'],
   },

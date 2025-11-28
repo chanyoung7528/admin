@@ -1,5 +1,5 @@
 import { useNavigate, useSearch } from '@tanstack/react-router';
-import type { ColumnDef, ColumnFiltersState, PaginationState, SortingState } from '@tanstack/react-table';
+import type { ColumnDef, ColumnFiltersState, PaginationState, Row, SortingState } from '@tanstack/react-table';
 import debounce from 'lodash-es/debounce';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { DataTableProps } from './data-table';
@@ -14,7 +14,7 @@ interface FilterConfig {
 interface UseDataTableControllerParams<TData, TValue> {
   tableId: string;
   columns: ColumnDef<TData, TValue>[];
-  useQueryHook: (params: any) => {
+  useQueryHook: (params: Record<string, unknown>) => {
     data: TData[] | undefined;
     total?: number;
     isLoading: boolean;
@@ -29,14 +29,14 @@ interface UseDataTableControllerParams<TData, TValue> {
   filterConfigs?: FilterConfig[];
   searchPlaceholder?: string;
   emptyMessage?: string;
-  globalFilterFn?: (row: any, columnId: string, filterValue: any) => boolean;
+  globalFilterFn?: (row: Row<TData>, columnId: string, filterValue: unknown) => boolean;
   renderFilters?: (columnFilters: ColumnFiltersState) => DataTableProps<TData, TValue>['filters'];
   defaultPageSize?: number;
   /** 검색어 디바운스 시간 (ms). 기본값: 500ms */
   searchDebounceMs?: number;
 }
 
-interface UseDataTableControllerReturn<TData, TValue> {
+export interface UseDataTableControllerReturn<TData, TValue> {
   tableProps: DataTableProps<TData, TValue>;
   data: TData[];
   isLoading: boolean;
