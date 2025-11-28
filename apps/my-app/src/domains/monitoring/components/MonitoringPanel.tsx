@@ -11,13 +11,17 @@ export function MonitoringPanel({ service, refreshInterval = 60000 }: Monitoring
   }[service];
 
   return (
-    <div className="bg-card rounded-lg border p-6">
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg font-semibold">{serviceLabel} 모니터링</h2>
-        <span className="text-muted-foreground text-xs">자동 새로고침: {refreshInterval / 1000}초</span>
+    <div className="bg-card flex flex-col gap-4 rounded-lg border p-4 shadow-sm">
+      {/* 헤더 */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-xl font-semibold">{serviceLabel} 모니터링</h2>
+          <p className="text-muted-foreground mt-1 text-sm">{serviceLabel} 서비스의 실시간 시스템 상태를 모니터링합니다</p>
+        </div>
+        <div className="flex gap-2">
+          <span className="text-muted-foreground text-xs">자동 새로고침: {refreshInterval / 1000}초</span>
+        </div>
       </div>
-
-      <p className="text-muted-foreground mb-6">{serviceLabel} 서비스의 실시간 시스템 상태를 모니터링합니다</p>
 
       {/* 상태 카드 */}
       <div className="grid gap-4 md:grid-cols-3">

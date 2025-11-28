@@ -8,10 +8,10 @@ export const Route = createFileRoute('/_authenticated/my-food/dashboard')({
 
 function FoodDashboardPage() {
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold">MY FOOD Dashboard</h1>
-        <p className="text-muted-foreground">MY FOOD 서비스 이용 현황</p>
+    <div className="flex flex-col gap-4 p-4">
+      <div className="flex flex-col gap-2">
+        <h1 className="text-2xl font-bold">MY FOOD Dashboard</h1>
+        <p className="text-muted-foreground text-sm">MY FOOD 서비스 이용 현황</p>
       </div>
 
       {/* Dashboard + Monitoring 도메인 조합 */}
