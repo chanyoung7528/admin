@@ -1,7 +1,7 @@
 import { Checkbox } from '@shared/components/ui/checkbox';
 import { Label } from '@shared/components/ui/label';
 import { cn } from '@shared/lib/utils';
-import { Control, FieldValues, Path, useController } from 'react-hook-form';
+import { type Control, type FieldValues, type Path, useController } from 'react-hook-form';
 
 interface CheckboxOption {
   value: string;

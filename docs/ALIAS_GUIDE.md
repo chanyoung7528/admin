@@ -251,6 +251,10 @@ import { CustomDocsPage } from '@/components/CustomDocsPage';
       // storybook 자체 alias
       "@/*": ["./src/*"],
 
+      // date-picker 패키지
+      "@repo/date-picker": ["../../packages/date-picker/src"],
+      "@repo/date-picker/*": ["../../packages/date-picker/src/*"],
+
       // shared 패키지 가져오기 (구체적인 것부터)
       "@repo/shared/components/ui": ["../../packages/shared/src/components/ui"],
       "@repo/shared/components/context": ["../../packages/shared/src/components/context"],
