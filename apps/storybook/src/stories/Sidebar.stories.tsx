@@ -16,6 +16,7 @@ import {
 } from '@repo/shared/components/ui';
 import type { Meta, StoryObj } from '@storybook/react';
 import { BarChart, FileText, HelpCircle, Home, Settings, Users } from 'lucide-react';
+
 import { CustomDocsPage } from '../components/CustomDocsPage';
 
 const meta = {

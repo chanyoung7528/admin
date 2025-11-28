@@ -1,9 +1,10 @@
-import { useLogout } from '@/domains/auth/hooks/useLogout';
-import { useAuthStore } from '@/domains/auth/stores/useAuthStore';
-import { Header } from '@/domains/dashboard/components/Header';
 import { Layout } from '@repo/shared/components/layouts';
 import { ErrorBoundary } from '@repo/shared/components/ui';
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router';
+
+import { useLogout } from '@/domains/auth/hooks/useLogout';
+import { useAuthStore } from '@/domains/auth/stores/useAuthStore';
+import { Header } from '@/domains/dashboard/components/Header';
 
 // 인증이 필요한 모든 페이지의 레이아웃
 export const Route = createFileRoute('/_authenticated')({

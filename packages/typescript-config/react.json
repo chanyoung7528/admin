@@ -3,6 +3,8 @@
   "extends": "./base.json",
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2022"],
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "target": "ES2022",
+    "useDefineForClassFields": true
   }
 }

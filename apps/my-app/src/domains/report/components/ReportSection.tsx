@@ -1,3 +1,5 @@
+import { Download } from 'lucide-react';
+
 interface ReportSectionProps {
   service: 'BODY' | 'FOOD' | 'MIND';
   period?: 'daily' | 'weekly' | 'monthly' | 'yearly';
@@ -18,20 +20,23 @@ export function ReportSection({ service, period = 'monthly' }: ReportSectionProp
   }[period];
 
   return (
-    <div className="bg-card rounded-lg border p-6">
-      <div className="mb-4 flex items-center justify-between">
-        <h2 className="text-lg font-semibold">
-          {serviceLabel} 운영 리포트 ({periodLabel})
-        </h2>
+    <div className="bg-card flex flex-col gap-4 rounded-lg border p-4 shadow-sm">
+      {/* 헤더 */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-xl font-semibold">
+            {serviceLabel} 운영 리포트 ({periodLabel})
+          </h2>
+          <p className="text-muted-foreground mt-1 text-sm">{serviceLabel} 서비스의 Site별 정산 내역을 관리하고 조회할 수 있습니다.</p>
+        </div>
         <div className="flex gap-2">
           <button className="hover:bg-muted rounded-md border px-3 py-1 text-sm">PDF 저장</button>
-          <button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-md px-3 py-1 text-sm">엑셀 다운로드</button>
+          <button className="bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors">
+            <Download className="h-4 w-4" />
+            정산 엑셀 다운로드
+          </button>
         </div>
       </div>
-
-      <p className="text-muted-foreground mb-6">
-        {serviceLabel} 서비스의 {periodLabel} 운영 현황을 분석합니다
-      </p>
 
       {/* 핵심 지표 */}
       <div className="mb-6 grid gap-4 md:grid-cols-4">

@@ -9,10 +9,11 @@
 
     */
 
+import './styles.css';
+
 import { CKEditor as Editor } from '@ckeditor/ckeditor5-react';
 // @ts-expect-error - CKEditor custom build
 import ClassicEditor from 'ckeditor5-custom-build/build/ckeditor';
-import './styles.css';
 
 interface EditorProps {
   data?: string;

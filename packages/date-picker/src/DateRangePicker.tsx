@@ -8,15 +8,16 @@
  * 4. Delete : clickOutDefault 함수는 선택되지 않았는데 모달창 밖 범위를 클릭했을때 초기화
  */
 
+import 'react-datepicker/dist/react-datepicker.css';
+import './styles.css';
+
 import { enUS } from 'date-fns/locale/en-US';
 import dayjs from 'dayjs';
 import { range } from 'lodash-es';
 import React, { forwardRef, useCallback, useEffect, useRef, useState } from 'react';
 import ReactDatePicker, { registerLocale } from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
 
 import { AngleIcon } from './icons';
-import './styles.css';
 import type { DateRangePickerProps } from './types';
 
 // react-datepicker는 date-fns 로케일이 필요하지만, 날짜 처리는 dayjs로 통일
@@ -108,7 +109,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
     }
 
     const [start, end] = currentDate;
-    if (!startDate || !endDate) return;
+    if (!start || !end) return;
 
     setStartDate(start);
     setEndDate(end);

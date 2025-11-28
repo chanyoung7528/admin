@@ -11,9 +11,17 @@ export function DashboardView({ service }: DashboardViewProps) {
   }[service];
 
   return (
-    <div className="bg-card rounded-lg border p-6">
-      <h2 className="mb-4 text-lg font-semibold">{serviceLabel} 대시보드</h2>
-      <p className="text-muted-foreground mb-6">{serviceLabel} 서비스의 핵심 지표를 시각화합니다</p>
+    <div className="bg-card flex flex-col gap-4 rounded-lg border p-4 shadow-sm">
+      {/* 헤더 */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-xl font-semibold">{serviceLabel} 대시보드</h2>
+          <p className="text-muted-foreground mt-1 text-sm">{serviceLabel} 서비스의 핵심 지표를 시각화합니다</p>
+        </div>
+        {/* <div className="flex gap-2">
+          <span className="text-muted-foreground text-xs">자동 새로고침: {refreshInterval / 1000}초</span>
+        </div> */}
+      </div>
 
       {/* 통계 카드 */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">

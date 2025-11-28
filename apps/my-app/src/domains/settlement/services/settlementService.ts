@@ -1,4 +1,5 @@
 import { faker } from '@faker-js/faker';
+
 import { type Settlement } from '../types';
 
 export interface GetSettlementsParams {

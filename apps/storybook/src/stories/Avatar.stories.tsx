@@ -1,8 +1,8 @@
 import { Avatar, AvatarFallback, AvatarImage, Badge } from '@repo/shared/components/ui';
 import type { Meta, StoryObj } from '@storybook/react';
-import { CustomDocsPage } from '../components/CustomDocsPage';
-
 import { Check, Crown, Mail, MoreVertical, Phone, User } from 'lucide-react';
+
+import { CustomDocsPage } from '../components/CustomDocsPage';
 
 const meta = {
   title: 'UI Components/Avatar',

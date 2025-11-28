@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
+
 import { InquiryList } from '@/domains/inquiry/components';
 
 export const Route = createFileRoute('/_authenticated/my-food/inquiry')({

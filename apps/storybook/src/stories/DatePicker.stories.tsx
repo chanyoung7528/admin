@@ -1,9 +1,11 @@
-import { DatePicker } from '@repo/date-picker';
 import '@repo/date-picker/styles.css';
+
+import { DatePicker } from '@repo/date-picker';
 import type { Meta, StoryObj } from '@storybook/react';
 import dayjs from 'dayjs';
 import { Calendar, Clock } from 'lucide-react';
 import { useEffect, useState } from 'react';
+
 import { CustomDocsPage } from '../components/CustomDocsPage';
 
 const meta = {
@@ -144,6 +146,7 @@ export const Default: Story = {
         setTimeout(() => {
           setDate(args.defaultDate || '');
         }, 0);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [args.defaultDate]);
 
       // width를 적절하게 파싱 (텍스트 입력을 숫자로 변환)
@@ -187,6 +190,7 @@ export const WithDefaultDate: Story = {
         setTimeout(() => {
           setDate(args.defaultDate || dayjs().format('YYYY-MM-DD HH:mm:ss'));
         }, 0);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
       }, [args.defaultDate]);
 
       // width를 적절하게 파싱

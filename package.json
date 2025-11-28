@@ -24,7 +24,7 @@
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.6",
+    "lint-staged": "^16.2.7",
     "turbo": "^2.6.1"
   },
   "lint-staged": {
@@ -47,7 +47,9 @@
   "pnpm": {
     "overrides": {
       "react": "^19.2.0",
-      "react-dom": "^19.2.0"
+      "react-dom": "^19.2.0",
+      "@types/react": "^19.2.2",
+      "@types/react-dom": "^19.2.2"
     }
   },
   "dependencies": {

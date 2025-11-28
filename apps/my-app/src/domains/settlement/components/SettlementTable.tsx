@@ -1,5 +1,6 @@
 import { DataTable } from '@shared/components/data-table';
 import { Download, TrendingDown, TrendingUp } from 'lucide-react';
+
 import { useSettlementTable } from '../hooks';
 import { type Settlement } from '../types';
 
@@ -25,17 +26,19 @@ export function SettlementTable({ service }: SettlementTableProps) {
   const averageAmount = data.length > 0 ? totalAmount / data.length : 0;
 
   return (
-    <div className="bg-card rounded-lg border p-6 shadow-sm">
+    <div className="bg-card flex flex-col gap-4 rounded-lg border p-4 shadow-sm">
       {/* 헤더 */}
-      <div className="mb-6 flex items-center justify-between">
+      <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-semibold">{serviceLabel} 정산 관리</h2>
+          <h2 className="text-xl font-semibold">{serviceLabel} 정산 관리</h2>
           <p className="text-muted-foreground mt-1 text-sm">{serviceLabel} 서비스의 Site별 정산 내역을 관리하고 조회할 수 있습니다.</p>
         </div>
-        <button className="bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors">
-          <Download className="h-4 w-4" />
-          정산 엑셀 다운로드
-        </button>
+        <div className="flex gap-2">
+          <button className="bg-primary text-primary-foreground hover:bg-primary/90 flex items-center gap-2 rounded-md px-4 py-2 text-sm font-medium transition-colors">
+            <Download className="h-4 w-4" />
+            정산 엑셀 다운로드
+          </button>
+        </div>
       </div>
 
       {/* 요약 통계 카드 */}

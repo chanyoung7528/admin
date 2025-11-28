@@ -1,6 +1,7 @@
 import axios, { type AxiosError, type InternalAxiosRequestConfig } from 'axios';
+
 import { env } from '../config';
-import { AUTH_ERROR_CODES, AuthError, getAuthConfig, type AuthTokens } from './auth';
+import { AUTH_ERROR_CODES, AuthError, type AuthTokens, getAuthConfig } from './auth';
 
 // Axios Request Config 확장
 declare module 'axios' {

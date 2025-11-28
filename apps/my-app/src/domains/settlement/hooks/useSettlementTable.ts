@@ -1,4 +1,5 @@
-import { useDataTableController } from '@shared/components/data-table';
+import { useDataTableController, type UseDataTableControllerReturn } from '@shared/components/data-table';
+
 import { settlementColumns } from '../columns';
 import { type Settlement } from '../types';
 import { useSettlements } from './useSettlements';
@@ -7,7 +8,7 @@ interface UseSettlementTableParams {
   service: 'BODY' | 'FOOD' | 'MIND';
 }
 
-export function useSettlementTable({ service }: UseSettlementTableParams) {
+export function useSettlementTable({ service }: UseSettlementTableParams): UseDataTableControllerReturn<Settlement, unknown> {
   return useDataTableController<Settlement, unknown>({
     tableId: `settlement-${service.toLowerCase()}`,
     columns: settlementColumns,
