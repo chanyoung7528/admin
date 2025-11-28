@@ -1,23 +1,6 @@
 {
+  "extends": "@repo/typescript-config/vite.json",
   "compilerOptions": {
-    "target": "ES2022",
-    "useDefineForClassFields": true,
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "module": "ESNext",
-    "types": ["vite/client", "node"],
-    "skipLibCheck": true,
-
-    /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "verbatimModuleSyntax": true,
-    "moduleDetection": "force",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
-
-    /* Path Aliases - my-app 내부 경로 */
     "baseUrl": ".",
     "paths": {
       // my-app 자체 alias (src 폴더 기반)
@@ -45,14 +28,7 @@
       "@shared/lib/*": ["../../packages/shared/src/lib/*"],
       "@shared/hooks/*": ["../../packages/shared/src/hooks/*"],
       "@shared/assets/*": ["../../packages/shared/src/assets/*"]
-    },
-
-    /* Linting */
-    "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": true
+    }
   },
   "include": ["src", "vite.config.ts"],
   "exclude": ["node_modules", "dist"]

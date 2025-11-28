@@ -108,7 +108,7 @@ export const DateRangePicker: React.FC<DateRangePickerProps> = ({
     }
 
     const [start, end] = currentDate;
-    if (!startDate || !endDate) return;
+    if (!start || !end) return;
 
     setStartDate(start);
     setEndDate(end);

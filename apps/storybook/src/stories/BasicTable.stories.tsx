@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { BasicTable, type BasicTableColumn } from '@repo/shared/components/ui';
 import type { Meta, StoryObj } from '@storybook/react';
 import { CustomDocsPage } from '../components/CustomDocsPage';
@@ -39,6 +40,7 @@ const meta = {
         <CustomDocsPage
           componentName="BasicTable"
           description="간단한 리스트 표시용 재사용 가능한 테이블 컴포넌트입니다. shadcn UI table을 기반으로 하며, 복잡한 필터링이나 정렬 없이 데이터를 깔끔하게 표시하는 용도로 사용됩니다."
+          installationDeps={['@repo/shared']}
           implementationCode={`import { BasicTable, type BasicTableColumn } from "@repo/shared/components/ui";
 
 interface Order {
@@ -310,7 +312,7 @@ const userColumns: BasicTableColumn<User>[] = [
 export const Default: Story = {
   args: {
     data: sampleProducts,
-    columns: productColumns,
+    columns: productColumns as any,
   },
 };
 
@@ -320,7 +322,7 @@ export const Default: Story = {
 export const OrderTable: Story = {
   args: {
     data: sampleOrders,
-    columns: orderColumns,
+    columns: orderColumns as any,
   },
 };
 
@@ -330,7 +332,7 @@ export const OrderTable: Story = {
 export const UserTable: Story = {
   args: {
     data: sampleUsers,
-    columns: userColumns,
+    columns: userColumns as any,
   },
 };
 
@@ -340,7 +342,7 @@ export const UserTable: Story = {
 export const Loading: Story = {
   args: {
     data: [],
-    columns: productColumns,
+    columns: productColumns as any,
     isLoading: true,
     skeletonRows: 5,
   },
@@ -352,7 +354,7 @@ export const Loading: Story = {
 export const Empty: Story = {
   args: {
     data: [],
-    columns: productColumns,
+    columns: productColumns as any,
     emptyMessage: '등록된 상품이 없습니다.',
   },
 };
@@ -363,7 +365,7 @@ export const Empty: Story = {
 export const CustomEmptyMessage: Story = {
   args: {
     data: [],
-    columns: orderColumns,
+    columns: orderColumns as any,
     emptyMessage: '😔 아직 주문 내역이 없습니다. 첫 주문을 생성해보세요!',
   },
 };
@@ -374,8 +376,8 @@ export const CustomEmptyMessage: Story = {
 export const ClickableRows: Story = {
   args: {
     data: sampleUsers,
-    columns: userColumns,
-    onRowClick: (row, index) => {
+    columns: userColumns as any,
+    onRowClick: (row: any, index) => {
       alert(`사용자 선택:\n이름: ${row.name}\n이메일: ${row.email}\n인덱스: ${index}`);
     },
   },
@@ -387,7 +389,7 @@ export const ClickableRows: Story = {
 export const SmallDataset: Story = {
   args: {
     data: sampleProducts.slice(0, 2),
-    columns: productColumns,
+    columns: productColumns as any,
   },
 };
 
@@ -418,9 +420,9 @@ export const CustomStyling: Story = {
         cellAlign: 'right',
         headerClassName: 'bg-green-100 dark:bg-green-900',
         cellClassName: 'font-bold text-green-600 dark:text-green-400',
-        cell: row => `₩${row.price.toLocaleString()}`,
+        cell: (row: any) => `₩${row.price.toLocaleString()}`,
       },
-    ],
+    ] as any,
   },
 };
 
@@ -430,7 +432,7 @@ export const CustomStyling: Story = {
 export const CustomContainer: Story = {
   args: {
     data: sampleProducts.slice(0, 3),
-    columns: productColumns,
+    columns: productColumns as any,
     className: 'shadow-xl border-2 border-blue-200 dark:border-blue-800',
   },
 };
@@ -452,7 +454,7 @@ export const MinimalColumns: Story = {
         header: '이메일',
         accessor: 'email',
       },
-    ],
+    ] as any,
   },
 };
 
@@ -482,8 +484,8 @@ export const VariousAlignment: Story = {
         header: '주문금액',
         headerAlign: 'right',
         cellAlign: 'right',
-        cell: row => `₩${row.amount.toLocaleString()}`,
+        cell: (row: any) => `₩${row.amount.toLocaleString()}`,
       },
-    ],
+    ] as any,
   },
 };

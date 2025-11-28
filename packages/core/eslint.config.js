@@ -1,3 +1,8 @@
-import config from '@repo/eslint-config';
+import { baseConfig } from '@repo/eslint-config/base';
 
-export default config;
+export default [
+  ...baseConfig,
+  {
+    ignores: ['dist/**', 'node_modules/**'],
+  },
+];
