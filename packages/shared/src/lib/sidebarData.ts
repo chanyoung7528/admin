@@ -24,16 +24,16 @@ export const sidebarData: SidebarData = {
           icon: LayoutDashboard,
         },
         {
-          title: '정산 관리',
+          title: '테이블',
           icon: BarChart3,
           items: [
             {
-              title: '결제/정산 내역',
-              url: '/my-food/settlement',
+              title: 'Basic Table',
+              url: '/my-food/delivery',
             },
             {
-              title: '운영 Report',
-              url: '/my-food/report',
+              title: 'Data Table',
+              url: '/my-food/settlement',
             },
           ],
         },
