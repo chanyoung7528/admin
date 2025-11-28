@@ -1,490 +1,73 @@
-# 🏗️ Admin Dashboard Architecture
+# 🏗️ Admin Monorepo
 
-## 📋 개요
+DDD 기반 관리자 대시보드를 중심으로 한 Turborepo입니다. `apps`, `packages` 전체가 pnpm workspace로 묶여 있으며 React 19 + TanStack Router + Shadcn UI 조합을 사용합니다.
 
-이 프로젝트는 **Domain-Driven Design (DDD)** 원칙을 따르는 관리자 대시보드입니다.
-핵심 원칙: **비즈니스 기능별 도메인 구성 + 재사용 가능한 컴포넌트**
+## 📦 폴더 구성
 
----
+| 경로                   | 설명                                                           |
+| ---------------------- | -------------------------------------------------------------- |
+| `apps/my-app`          | 실제 관리자 웹앱. TanStack Router + React Query + Zustand 조합 |
+| `apps/storybook`       | shared UI 문서화 전용 Storybook                                |
+| `packages/shared`      | Shadcn 기반 UI, DataTable, Toolkit                             |
+| `packages/core`        | axios 클라이언트, 인증 설정, env 스키마                        |
+| `packages/date-picker` | dayjs 연동 DatePicker/DateRangePicker                          |
+| `packages/editor`      | CKEditor 5 커스텀 래퍼                                         |
 
-## 🎯 핵심 철학
+각 디렉터리별 README는 간단한 사용법만 다루고, 세부 내용은 `/docs` 에 정리합니다.
 
-### ✅ DO (올바른 접근)
-
-```
-도메인 = 비즈니스 기능 (What을 수행)
-- dashboard (대시보드)
-- monitoring (모니터링)
-- settlement (정산)
-- report (리포트)
-- order (주문 관리)
-- content (콘텐츠 관리)
-```
-
----
-
-## 📁 전체 구조
-
-```
-apps/my-app/src/
-├── domains/                   # 🧠 비즈니스 로직 (도메인)
-│   ├── dashboard/             # 📊 공통 대시보드
-│   ├── monitoring/            # 🖥️ 공통 모니터링
-│   ├── settlement/            # 💳 공통 정산
-│   ├── report/                # 📈 공통 리포트
-│   ├── inquiry/               # 🗣️ 공통 문의 관리
-│   ├── user/                  # 👤 사용자 관리 (Management 전용)
-│   ├── insight/               # 📊 인사이트 분석 (Management 전용)
-│   ├── order/                 # 📦 주문 관리 (FOOD 전용)
-│   ├── content/               # 📚 콘텐츠 관리 (MIND 전용)
-│   ├── billing/               # 💰 결제 관리
-│   └── site/                  # 🏢 Site(고객사) 관리
-│
-└── pages/                     # 📄 실제 라우트 (TanStack Router)
-    ├── index.tsx              # 메인 대시보드
-    ├── dashboard.tsx          # 이용 현황
-    ├── user/                  # 사용자 관리
-    ├── my-body/               # MY BODY 서비스
-    ├── my-food/               # MY FOOD 서비스
-    └── my-mind/               # MY MIND 서비스
-```
-
----
-
-## 🔥 도메인 상세 구조
-
-### 1️⃣ 공통 도메인 (Core Domains)
-
-모든 서비스(BODY/FOOD/MIND)에서 재사용 가능한 도메인
-
-#### 📊 dashboard - 대시보드
-
-```typescript
-src/domains/dashboard/
-├── components/
-│   ├── DashboardView.tsx       // Props: service: 'BODY' | 'FOOD' | 'MIND' | 'ALL'
-│   ├── UsageChart.tsx
-│   └── index.ts
-├── hooks/
-│   ├── useDashboardData.ts     // Params: service
-│   └── index.ts
-└── services/
-    ├── dashboardService.ts     // getServiceStats(service)
-    └── index.ts
-```
-
-**사용 예시:**
-
-```typescript
-// MY BODY 대시보드
-<DashboardView service="BODY" />
-
-// MY FOOD 대시보드
-<DashboardView service="FOOD" />
-
-// 전체 대시보드
-<DashboardView service="ALL" />
-```
-
-#### 🖥️ monitoring - 모니터링
-
-```typescript
-src/domains/monitoring/
-├── components/
-│   ├── MonitoringPanel.tsx     // Props: service, refreshInterval
-│   ├── DeviceStatusDashboard.tsx
-│   ├── ErrorLogViewer.tsx
-│   └── index.ts
-├── hooks/
-│   ├── useDeviceStatus.ts      // Params: service
-│   └── index.ts
-└── services/
-    ├── monitoringService.ts    // getDeviceStatus(service)
-    └── index.ts
-```
-
-**사용 예시:**
-
-```typescript
-// MY BODY 모니터링 (30초마다 갱신)
-<MonitoringPanel service="BODY" refreshInterval={30000} />
-
-// MY FOOD 모니터링 (1분마다 갱신)
-<MonitoringPanel service="FOOD" refreshInterval={60000} />
-```
-
-#### 💳 settlement - 정산
-
-```typescript
-src/domains/settlement/
-├── components/
-│   ├── SettlementTable.tsx     // Props: service
-│   └── index.ts
-├── hooks/
-│   ├── useSettlementData.ts    // Params: service
-│   └── index.ts
-└── services/
-    ├── settlementService.ts    // getSettlement(service)
-    └── index.ts
-```
-
-**사용 예시:**
-
-```typescript
-// MY BODY 정산
-<SettlementTable service="BODY" />
-
-// MY FOOD 정산
-<SettlementTable service="FOOD" />
-```
-
-#### 📈 report - 운영 리포트
-
-```typescript
-src/domains/report/
-├── components/
-│   ├── ReportSection.tsx       // Props: service, period
-│   └── index.ts
-├── hooks/
-│   ├── useReportData.ts        // Params: service, period
-│   └── index.ts
-└── services/
-    ├── reportService.ts        // getOperationReport(service, period)
-    └── index.ts
-```
-
-**사용 예시:**
-
-```typescript
-// MY BODY 월별 리포트
-<ReportSection service="BODY" period="monthly" />
-
-// MY FOOD 연간 리포트
-<ReportSection service="FOOD" period="yearly" />
-```
-
-### 2️⃣ 특화 도메인 (Specialized Domains)
-
-특정 서비스에만 사용되는 도메인
-
-#### 👤 user - 사용자 관리 (Management 전용)
-
-```typescript
-src/domains/user/
-├── components/
-│   ├── UserListTable.tsx
-│   ├── UserForm.tsx
-│   ├── MessageForm.tsx
-│   └── index.ts
-├── hooks/
-│   ├── useUsersQuery.ts
-│   ├── useSendMessage.ts
-│   └── index.ts
-└── services/
-    ├── userService.ts
-    └── index.ts
-```
-
-#### 📊 insight - 인사이트 분석 (Management 전용)
-
-```typescript
-src/domains/insight/
-├── components/
-│   ├── InsightDashboard.tsx
-│   └── index.ts
-├── hooks/
-│   ├── useInsightData.ts
-│   └── index.ts
-└── services/
-    ├── insightService.ts
-    └── index.ts
-```
-
-#### 📦 order - 주문 관리 (FOOD 전용)
-
-```typescript
-src/domains/order/
-├── components/
-│   ├── OrderList.tsx
-│   └── index.ts
-├── hooks/
-│   ├── useOrdersData.ts
-│   └── index.ts
-└── services/
-    ├── orderService.ts
-    └── index.ts
-```
-
-#### 📚 content - 콘텐츠 관리 (MIND 전용)
-
-```typescript
-src/domains/content/
-├── components/
-│   ├── ContentList.tsx
-│   └── index.ts
-├── hooks/
-│   ├── useContentData.ts
-│   └── index.ts
-└── services/
-    ├── contentService.ts
-    └── index.ts
-```
-
----
-
-## 🔌 페이지에서 도메인 조합
-
-페이지는 도메인 컴포넌트를 **조립(Composition)**하여 구성합니다.
-
-### 예시 1: MY BODY 대시보드
-
-```typescript
-// pages/my-body/dashboard.tsx
-import { DashboardView } from "@/domains/dashboard/components";
-import { MonitoringPanel } from "@/domains/monitoring/components";
-
-function BodyDashboardPage() {
-  return (
-    <>
-      <DashboardView service="BODY" />
-      <MonitoringPanel service="BODY" refreshInterval={30000} />
-    </>
-  );
-}
-```
-
-### 예시 2: MY FOOD 정산
-
-```typescript
-// pages/my-food/settlement.tsx
-import { SettlementTable } from "@/domains/settlement/components";
-
-function FoodSettlementPage() {
-  return (
-    <>
-      <SettlementTable service="FOOD" />
-    </>
-  );
-}
-```
-
-### 예시 3: Management 메인
-
-```typescript
-// pages/index.tsx
-import { InsightDashboard } from "@/domains/insight/components";
-import { DashboardView } from "@/domains/dashboard/components";
-
-function MainDashboardPage() {
-  return (
-    <>
-      <InsightDashboard />
-      <DashboardView service="ALL" />
-    </>
-  );
-}
-```
-
----
-
-## 📊 페이지-도메인 매핑
-
-### Management
-
-| 페이지           | 사용 도메인            |
-| ---------------- | ---------------------- |
-| `/` (메인)       | `insight`, `dashboard` |
-| `/dashboard`     | `dashboard`            |
-| `/user/list`     | `user`                 |
-| `/user/insight`  | `insight`              |
-| `/user/register` | `user`                 |
-| `/user/message`  | `user`                 |
-| `/inquiry`       | `inquiry`              |
-| `/monitoring`    | `monitoring`           |
-
-### MY BODY
-
-| 페이지                | 사용 도메인               |
-| --------------------- | ------------------------- |
-| `/my-body/dashboard`  | `dashboard`, `monitoring` |
-| `/my-body/monitoring` | `monitoring`              |
-| `/my-body/settlement` | `settlement`              |
-| `/my-body/report`     | `report`                  |
-
-### MY FOOD
-
-| 페이지                | 사용 도메인               |
-| --------------------- | ------------------------- |
-| `/my-food/dashboard`  | `dashboard`, `monitoring` |
-| `/my-food/monitoring` | `monitoring`              |
-| `/my-food/order`      | `order`                   |
-| `/my-food/delivery`   | `order`                   |
-| `/my-food/inquiry`    | `inquiry`                 |
-| `/my-food/settlement` | `settlement`              |
-| `/my-food/report`     | `report`                  |
-
-### MY MIND
-
-| 페이지                | 사용 도메인               |
-| --------------------- | ------------------------- |
-| `/my-mind/dashboard`  | `dashboard`, `monitoring` |
-| `/my-mind/monitoring` | `monitoring`              |
-| `/my-mind/contract`   | `content`                 |
-| `/my-mind/inquiry`    | `inquiry`                 |
-| `/my-mind/settlement` | `settlement`              |
-| `/my-mind/report`     | `report`                  |
-
----
-
-## 💡 DDD 장점
-
-### 1. 재사용성 극대화
-
-```typescript
-// ❌ Before (중복 코드)
-- productBody/BodyDashboard
-- productFood/FoodDashboard
-- productMind/MindDashboard
-
-// ✅ After (재사용)
-- dashboard/DashboardView (service prop으로 구분)
-```
-
-### 2. 유지보수 간편화
-
-```typescript
-// 대시보드 수정 시
-// ❌ Before: 3개 파일 수정 필요
-// ✅ After: 1개 파일만 수정
-```
-
-### 3. 확장성
-
-```typescript
-// 새 서비스 추가 시
-// ❌ Before: 전체 폴더 구조 복제
-// ✅ After: service enum에만 추가
-type Service = 'BODY' | 'FOOD' | 'MIND' | 'NEW_SERVICE';
-```
-
-### 4. 테스트 용이성
-
-```typescript
-// 도메인별로 독립적 테스트 가능
-describe('DashboardView', () => {
-  it('should render BODY dashboard', () => {
-    render(<DashboardView service="BODY" />);
-  });
-});
-```
-
----
-
-## 🛠️ 기술 스택
-
-| 분류          | 기술                         |
-| ------------- | ---------------------------- |
-| **Framework** | Vite + React                 |
-| **Language**  | TypeScript                   |
-| **Routing**   | TanStack Router (File-based) |
-| **State**     | TanStack Query, Zustand      |
-| **Styling**   | Tailwind CSS v4, Shadcn UI   |
-| **Monorepo**  | Turborepo                    |
-
----
-
-## 📝 명명 규칙
-
-### 도메인 네이밍
-
-```typescript
-✅ 동사/명사 기반 (기능 중심)
-- dashboard, monitoring, settlement, report
-- order, content, inquiry, user
-
-❌ 제품/서비스명
-- productBody, productFood, productMind
-```
-
-### 컴포넌트 Props
-
-```typescript
-// 서비스 구분이 필요한 경우
-interface DashboardViewProps {
-  service: 'BODY' | 'FOOD' | 'MIND' | 'ALL';
-}
-
-// 기간 옵션이 필요한 경우
-interface ReportSectionProps {
-  service: 'BODY' | 'FOOD' | 'MIND';
-  period: 'daily' | 'weekly' | 'monthly' | 'yearly';
-}
-```
-
----
-
-## 🚀 추가 확장 가이드
-
-### 새로운 서비스 추가
-
-1. Service 타입에 추가
-
-```typescript
-type Service = 'BODY' | 'FOOD' | 'MIND' | 'NEW_SERVICE';
-```
-
-2. 페이지 추가
+## ⚙️ 빠른 시작
 
 ```bash
-mkdir -p src/pages/new-service
+pnpm install               # 루트 의존성 설치
+pnpm dev:my-app            # my-app 개발 서버
+pnpm dev:storybook         # Storybook 개발 서버
+pnpm build:my-app          # my-app 프로덕션 빌드
+pnpm build:storybook       # Storybook 정적 빌드
+pnpm lint && pnpm type-check
 ```
 
-3. 기존 도메인 재사용
+> CI 스크립트는 `package.json` 의 turbo 파이프라인을 그대로 사용합니다.
 
-```typescript
-<DashboardView service="NEW_SERVICE" />
-<MonitoringPanel service="NEW_SERVICE" />
-```
+## 📚 문서 모음
 
-### 새로운 도메인 추가
+| 문서                                | 내용                                            |
+| ----------------------------------- | ----------------------------------------------- |
+| `docs/APP_ARCHITECTURE.md`          | 실제 도메인/라우트 구조, URL 상태 설계          |
+| `docs/APP_DEPLOYMENT.md`            | Vercel 설정, `.vercelignore`, 빌드 파이프라인   |
+| `docs/ALIAS_GUIDE.md`               | 각 앱/패키지별 TS/Vite alias 규칙               |
+| `docs/API_AUTH_INTEGRATION.md`      | `configureAuth`, `setupApiClient`, refresh flow |
+| `docs/DATA_TABLE_IMPLEMENTATION.md` | Settlement DataTable 구성과 재사용 패턴         |
+| `docs/DATA_TABLE_PAGINATION.md`     | manual pagination, UI 상태, 디버깅 가이드       |
+| `docs/ERROR_BOUNDARY.md`            | ErrorBoundary 계층 구조와 사용 지침             |
+| `docs/FAKER_SETUP.md`               | Faker 기반 Mock 데이터 전략                     |
+| `docs/ROUTE_AUTH_GUIDE.md`          | TanStack Router 레이아웃, `beforeLoad` 인증     |
+| `docs/STORYBOOK_SETUP.md`           | Storybook 구조, CustomDocsPage                  |
+| `docs/BUNDLE_ANALYSIS.md`           | 최신 번들 사이즈, 최적화 전략                   |
 
-1. 도메인 폴더 생성
+필요한 가이드를 먼저 정독한 뒤 모듈을 수정하는 것이 원칙입니다.
 
-```bash
-mkdir -p src/domains/new-domain/{components,hooks,services}
-```
+## ✨ 주요 특징
 
-2. 표준 구조 따르기
+- **DDD + Composition**: `apps/my-app/src/domains` 단위로 컴포넌트/훅/서비스 구성.
+- **공용 DataTable**: `packages/shared` 의 `useDataTableController` + URL 동기화.
+- **Auth Core**: `packages/core/api` 의 `configureAuth` 로 토큰 주입/갱신 중앙화.
+- **문서화 우선**: 모든 핵심 작업은 `/docs` 에 근거를 남기고 README 는 요약만 유지.
 
-```typescript
-// components/index.ts
-export { NewDomainComponent } from './NewDomainComponent';
+## 🧪 스크립트 요약
 
-// hooks/index.ts
-export { useNewDomainData } from './useNewDomainData';
+| 명령                                     | 설명                      |
+| ---------------------------------------- | ------------------------- |
+| `pnpm dev`                               | 전체 앱 워치              |
+| `pnpm dev:my-app` / `pnpm dev:storybook` | 단일 앱 개발 서버         |
+| `pnpm build`                             | 터보 빌드 (CI 동일)       |
+| `pnpm lint`, `pnpm lint:fix`             | eslint 전역 실행          |
+| `pnpm type-check`                        | tsconfig 기반 타입 검사   |
+| `pnpm clean`                             | Turbo & node_modules 정리 |
 
-// services/index.ts
-export * from './newDomainService';
-```
+## 🔗 연관 패키지
 
----
+- `@repo/shared` 의 Shadcn UI는 my-app과 Storybook이 동일 alias로 불러옵니다.
+- `@repo/core` 는 axios 인스턴스/토큰 재발급 로직을 제공하며 앱에서는 `setupApiClient()` 한 번만 호출하면 됩니다.
+- `@repo/date-picker`, `@repo/editor` 는 Storybook과 앱에서 모두 사용 가능합니다.
 
-## 📚 참고 자료
-
-- [Domain-Driven Design](https://martinfowler.com/bliki/DomainDrivenDesign.html)
-- [TanStack Router](https://tanstack.com/router/latest)
-- [TanStack Query](https://tanstack.com/query/latest)
-- [Tailwind CSS v4](https://tailwindcss.com/)
-
----
-
-## ✨ 요약
-
-이 프로젝트는 **비즈니스 기능 기반 도메인 구조**로 설계되어:
-
-- 🔄 **재사용성 극대화**
-- 🧩 **컴포넌트 조립(Composition) 패턴**
-- 🚀 **확장 용이성**
-- 🛡️ **타입 안전성**
-
-을 제공합니다.
+필수 가이드는 `/docs` 를 참고하고, 중복 문서나 오래된 경로가 보이면 바로 정리해 주세요. README 는 앞으로도 “요약 & 링크” 역할에 집중합니다.

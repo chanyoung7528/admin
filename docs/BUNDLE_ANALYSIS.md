@@ -1,129 +1,70 @@
-# 번들 크기 분석 결과
+# 번들 분석 및 최적화 가이드
 
-## 현재 빌드 파일 크기
+## 1. 현재 빌드 스냅샷 (2025-11-28)
 
-```
-412K - index-DdTqnIKX.js (앱 코드 + 기타 라이브러리)
-104K - tanstack-vendor-BcoaNIkb.js (TanStack Router + Query)
- 64K - index-BkylTbfJ.css (Tailwind CSS)
- 12K - react-vendor-Bzgz95E1.js (React + ReactDOM)
-  8K - index-ClKPa7us.js
-  4K - vendor-CgbjetqP.js (zustand, axios)
-  4K - index-Dho7K2ld.js
-```
+`apps/my-app/dist/assets` 기준
 
-## 용량을 많이 차지하는 주요 라이브러리 (추정)
+| 파일                                     | 크기       | 설명                                   |
+| ---------------------------------------- | ---------- | -------------------------------------- |
+| `index-lTy2agqc.js`                      | **1.2 MB** | 애플리케이션 본체 (페이지/도메인 코드) |
+| `tanstack-vendor-Cuwiek6D.js`            | 108 KB     | Router + Query 번들                    |
+| `index-C84G8vaz.css`                     | 81 KB      | Tailwind + Shadcn 스타일               |
+| `BaseTanStackRouterDevtools*.js`         | 37 KB      | DevTools(동적 import)                  |
+| `FloatingTanStackRouterDevtools*.js`     | 19 KB      | DevTools 서브 패널                     |
+| `react-vendor-OvXVS5lI.js`               | 11 KB      | React + DOM                            |
+| `vendor-CJBMpuhP.js`                     | 36 KB      | axios, zustand 등 기타 라이브러리      |
+| `index-CTSpGF5Z.js`, `index-zioTSqyj.js` | 소형       | 라우터 부수 파일                       |
 
-1. 🟡 **@radix-ui 패키지들** (~100KB)
-   현재 사용 중:
+> DevTools 번들은 `env.isDebug` 조건으로만 로드됩니다. 프로덕션에서 `VITE_FEATURE_DEBUG=false` 여야 합니다.
 
-- @radix-ui/react-alert-dialog
-- @radix-ui/react-avatar
-- @radix-ui/react-collapsible
-- @radix-ui/react-dialog
-- @radix-ui/react-dropdown-menu
-- @radix-ui/react-separator
-- @radix-ui/react-slot
-- @radix-ui/react-tabs
-- @radix-ui/react-tooltip
+## 2. 이미 적용된 최적화
 
-**해결방법**:
+- `apps/my-app/vite.config.ts`
+  - `manualChunks` 로 `react-vendor`, `tanstack-vendor`, `vendor` 분리
+  - `visualizer` 플러그인으로 `dist/stats.html` 생성
+  - `esbuild.pure`/`drop` 로 `console.*`, `debugger` 제거
+- `src/main.tsx` / `pages/__root.tsx`
+  - React Query DevTools / Router DevTools 를 `lazy` + `Suspense` 로 감싸 프로덕션 번들에서 제외
 
-- 사용하지 않는 Radix UI 컴포넌트 제거
-- 실제로 사용하는 컴포넌트만 import
+## 3. 추가 최적화 아이디어
 
-### 3. 🟡 **TanStack Router** (~70-80KB)
+| 작업                | 설명                                                     | 비고                                         |
+| ------------------- | -------------------------------------------------------- | -------------------------------------------- |
+| 라우트 Lazy Loading | 페이지 단위 `lazy(() => import())` 적용                  | TanStack Router에 `loader` + `lazy` API 사용 |
+| 미사용 Radix 제거   | `packages/shared` 에서 쓰지 않는 UI import 삭제          | `pnpm ls @radix-ui/*` 로 확인                |
+| 아이콘 청크 줄이기  | `lucide-react` Tree Shaking 확인, 필요한 아이콘만 import | 불필요한 `lucide-react/` export 사용 금지    |
+| CSS 모듈화          | 대규모 컴포넌트의 CSS를 지연 로딩 (예: Chart, FormTable) | 현재는 단일 CSS 청크                         |
 
-- 이미 별도 청크로 분리됨 ✅
-- routeTree.gen.ts 파일이 클 수 있음 (페이지 수에 비례)
-
-### 4. 🟡 **TanStack Query** (~30-40KB)
-
-- 이미 별도 청크로 분리됨 ✅
-
-### 5. 🟢 **기타**
-
-- axios: ~14KB (작음)
-- zustand: ~3KB (매우 작음)
-- class-variance-authority: ~5KB
-- clsx: ~1KB
-- tailwind-merge: ~10KB
-
-## 즉시 적용 가능한 최적화
-
-3. Tree Shaking 개선
-
-vite.config.ts에 추가:
-
-```typescript
-export default defineConfig({
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom'],
-          'tanstack-vendor': ['@tanstack/react-router', '@tanstack/react-query'],
-          'ui-vendor': [
-            '@radix-ui/react-dialog',
-            '@radix-ui/react-dropdown-menu',
-            '@radix-ui/react-tabs',
-            // 실제 사용하는 것만 추가
-          ],
-          vendor: ['axios', 'zustand'],
-        },
-      },
-    },
-  },
-  // Tree shaking 최적화
-  optimizeDeps: {
-    exclude: ['lucide-react'], // 직접 import 사용 시
-  },
-});
-```
-
-## 예상 개선 효과
-
-| 최적화 항목              | 예상 절감             | 난이도 |
-| ------------------------ | --------------------- | ------ |
-| lucide-react 개선        | ~100-150KB            | 중     |
-| 미사용 Radix UI 제거     | ~20-50KB              | 쉬움   |
-| 모든 페이지 lazy loading | ~50-100KB (초기 로딩) | 중     |
-| UI vendor 청크 분리      | 캐싱 개선             | 쉬움   |
-
-**총 예상 개선**: 170-300KB (30-50% 감소)
-
-## 번들 분석 확인 방법
-
-1. **시각적 분석**:
+## 4. stats.html 보는 법
 
 ```bash
-open /Users/mz01-chansm/Desktop/side-project/admin/apps/my-app/dist/stats.html
+pnpm run build:my-app
+open apps/my-app/dist/stats.html
 ```
 
-2. **명령줄 분석**:
+- `react-vendor`: React / ReactDOM / scheduler
+- `tanstack-vendor`: `@tanstack/react-router`, `@tanstack/react-query`
+- `vendor`: axios, zustand 등 기타 공통 라이브러리
+- `index-*.js`: 앱 코드. 해당 영역이 너무 크다면 lazy 로 분리할 후보입니다.
+
+## 5. CLI로 파일 크기 확인
 
 ```bash
-cd /Users/mz01-chansm/Desktop/side-project/admin/apps/my-app
-du -sh dist/assets/* | sort -h
+cd apps/my-app
+du -h dist/assets/* | sort -h
 ```
 
-3. **Source Map Explorer** (더 상세한 분석):
+추가로 `pnpm add -D source-map-explorer` 후 개별 청크 분석도 가능합니다.
 
-```bash
-pnpm add -D source-map-explorer
-pnpm run build
-npx source-map-explorer 'dist/assets/*.js'
-```
+## 6. 체크리스트
 
-## 다음 단계
+- [ ] 새로운 페이지/도메인 추가 시 `lazy import` 가능 여부 검토
+- [ ] DevTools 관련 플래그(`VITE_FEATURE_DEBUG`)를 프로덕션에서 항상 `false`
+- [ ] `react-vendor` / `tanstack-vendor` 외에 덩치가 큰 패키지는 `manualChunks` 로 추가 분리
+- [ ] Storybook 컴포넌트가 앱 번들에 포함되지 않도록 `apps/my-app` 에서 import 금지
 
-1. [x] 번들 분석 완료
-2. [ ] lucide-react 최적화 적용
-3. [ ] 미사용 Radix UI 컴포넌트 제거
-4. [ ] 모든 페이지에 lazy loading 적용
-5. [ ] 재빌드 후 크기 비교
+## 7. 참고
 
-## 참고
-
-- 브라우저에 열린 `stats.html`에서 각 라이브러리의 정확한 크기를 확인할 수 있습니다
-- 마우스로 각 블록을 클릭하면 상세 정보가 표시됩니다
+- `docs/APP_DEPLOYMENT.md` : 빌드/배포 파이프라인
+- `apps/my-app/vite.config.ts` : 최신 최적화 설정
+- `apps/my-app/dist/stats.html` : 실제 의존성 트리 시각화

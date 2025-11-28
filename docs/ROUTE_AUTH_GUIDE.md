@@ -1,292 +1,26 @@
-# 🔐 인증 기반 라우트 구조 가이드
+# 🔐 TanStack Router 인증 가이드
 
-TanStack Router를 사용한 인증/퍼블릭 라우트 분기 처리
-
-## 📁 새로운 라우트 구조
+## 1. 기본 구조
 
 ```
-apps/my-app/src/pages/
-├── __root.tsx                    # 루트 레이아웃
-├── _authenticated.tsx            # 인증 필요 레이아웃 (사이드바 포함)
-├── _public.tsx                   # 퍼블릭 레이아웃 (사이드바 없음)
-│
-├── _authenticated/               # 인증 필요한 페이지들
-│   ├── index.tsx                 # → / (메인 대시보드)
-│   ├── user/
-│   │   ├── list.tsx              # → /user/list
-│   │   ├── register.tsx          # → /user/register
-│   │   └── ...
-│   ├── my-mind/
-│   │   ├── dashboard.tsx         # → /my-mind/dashboard
-│   │   └── ...
-│   └── ...
-│
-└── _public/                      # 퍼블릭 페이지들
-    ├── login.tsx                 # → /login
-    ├── about.tsx                 # → /about
-    └── test.tsx                  # → /test
+apps/my-app/src/pages
+├── __root.tsx
+├── _authenticated.tsx
+├── _authenticated/
+└── _public/
 ```
 
-## 🎯 핵심 개념
+- `__root.tsx` : ErrorBoundary, Loading Overlay, DevTools, RouterProvider
+- `/_authenticated` : 인증이 필요한 모든 페이지를 감싸는 레이아웃
+- `/_public` : 로그인 등 인증이 필요 없는 페이지 전용 레이아웃
 
-### 1. 레이아웃 라우트 (`_` prefix)
+## 2. 인증 레이아웃
 
-TanStack Router에서 `_` prefix가 붙은 파일은 **레이아웃 라우트**입니다:
-
-- URL에 포함되지 않음
-- 자식 라우트에 공통 레이아웃 제공
-- 인증 체크 등 공통 로직 처리
-
-### 2. `_authenticated.tsx` - 인증 레이아웃
-
-```typescript
-import { Layout } from '@repo/shared/components/layouts';
-import { createFileRoute, Outlet, redirect } from '@tanstack/react-router';
-
+```tsx
+// apps/my-app/src/pages/_authenticated.tsx
 export const Route = createFileRoute('/_authenticated')({
-  // ✅ 모든 자식 라우트에서 실행됨
-  beforeLoad: async ({ location }) => {
-    const isAuthenticated = checkAuth();
-
-    if (!isAuthenticated) {
-      // 로그인 페이지로 리다이렉트
-      throw redirect({
-        to: '/login',
-        search: {
-          redirect: location.href, // 로그인 후 돌아갈 URL
-        },
-      });
-    }
-  },
-  component: AuthenticatedLayout,
-});
-
-function AuthenticatedLayout() {
-  return (
-    <Layout>  {/* 사이드바 포함 */}
-      <Outlet />  {/* 자식 라우트 렌더링 */}
-    </Layout>
-  );
-}
-```
-
-### 3. `_public.tsx` - 퍼블릭 레이아웃
-
-```typescript
-import { createFileRoute, Outlet } from '@tanstack/react-router';
-
-export const Route = createFileRoute('/_public')({
-  component: PublicLayout,
-});
-
-function PublicLayout() {
-  return (
-    <div className="min-h-screen">
-      <Outlet />  {/* 사이드바 없음 */}
-    </div>
-  );
-}
-```
-
-## 📝 페이지 작성 방법
-
-### ✅ 인증 필요 페이지
-
-```typescript
-// apps/my-app/src/pages/_authenticated/user/list.tsx
-import { createFileRoute } from '@tanstack/react-router';
-
-export const Route = createFileRoute('/_authenticated/user/list')({
-  component: UserListPage,
-});
-
-function UserListPage() {
-  // ✅ Layout은 _authenticated.tsx에서 제공
-  // ✅ 사이드바 자동 포함
-  // ✅ 인증 자동 체크
-  return (
-    <div>
-      <h1>사용자 목록</h1>
-      {/* 컨텐츠만 작성 */}
-    </div>
-  );
-}
-```
-
-### ✅ 퍼블릭 페이지
-
-```typescript
-// apps/my-app/src/pages/_public/login.tsx
-import { createFileRoute } from '@tanstack/react-router';
-
-export const Route = createFileRoute('/_public/login')({
-  component: LoginPage,
-});
-
-function LoginPage() {
-  // ✅ 사이드바 없음
-  // ✅ 인증 체크 없음
-  return (
-    <div className="flex min-h-screen items-center justify-center">
-      <form>{/* 로그인 폼 */}</form>
-    </div>
-  );
-}
-```
-
-## 🔄 기존 페이지 마이그레이션
-
-### Before (기존 방식)
-
-```typescript
-// ❌ pages/user/list.tsx
-function UserListPage() {
-  return (
-    <Layout>  {/* 매번 Layout 감싸야 함 */}
-      <div>사용자 목록</div>
-    </Layout>
-  );
-}
-```
-
-### After (새 방식)
-
-```typescript
-// ✅ pages/_authenticated/user/list.tsx
-export const Route = createFileRoute('/_authenticated/user/list')({
-  component: UserListPage,
-});
-
-function UserListPage() {
-  // Layout 자동 적용!
-  return <div>사용자 목록</div>;
-}
-```
-
-## 🛠️ 마이그레이션 단계
-
-### 1. 기존 페이지 파일 확인
-
-```bash
-# 현재 위치
-pages/
-├── index.tsx              # 대시보드
-├── user/list.tsx          # 사용자 목록
-└── login.tsx              # 로그인
-```
-
-### 2. 인증 여부에 따라 분류
-
-**인증 필요 (대부분):**
-
-- `/` (대시보드)
-- `/user/*`
-- `/my-mind/*`
-- `/my-food/*`
-- `/my-body/*`
-- `/monitoring/*`
-- `/report/*`
-- `/inquiry/*`
-
-**퍼블릭:**
-
-- `/login`
-- `/about`
-- `/test` (테스트용)
-
-### 3. 파일 이동 및 경로 업데이트
-
-#### Step 1: 인증 필요 페이지 이동
-
-```bash
-# 예시: user/list.tsx 이동
-mv pages/user/list.tsx pages/_authenticated/user/list.tsx
-```
-
-#### Step 2: 파일 내용 업데이트
-
-```typescript
-// Before
-export const Route = createFileRoute('/user/list')({
-  component: UserListPage,
-});
-
-function UserListPage() {
-  return (
-    <Layout>  {/* 제거 */}
-      <div>컨텐츠</div>
-    </Layout>
-  );
-}
-
-// After
-export const Route = createFileRoute('/_authenticated/user/list')({
-  //                                  ^^^^^^^^^^^^^^^ 추가
-  component: UserListPage,
-});
-
-function UserListPage() {
-  // Layout 제거!
-  return <div>컨텐츠</div>;
-}
-```
-
-#### Step 3: 퍼블릭 페이지 이동
-
-```bash
-mv pages/login.tsx pages/_public/login.tsx
-```
-
-```typescript
-// login.tsx 업데이트
-export const Route = createFileRoute('/_public/login')({
-  //                                  ^^^^^^^^^ 추가
-  component: LoginPage,
-});
-```
-
-## 🔐 인증 로직 구현
-
-### 1. Auth Store 생성 (Zustand)
-
-```typescript
-// src/stores/useAuthStore.ts
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-
-interface AuthState {
-  token: string | null;
-  user: User | null;
-  isAuthenticated: boolean;
-  login: (token: string, user: User) => void;
-  logout: () => void;
-}
-
-export const useAuthStore = create<AuthState>()(
-  persist(
-    set => ({
-      token: null,
-      user: null,
-      isAuthenticated: false,
-      login: (token, user) => set({ token, user, isAuthenticated: true }),
-      logout: () => set({ token: null, user: null, isAuthenticated: false }),
-    }),
-    {
-      name: 'auth-storage',
-    }
-  )
-);
-```
-
-### 2. `_authenticated.tsx`에서 사용
-
-```typescript
-import { useAuthStore } from '@/stores/useAuthStore';
-
-export const Route = createFileRoute('/_authenticated')({
-  beforeLoad: async ({ location }) => {
+  beforeLoad: ({ location }) => {
     const { isAuthenticated } = useAuthStore.getState();
-
     if (!isAuthenticated) {
       throw redirect({
         to: '/login',
@@ -296,81 +30,86 @@ export const Route = createFileRoute('/_authenticated')({
   },
   component: AuthenticatedLayout,
 });
-```
 
-### 3. 로그인 페이지에서 사용
-
-```typescript
-// pages/_public/login.tsx
-import { useAuthStore } from '@/stores/useAuthStore';
-import { useNavigate, useSearch } from '@tanstack/react-router';
-
-function LoginPage() {
-  const navigate = useNavigate();
-  const search = useSearch({ from: '/_public/login' });
-  const login = useAuthStore((state) => state.login);
-
-  const handleLogin = async (credentials) => {
-    const { token, user } = await loginAPI(credentials);
-
-    // Store에 저장
-    login(token, user);
-
-    // 원래 가려던 페이지로 이동
-    navigate({ to: search.redirect || '/' });
-  };
-
-  return <form onSubmit={handleLogin}>{/* ... */}</form>;
+function AuthenticatedLayout() {
+  return (
+    <Layout onSignOut={logout}>
+      <ErrorBoundary fallback="minimal">
+        <Header />
+      </ErrorBoundary>
+      <ErrorBoundary fallback="default">
+        <Outlet />
+      </ErrorBoundary>
+    </Layout>
+  );
 }
 ```
 
-## 🎨 레이아웃 커스터마이징
+## 3. 퍼블릭 레이아웃
 
-### 다양한 레이아웃 추가 가능
+```tsx
+// apps/my-app/src/pages/_public.tsx
+export const Route = createFileRoute('/_public')({
+  component: PublicLayout,
+});
 
+function PublicLayout() {
+  return (
+    <div className="min-h-screen">
+      <ErrorBoundary fallback="default" showHomeButton>
+        <Outlet />
+      </ErrorBoundary>
+    </div>
+  );
+}
 ```
-pages/
-├── _authenticated.tsx           # 기본 사이드바 레이아웃
-├── _authenticated-minimal.tsx   # 최소화 레이아웃
-├── _public.tsx                  # 퍼블릭 레이아웃
-└── _public-landing.tsx          # 랜딩 페이지 레이아웃
+
+## 4. 자식 라우트 작성법
+
+### 인증이 필요한 페이지
+
+```tsx
+// apps/my-app/src/pages/_authenticated/my-food/settlement.tsx
+export const Route = createFileRoute('/_authenticated/my-food/settlement')({
+  component: FoodSettlementPage,
+  validateSearch: settlementSearchSchema,
+});
 ```
 
-## ✅ 체크리스트
+### 퍼블릭 페이지
 
-### 마이그레이션 완료 확인
+```tsx
+// apps/my-app/src/pages/_public/login.tsx
+export const Route = createFileRoute('/_public/login')({
+  component: LoginPage,
+});
+```
 
-- [ ] `_authenticated.tsx` 생성 완료
-- [ ] `_public.tsx` 생성 완료
-- [ ] 모든 인증 필요 페이지가 `_authenticated/` 폴더로 이동
-- [ ] 모든 퍼블릭 페이지가 `_public/` 폴더로 이동
-- [ ] 각 페이지의 `createFileRoute` 경로 업데이트
-- [ ] 페이지에서 불필요한 `<Layout>` 제거
-- [ ] 인증 로직 구현 (`beforeLoad`)
-- [ ] 로그인/로그아웃 기능 테스트
-- [ ] 리다이렉트 기능 테스트
+## 5. 로그인 성공 후 redirect
 
-### 테스트 시나리오
+```tsx
+const navigate = useNavigate();
+const search = useSearch({ from: '/_public/login' });
 
-1. **인증되지 않은 상태**
-   - `/` 접근 → `/login`으로 리다이렉트
-   - `/user/list` 접근 → `/login`으로 리다이렉트
+const handleLoginSuccess = () => {
+  const redirectTo = (search as { redirect?: string }).redirect || '/';
+  navigate({ to: redirectTo });
+};
+```
 
-2. **로그인 후**
-   - `/login`에서 로그인 → `/`로 이동
-   - 사이드바가 모든 페이지에 표시됨
+`_authenticated` 의 `beforeLoad` 가 `redirect` search param 을 채우므로, 로그인 성공 후 원래 가려던 페이지로 돌아갈 수 있습니다.
 
-3. **퍼블릭 페이지**
-   - `/login` 접근 → 정상 접근
-   - `/about` 접근 → 정상 접근
-   - 사이드바가 표시되지 않음
+## 6. 체크리스트
 
-## 📖 참고 자료
+- [ ] 인증 필요한 파일은 반드시 `_authenticated/<path>.tsx` 로 위치
+- [ ] `createFileRoute` 경로가 `/ _authenticated/...` 또는 `/_public/...` 인지 확인
+- [ ] `beforeLoad` 에서 Zustand store 를 직접 읽어 동기적으로 인증 여부 판별
+- [ ] 로그인 API 응답에서 토큰을 `useAuthStore.setTokens` 로 저장 후 `navigate`
+- [ ] 로그아웃 버튼(`Layout` 의 `onSignOut`)은 `useLogout` 훅을 통해 store와 API를 모두 초기화
 
+## 7. 참고 자료
+
+- `docs/API_AUTH_INTEGRATION.md`
+- `docs/ERROR_BOUNDARY.md`
 - [TanStack Router - Layout Routes](https://tanstack.com/router/latest/docs/framework/react/guide/route-trees#layout-routes)
 - [TanStack Router - Authentication](https://tanstack.com/router/latest/docs/framework/react/guide/authenticated-routes)
-- [TanStack Router - Redirect](https://tanstack.com/router/latest/docs/framework/react/api/redirect)
-
----
-
-_마지막 업데이트: 2025-11-13_

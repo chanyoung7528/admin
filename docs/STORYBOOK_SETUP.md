@@ -2,30 +2,18 @@
 
 Storybook이 성공적으로 설정되었습니다!
 
-## 📁 생성된 파일 구조
+## 📁 구조 요약
 
 ```
 apps/storybook/
 ├── .storybook/
-│   ├── main.ts                 # Storybook 메인 설정
-│   ├── preview.ts              # 미리보기 설정 (Tailwind CSS 포함)
-│   └── preview-head.html       # 커스텀 head 태그
+│   ├── main.ts           # alias, dedupe, manualChunks
+│   ├── preview.ts        # globals.css, backgrounds
+│   └── preview-head.html # 추가 head 태그
 ├── src/
-│   ├── components/
-│   │   └── CustomDocsPage.tsx  # 커스텀 문서 페이지 컴포넌트
-│   └── stories/
-│       ├── Button.stories.tsx  # Button 컴포넌트 문서
-│       ├── Tabs.stories.tsx    # Tabs 컴포넌트 문서
-│       ├── Badge.stories.tsx   # Badge 컴포넌트 문서
-│       ├── Input.stories.tsx   # Input 컴포넌트 문서
-│       └── Avatar.stories.tsx  # Avatar 컴포넌트 문서
-├── package.json
-├── tsconfig.json
-├── vercel.json                 # Vercel 배포 설정
-├── .gitignore
-├── README.md                   # 프로젝트 개요
-└── DEPLOYMENT.md               # 배포 가이드
-
+│   ├── components/CustomDocsPage.tsx
+│   └── stories/          # Avatar, DataTable, DatePicker 등 스토리
+└── storybook-static/     # 빌드 결과
 ```
 
 ## 🎨 CustomDocsPage 기능
@@ -173,26 +161,14 @@ export const Variant1: Story = {
 
 ## 📚 문서화된 컴포넌트
 
-현재 문서화된 컴포넌트:
+현재 Storybook에는 다음 스토리가 포함되어 있습니다.
 
-- ✅ **Button** - 버튼 컴포넌트 (6개 variant, 3개 size)
-- ✅ **Tabs** - 탭 네비게이션 (default, underline variant)
-- ✅ **Badge** - 상태 배지 (4개 variant)
-- ✅ **Input** - 텍스트 입력 (다양한 type)
-- ✅ **Avatar** - 사용자 아바타 (이미지/fallback)
+- Avatar, Badge, Button, Input, Tabs
+- Sidebar, BasicTable, DataTable
+- DatePicker, DateRangePicker, FormTable, FormViewer
+- ErrorBoundary 등 공용 UI
 
-### 추가 예정
-
-shared/src/components/ui/에서 추가로 문서화할 컴포넌트:
-
-- [ ] AlertDialog
-- [ ] Collapsible
-- [ ] DropdownMenu
-- [ ] Separator
-- [ ] Sheet
-- [ ] Skeleton
-- [ ] Tooltip
-- [ ] Sidebar
+새 UI를 추가할 때는 동일한 패턴으로 `.stories.tsx` 파일을 만들고 `CustomDocsPage` 탭에 구현/설치/유틸리티 정보를 채워주세요.
 
 ## 🎯 CustomDocsPage 특징
 
