@@ -1,5 +1,6 @@
-import { LoginForm } from '@/domains/auth/components/LoginForm';
 import { createFileRoute, useNavigate, useSearch } from '@tanstack/react-router';
+
+import { LoginForm } from '@/domains/auth/components/LoginForm';
 
 export const Route = createFileRoute('/_public/login')({
   component: LoginPage,

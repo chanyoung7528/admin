@@ -1,6 +1,7 @@
-import { SettlementTable } from '@/domains/settlement/components';
 import { createFileRoute } from '@tanstack/react-router';
 import { z } from 'zod';
+
+import { SettlementTable } from '@/domains/settlement/components';
 
 // Search params 스키마 정의
 const settlementSearchSchema = z.object({

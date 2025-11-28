@@ -1,6 +1,7 @@
 import { Badge, Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/shared/components/ui';
 import type { Meta, StoryObj } from '@storybook/react';
 import { BarChart3, Bell, CreditCard, FileText, Home, Package, Settings, ShoppingCart, User, Users } from 'lucide-react';
+
 import { CustomDocsPage } from '../components/CustomDocsPage';
 
 const meta = {

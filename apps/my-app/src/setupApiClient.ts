@@ -1,6 +1,7 @@
+import { configureAuth } from '@repo/core/api';
+
 import { postAuthRefreshToken } from '@/domains/auth/services/authService';
 import { useAuthStore } from '@/domains/auth/stores/useAuthStore';
-import { configureAuth } from '@repo/core/api';
 
 export function setupApiClient() {
   if (typeof window === 'undefined') return;

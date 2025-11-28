@@ -1,6 +1,7 @@
+import { createFileRoute } from '@tanstack/react-router';
+
 import { DashboardView } from '@/domains/dashboard/components';
 import { MonitoringPanel } from '@/domains/monitoring/components';
-import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_authenticated/my-food/dashboard')({
   component: FoodDashboardPage,

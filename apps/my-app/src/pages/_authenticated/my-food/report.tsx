@@ -1,5 +1,6 @@
-import { ReportSection } from '@/domains/report/components';
 import { createFileRoute } from '@tanstack/react-router';
+
+import { ReportSection } from '@/domains/report/components';
 
 export const Route = createFileRoute('/_authenticated/my-food/report')({
   component: FoodReportPage,

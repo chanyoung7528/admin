@@ -1,4 +1,5 @@
 import { BasicTable } from '@repo/shared/components/ui';
+
 import { orderColumns } from '../columns';
 import type { Order } from '../types';
 

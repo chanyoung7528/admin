@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
+
 import { InsightDashboard } from '@/domains/insight/components';
 
 export const Route = createFileRoute('/_authenticated/user/insight')({
