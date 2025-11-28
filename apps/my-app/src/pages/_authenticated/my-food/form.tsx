@@ -1,6 +1,7 @@
+import { createFileRoute } from '@tanstack/react-router';
+
 import { FoodForm } from '@/domains/my-food/components/FoodForm';
 import type { FoodFormSchema } from '@/domains/my-food/schemas';
-import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_authenticated/my-food/form')({
   component: RouteComponent,

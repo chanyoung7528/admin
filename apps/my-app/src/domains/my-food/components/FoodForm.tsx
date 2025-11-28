@@ -5,7 +5,8 @@ import { ControlledSelect } from '@shared/components/ui/form/FormSelect';
 import { FormTable } from '@shared/components/ui/form/FormTable';
 import { ControlledTextarea } from '@shared/components/ui/form/FormTextarea';
 import { useForm } from 'react-hook-form';
-import { foodFormSchema, type FoodFormSchema } from '../schemas';
+
+import { type FoodFormSchema, foodFormSchema } from '../schemas';
 
 const CATEGORY_OPTIONS = [
   { value: 'korean', label: '한식' },
