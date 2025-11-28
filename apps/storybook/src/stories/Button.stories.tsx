@@ -1,6 +1,7 @@
 import { Button } from '@repo/shared/components/ui';
 import type { Meta, StoryObj } from '@storybook/react';
 import { AlertCircle, ArrowRight, Check, ChevronRight, Download, Edit, Loader2, Mail, Plus, Search, Settings, Trash2, Upload } from 'lucide-react';
+
 import { CustomDocsPage } from '../components/CustomDocsPage';
 
 const meta = {

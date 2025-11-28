@@ -1,6 +1,7 @@
+import { createFileRoute } from '@tanstack/react-router';
+
 import { DashboardView } from '@/domains/dashboard/components';
 import { InsightDashboard } from '@/domains/insight/components';
-import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_authenticated/')({
   component: DashboardPage,

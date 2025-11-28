@@ -2,6 +2,7 @@ import { useNavigate, useSearch } from '@tanstack/react-router';
 import type { ColumnDef, ColumnFiltersState, PaginationState, Row, SortingState } from '@tanstack/react-table';
 import debounce from 'lodash-es/debounce';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+
 import type { DataTableProps } from './data-table';
 import { type NavigateFn, useTableUrlState } from './useTableUrlState';
 

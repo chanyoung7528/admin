@@ -1,4 +1,5 @@
 import type { BasicTableColumn } from '@repo/shared/components/ui';
+
 import type { Order } from '../types';
 
 export const orderColumns: BasicTableColumn<Order>[] = [

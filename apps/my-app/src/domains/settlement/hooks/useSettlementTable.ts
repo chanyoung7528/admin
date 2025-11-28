@@ -1,4 +1,5 @@
-import { type UseDataTableControllerReturn, useDataTableController } from '@shared/components/data-table';
+import { useDataTableController, type UseDataTableControllerReturn } from '@shared/components/data-table';
+
 import { settlementColumns } from '../columns';
 import { type Settlement } from '../types';
 import { useSettlements } from './useSettlements';

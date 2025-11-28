@@ -1,5 +1,6 @@
+import { ConfigDrawer, Header as SharedHeader, ProfileDropdown, TopNav } from '@repo/shared/components/layouts';
+
 import { useLogout } from '@/domains/auth/hooks/useLogout';
-import { ConfigDrawer, ProfileDropdown, Header as SharedHeader, TopNav } from '@repo/shared/components/layouts';
 
 const topNav = [
   { title: '개요', href: '/', isActive: true },

@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { BasicTable, type BasicTableColumn } from '@repo/shared/components/ui';
 import type { Meta, StoryObj } from '@storybook/react';
+
 import { CustomDocsPage } from '../components/CustomDocsPage';
 
 // 샘플 데이터 타입 정의

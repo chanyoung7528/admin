@@ -1,5 +1,6 @@
-import { MonitoringPanel } from '@/domains/monitoring/components';
 import { createFileRoute } from '@tanstack/react-router';
+
+import { MonitoringPanel } from '@/domains/monitoring/components';
 
 export const Route = createFileRoute('/_authenticated/my-food/monitoring')({
   component: FoodMonitoringPage,

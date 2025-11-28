@@ -1,4 +1,5 @@
-import { BarChart3, BookText, Command, LayoutDashboard, TrendingUp } from 'lucide-react';
+import { BarChart3, Command, LayoutDashboard, TrendingUp } from 'lucide-react';
+
 import type { SidebarData } from '../types/sidebar';
 
 export const sidebarData: SidebarData = {

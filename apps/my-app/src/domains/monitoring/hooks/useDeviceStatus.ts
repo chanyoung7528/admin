@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+
 import { getDeviceStatus } from '../services';
 
 interface Device {

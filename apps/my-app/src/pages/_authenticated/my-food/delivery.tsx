@@ -1,5 +1,6 @@
-import { OrderList } from '@/domains/order/components';
 import { createFileRoute } from '@tanstack/react-router';
+
+import { OrderList } from '@/domains/order/components';
 
 export const Route = createFileRoute('/_authenticated/my-food/delivery')({
   component: FoodDeliveryPage,

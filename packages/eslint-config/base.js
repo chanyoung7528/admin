@@ -1,7 +1,8 @@
 import js from '@eslint/js';
-import tseslint from 'typescript-eslint';
 import prettier from 'eslint-plugin-prettier/recommended';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import globals from 'globals';
+import tseslint from 'typescript-eslint';
 
 /**
  * Base configuration for TypeScript/JavaScript projects
@@ -9,6 +10,7 @@ import globals from 'globals';
  * - ESLint Recommended
  * - TypeScript ESLint Recommended
  * - Prettier integration
+ * - Simple Import Sort
  */
 export const baseConfig = tseslint.config(
   {
@@ -17,6 +19,9 @@ export const baseConfig = tseslint.config(
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended, prettier],
     files: ['**/*.{js,jsx,ts,tsx}'],
+    plugins: {
+      'simple-import-sort': simpleImportSort,
+    },
     languageOptions: {
       ecmaVersion: 2022,
       globals: {
@@ -26,6 +31,8 @@ export const baseConfig = tseslint.config(
       },
     },
     rules: {
+      'simple-import-sort/imports': 'error',
+      'simple-import-sort/exports': 'error',
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-unused-vars': [
         'error',

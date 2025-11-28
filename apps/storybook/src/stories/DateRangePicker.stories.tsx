@@ -1,9 +1,11 @@
-import { DateRangePicker } from '@repo/date-picker';
 import '@repo/date-picker/styles.css';
+
+import { DateRangePicker } from '@repo/date-picker';
 import type { Meta, StoryObj } from '@storybook/react';
 import dayjs from 'dayjs';
 import { Calendar, CalendarRange } from 'lucide-react';
 import { useEffect, useState } from 'react';
+
 import { CustomDocsPage } from '../components/CustomDocsPage';
 
 const meta = {

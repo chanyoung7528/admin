@@ -1,5 +1,6 @@
 import { DataTable } from '@shared/components/data-table';
 import { Download, TrendingDown, TrendingUp } from 'lucide-react';
+
 import { useSettlementTable } from '../hooks';
 import { type Settlement } from '../types';
 
