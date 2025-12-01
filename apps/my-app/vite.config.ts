@@ -31,6 +31,7 @@ export default defineConfig(({ mode }) => {
       }),
     ],
     resolve: {
+      dedupe: ['react', 'react-dom', 'scheduler'],
       alias: {
         // shared 패키지 가져오기 (구체적인 것부터 먼저)
         '@repo/shared/globals.css': path.resolve(__dirname, '../../packages/shared/src/styles/globals.css'),
