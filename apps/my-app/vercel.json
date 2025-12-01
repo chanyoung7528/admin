@@ -1,7 +1,7 @@
 {
-  "buildCommand": "cd ../.. && pnpm install --frozen-lockfile && pnpm run build:my-app",
+  "buildCommand": "cd ../.. && pnpm run build:my-app",
   "outputDirectory": "dist",
-  "installCommand": "pnpm install --frozen-lockfile",
+  "installCommand": "pnpm install",
   "framework": null,
   "devCommand": "pnpm run dev",
   "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
