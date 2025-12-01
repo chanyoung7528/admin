@@ -46,12 +46,12 @@
   "name": "with-vite",
   "pnpm": {
     "overrides": {
-      "react": "^19.2.0",
-      "react-dom": "^19.2.0",
-      "@types/react": "^19.2.7",
-      "@types/react-dom": "^19.2.3",
-      "vite": "^7.2.4",
-      "scheduler": "^0.25.0"
+      "react": "19.2.0",
+      "react-dom": "19.2.0",
+      "@types/react": "19.2.7",
+      "@types/react-dom": "19.2.3",
+      "vite": "7.2.4",
+      "scheduler": "0.25.0"
     }
   },
   "dependencies": {
