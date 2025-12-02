@@ -44,7 +44,7 @@ function RootComponent() {
 
       {env.isDebug && (
         <Suspense fallback={null}>
-          <TanStackRouterDevtools position="bottom-right" />
+          <TanStackRouterDevtools position="bottom-left" />
         </Suspense>
       )}
     </ErrorBoundary>

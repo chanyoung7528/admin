@@ -4,7 +4,9 @@ import { cn } from '@shared/lib/utils';
 import type { Control, FieldValues, Path } from 'react-hook-form';
 import { useController } from 'react-hook-form';
 
-interface ControlledTextareaProps<T extends FieldValues = FieldValues> {
+import { FormFieldError } from './FormError';
+
+interface FormTextareaProps<T extends FieldValues = FieldValues> {
   name: string;
   control: Control<T>;
   label?: string;
@@ -20,7 +22,7 @@ interface ControlledTextareaProps<T extends FieldValues = FieldValues> {
   onFocus?: (value: string) => void;
 }
 
-export function ControlledTextarea<T extends FieldValues = FieldValues>({
+export function FormTextarea<T extends FieldValues = FieldValues>({
   name,
   control,
   label,
@@ -34,7 +36,7 @@ export function ControlledTextarea<T extends FieldValues = FieldValues>({
   onChange: onChangeProp,
   onBlur: onBlurProp,
   onFocus: onFocusProp,
-}: ControlledTextareaProps<T>) {
+}: FormTextareaProps<T>) {
   const {
     field,
     fieldState: { error },
@@ -93,7 +95,7 @@ export function ControlledTextarea<T extends FieldValues = FieldValues>({
 
       {description && !error && <p className="text-muted-foreground text-sm">{description}</p>}
 
-      {error && <p className="text-destructive text-sm">{error.message}</p>}
+      <FormFieldError message={error?.message} />
     </div>
   );
 }

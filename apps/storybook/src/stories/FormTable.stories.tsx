@@ -1,10 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@shared/components/ui/button';
-import { ControlledCheckboxGroup } from '@shared/components/ui/form/FormCheckbox';
-import { ControlledInput } from '@shared/components/ui/form/FormInput';
-import { ControlledSelect } from '@shared/components/ui/form/FormSelect';
+import { FormCheckboxGroup } from '@shared/components/ui/form/FormCheckbox';
+import { FormInput } from '@shared/components/ui/form/FormInput';
+import { FormSelect } from '@shared/components/ui/form/FormSelect';
 import { FormTable } from '@shared/components/ui/form/FormTable';
-import { ControlledTextarea } from '@shared/components/ui/form/FormTextarea';
+import { FormTextarea } from '@shared/components/ui/form/FormTextarea';
 import type { Meta, StoryObj } from '@storybook/react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -25,7 +25,7 @@ const meta = {
           installationDeps={['react-hook-form', 'zod', '@hookform/resolvers']}
           implementationCode={`// 기본 FormTable 사용
 import { FormTable } from '@shared/components/ui/form';
-import { ControlledInput } from '@shared/components/ui/form';
+import { FormInput } from '@shared/components/ui/form';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -49,10 +49,10 @@ export default function MyForm() {
       <FormTable title="사용자 정보">
         <FormTable.Row>
           <FormTable.Cell label="이름" required>
-            <ControlledInput name="name" control={control} />
+            <FormInput name="name" control={control} />
           </FormTable.Cell>
           <FormTable.Cell label="이메일" required>
-            <ControlledInput name="email" control={control} type="email" />
+            <FormInput name="email" control={control} type="email" />
           </FormTable.Cell>
         </FormTable.Row>
       </FormTable>
@@ -78,7 +78,7 @@ export default function RowLayoutForm() {
             labelWidth="150px"
             span={2}
           >
-            <ControlledInput name="name" control={control} />
+            <FormInput name="name" control={control} />
           </FormTable.Cell>
         </FormTable.Row>
 
@@ -90,7 +90,7 @@ export default function RowLayoutForm() {
             labelWidth="150px"
             span={2}
           >
-            <ControlledInput name="email" control={control} type="email" />
+            <FormInput name="email" control={control} type="email" />
           </FormTable.Cell>
         </FormTable.Row>
       </FormTable>
@@ -116,10 +116,10 @@ interface FormTableCellProps {
 }
 
 // 사용 가능한 Form 컴포넌트들
-- ControlledInput: 텍스트 입력 필드
-- ControlledSelect: 드롭다운 선택
-- ControlledTextarea: 여러 줄 텍스트 입력
-- ControlledCheckboxGroup: 체크박스 그룹 (layout: vertical/horizontal/grid)
+- FormInput: 텍스트 입력 필드
+- FormSelect: 드롭다운 선택
+- FormTextarea: 여러 줄 텍스트 입력
+- FormCheckboxGroup: 체크박스 그룹 (layout: vertical/horizontal/grid)
 
 // 레이아웃 패턴
 1. Col 형태: 라벨이 위, 입력 필드가 아래
@@ -157,18 +157,18 @@ export const TwoByTwo: Story = {
         <FormTable>
           <FormTable.Row cols={2}>
             <FormTable.Cell>
-              <ControlledInput name="name" control={control} label="이름" placeholder="홍길동" required />
+              <FormInput name="name" control={control} label="이름" placeholder="홍길동" required />
             </FormTable.Cell>
             <FormTable.Cell>
-              <ControlledInput name="email" control={control} label="이메일" placeholder="example@email.com" type="email" required />
+              <FormInput name="email" control={control} label="이메일" placeholder="example@email.com" type="email" required />
             </FormTable.Cell>
           </FormTable.Row>
           <FormTable.Row cols={2}>
             <FormTable.Cell>
-              <ControlledInput name="phone" control={control} label="전화번호" placeholder="010-1234-5678" type="tel" />
+              <FormInput name="phone" control={control} label="전화번호" placeholder="010-1234-5678" type="tel" />
             </FormTable.Cell>
             <FormTable.Cell>
-              <ControlledInput name="address" control={control} label="주소" placeholder="서울시 강남구" />
+              <FormInput name="address" control={control} label="주소" placeholder="서울시 강남구" />
             </FormTable.Cell>
           </FormTable.Row>
         </FormTable>
@@ -189,35 +189,35 @@ export const ThreeByThree: Story = {
         <FormTable>
           <FormTable.Row cols={3}>
             <FormTable.Cell>
-              <ControlledInput name="field1" control={control} label="필드 1" placeholder="값 입력" />
+              <FormInput name="field1" control={control} label="필드 1" placeholder="값 입력" />
             </FormTable.Cell>
             <FormTable.Cell>
-              <ControlledInput name="field2" control={control} label="필드 2" placeholder="값 입력" />
+              <FormInput name="field2" control={control} label="필드 2" placeholder="값 입력" />
             </FormTable.Cell>
             <FormTable.Cell>
-              <ControlledInput name="field3" control={control} label="필드 3" placeholder="값 입력" />
-            </FormTable.Cell>
-          </FormTable.Row>
-          <FormTable.Row cols={3}>
-            <FormTable.Cell>
-              <ControlledInput name="field4" control={control} label="필드 4" placeholder="값 입력" />
-            </FormTable.Cell>
-            <FormTable.Cell>
-              <ControlledInput name="field5" control={control} label="필드 5" placeholder="값 입력" />
-            </FormTable.Cell>
-            <FormTable.Cell>
-              <ControlledInput name="field6" control={control} label="필드 6" placeholder="값 입력" />
+              <FormInput name="field3" control={control} label="필드 3" placeholder="값 입력" />
             </FormTable.Cell>
           </FormTable.Row>
           <FormTable.Row cols={3}>
             <FormTable.Cell>
-              <ControlledInput name="field7" control={control} label="필드 7" placeholder="값 입력" />
+              <FormInput name="field4" control={control} label="필드 4" placeholder="값 입력" />
             </FormTable.Cell>
             <FormTable.Cell>
-              <ControlledInput name="field8" control={control} label="필드 8" placeholder="값 입력" />
+              <FormInput name="field5" control={control} label="필드 5" placeholder="값 입력" />
             </FormTable.Cell>
             <FormTable.Cell>
-              <ControlledInput name="field9" control={control} label="필드 9" placeholder="값 입력" />
+              <FormInput name="field6" control={control} label="필드 6" placeholder="값 입력" />
+            </FormTable.Cell>
+          </FormTable.Row>
+          <FormTable.Row cols={3}>
+            <FormTable.Cell>
+              <FormInput name="field7" control={control} label="필드 7" placeholder="값 입력" />
+            </FormTable.Cell>
+            <FormTable.Cell>
+              <FormInput name="field8" control={control} label="필드 8" placeholder="값 입력" />
+            </FormTable.Cell>
+            <FormTable.Cell>
+              <FormInput name="field9" control={control} label="필드 9" placeholder="값 입력" />
             </FormTable.Cell>
           </FormTable.Row>
         </FormTable>
@@ -238,44 +238,44 @@ export const ThreeByFour: Story = {
         <FormTable>
           <FormTable.Row cols={4}>
             <FormTable.Cell>
-              <ControlledInput name="a1" control={control} label="A1" placeholder="A1" />
+              <FormInput name="a1" control={control} label="A1" placeholder="A1" />
             </FormTable.Cell>
             <FormTable.Cell>
-              <ControlledInput name="a2" control={control} label="A2" placeholder="A2" />
+              <FormInput name="a2" control={control} label="A2" placeholder="A2" />
             </FormTable.Cell>
             <FormTable.Cell>
-              <ControlledInput name="a3" control={control} label="A3" placeholder="A3" />
+              <FormInput name="a3" control={control} label="A3" placeholder="A3" />
             </FormTable.Cell>
             <FormTable.Cell>
-              <ControlledInput name="a4" control={control} label="A4" placeholder="A4" />
-            </FormTable.Cell>
-          </FormTable.Row>
-          <FormTable.Row cols={4}>
-            <FormTable.Cell>
-              <ControlledInput name="b1" control={control} label="B1" placeholder="B1" />
-            </FormTable.Cell>
-            <FormTable.Cell>
-              <ControlledInput name="b2" control={control} label="B2" placeholder="B2" />
-            </FormTable.Cell>
-            <FormTable.Cell>
-              <ControlledInput name="b3" control={control} label="B3" placeholder="B3" />
-            </FormTable.Cell>
-            <FormTable.Cell>
-              <ControlledInput name="b4" control={control} label="B4" placeholder="B4" />
+              <FormInput name="a4" control={control} label="A4" placeholder="A4" />
             </FormTable.Cell>
           </FormTable.Row>
           <FormTable.Row cols={4}>
             <FormTable.Cell>
-              <ControlledInput name="c1" control={control} label="C1" placeholder="C1" />
+              <FormInput name="b1" control={control} label="B1" placeholder="B1" />
             </FormTable.Cell>
             <FormTable.Cell>
-              <ControlledInput name="c2" control={control} label="C2" placeholder="C2" />
+              <FormInput name="b2" control={control} label="B2" placeholder="B2" />
             </FormTable.Cell>
             <FormTable.Cell>
-              <ControlledInput name="c3" control={control} label="C3" placeholder="C3" />
+              <FormInput name="b3" control={control} label="B3" placeholder="B3" />
             </FormTable.Cell>
             <FormTable.Cell>
-              <ControlledInput name="c4" control={control} label="C4" placeholder="C4" />
+              <FormInput name="b4" control={control} label="B4" placeholder="B4" />
+            </FormTable.Cell>
+          </FormTable.Row>
+          <FormTable.Row cols={4}>
+            <FormTable.Cell>
+              <FormInput name="c1" control={control} label="C1" placeholder="C1" />
+            </FormTable.Cell>
+            <FormTable.Cell>
+              <FormInput name="c2" control={control} label="C2" placeholder="C2" />
+            </FormTable.Cell>
+            <FormTable.Cell>
+              <FormInput name="c3" control={control} label="C3" placeholder="C3" />
+            </FormTable.Cell>
+            <FormTable.Cell>
+              <FormInput name="c4" control={control} label="C4" placeholder="C4" />
             </FormTable.Cell>
           </FormTable.Row>
         </FormTable>
@@ -309,40 +309,40 @@ export const MixedLayout: Story = {
           {/* 1행: 2개 셀 (각각 colspan 1) */}
           <FormTable.Row cols={2}>
             <FormTable.Cell>
-              <ControlledInput name="title" control={control} label="제목" placeholder="제목 입력" required />
+              <FormInput name="title" control={control} label="제목" placeholder="제목 입력" required />
             </FormTable.Cell>
             <FormTable.Cell>
-              <ControlledSelect name="category" control={control} label="카테고리" options={categoryOptions} required />
+              <FormSelect name="category" control={control} label="카테고리" options={categoryOptions} required />
             </FormTable.Cell>
           </FormTable.Row>
 
           {/* 2행: 3개 셀 (각각 colspan 1) */}
           <FormTable.Row cols={3}>
             <FormTable.Cell>
-              <ControlledInput name="price" control={control} label="가격" placeholder="10000" />
+              <FormInput name="price" control={control} label="가격" placeholder="10000" />
             </FormTable.Cell>
             <FormTable.Cell>
-              <ControlledInput name="stock" control={control} label="재고" placeholder="100" />
+              <FormInput name="stock" control={control} label="재고" placeholder="100" />
             </FormTable.Cell>
             <FormTable.Cell>
-              <ControlledInput name="discount" control={control} label="할인율" placeholder="10" />
+              <FormInput name="discount" control={control} label="할인율" placeholder="10" />
             </FormTable.Cell>
           </FormTable.Row>
 
           {/* 3행: 1개 셀 (colspan 3으로 전체 너비) */}
           <FormTable.Row cols={1}>
             <FormTable.Cell span={3}>
-              <ControlledTextarea name="description" control={control} label="상세 설명" placeholder="상세 설명을 입력하세요" rows={4} maxLength={500} />
+              <FormTextarea name="description" control={control} label="상세 설명" placeholder="상세 설명을 입력하세요" rows={4} maxLength={500} />
             </FormTable.Cell>
           </FormTable.Row>
 
           {/* 4행: 2개 셀 (첫 번째는 colspan 2, 두 번째는 colspan 1) */}
           <FormTable.Row cols={3}>
             <FormTable.Cell span={2}>
-              <ControlledCheckboxGroup name="tags" control={control} label="태그" options={tagOptions} maxSelection={3} />
+              <FormCheckboxGroup name="tags" control={control} label="태그" options={tagOptions} maxSelection={3} />
             </FormTable.Cell>
             <FormTable.Cell>
-              <ControlledInput name="code" control={control} label="상품코드" placeholder="ABC123" />
+              <FormInput name="code" control={control} label="상품코드" placeholder="ABC123" />
             </FormTable.Cell>
           </FormTable.Row>
         </FormTable>
