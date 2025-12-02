@@ -67,8 +67,15 @@ export default defineConfig(({ mode }) => {
           manualChunks: id => {
             // node_modules 처리
             if (id.includes('node_modules')) {
-              // React 코어 + scheduler (scheduler가 별도 vendor로 가는 것 방지)
-              if (id.includes('react') || id.includes('scheduler')) {
+              // React 코어 + scheduler (정확한 패키지만 매칭)
+              if (
+                id.includes('/react/') ||
+                id.includes('/react-dom/') ||
+                id.includes('/scheduler/') ||
+                id.match(/node_modules\/react$/) ||
+                id.match(/node_modules\/react-dom$/) ||
+                id.match(/node_modules\/scheduler$/)
+              ) {
                 return 'react-vendor';
               }
               // TanStack Router & Query
