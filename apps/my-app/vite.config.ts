@@ -89,32 +89,9 @@ export default defineConfig(({ mode }) => {
               if (id.includes('@tanstack/react-table') || id.includes('@tanstack/table-core')) {
                 return 'table-vendor';
               }
-              // Radix UI - 대화상자/팝업 관련
-              if (
-                id.includes('@radix-ui/react-dialog') ||
-                id.includes('@radix-ui/react-popover') ||
-                id.includes('@radix-ui/react-dropdown-menu') ||
-                id.includes('@radix-ui/react-context-menu')
-              ) {
-                return 'radix-dialog-vendor';
-              }
-              // Radix UI - 폼 관련
-              if (
-                id.includes('@radix-ui/react-select') ||
-                id.includes('@radix-ui/react-checkbox') ||
-                id.includes('@radix-ui/react-radio-group') ||
-                id.includes('@radix-ui/react-switch') ||
-                id.includes('@radix-ui/react-slider')
-              ) {
-                return 'radix-form-vendor';
-              }
-              // Radix UI - 네비게이션 관련
-              if (id.includes('@radix-ui/react-tabs') || id.includes('@radix-ui/react-accordion') || id.includes('@radix-ui/react-navigation-menu')) {
-                return 'radix-nav-vendor';
-              }
-              // Radix UI - 기타
+              // Radix UI - 모두 하나의 청크로 (순환 참조 방지)
               if (id.includes('@radix-ui')) {
-                return 'radix-other-vendor';
+                return 'radix-vendor';
               }
               // 아이콘 라이브러리
               if (id.includes('lucide-react')) {
