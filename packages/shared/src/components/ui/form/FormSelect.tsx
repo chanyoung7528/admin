@@ -2,7 +2,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { cn } from '@shared/lib/utils';
 import type { Control, FieldValues, Path } from 'react-hook-form';
 import { useController } from 'react-hook-form';
+
 import { Label } from '../label';
+import { FormFieldError } from './FormError';
 
 interface SelectOption {
   value: string;
@@ -10,7 +12,7 @@ interface SelectOption {
   disabled?: boolean;
 }
 
-interface ControlledSelectProps<T extends FieldValues = FieldValues> {
+interface FormSelectProps<T extends FieldValues = FieldValues> {
   name: Path<T>;
   control: Control<T>;
   options: SelectOption[];
@@ -23,7 +25,7 @@ interface ControlledSelectProps<T extends FieldValues = FieldValues> {
   onValueChange?: (value: string) => void;
 }
 
-export function ControlledSelect<T extends FieldValues = FieldValues>({
+export function FormSelect<T extends FieldValues = FieldValues>({
   name,
   control,
   options,
@@ -34,7 +36,7 @@ export function ControlledSelect<T extends FieldValues = FieldValues>({
   className,
   description,
   onValueChange: onValueChangeProp,
-}: ControlledSelectProps<T>) {
+}: FormSelectProps<T>) {
   const {
     field,
     fieldState: { error },
@@ -75,7 +77,7 @@ export function ControlledSelect<T extends FieldValues = FieldValues>({
 
       {description && !error && <p className="text-muted-foreground text-sm">{description}</p>}
 
-      {error && <p className="text-destructive text-sm">{error.message}</p>}
+      <FormFieldError message={error?.message} />
     </div>
   );
 }
