@@ -4,13 +4,14 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import {
   type ColumnDef,
   type ColumnFiltersState,
+  flexRender,
   type OnChangeFn,
   type PaginationState,
   type RowSelectionState,
   type SortingState,
   type VisibilityState,
-  flexRender,
 } from '@tanstack/react-table';
+
 import { useDataTableState } from './hooks';
 import { DataTablePagination } from './pagination';
 import { DataTableToolbar } from './toolbar';

@@ -1,3 +1,5 @@
+import type { SettlementFormSchema } from '../schemas';
+
 export interface Settlement {
   id: string;
   site: string;
@@ -16,4 +18,9 @@ export interface JsonPlaceholderPost {
   id: number;
   title: string;
   body: string;
+}
+
+export interface SettlementFormProps {
+  onSubmit: (data: SettlementFormSchema) => void;
+  defaultValues?: Partial<SettlementFormSchema>;
 }

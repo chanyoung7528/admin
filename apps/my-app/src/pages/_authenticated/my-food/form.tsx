@@ -1,14 +1,14 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-import { FoodForm } from '@/domains/my-food/components/FoodForm';
-import type { FoodFormSchema } from '@/domains/my-food/schemas';
+import { SettlementForm } from '@/domains/settlement/components/SettlementForm';
+import type { SettlementFormSchema } from '@/domains/settlement/schemas';
 
 export const Route = createFileRoute('/_authenticated/my-food/form')({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const handleSubmit = (data: FoodFormSchema) => {
+  const handleSubmit = (data: SettlementFormSchema) => {
     console.log('폼 제출:', data);
     alert('폼이 제출되었습니다. 콘솔을 확인하세요.');
   };
@@ -20,7 +20,7 @@ function RouteComponent() {
         <p className="text-muted-foreground text-sm">MY FOOD 폼 관리 - Table 기반 재사용 컴포넌트 예제</p>
       </div>
 
-      <FoodForm onSubmit={handleSubmit} />
+      <SettlementForm onSubmit={handleSubmit} />
     </div>
   );
 }
