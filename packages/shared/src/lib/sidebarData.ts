@@ -29,16 +29,20 @@ export const sidebarData: SidebarData = {
           icon: BarChart3,
           items: [
             {
-              title: '정산 조회',
+              title: '조회',
               url: '/settlement/basic-table',
             },
             {
-              title: '정산 목록',
+              title: '목록',
               url: '/settlement/list',
             },
             {
-              title: '정산 등록',
+              title: '등록',
               url: '/settlement/register',
+            },
+            {
+              title: '상세',
+              url: '/settlement/view',
             },
           ],
         },

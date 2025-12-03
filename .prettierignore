@@ -37,3 +37,7 @@ pnpm-lock.yaml
 # Misc
 .changeset
 .DS_Store
+
+# TanStack Router
+**/routeTree.gen.ts
+*.routeTree.gen.ts

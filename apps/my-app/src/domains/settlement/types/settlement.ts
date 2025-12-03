@@ -24,3 +24,12 @@ export interface SettlementFormProps {
   onSubmit: (data: SettlementFormSchema) => void;
   defaultValues?: Partial<SettlementFormSchema>;
 }
+
+export interface SettlementBasic {
+  id: string;
+  customer: string;
+  items: string;
+  amount: number;
+  status: 'pending' | 'processing' | 'completed' | 'cancelled';
+  date: string;
+}

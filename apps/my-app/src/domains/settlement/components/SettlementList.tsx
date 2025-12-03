@@ -1,7 +1,7 @@
 import { BasicTable } from '@repo/shared/components/ui';
 
-import { settlementColumns } from '../columns';
-import { settlements } from '../services';
+import { settlementBasicColumns } from '../columns/settlementBasicColumns';
+import { settlementsBasic } from '../services';
 
 export function SettlementList() {
   return (
@@ -39,8 +39,8 @@ export function SettlementList() {
 
       {/* 주문 테이블 - BasicTable 사용 */}
       <BasicTable
-        data={settlements}
-        columns={settlementColumns}
+        data={settlementsBasic}
+        columns={settlementBasicColumns}
         emptyMessage="정산 내역이 없습니다."
         onRowClick={row => {
           console.log('정산 상세:', row);

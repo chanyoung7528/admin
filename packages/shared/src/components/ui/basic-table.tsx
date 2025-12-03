@@ -1,5 +1,6 @@
 import { cn } from '@shared/lib/utils';
 import type { ReactNode } from 'react';
+
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './table';
 
 /**

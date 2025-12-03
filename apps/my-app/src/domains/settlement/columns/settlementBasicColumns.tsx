@@ -1,0 +1,48 @@
+import type { BasicTableColumn } from '@repo/shared/components/ui';
+
+import type { SettlementBasic } from '../types';
+
+export const settlementBasicColumns: BasicTableColumn<SettlementBasic>[] = [
+  {
+    key: 'id',
+    header: '주문번호',
+    accessor: 'id',
+    cellClassName: 'font-medium',
+  },
+  {
+    key: 'customer',
+    header: '고객명',
+    accessor: 'customer',
+  },
+
+  {
+    key: 'amount',
+    header: '주문금액',
+    cellClassName: 'font-medium',
+    cell: row => `₩${row.amount}`,
+  },
+  {
+    key: 'date',
+    header: '주문일',
+    accessor: 'date',
+  },
+  {
+    key: 'status',
+    header: '상태',
+    headerAlign: 'center',
+    cellAlign: 'center',
+    cell: row => (
+      <span
+        className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ${
+          row.status === 'completed'
+            ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
+            : row.status === 'pending'
+              ? 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200'
+              : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200'
+        }`}
+      >
+        {row.status}
+      </span>
+    ),
+  },
+];

@@ -8,522 +8,217 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from './pages/__root';
-import { Route as PublicRouteImport } from './pages/_public';
-import { Route as AuthenticatedRouteImport } from './pages/_authenticated';
-import { Route as AuthenticatedIndexRouteImport } from './pages/_authenticated/index';
-import { Route as PublicTestRouteImport } from './pages/_public/test';
-import { Route as PublicLoginRouteImport } from './pages/_public/login';
-import { Route as PublicAboutRouteImport } from './pages/_public/about';
-import { Route as AuthenticatedReportIndexRouteImport } from './pages/_authenticated/report/index';
-import { Route as AuthenticatedMonitoringIndexRouteImport } from './pages/_authenticated/monitoring/index';
-import { Route as AuthenticatedInquiryIndexRouteImport } from './pages/_authenticated/inquiry/index';
-import { Route as AuthenticatedUserRegisterRouteImport } from './pages/_authenticated/user/register';
-import { Route as AuthenticatedUserMessageRouteImport } from './pages/_authenticated/user/message';
-import { Route as AuthenticatedUserListRouteImport } from './pages/_authenticated/user/list';
-import { Route as AuthenticatedUserInsightRouteImport } from './pages/_authenticated/user/insight';
-import { Route as AuthenticatedMyFoodSettlementRouteImport } from './pages/_authenticated/my-food/settlement';
-import { Route as AuthenticatedMyFoodReportRouteImport } from './pages/_authenticated/my-food/report';
-import { Route as AuthenticatedMyFoodOrderRouteImport } from './pages/_authenticated/my-food/order';
-import { Route as AuthenticatedMyFoodMonitoringRouteImport } from './pages/_authenticated/my-food/monitoring';
-import { Route as AuthenticatedMyFoodInvoiceRouteImport } from './pages/_authenticated/my-food/invoice';
-import { Route as AuthenticatedMyFoodInquiryRouteImport } from './pages/_authenticated/my-food/inquiry';
-import { Route as AuthenticatedMyFoodFormViewRouteImport } from './pages/_authenticated/my-food/form-view';
-import { Route as AuthenticatedMyFoodFormRouteImport } from './pages/_authenticated/my-food/form';
-import { Route as AuthenticatedMyFoodDeliveryRouteImport } from './pages/_authenticated/my-food/delivery';
-import { Route as AuthenticatedMyFoodDashboardRouteImport } from './pages/_authenticated/my-food/dashboard';
+import { Route as rootRouteImport } from './pages/__root'
+import { Route as PublicRouteImport } from './pages/_public'
+import { Route as AuthenticatedRouteImport } from './pages/_authenticated'
+import { Route as AuthenticatedIndexRouteImport } from './pages/_authenticated/index'
+import { Route as PublicLoginRouteImport } from './pages/_public/login'
+import { Route as AuthenticatedSettlementViewRouteImport } from './pages/_authenticated/settlement/view'
+import { Route as AuthenticatedSettlementRegisterRouteImport } from './pages/_authenticated/settlement/register'
+import { Route as AuthenticatedSettlementListRouteImport } from './pages/_authenticated/settlement/list'
+import { Route as AuthenticatedSettlementBasicTableRouteImport } from './pages/_authenticated/settlement/basic-table'
 
 const PublicRoute = PublicRouteImport.update({
   id: '/_public',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const AuthenticatedRoute = AuthenticatedRouteImport.update({
   id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
-} as any);
+} as any)
 const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => AuthenticatedRoute,
-} as any);
-const PublicTestRoute = PublicTestRouteImport.update({
-  id: '/test',
-  path: '/test',
-  getParentRoute: () => PublicRoute,
-} as any);
+} as any)
 const PublicLoginRoute = PublicLoginRouteImport.update({
   id: '/login',
   path: '/login',
   getParentRoute: () => PublicRoute,
-} as any);
-const PublicAboutRoute = PublicAboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => PublicRoute,
-} as any);
-const AuthenticatedReportIndexRoute = AuthenticatedReportIndexRouteImport.update({
-  id: '/report/',
-  path: '/report/',
-  getParentRoute: () => AuthenticatedRoute,
-} as any);
-const AuthenticatedMonitoringIndexRoute = AuthenticatedMonitoringIndexRouteImport.update({
-  id: '/monitoring/',
-  path: '/monitoring/',
-  getParentRoute: () => AuthenticatedRoute,
-} as any);
-const AuthenticatedInquiryIndexRoute = AuthenticatedInquiryIndexRouteImport.update({
-  id: '/inquiry/',
-  path: '/inquiry/',
-  getParentRoute: () => AuthenticatedRoute,
-} as any);
-const AuthenticatedUserRegisterRoute = AuthenticatedUserRegisterRouteImport.update({
-  id: '/user/register',
-  path: '/user/register',
-  getParentRoute: () => AuthenticatedRoute,
-} as any);
-const AuthenticatedUserMessageRoute = AuthenticatedUserMessageRouteImport.update({
-  id: '/user/message',
-  path: '/user/message',
-  getParentRoute: () => AuthenticatedRoute,
-} as any);
-const AuthenticatedUserListRoute = AuthenticatedUserListRouteImport.update({
-  id: '/user/list',
-  path: '/user/list',
-  getParentRoute: () => AuthenticatedRoute,
-} as any);
-const AuthenticatedUserInsightRoute = AuthenticatedUserInsightRouteImport.update({
-  id: '/user/insight',
-  path: '/user/insight',
-  getParentRoute: () => AuthenticatedRoute,
-} as any);
-const AuthenticatedMyFoodSettlementRoute = AuthenticatedMyFoodSettlementRouteImport.update({
-  id: '/my-food/settlement',
-  path: '/my-food/settlement',
-  getParentRoute: () => AuthenticatedRoute,
-} as any);
-const AuthenticatedMyFoodReportRoute = AuthenticatedMyFoodReportRouteImport.update({
-  id: '/my-food/report',
-  path: '/my-food/report',
-  getParentRoute: () => AuthenticatedRoute,
-} as any);
-const AuthenticatedMyFoodOrderRoute = AuthenticatedMyFoodOrderRouteImport.update({
-  id: '/my-food/order',
-  path: '/my-food/order',
-  getParentRoute: () => AuthenticatedRoute,
-} as any);
-const AuthenticatedMyFoodMonitoringRoute = AuthenticatedMyFoodMonitoringRouteImport.update({
-  id: '/my-food/monitoring',
-  path: '/my-food/monitoring',
-  getParentRoute: () => AuthenticatedRoute,
-} as any);
-const AuthenticatedMyFoodInvoiceRoute = AuthenticatedMyFoodInvoiceRouteImport.update({
-  id: '/my-food/invoice',
-  path: '/my-food/invoice',
-  getParentRoute: () => AuthenticatedRoute,
-} as any);
-const AuthenticatedMyFoodInquiryRoute = AuthenticatedMyFoodInquiryRouteImport.update({
-  id: '/my-food/inquiry',
-  path: '/my-food/inquiry',
-  getParentRoute: () => AuthenticatedRoute,
-} as any);
-const AuthenticatedMyFoodFormViewRoute = AuthenticatedMyFoodFormViewRouteImport.update({
-  id: '/my-food/form-view',
-  path: '/my-food/form-view',
-  getParentRoute: () => AuthenticatedRoute,
-} as any);
-const AuthenticatedMyFoodFormRoute = AuthenticatedMyFoodFormRouteImport.update({
-  id: '/my-food/form',
-  path: '/my-food/form',
-  getParentRoute: () => AuthenticatedRoute,
-} as any);
-const AuthenticatedMyFoodDeliveryRoute = AuthenticatedMyFoodDeliveryRouteImport.update({
-  id: '/my-food/delivery',
-  path: '/my-food/delivery',
-  getParentRoute: () => AuthenticatedRoute,
-} as any);
-const AuthenticatedMyFoodDashboardRoute = AuthenticatedMyFoodDashboardRouteImport.update({
-  id: '/my-food/dashboard',
-  path: '/my-food/dashboard',
-  getParentRoute: () => AuthenticatedRoute,
-} as any);
+} as any)
+const AuthenticatedSettlementViewRoute =
+  AuthenticatedSettlementViewRouteImport.update({
+    id: '/settlement/view',
+    path: '/settlement/view',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSettlementRegisterRoute =
+  AuthenticatedSettlementRegisterRouteImport.update({
+    id: '/settlement/register',
+    path: '/settlement/register',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSettlementListRoute =
+  AuthenticatedSettlementListRouteImport.update({
+    id: '/settlement/list',
+    path: '/settlement/list',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
+const AuthenticatedSettlementBasicTableRoute =
+  AuthenticatedSettlementBasicTableRouteImport.update({
+    id: '/settlement/basic-table',
+    path: '/settlement/basic-table',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
-  '/about': typeof PublicAboutRoute;
-  '/login': typeof PublicLoginRoute;
-  '/test': typeof PublicTestRoute;
-  '/': typeof AuthenticatedIndexRoute;
-  '/my-food/dashboard': typeof AuthenticatedMyFoodDashboardRoute;
-  '/my-food/delivery': typeof AuthenticatedMyFoodDeliveryRoute;
-  '/my-food/form': typeof AuthenticatedMyFoodFormRoute;
-  '/my-food/form-view': typeof AuthenticatedMyFoodFormViewRoute;
-  '/my-food/inquiry': typeof AuthenticatedMyFoodInquiryRoute;
-  '/my-food/invoice': typeof AuthenticatedMyFoodInvoiceRoute;
-  '/my-food/monitoring': typeof AuthenticatedMyFoodMonitoringRoute;
-  '/my-food/order': typeof AuthenticatedMyFoodOrderRoute;
-  '/my-food/report': typeof AuthenticatedMyFoodReportRoute;
-  '/my-food/settlement': typeof AuthenticatedMyFoodSettlementRoute;
-  '/user/insight': typeof AuthenticatedUserInsightRoute;
-  '/user/list': typeof AuthenticatedUserListRoute;
-  '/user/message': typeof AuthenticatedUserMessageRoute;
-  '/user/register': typeof AuthenticatedUserRegisterRoute;
-  '/inquiry': typeof AuthenticatedInquiryIndexRoute;
-  '/monitoring': typeof AuthenticatedMonitoringIndexRoute;
-  '/report': typeof AuthenticatedReportIndexRoute;
+  '/login': typeof PublicLoginRoute
+  '/': typeof AuthenticatedIndexRoute
+  '/settlement/basic-table': typeof AuthenticatedSettlementBasicTableRoute
+  '/settlement/list': typeof AuthenticatedSettlementListRoute
+  '/settlement/register': typeof AuthenticatedSettlementRegisterRoute
+  '/settlement/view': typeof AuthenticatedSettlementViewRoute
 }
 export interface FileRoutesByTo {
-  '/about': typeof PublicAboutRoute;
-  '/login': typeof PublicLoginRoute;
-  '/test': typeof PublicTestRoute;
-  '/': typeof AuthenticatedIndexRoute;
-  '/my-food/dashboard': typeof AuthenticatedMyFoodDashboardRoute;
-  '/my-food/delivery': typeof AuthenticatedMyFoodDeliveryRoute;
-  '/my-food/form': typeof AuthenticatedMyFoodFormRoute;
-  '/my-food/form-view': typeof AuthenticatedMyFoodFormViewRoute;
-  '/my-food/inquiry': typeof AuthenticatedMyFoodInquiryRoute;
-  '/my-food/invoice': typeof AuthenticatedMyFoodInvoiceRoute;
-  '/my-food/monitoring': typeof AuthenticatedMyFoodMonitoringRoute;
-  '/my-food/order': typeof AuthenticatedMyFoodOrderRoute;
-  '/my-food/report': typeof AuthenticatedMyFoodReportRoute;
-  '/my-food/settlement': typeof AuthenticatedMyFoodSettlementRoute;
-  '/user/insight': typeof AuthenticatedUserInsightRoute;
-  '/user/list': typeof AuthenticatedUserListRoute;
-  '/user/message': typeof AuthenticatedUserMessageRoute;
-  '/user/register': typeof AuthenticatedUserRegisterRoute;
-  '/inquiry': typeof AuthenticatedInquiryIndexRoute;
-  '/monitoring': typeof AuthenticatedMonitoringIndexRoute;
-  '/report': typeof AuthenticatedReportIndexRoute;
+  '/login': typeof PublicLoginRoute
+  '/': typeof AuthenticatedIndexRoute
+  '/settlement/basic-table': typeof AuthenticatedSettlementBasicTableRoute
+  '/settlement/list': typeof AuthenticatedSettlementListRoute
+  '/settlement/register': typeof AuthenticatedSettlementRegisterRoute
+  '/settlement/view': typeof AuthenticatedSettlementViewRoute
 }
 export interface FileRoutesById {
-  __root__: typeof rootRouteImport;
-  '/_authenticated': typeof AuthenticatedRouteWithChildren;
-  '/_public': typeof PublicRouteWithChildren;
-  '/_public/about': typeof PublicAboutRoute;
-  '/_public/login': typeof PublicLoginRoute;
-  '/_public/test': typeof PublicTestRoute;
-  '/_authenticated/': typeof AuthenticatedIndexRoute;
-  '/_authenticated/my-food/dashboard': typeof AuthenticatedMyFoodDashboardRoute;
-  '/_authenticated/my-food/delivery': typeof AuthenticatedMyFoodDeliveryRoute;
-  '/_authenticated/my-food/form': typeof AuthenticatedMyFoodFormRoute;
-  '/_authenticated/my-food/form-view': typeof AuthenticatedMyFoodFormViewRoute;
-  '/_authenticated/my-food/inquiry': typeof AuthenticatedMyFoodInquiryRoute;
-  '/_authenticated/my-food/invoice': typeof AuthenticatedMyFoodInvoiceRoute;
-  '/_authenticated/my-food/monitoring': typeof AuthenticatedMyFoodMonitoringRoute;
-  '/_authenticated/my-food/order': typeof AuthenticatedMyFoodOrderRoute;
-  '/_authenticated/my-food/report': typeof AuthenticatedMyFoodReportRoute;
-  '/_authenticated/my-food/settlement': typeof AuthenticatedMyFoodSettlementRoute;
-  '/_authenticated/user/insight': typeof AuthenticatedUserInsightRoute;
-  '/_authenticated/user/list': typeof AuthenticatedUserListRoute;
-  '/_authenticated/user/message': typeof AuthenticatedUserMessageRoute;
-  '/_authenticated/user/register': typeof AuthenticatedUserRegisterRoute;
-  '/_authenticated/inquiry/': typeof AuthenticatedInquiryIndexRoute;
-  '/_authenticated/monitoring/': typeof AuthenticatedMonitoringIndexRoute;
-  '/_authenticated/report/': typeof AuthenticatedReportIndexRoute;
+  __root__: typeof rootRouteImport
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
+  '/_public': typeof PublicRouteWithChildren
+  '/_public/login': typeof PublicLoginRoute
+  '/_authenticated/': typeof AuthenticatedIndexRoute
+  '/_authenticated/settlement/basic-table': typeof AuthenticatedSettlementBasicTableRoute
+  '/_authenticated/settlement/list': typeof AuthenticatedSettlementListRoute
+  '/_authenticated/settlement/register': typeof AuthenticatedSettlementRegisterRoute
+  '/_authenticated/settlement/view': typeof AuthenticatedSettlementViewRoute
 }
 export interface FileRouteTypes {
-  fileRoutesByFullPath: FileRoutesByFullPath;
+  fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/about'
     | '/login'
-    | '/test'
     | '/'
-    | '/my-food/dashboard'
-    | '/my-food/delivery'
-    | '/my-food/form'
-    | '/my-food/form-view'
-    | '/my-food/inquiry'
-    | '/my-food/invoice'
-    | '/my-food/monitoring'
-    | '/my-food/order'
-    | '/my-food/report'
-    | '/my-food/settlement'
-    | '/user/insight'
-    | '/user/list'
-    | '/user/message'
-    | '/user/register'
-    | '/inquiry'
-    | '/monitoring'
-    | '/report';
-  fileRoutesByTo: FileRoutesByTo;
+    | '/settlement/basic-table'
+    | '/settlement/list'
+    | '/settlement/register'
+    | '/settlement/view'
+  fileRoutesByTo: FileRoutesByTo
   to:
-    | '/about'
     | '/login'
-    | '/test'
     | '/'
-    | '/my-food/dashboard'
-    | '/my-food/delivery'
-    | '/my-food/form'
-    | '/my-food/form-view'
-    | '/my-food/inquiry'
-    | '/my-food/invoice'
-    | '/my-food/monitoring'
-    | '/my-food/order'
-    | '/my-food/report'
-    | '/my-food/settlement'
-    | '/user/insight'
-    | '/user/list'
-    | '/user/message'
-    | '/user/register'
-    | '/inquiry'
-    | '/monitoring'
-    | '/report';
+    | '/settlement/basic-table'
+    | '/settlement/list'
+    | '/settlement/register'
+    | '/settlement/view'
   id:
     | '__root__'
     | '/_authenticated'
     | '/_public'
-    | '/_public/about'
     | '/_public/login'
-    | '/_public/test'
     | '/_authenticated/'
-    | '/_authenticated/my-food/dashboard'
-    | '/_authenticated/my-food/delivery'
-    | '/_authenticated/my-food/form'
-    | '/_authenticated/my-food/form-view'
-    | '/_authenticated/my-food/inquiry'
-    | '/_authenticated/my-food/invoice'
-    | '/_authenticated/my-food/monitoring'
-    | '/_authenticated/my-food/order'
-    | '/_authenticated/my-food/report'
-    | '/_authenticated/my-food/settlement'
-    | '/_authenticated/user/insight'
-    | '/_authenticated/user/list'
-    | '/_authenticated/user/message'
-    | '/_authenticated/user/register'
-    | '/_authenticated/inquiry/'
-    | '/_authenticated/monitoring/'
-    | '/_authenticated/report/';
-  fileRoutesById: FileRoutesById;
+    | '/_authenticated/settlement/basic-table'
+    | '/_authenticated/settlement/list'
+    | '/_authenticated/settlement/register'
+    | '/_authenticated/settlement/view'
+  fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren;
-  PublicRoute: typeof PublicRouteWithChildren;
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
+  PublicRoute: typeof PublicRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
     '/_public': {
-      id: '/_public';
-      path: '';
-      fullPath: '';
-      preLoaderRoute: typeof PublicRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/_public'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof PublicRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated': {
-      id: '/_authenticated';
-      path: '';
-      fullPath: '';
-      preLoaderRoute: typeof AuthenticatedRouteImport;
-      parentRoute: typeof rootRouteImport;
-    };
+      id: '/_authenticated'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthenticatedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/': {
-      id: '/_authenticated/';
-      path: '/';
-      fullPath: '/';
-      preLoaderRoute: typeof AuthenticatedIndexRouteImport;
-      parentRoute: typeof AuthenticatedRoute;
-    };
-    '/_public/test': {
-      id: '/_public/test';
-      path: '/test';
-      fullPath: '/test';
-      preLoaderRoute: typeof PublicTestRouteImport;
-      parentRoute: typeof PublicRoute;
-    };
+      id: '/_authenticated/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
     '/_public/login': {
-      id: '/_public/login';
-      path: '/login';
-      fullPath: '/login';
-      preLoaderRoute: typeof PublicLoginRouteImport;
-      parentRoute: typeof PublicRoute;
-    };
-    '/_public/about': {
-      id: '/_public/about';
-      path: '/about';
-      fullPath: '/about';
-      preLoaderRoute: typeof PublicAboutRouteImport;
-      parentRoute: typeof PublicRoute;
-    };
-    '/_authenticated/report/': {
-      id: '/_authenticated/report/';
-      path: '/report';
-      fullPath: '/report';
-      preLoaderRoute: typeof AuthenticatedReportIndexRouteImport;
-      parentRoute: typeof AuthenticatedRoute;
-    };
-    '/_authenticated/monitoring/': {
-      id: '/_authenticated/monitoring/';
-      path: '/monitoring';
-      fullPath: '/monitoring';
-      preLoaderRoute: typeof AuthenticatedMonitoringIndexRouteImport;
-      parentRoute: typeof AuthenticatedRoute;
-    };
-    '/_authenticated/inquiry/': {
-      id: '/_authenticated/inquiry/';
-      path: '/inquiry';
-      fullPath: '/inquiry';
-      preLoaderRoute: typeof AuthenticatedInquiryIndexRouteImport;
-      parentRoute: typeof AuthenticatedRoute;
-    };
-    '/_authenticated/user/register': {
-      id: '/_authenticated/user/register';
-      path: '/user/register';
-      fullPath: '/user/register';
-      preLoaderRoute: typeof AuthenticatedUserRegisterRouteImport;
-      parentRoute: typeof AuthenticatedRoute;
-    };
-    '/_authenticated/user/message': {
-      id: '/_authenticated/user/message';
-      path: '/user/message';
-      fullPath: '/user/message';
-      preLoaderRoute: typeof AuthenticatedUserMessageRouteImport;
-      parentRoute: typeof AuthenticatedRoute;
-    };
-    '/_authenticated/user/list': {
-      id: '/_authenticated/user/list';
-      path: '/user/list';
-      fullPath: '/user/list';
-      preLoaderRoute: typeof AuthenticatedUserListRouteImport;
-      parentRoute: typeof AuthenticatedRoute;
-    };
-    '/_authenticated/user/insight': {
-      id: '/_authenticated/user/insight';
-      path: '/user/insight';
-      fullPath: '/user/insight';
-      preLoaderRoute: typeof AuthenticatedUserInsightRouteImport;
-      parentRoute: typeof AuthenticatedRoute;
-    };
-    '/_authenticated/my-food/settlement': {
-      id: '/_authenticated/my-food/settlement';
-      path: '/my-food/settlement';
-      fullPath: '/my-food/settlement';
-      preLoaderRoute: typeof AuthenticatedMyFoodSettlementRouteImport;
-      parentRoute: typeof AuthenticatedRoute;
-    };
-    '/_authenticated/my-food/report': {
-      id: '/_authenticated/my-food/report';
-      path: '/my-food/report';
-      fullPath: '/my-food/report';
-      preLoaderRoute: typeof AuthenticatedMyFoodReportRouteImport;
-      parentRoute: typeof AuthenticatedRoute;
-    };
-    '/_authenticated/my-food/order': {
-      id: '/_authenticated/my-food/order';
-      path: '/my-food/order';
-      fullPath: '/my-food/order';
-      preLoaderRoute: typeof AuthenticatedMyFoodOrderRouteImport;
-      parentRoute: typeof AuthenticatedRoute;
-    };
-    '/_authenticated/my-food/monitoring': {
-      id: '/_authenticated/my-food/monitoring';
-      path: '/my-food/monitoring';
-      fullPath: '/my-food/monitoring';
-      preLoaderRoute: typeof AuthenticatedMyFoodMonitoringRouteImport;
-      parentRoute: typeof AuthenticatedRoute;
-    };
-    '/_authenticated/my-food/invoice': {
-      id: '/_authenticated/my-food/invoice';
-      path: '/my-food/invoice';
-      fullPath: '/my-food/invoice';
-      preLoaderRoute: typeof AuthenticatedMyFoodInvoiceRouteImport;
-      parentRoute: typeof AuthenticatedRoute;
-    };
-    '/_authenticated/my-food/inquiry': {
-      id: '/_authenticated/my-food/inquiry';
-      path: '/my-food/inquiry';
-      fullPath: '/my-food/inquiry';
-      preLoaderRoute: typeof AuthenticatedMyFoodInquiryRouteImport;
-      parentRoute: typeof AuthenticatedRoute;
-    };
-    '/_authenticated/my-food/form-view': {
-      id: '/_authenticated/my-food/form-view';
-      path: '/my-food/form-view';
-      fullPath: '/my-food/form-view';
-      preLoaderRoute: typeof AuthenticatedMyFoodFormViewRouteImport;
-      parentRoute: typeof AuthenticatedRoute;
-    };
-    '/_authenticated/my-food/form': {
-      id: '/_authenticated/my-food/form';
-      path: '/my-food/form';
-      fullPath: '/my-food/form';
-      preLoaderRoute: typeof AuthenticatedMyFoodFormRouteImport;
-      parentRoute: typeof AuthenticatedRoute;
-    };
-    '/_authenticated/my-food/delivery': {
-      id: '/_authenticated/my-food/delivery';
-      path: '/my-food/delivery';
-      fullPath: '/my-food/delivery';
-      preLoaderRoute: typeof AuthenticatedMyFoodDeliveryRouteImport;
-      parentRoute: typeof AuthenticatedRoute;
-    };
-    '/_authenticated/my-food/dashboard': {
-      id: '/_authenticated/my-food/dashboard';
-      path: '/my-food/dashboard';
-      fullPath: '/my-food/dashboard';
-      preLoaderRoute: typeof AuthenticatedMyFoodDashboardRouteImport;
-      parentRoute: typeof AuthenticatedRoute;
-    };
+      id: '/_public/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof PublicLoginRouteImport
+      parentRoute: typeof PublicRoute
+    }
+    '/_authenticated/settlement/view': {
+      id: '/_authenticated/settlement/view'
+      path: '/settlement/view'
+      fullPath: '/settlement/view'
+      preLoaderRoute: typeof AuthenticatedSettlementViewRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/settlement/register': {
+      id: '/_authenticated/settlement/register'
+      path: '/settlement/register'
+      fullPath: '/settlement/register'
+      preLoaderRoute: typeof AuthenticatedSettlementRegisterRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/settlement/list': {
+      id: '/_authenticated/settlement/list'
+      path: '/settlement/list'
+      fullPath: '/settlement/list'
+      preLoaderRoute: typeof AuthenticatedSettlementListRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/settlement/basic-table': {
+      id: '/_authenticated/settlement/basic-table'
+      path: '/settlement/basic-table'
+      fullPath: '/settlement/basic-table'
+      preLoaderRoute: typeof AuthenticatedSettlementBasicTableRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
 interface AuthenticatedRouteChildren {
-  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute;
-  AuthenticatedMyFoodDashboardRoute: typeof AuthenticatedMyFoodDashboardRoute;
-  AuthenticatedMyFoodDeliveryRoute: typeof AuthenticatedMyFoodDeliveryRoute;
-  AuthenticatedMyFoodFormRoute: typeof AuthenticatedMyFoodFormRoute;
-  AuthenticatedMyFoodFormViewRoute: typeof AuthenticatedMyFoodFormViewRoute;
-  AuthenticatedMyFoodInquiryRoute: typeof AuthenticatedMyFoodInquiryRoute;
-  AuthenticatedMyFoodInvoiceRoute: typeof AuthenticatedMyFoodInvoiceRoute;
-  AuthenticatedMyFoodMonitoringRoute: typeof AuthenticatedMyFoodMonitoringRoute;
-  AuthenticatedMyFoodOrderRoute: typeof AuthenticatedMyFoodOrderRoute;
-  AuthenticatedMyFoodReportRoute: typeof AuthenticatedMyFoodReportRoute;
-  AuthenticatedMyFoodSettlementRoute: typeof AuthenticatedMyFoodSettlementRoute;
-  AuthenticatedUserInsightRoute: typeof AuthenticatedUserInsightRoute;
-  AuthenticatedUserListRoute: typeof AuthenticatedUserListRoute;
-  AuthenticatedUserMessageRoute: typeof AuthenticatedUserMessageRoute;
-  AuthenticatedUserRegisterRoute: typeof AuthenticatedUserRegisterRoute;
-  AuthenticatedInquiryIndexRoute: typeof AuthenticatedInquiryIndexRoute;
-  AuthenticatedMonitoringIndexRoute: typeof AuthenticatedMonitoringIndexRoute;
-  AuthenticatedReportIndexRoute: typeof AuthenticatedReportIndexRoute;
+  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+  AuthenticatedSettlementBasicTableRoute: typeof AuthenticatedSettlementBasicTableRoute
+  AuthenticatedSettlementListRoute: typeof AuthenticatedSettlementListRoute
+  AuthenticatedSettlementRegisterRoute: typeof AuthenticatedSettlementRegisterRoute
+  AuthenticatedSettlementViewRoute: typeof AuthenticatedSettlementViewRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
-  AuthenticatedMyFoodDashboardRoute: AuthenticatedMyFoodDashboardRoute,
-  AuthenticatedMyFoodDeliveryRoute: AuthenticatedMyFoodDeliveryRoute,
-  AuthenticatedMyFoodFormRoute: AuthenticatedMyFoodFormRoute,
-  AuthenticatedMyFoodFormViewRoute: AuthenticatedMyFoodFormViewRoute,
-  AuthenticatedMyFoodInquiryRoute: AuthenticatedMyFoodInquiryRoute,
-  AuthenticatedMyFoodInvoiceRoute: AuthenticatedMyFoodInvoiceRoute,
-  AuthenticatedMyFoodMonitoringRoute: AuthenticatedMyFoodMonitoringRoute,
-  AuthenticatedMyFoodOrderRoute: AuthenticatedMyFoodOrderRoute,
-  AuthenticatedMyFoodReportRoute: AuthenticatedMyFoodReportRoute,
-  AuthenticatedMyFoodSettlementRoute: AuthenticatedMyFoodSettlementRoute,
-  AuthenticatedUserInsightRoute: AuthenticatedUserInsightRoute,
-  AuthenticatedUserListRoute: AuthenticatedUserListRoute,
-  AuthenticatedUserMessageRoute: AuthenticatedUserMessageRoute,
-  AuthenticatedUserRegisterRoute: AuthenticatedUserRegisterRoute,
-  AuthenticatedInquiryIndexRoute: AuthenticatedInquiryIndexRoute,
-  AuthenticatedMonitoringIndexRoute: AuthenticatedMonitoringIndexRoute,
-  AuthenticatedReportIndexRoute: AuthenticatedReportIndexRoute,
-};
+  AuthenticatedSettlementBasicTableRoute:
+    AuthenticatedSettlementBasicTableRoute,
+  AuthenticatedSettlementListRoute: AuthenticatedSettlementListRoute,
+  AuthenticatedSettlementRegisterRoute: AuthenticatedSettlementRegisterRoute,
+  AuthenticatedSettlementViewRoute: AuthenticatedSettlementViewRoute,
+}
 
-const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(AuthenticatedRouteChildren);
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
 
 interface PublicRouteChildren {
-  PublicAboutRoute: typeof PublicAboutRoute;
-  PublicLoginRoute: typeof PublicLoginRoute;
-  PublicTestRoute: typeof PublicTestRoute;
+  PublicLoginRoute: typeof PublicLoginRoute
 }
 
 const PublicRouteChildren: PublicRouteChildren = {
-  PublicAboutRoute: PublicAboutRoute,
   PublicLoginRoute: PublicLoginRoute,
-  PublicTestRoute: PublicTestRoute,
-};
+}
 
-const PublicRouteWithChildren = PublicRoute._addFileChildren(PublicRouteChildren);
+const PublicRouteWithChildren =
+  PublicRoute._addFileChildren(PublicRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRoute: AuthenticatedRouteWithChildren,
   PublicRoute: PublicRouteWithChildren,
-};
-export const routeTree = rootRouteImport._addFileChildren(rootRouteChildren)._addFileTypes<FileRouteTypes>();
+}
+export const routeTree = rootRouteImport
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()

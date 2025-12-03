@@ -3,10 +3,10 @@ import { createFileRoute } from '@tanstack/react-router';
 import { SettlementForm } from '@/domains/settlement/components/SettlementForm';
 
 export const Route = createFileRoute('/_authenticated/settlement/register')({
-  component: SettlementRegisterPage,
+  component: RouteComponent,
 });
 
-function SettlementRegisterPage() {
+function RouteComponent() {
   return (
     <div className="flex flex-col gap-4 p-4">
       <div className="flex flex-col gap-2">

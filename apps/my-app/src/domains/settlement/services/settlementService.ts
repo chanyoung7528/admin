@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker';
 
-import { type Settlement } from '../types';
+import { type Settlement, type SettlementBasic } from '../types';
 
 export interface GetSettlementsParams {
   page?: number;
@@ -65,6 +65,13 @@ export const settlements = Array.from({ length: 1000 }, (_, index) => {
     date: faker.date.between({ from: '2025-01-01', to: '2025-12-31' }).toISOString().slice(0, 10),
   } satisfies Settlement;
 });
+
+export const settlementsBasic: SettlementBasic[] = [
+  { id: 'ORD-2025-001', customer: '강남 헬스케어', items: '프로틴 바 외 5건', amount: 450000, status: 'completed', date: '2025-11-08' },
+  { id: 'ORD-2025-002', customer: '서초 웰니스', items: '건강식 도시락 외 3건', amount: 320000, status: 'processing', date: '2025-11-09' },
+  { id: 'ORD-2025-003', customer: '판교 케어센터', items: '샐러드 키트 외 8건', amount: 680000, status: 'pending', date: '2025-11-10' },
+  { id: 'ORD-2025-004', customer: '분당 피트니스', items: '프로틴 쉐이크 외 2건', amount: 280000, status: 'cancelled', date: '2025-11-11' },
+];
 
 /**
  * Settlement 목록 조회 (클라이언트 사이드 필터링)
