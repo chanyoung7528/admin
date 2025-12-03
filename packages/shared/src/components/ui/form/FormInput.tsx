@@ -4,7 +4,9 @@ import { cn } from '@shared/lib/utils';
 import type { Control, FieldValues, Path } from 'react-hook-form';
 import { useController } from 'react-hook-form';
 
-interface ControlledInputProps<T extends FieldValues = FieldValues> {
+import { FormFieldError } from './FormError';
+
+interface FormInputProps<T extends FieldValues = FieldValues> {
   name: string;
   control: Control<T>;
   label?: string;
@@ -19,7 +21,7 @@ interface ControlledInputProps<T extends FieldValues = FieldValues> {
   onFocus?: (value: string) => void;
 }
 
-export function ControlledInput<T extends FieldValues = FieldValues>({
+export function FormInput<T extends FieldValues = FieldValues>({
   name,
   control,
   label,
@@ -32,7 +34,7 @@ export function ControlledInput<T extends FieldValues = FieldValues>({
   onChange: onChangeProp,
   onBlur: onBlurProp,
   onFocus: onFocusProp,
-}: ControlledInputProps<T>) {
+}: FormInputProps<T>) {
   const {
     field,
     fieldState: { error },
@@ -73,7 +75,7 @@ export function ControlledInput<T extends FieldValues = FieldValues>({
 
       {description && !error && <p className="text-muted-foreground text-sm">{description}</p>}
 
-      {error && <p className="text-destructive text-sm">{error.message}</p>}
+      <FormFieldError message={error?.message} />
     </div>
   );
 }

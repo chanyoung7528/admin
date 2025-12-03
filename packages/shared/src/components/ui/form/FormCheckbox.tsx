@@ -9,7 +9,7 @@ interface CheckboxOption {
   disabled?: boolean;
 }
 
-interface ControlledCheckboxGroupProps<T extends FieldValues = FieldValues> {
+interface FormCheckboxGroupProps<T extends FieldValues = FieldValues> {
   name: string;
   control: Control<T>;
   options: CheckboxOption[];
@@ -25,7 +25,7 @@ interface ControlledCheckboxGroupProps<T extends FieldValues = FieldValues> {
   gridCols?: 2 | 3 | 4 | 5 | 6;
 }
 
-export function ControlledCheckboxGroup<T extends FieldValues = FieldValues>({
+export function FormCheckboxGroup<T extends FieldValues = FieldValues>({
   name,
   control,
   options,
@@ -39,7 +39,7 @@ export function ControlledCheckboxGroup<T extends FieldValues = FieldValues>({
   onValueChange: onValueChangeProp,
   layout = 'vertical',
   gridCols = 3,
-}: ControlledCheckboxGroupProps<T>) {
+}: FormCheckboxGroupProps<T>) {
   const {
     field,
     fieldState: { error },

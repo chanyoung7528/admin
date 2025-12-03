@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Button } from '@shared/components/ui/button';
-import { ControlledCheckboxGroup, ControlledInput, ControlledSelect, ControlledTextarea, FormTable } from '@shared/components/ui/form';
+import { FormCheckboxGroup, FormInput, FormSelect, FormTable, FormTextarea } from '@shared/components/ui/form';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
@@ -55,10 +55,10 @@ export function ComplexFormTemplate() {
       <FormTable title="기본 정보">
         <FormTable.Row>
           <FormTable.Cell label="음식명" required>
-            <ControlledInput name="name" control={control} placeholder="음식명을 입력하세요" onChange={(value: string) => console.log('음식명:', value)} />
+            <FormInput name="name" control={control} placeholder="음식명을 입력하세요" onChange={(value: string) => console.log('음식명:', value)} />
           </FormTable.Cell>
           <FormTable.Cell label="카테고리" required>
-            <ControlledSelect name="category" control={control} options={categoryOptions} onValueChange={(value: string) => console.log('카테고리:', value)} />
+            <FormSelect name="category" control={control} options={categoryOptions} onValueChange={(value: string) => console.log('카테고리:', value)} />
           </FormTable.Cell>
         </FormTable.Row>
       </FormTable>
@@ -66,19 +66,19 @@ export function ComplexFormTemplate() {
       <FormTable title="상세 정보">
         <FormTable.Row>
           <FormTable.Cell label="가격 (원)" required>
-            <ControlledInput name="price" control={control} placeholder="10000" required onChange={(value: string) => console.log('가격:', value)} />
+            <FormInput name="price" control={control} placeholder="10000" required onChange={(value: string) => console.log('가격:', value)} />
           </FormTable.Cell>
           <FormTable.Cell label="조리시간 (분)" required>
-            <ControlledInput name="preparationTime" control={control} placeholder="15" required onChange={(value: string) => console.log('조리시간:', value)} />
+            <FormInput name="preparationTime" control={control} placeholder="15" required onChange={(value: string) => console.log('조리시간:', value)} />
           </FormTable.Cell>
           <FormTable.Cell label="칼로리 (kcal)">
-            <ControlledInput name="calories" control={control} placeholder="500" onChange={(value: string) => console.log('칼로리:', value)} />
+            <FormInput name="calories" control={control} placeholder="500" onChange={(value: string) => console.log('칼로리:', value)} />
           </FormTable.Cell>
         </FormTable.Row>
 
         <FormTable.Row>
           <FormTable.Cell span={3} label="설명">
-            <ControlledTextarea
+            <FormTextarea
               name="description"
               control={control}
               placeholder="음식 설명을 입력하세요"
@@ -93,7 +93,7 @@ export function ComplexFormTemplate() {
       <FormTable title="추가 옵션">
         <FormTable.Row>
           <FormTable.Cell label="태그" required>
-            <ControlledCheckboxGroup
+            <FormCheckboxGroup
               name="tags"
               control={control}
               options={tagOptions}
@@ -105,7 +105,7 @@ export function ComplexFormTemplate() {
             />
           </FormTable.Cell>
           <FormTable.Cell label="알레르기 정보">
-            <ControlledCheckboxGroup
+            <FormCheckboxGroup
               name="allergens"
               control={control}
               options={allergenOptions}
@@ -150,25 +150,25 @@ export function RowLayoutFormTemplate() {
       <FormTable title="회원 등록">
         <FormTable.Row>
           <FormTable.Cell label="이름" required labelPosition="left" labelWidth="150px" span={2}>
-            <ControlledInput name="name" control={control} placeholder="홍길동" />
+            <FormInput name="name" control={control} placeholder="홍길동" />
           </FormTable.Cell>
         </FormTable.Row>
 
         <FormTable.Row>
           <FormTable.Cell label="이메일" required labelPosition="left" labelWidth="150px" span={2}>
-            <ControlledInput name="email" control={control} placeholder="example@email.com" type="email" />
+            <FormInput name="email" control={control} placeholder="example@email.com" type="email" />
           </FormTable.Cell>
         </FormTable.Row>
 
         <FormTable.Row>
           <FormTable.Cell label="전화번호" labelPosition="left" labelWidth="150px" span={2}>
-            <ControlledInput name="phone" control={control} placeholder="010-1234-5678" type="tel" />
+            <FormInput name="phone" control={control} placeholder="010-1234-5678" type="tel" />
           </FormTable.Cell>
         </FormTable.Row>
 
         <FormTable.Row>
           <FormTable.Cell label="주소" labelPosition="left" labelWidth="150px" span={2}>
-            <ControlledTextarea name="address" control={control} placeholder="주소를 입력하세요" rows={3} />
+            <FormTextarea name="address" control={control} placeholder="주소를 입력하세요" rows={3} />
           </FormTable.Cell>
         </FormTable.Row>
       </FormTable>
@@ -218,33 +218,33 @@ export function MixedColRowFormTemplate() {
         {/* Col 형태 */}
         <FormTable.Row>
           <FormTable.Cell label="상품명" required>
-            <ControlledInput name="productName" control={control} placeholder="상품명 입력" />
+            <FormInput name="productName" control={control} placeholder="상품명 입력" />
           </FormTable.Cell>
           <FormTable.Cell label="카테고리" required>
-            <ControlledSelect name="category" control={control} options={categoryOptions} />
+            <FormSelect name="category" control={control} options={categoryOptions} />
           </FormTable.Cell>
         </FormTable.Row>
 
         {/* Row 형태 */}
         <FormTable.Row>
           <FormTable.Cell label="제조사" labelPosition="left" labelWidth="150px" span={2}>
-            <ControlledInput name="manufacturer" control={control} placeholder="제조사명" />
+            <FormInput name="manufacturer" control={control} placeholder="제조사명" />
           </FormTable.Cell>
         </FormTable.Row>
 
         <FormTable.Row>
           <FormTable.Cell label="모델명" labelPosition="left" labelWidth="150px" span={2}>
-            <ControlledInput name="model" control={control} placeholder="모델명" />
+            <FormInput name="model" control={control} placeholder="모델명" />
           </FormTable.Cell>
         </FormTable.Row>
 
         {/* 다시 Col 형태 */}
         <FormTable.Row>
           <FormTable.Cell label="가격">
-            <ControlledInput name="price" control={control} placeholder="100000" />
+            <FormInput name="price" control={control} placeholder="100000" />
           </FormTable.Cell>
           <FormTable.Cell label="재고">
-            <ControlledInput name="stock" control={control} placeholder="50" />
+            <FormInput name="stock" control={control} placeholder="50" />
           </FormTable.Cell>
         </FormTable.Row>
       </FormTable>

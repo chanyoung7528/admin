@@ -42,14 +42,15 @@
       "prettier --write"
     ]
   },
-  "packageManager": "pnpm@8.15.6",
+  "packageManager": "pnpm@9.15.0",
   "name": "with-vite",
   "pnpm": {
     "overrides": {
-      "react": "^19.2.0",
-      "react-dom": "^19.2.0",
-      "@types/react": "^19.2.2",
-      "@types/react-dom": "^19.2.2"
+      "react": "19.2.0",
+      "react-dom": "19.2.0",
+      "@types/react": "19.2.7",
+      "@types/react-dom": "19.2.3",
+      "vite": "7.2.4"
     }
   },
   "dependencies": {
