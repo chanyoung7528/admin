@@ -1,10 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { FormCheckboxGroup } from '@shared/components/form/FormCheckbox';
+import { FormInput } from '@shared/components/form/FormInput';
+import { FormSelect } from '@shared/components/form/FormSelect';
+import { FormTable } from '@shared/components/form/FormTable';
+import { FormTextarea } from '@shared/components/form/FormTextarea';
 import { Button } from '@shared/components/ui/button';
-import { FormCheckboxGroup } from '@shared/components/ui/form/FormCheckbox';
-import { FormInput } from '@shared/components/ui/form/FormInput';
-import { FormSelect } from '@shared/components/ui/form/FormSelect';
-import { FormTable } from '@shared/components/ui/form/FormTable';
-import { FormTextarea } from '@shared/components/ui/form/FormTextarea';
 import type { Meta, StoryObj } from '@storybook/react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -24,8 +24,8 @@ const meta = {
           description="테이블 기반의 폼 레이아웃 컴포넌트입니다. React Hook Form과 Zod를 활용하여 유연한 폼 레이아웃을 구성할 수 있습니다. Col/Row 형태의 다양한 레이아웃을 지원합니다."
           installationDeps={['react-hook-form', 'zod', '@hookform/resolvers']}
           implementationCode={`// 기본 FormTable 사용
-import { FormTable } from '@shared/components/ui/form';
-import { FormInput } from '@shared/components/ui/form';
+import { FormTable } from '@shared/components/form';
+import { FormInput } from '@shared/components/form';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';

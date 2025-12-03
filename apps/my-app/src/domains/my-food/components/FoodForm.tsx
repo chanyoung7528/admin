@@ -1,9 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { FormInput } from '@shared/components/form/FormInput';
+import { FormSelect } from '@shared/components/form/FormSelect';
+import { FormTable } from '@shared/components/form/FormTable';
+import { FormTextarea } from '@shared/components/form/FormTextarea';
 import { Button } from '@shared/components/ui/button';
-import { FormInput } from '@shared/components/ui/form/FormInput';
-import { FormSelect } from '@shared/components/ui/form/FormSelect';
-import { FormTable } from '@shared/components/ui/form/FormTable';
-import { FormTextarea } from '@shared/components/ui/form/FormTextarea';
 import { type FieldErrors, useForm } from 'react-hook-form';
 
 import { type FoodFormSchema, foodFormSchema } from '../schemas';

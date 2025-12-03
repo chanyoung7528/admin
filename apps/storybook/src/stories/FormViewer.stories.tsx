@@ -1,5 +1,5 @@
+import { FormViewer } from '@shared/components/form/FormViewer';
 import { Button } from '@shared/components/ui/button';
-import { FormViewer } from '@shared/components/ui/form/FormViewer';
 import type { Meta, StoryObj } from '@storybook/react';
 import type { ReactNode } from 'react';
 
@@ -35,7 +35,7 @@ const meta: Meta<FormViewerProps> = {
           description="폼 데이터를 읽기 전용으로 표시하는 뷰어 컴포넌트입니다. FormTable을 기반으로 구축되어 일관된 스타일을 제공하며, 다양한 레이아웃과 데이터 타입을 지원합니다."
           installationDeps={['react']}
           implementationCode={`// 기본 FormViewer 사용
-import { FormViewer } from '@shared/components/ui/form';
+import { FormViewer } from '@shared/components/form';
 
 export default function UserProfile() {
   return (
@@ -68,7 +68,7 @@ export default function UserProfile() {
   );
 }`}
           exampleCode={`// Badge와 ReactNode 사용
-import { FormViewer } from '@shared/components/ui/form';
+import { FormViewer } from '@shared/components/form';
 
 export default function MenuDetail() {
   return (
