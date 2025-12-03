@@ -9,7 +9,7 @@ React Hook Form 기반의 재사용 가능한 폼 컴포넌트 모음입니다.
 폼을 테이블 형태로 깔끔하게 배치하는 레이아웃 컴포넌트입니다.
 
 ```tsx
-import { FormTable } from '@shared/components/ui/form/FormTable';
+import { FormTable } from '@shared/components/form/FormTable';
 
 <FormTable title="기본 정보">
   <FormTable.Row>
@@ -40,7 +40,7 @@ import { FormTable } from '@shared/components/ui/form/FormTable';
 #### 1. FormError - 전체 폼 에러 (상단 표시)
 
 ```tsx
-import { FormError } from '@shared/components/ui/form/FormError';
+import { FormError } from '@shared/components/form/FormError';
 
 // 기본 사용 (error 스타일)
 <FormError
@@ -86,7 +86,7 @@ import { FormError } from '@shared/components/ui/form/FormError';
 #### 2. FormFieldError - 필드별 인라인 에러
 
 ```tsx
-import { FormFieldError } from '@shared/components/ui/form/FormError';
+import { FormFieldError } from '@shared/components/form/FormError';
 
 <FormTable.Cell label="이름" required>
   <Input {...} />
@@ -106,9 +106,9 @@ import { FormFieldError } from '@shared/components/ui/form/FormError';
 ```tsx
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { FormTable } from '@shared/components/ui/form/FormTable';
-import { FormFieldError } from '@shared/components/ui/form/FormError';
-import { FormInput } from '@shared/components/ui/form/FormInput';
+import { FormTable } from '@shared/components/form/FormTable';
+import { FormFieldError } from '@shared/components/form/FormError';
+import { FormInput } from '@shared/components/form/FormInput';
 
 export function MyForm() {
   const {

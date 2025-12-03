@@ -1,4 +1,4 @@
-import { FormError, FormFieldError } from '@shared/components/ui/form/FormError';
+import { FormError, FormFieldError } from '@shared/components/form/FormError';
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { CustomDocsPage } from '../components/CustomDocsPage';
@@ -14,8 +14,8 @@ const meta = {
           componentName="FormError"
           description="폼 검증 에러를 일관된 스타일로 표시하는 컴포넌트입니다."
           installationDeps={['lucide-react']}
-          exampleCode={`import { FormError, FormFieldError } from '@shared/components/ui/form/FormError';
-import { FormInput } from '@shared/components/ui/form/FormInput';
+          exampleCode={`import { FormError, FormFieldError } from '@shared/components/form/FormError';
+import { FormInput } from '@shared/components/form/FormInput';
 import { useForm } from 'react-hook-form';
 
 export function MyForm() {

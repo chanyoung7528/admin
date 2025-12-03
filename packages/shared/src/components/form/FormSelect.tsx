@@ -1,9 +1,9 @@
+import { Label } from '@shared/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@shared/components/ui/select';
 import { cn } from '@shared/lib/utils';
 import type { Control, FieldValues, Path } from 'react-hook-form';
 import { useController } from 'react-hook-form';
 
-import { Label } from '../label';
 import { FormFieldError } from './FormError';
 
 interface SelectOption {

@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { FormCheckboxGroup, FormInput, FormSelect, FormTable, FormTextarea } from '@shared/components/form';
 import { Button } from '@shared/components/ui/button';
-import { FormCheckboxGroup, FormInput, FormSelect, FormTable, FormTextarea } from '@shared/components/ui/form';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 

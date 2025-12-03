@@ -1,4 +1,4 @@
-import { FormViewer, type ViewerRow } from '@shared/components/ui/form/FormViewer';
+import { FormViewer, type ViewerRow } from '@shared/components/form/FormViewer';
 import { createFileRoute } from '@tanstack/react-router';
 
 export const Route = createFileRoute('/_authenticated/my-food/form-view')({
