@@ -1,10 +1,5 @@
-import { profitData, recentOrders, revenueGoals, salesCategoryData, statsData, upcomingSchedule } from '../data/mockData';
-import { ProfitChart } from './widgets/ProfitChart';
-import { RecentOrders } from './widgets/RecentOrders';
-import { RevenueGoals } from './widgets/RevenueGoals';
-import { SalesCategory } from './widgets/SalesCategory';
-import { StatsGrid } from './widgets/StatsGrid';
-import { UpcomingSchedule } from './widgets/UpcomingSchedule';
+import { profitData, profitInsights, recentOrders, revenueGoals, salesCategoryData, statsData, upcomingSchedule } from '../data/mockData';
+import { ProfitChart, RecentOrders, RevenueGoals, SalesCategory, StatsGrid, UpcomingSchedule } from './widgets';
 
 interface DashboardViewProps {
   service: 'ALL' | 'BODY' | 'FOOD' | 'MIND';
@@ -29,7 +24,7 @@ export function DashboardView({ service }: DashboardViewProps) {
 
       <div className="grid gap-6 lg:grid-cols-12">
         <div className="lg:col-span-8">
-          <ProfitChart data={profitData} />
+          <ProfitChart data={profitData} insights={profitInsights} />
         </div>
         <div className="lg:col-span-4">
           <RevenueGoals goals={revenueGoals} />

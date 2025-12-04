@@ -1,14 +1,15 @@
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
-import type { ChartDataPoint } from '../../types';
+import type { ChartDataPoint, ProfitInsight } from '../../types';
 
 interface ProfitChartProps {
   data: ChartDataPoint[];
+  insights?: ProfitInsight[];
   title?: string;
   description?: string;
 }
 
-export function ProfitChart({ data, title = '통계', description = '월별 목표 설정' }: ProfitChartProps) {
+export function ProfitChart({ data, insights, title = '통계', description = '월별 목표 설정' }: ProfitChartProps) {
   return (
     <div className="bg-card rounded-xl border p-6 shadow-sm">
       <div className="mb-6 flex items-center justify-between">
@@ -34,18 +35,17 @@ export function ProfitChart({ data, title = '통계', description = '월별 목�
           </AreaChart>
         </ResponsiveContainer>
       </div>
-      <div className="mt-4 flex gap-8">
-        <div>
-          <p className="text-muted-foreground text-sm">연평균 수익</p>
-          <p className="text-xl font-bold">₩275,944,758</p>
-          <span className="text-xs font-medium text-green-600">+23.2%</span>
+      {insights && insights.length > 0 && (
+        <div className="mt-4 flex gap-8">
+          {insights.map((insight, index) => (
+            <div key={index}>
+              <p className="text-muted-foreground text-sm">{insight.label}</p>
+              <p className="text-xl font-bold">{insight.value}</p>
+              <span className={`text-xs font-medium ${insight.trend === 'up' ? 'text-green-600' : 'text-red-600'}`}>{insight.change}</span>
+            </div>
+          ))}
         </div>
-        <div>
-          <p className="text-muted-foreground text-sm">연평균 매출</p>
-          <p className="text-xl font-bold">₩39,417,600</p>
-          <span className="text-xs font-medium text-red-600">-12.3%</span>
-        </div>
-      </div>
+      )}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import type { ChartDataPoint, Order, RevenueGoal, SalesCategory, Schedule, StatCard } from '../types';
+import type { ChartDataPoint, Order, ProfitInsight, RevenueGoal, SalesCategory, Schedule, StatCard } from '../types';
 
 export const statsData: StatCard[] = [
   {
@@ -39,15 +39,30 @@ export const profitData: ChartDataPoint[] = [
   { name: '12월', profit: 1890, revenue: 4800 },
 ];
 
+export const profitInsights: ProfitInsight[] = [
+  {
+    label: '연평균 수익',
+    value: '₩275,944,758',
+    change: '+23.2%',
+    trend: 'up',
+  },
+  {
+    label: '연평균 매출',
+    value: '₩39,417,600',
+    change: '-12.3%',
+    trend: 'down',
+  },
+];
+
 export const revenueGoals: RevenueGoal[] = [
   { label: '마케팅', amount: '₩39,739,700', percentage: 85, color: 'bg-primary' },
   { label: '영업', amount: '₩26,632,380', percentage: 55, color: 'bg-orange-500' },
 ];
 
 export const salesCategoryData: SalesCategory[] = [
-  { name: '제휴 프로그램', value: 48, count: '2,040개 상품', color: '#3b82f6' },
-  { name: '직접 구매', value: 33, count: '1,402개 상품', color: '#f97316' },
-  { name: '광고 수익', value: 19, count: '510개 상품', color: '#10b981' },
+  { name: '제휴 프로그램', value: 48, count: '2,040개 상품', color: '#3b82f6', customRadius: 110 },
+  { name: '직접 구매', value: 33, count: '1,402개 상품', color: '#f97316', customRadius: 90 },
+  { name: '광고 수익', value: 19, count: '510개 상품', color: '#10b981', customRadius: 70 },
 ];
 
 export const upcomingSchedule: Schedule[] = [

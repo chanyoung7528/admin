@@ -14,6 +14,13 @@ export interface ChartDataPoint {
   revenue: number;
 }
 
+export interface ProfitInsight {
+  label: string;
+  value: string;
+  change: string;
+  trend: TrendType;
+}
+
 export interface RevenueGoal {
   label: string;
   amount: string;
@@ -26,6 +33,7 @@ export interface SalesCategory {
   value: number;
   count: string;
   color: string;
+  customRadius: number;
 }
 
 export type ScheduleType = 'primary' | 'orange' | 'green';

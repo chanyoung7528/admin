@@ -8,24 +8,39 @@ interface SalesCategoryProps {
 }
 
 export function SalesCategory({ categories, title = '판매 카테고리' }: SalesCategoryProps) {
-  const chartData = categories.map(cat => ({ name: cat.name, value: cat.value, color: cat.color }));
+  const chartData = categories.map(cat => ({
+    name: cat.name,
+    percent: cat.value,
+    value: cat.name,
+    customRadius: cat.customRadius,
+    color: cat.color,
+  }));
 
   return (
     <div className="bg-card rounded-xl border p-6 shadow-sm">
       <h3 className="text-lg font-semibold">{title}</h3>
-      <div className="mt-4 h-[250px] w-full">
+      <div className="mt-4 h-[350px] w-full">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
-            <Pie data={chartData} innerRadius={60} outerRadius={80} paddingAngle={5} dataKey="value">
+            <Pie
+              data={chartData}
+              cx="50%"
+              cy="50%"
+              dataKey="percent"
+              nameKey="value"
+              outerRadius={(entry: { customRadius: number }) => entry.customRadius}
+              fill="#8884d8"
+              label={({ name, percent }) => `${name} ${percent}%`}
+            >
               {chartData.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={entry.color} />
               ))}
             </Pie>
-            <Tooltip />
+            <Tooltip formatter={(value: number) => `${value}%`} />
           </PieChart>
         </ResponsiveContainer>
       </div>
-      <div className="space-y-3">
+      <div className="mt-4 space-y-3">
         {categories.map((category, index) => (
           <div key={index} className="flex items-center justify-between text-sm">
             <div className="flex items-center gap-2">
