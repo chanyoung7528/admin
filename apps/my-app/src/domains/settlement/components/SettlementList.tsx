@@ -1,32 +1,19 @@
-import { BasicTable } from '@repo/shared/components/ui';
+import { BasicTable, StatsCard, StatsGrid } from '@repo/shared/components/ui';
+import { CheckCircle, Clock, Package, ShoppingCart } from 'lucide-react';
 
 import { settlementBasicColumns } from '../columns/settlementBasicColumns';
 import { settlementsBasic } from '../services';
 
 export function SettlementList() {
   return (
-    <div className="bg-card flex flex-col gap-4 rounded-lg border p-4 shadow-sm">
-      {/* 주문 요약 */}
-      <div className="mb-6 grid gap-4 md:grid-cols-4">
-        <div className="bg-background rounded-lg p-4">
-          <p className="text-muted-foreground text-sm">총 주문</p>
-          <p className="mt-1 text-2xl font-bold">156건</p>
-        </div>
-        <div className="rounded-lg bg-green-50 p-4 dark:bg-green-950">
-          <p className="text-sm text-green-700 dark:text-green-300">배송완료</p>
-          <p className="mt-1 text-2xl font-bold text-green-900 dark:text-green-100">142건</p>
-        </div>
-        <div className="rounded-lg bg-blue-50 p-4 dark:bg-blue-950">
-          <p className="text-sm text-blue-700 dark:text-blue-300">배송중</p>
-          <p className="mt-1 text-2xl font-bold text-blue-900 dark:text-blue-100">12건</p>
-        </div>
-        <div className="rounded-lg bg-yellow-50 p-4 dark:bg-yellow-950">
-          <p className="text-sm text-yellow-700 dark:text-yellow-300">주문확인</p>
-          <p className="mt-1 text-2xl font-bold text-yellow-900 dark:text-yellow-100">2건</p>
-        </div>
-      </div>
+    <div className="bg-card flex flex-col gap-6 rounded-lg border p-6 shadow-sm">
+      <StatsGrid>
+        <StatsCard title="총 주문" value="156건" icon={ShoppingCart} variant="default" />
+        <StatsCard title="배송완료" value="142건" icon={CheckCircle} variant="success" />
+        <StatsCard title="배송중" value="12건" icon={Package} variant="info" />
+        <StatsCard title="주문확인" value="2건" icon={Clock} variant="warning" />
+      </StatsGrid>
 
-      {/* 주문 테이블 - BasicTable 사용 */}
       <BasicTable
         data={settlementsBasic}
         columns={settlementBasicColumns}

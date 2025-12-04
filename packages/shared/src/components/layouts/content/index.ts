@@ -1,2 +1,2 @@
-export * from './ContentHeader';
-export * from './Wrapper';
+export { PageContainer } from './PageContainer';
+export { PageHeader } from './PageHeader';

@@ -1,4 +1,4 @@
-import { ContentHeader, ContentWrapper } from '@repo/shared/components/layouts/content';
+import { PageContainer, PageHeader } from '@repo/shared/components/layouts/content';
 import { Button } from '@repo/shared/components/ui';
 import { createFileRoute } from '@tanstack/react-router';
 
@@ -10,11 +10,9 @@ export const Route = createFileRoute('/_authenticated/settlement/basic-table')({
 
 function RouteComponent() {
   return (
-    <ContentWrapper>
-      <ContentHeader title="주문/발주 내역" description="MY FOOD 제품 주문 및 배송 현황을 관리합니다">
-        <Button size="lg">신규 주문 등록</Button>
-      </ContentHeader>
+    <PageContainer>
+      <PageHeader title="주문/발주 내역" description="MY FOOD 제품 주문 및 배송 현황을 관리합니다" actions={<Button size="lg">신규 주문 등록</Button>} />
       <SettlementList />
-    </ContentWrapper>
+    </PageContainer>
   );
 }
