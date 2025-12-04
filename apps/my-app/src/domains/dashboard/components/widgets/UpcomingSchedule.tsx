@@ -1,3 +1,5 @@
+import { WidgetCard } from '@repo/shared/components/layouts/content';
+
 import type { Schedule } from '../../types';
 
 interface UpcomingScheduleProps {
@@ -5,31 +7,28 @@ interface UpcomingScheduleProps {
   title?: string;
 }
 
-export function UpcomingSchedule({ schedules, title = '예정된 일정' }: UpcomingScheduleProps) {
-  const getColorClass = (type: Schedule['type']) => {
-    switch (type) {
-      case 'primary':
-        return 'bg-blue-500';
-      case 'orange':
-        return 'bg-orange-500';
-      case 'green':
-        return 'bg-green-500';
-      default:
-        return 'bg-gray-500';
-    }
-  };
+const scheduleColorMap: Record<Schedule['type'], string> = {
+  primary: 'bg-blue-500',
+  orange: 'bg-orange-500',
+  green: 'bg-green-500',
+};
 
+/**
+ * UpcomingSchedule - 예정된 일정 타임라인 위젯
+ * @param schedules - 일정 데이터 배열
+ * @param title - 위젯 제목
+ */
+export function UpcomingSchedule({ schedules, title = '예정된 일정' }: UpcomingScheduleProps) {
   return (
-    <div className="bg-card rounded-xl border p-6 shadow-sm">
-      <h3 className="text-lg font-semibold">{title}</h3>
-      <div className="mt-6 space-y-6">
+    <WidgetCard title={title}>
+      <div className="space-y-6">
         {schedules.map((item, index) => (
           <div key={index} className="flex gap-4">
             <div className="flex flex-col items-center pt-1">
-              <div className={`h-3 w-3 rounded-full ${getColorClass(item.type)}`}></div>
-              {index < schedules.length - 1 && <div className="my-1 h-full w-0.5 bg-gray-200 dark:bg-gray-800"></div>}
+              <div className={`h-3 w-3 flex-shrink-0 rounded-full ${scheduleColorMap[item.type]}`} />
+              {index < schedules.length - 1 && <div className="my-1 h-full w-0.5 bg-gray-200 dark:bg-gray-800" />}
             </div>
-            <div className="pb-4">
+            <div className="flex-1 pb-4">
               <p className="text-muted-foreground text-xs font-semibold">
                 {item.date} <span className="ml-2 font-normal">{item.time}</span>
               </p>
@@ -39,6 +38,6 @@ export function UpcomingSchedule({ schedules, title = '예정된 일정' }: Upco
           </div>
         ))}
       </div>
-    </div>
+    </WidgetCard>
   );
 }

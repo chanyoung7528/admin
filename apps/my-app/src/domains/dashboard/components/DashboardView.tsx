@@ -1,10 +1,10 @@
 import { profitData, profitInsights, recentOrders, revenueGoals, salesCategoryData, statsData, upcomingSchedule } from '../data/mockData';
-import { ProfitChart, RecentOrders, RevenueGoals, SalesCategory, StatsGrid, UpcomingSchedule } from './widgets';
+import { DashboardStats, ProfitChart, RecentOrders, RevenueGoals, SalesCategory, UpcomingSchedule } from './widgets';
 
 export function DashboardView() {
   return (
     <div className="flex flex-col gap-6">
-      <StatsGrid stats={statsData} />
+      <DashboardStats stats={statsData} />
 
       <div className="grid gap-6 lg:grid-cols-12">
         <div className="lg:col-span-8">

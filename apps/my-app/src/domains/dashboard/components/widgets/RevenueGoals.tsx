@@ -1,3 +1,5 @@
+import { WidgetCard } from '@repo/shared/components/layouts/content';
+
 import type { RevenueGoal } from '../../types';
 
 interface RevenueGoalsProps {
@@ -6,12 +8,15 @@ interface RevenueGoalsProps {
   description?: string;
 }
 
+/**
+ * RevenueGoals - 매출 목표 달성률 위젯
+ * @param goals - 목표 데이터 배열
+ * @param title - 위젯 제목
+ * @param description - 위젯 설명
+ */
 export function RevenueGoals({ goals, title = '예상 매출', description = '월별 목표 설정' }: RevenueGoalsProps) {
   return (
-    <div className="bg-card h-full rounded-xl border p-6 shadow-sm">
-      <h3 className="text-lg font-semibold">{title}</h3>
-      <p className="text-muted-foreground mb-6 text-sm">{description}</p>
-
+    <WidgetCard title={title} description={description} className="h-full">
       <div className="space-y-6">
         {goals.map((goal, index) => (
           <div key={index}>
@@ -26,6 +31,6 @@ export function RevenueGoals({ goals, title = '예상 매출', description = '�
           </div>
         ))}
       </div>
-    </div>
+    </WidgetCard>
   );
 }

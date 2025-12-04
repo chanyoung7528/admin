@@ -1,3 +1,5 @@
+import { WidgetCard } from '@repo/shared/components/layouts/content';
+
 import type { Order } from '../../types';
 
 interface RecentOrdersProps {
@@ -5,10 +7,25 @@ interface RecentOrdersProps {
   title?: string;
 }
 
+const statusConfig = {
+  Complete: {
+    label: '완료',
+    className: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
+  },
+  Pending: {
+    label: '대기중',
+    className: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400',
+  },
+};
+
+/**
+ * RecentOrders - 최근 주문 목록 테이블 위젯
+ * @param orders - 주문 데이터 배열
+ * @param title - 위젯 제목
+ */
 export function RecentOrders({ orders, title = '최근 주문' }: RecentOrdersProps) {
   return (
-    <div className="bg-card overflow-hidden rounded-xl border p-6 shadow-sm">
-      <h3 className="mb-4 text-lg font-semibold">{title}</h3>
+    <WidgetCard title={title} className="overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full text-left text-sm">
           <thead>
@@ -27,7 +44,7 @@ export function RecentOrders({ orders, title = '최근 주문' }: RecentOrdersPr
                 <td className="py-4 pl-2 font-medium">{order.id}</td>
                 <td className="py-4">
                   <div className="flex items-center gap-3">
-                    <div className="bg-primary/10 text-primary flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold">
+                    <div className="bg-primary/10 text-primary flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full text-xs font-bold">
                       {order.customer.avatar}
                     </div>
                     <div>
@@ -40,14 +57,8 @@ export function RecentOrders({ orders, title = '최근 주문' }: RecentOrdersPr
                 <td className="py-4 font-medium">{order.amount}</td>
                 <td className="text-muted-foreground py-4">{order.date}</td>
                 <td className="py-4 pr-2">
-                  <span
-                    className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${
-                      order.status === 'Complete'
-                        ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
-                        : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400'
-                    }`}
-                  >
-                    {order.status === 'Complete' ? '완료' : '대기중'}
+                  <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-medium ${statusConfig[order.status].className}`}>
+                    {statusConfig[order.status].label}
                   </span>
                 </td>
               </tr>
@@ -55,6 +66,6 @@ export function RecentOrders({ orders, title = '최근 주문' }: RecentOrdersPr
           </tbody>
         </table>
       </div>
-    </div>
+    </WidgetCard>
   );
 }
