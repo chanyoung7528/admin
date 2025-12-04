@@ -31,14 +31,13 @@ function createProxyConfig(target: string, prefix: string) {
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   const isDebug = env.VITE_FEATURE_DEBUG === 'true';
-  const isDev = mode === 'development';
   const apiBaseUrl = env.VITE_API_BASE_URL || '';
   const proxyPrefix = env.VITE_API_PROXY_PREFIX || '/api';
-  const shouldUseProxy = isDev && apiBaseUrl.startsWith('http');
+  const useProxy = mode === 'development' && apiBaseUrl.startsWith('http');
 
   return {
     server: {
-      proxy: shouldUseProxy ? createProxyConfig(apiBaseUrl, proxyPrefix) : undefined,
+      proxy: useProxy ? createProxyConfig(apiBaseUrl, proxyPrefix) : undefined,
     },
     plugins: [
       TanStackRouterVite({
@@ -185,7 +184,7 @@ export default defineConfig(({ mode }) => {
       // 청크 크기 경고 임계값 (기본 500kb)
       chunkSizeWarningLimit: 600,
       // 소스맵 제거 (프로덕션)
-      sourcemap: false,
+      sourcemap: isDebug,
       // 최소화 옵션
       minify: 'esbuild',
       target: 'esnext',
