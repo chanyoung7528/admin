@@ -1,4 +1,5 @@
 import { cn } from '@shared/lib/utils';
+import { Skeleton } from '@shared/components/ui/skeleton';
 import type { ComponentType, ReactNode } from 'react';
 
 export interface StatsCardProps {
@@ -65,18 +66,27 @@ export function StatsCard({ title, value, description, icon: Icon, iconElement, 
       </div>
 
       <div className="mt-3">
-        <p className={cn('text-2xl font-bold', styles.value)}>{isLoading ? '...' : value}</p>
+        {isLoading ? (
+          <>
+            <Skeleton className="mb-2 h-8 w-24" />
+            <Skeleton className="h-4 w-32" />
+          </>
+        ) : (
+          <>
+            <p className={cn('text-2xl font-bold', styles.value)}>{value}</p>
 
-        {(description || trend) && (
-          <div className="mt-1 flex items-center gap-2">
-            {description && <p className="text-muted-foreground text-xs">{description}</p>}
-            {trend && (
-              <span className={cn('text-xs font-medium', trend.value >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400')}>
-                {trend.value >= 0 ? '+' : ''}
-                {trend.value}% {trend.label}
-              </span>
+            {(description || trend) && (
+              <div className="mt-1 flex items-center gap-2">
+                {description && <p className="text-muted-foreground text-xs">{description}</p>}
+                {trend && (
+                  <span className={cn('text-xs font-medium', trend.value >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400')}>
+                    {trend.value >= 0 ? '+' : ''}
+                    {trend.value}% {trend.label}
+                  </span>
+                )}
+              </div>
             )}
-          </div>
+          </>
         )}
       </div>
     </div>

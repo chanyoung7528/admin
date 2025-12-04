@@ -12,16 +12,12 @@ export const Route = createFileRoute('/_authenticated/settlement/register')({
 function RouteComponent() {
   return (
     <PageContainer>
-      <PageHeader
-        title="MY FOOD 정산 등록"
-        description="MY FOOD 폼 관리 - Table 기반 재사용 컴포넌트 예제"
-        actions={
-          <Button size="lg">
-            <Upload className="h-4 w-4" />
-            정산 엑셀 업로드
-          </Button>
-        }
-      />
+      <PageHeader title="MY FOOD 정산 등록" description="MY FOOD 폼 관리 - Table 기반 재사용 컴포넌트 예제">
+        <Button size="lg">
+          <Upload className="h-4 w-4" />
+          정산 엑셀 업로드
+        </Button>
+      </PageHeader>
       <SettlementForm onSubmit={() => {}} />
     </PageContainer>
   );

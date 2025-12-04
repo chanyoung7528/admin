@@ -1,6 +1,7 @@
 import { DataTable } from '@shared/components/data-table';
+import { ErrorAlert } from '@shared/components/layouts/content';
 import { StatsCard, StatsGrid } from '@shared/components/ui';
-import { AlertCircle, CheckCircle, Clock, DollarSign, TrendingUp } from 'lucide-react';
+import { CheckCircle, Clock, DollarSign, TrendingUp } from 'lucide-react';
 import { useMemo } from 'react';
 
 import { useSettlementTable } from '../hooks';
@@ -58,17 +59,7 @@ export function SettlementTable({ service }: SettlementTableProps) {
         />
       </StatsGrid>
 
-      {isError && (
-        <div className="mb-4 rounded-lg border border-red-500 bg-red-50 p-4 dark:bg-red-900/20">
-          <div className="flex items-center gap-3">
-            <AlertCircle className="h-5 w-5 text-red-600 dark:text-red-400" />
-            <div>
-              <p className="text-sm font-medium text-red-800 dark:text-red-200">데이터를 불러오는데 실패했습니다.</p>
-              <p className="text-muted-foreground mt-1 text-xs">네트워크 연결을 확인하고 다시 시도해주세요.</p>
-            </div>
-          </div>
-        </div>
-      )}
+      {isError && <ErrorAlert title="데이터를 불러오는데 실패했습니다." description="네트워크 연결을 확인하고 다시 시도해주세요." />}
 
       <DataTable {...tableProps} />
     </div>

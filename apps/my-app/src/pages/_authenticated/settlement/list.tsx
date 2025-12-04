@@ -12,16 +12,12 @@ export const Route = createFileRoute('/_authenticated/settlement/list')({
 function RouteComponent() {
   return (
     <PageContainer>
-      <PageHeader
-        title="MY FOOD 정산 관리"
-        description="서비스의 Site별 정산 내역을 관리하고 조회할 수 있습니다"
-        actions={
-          <Button size="lg">
-            <Download className="h-4 w-4" />
-            정산 엑셀 다운로드
-          </Button>
-        }
-      />
+      <PageHeader title="MY FOOD 정산 관리" description="서비스의 Site별 정산 내역을 관리하고 조회할 수 있습니다">
+        <Button size="lg">
+          <Download className="h-4 w-4" />
+          정산 엑셀 다운로드
+        </Button>
+      </PageHeader>
       <SettlementTable service="FOOD" />
     </PageContainer>
   );
