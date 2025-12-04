@@ -1,6 +1,6 @@
 import { api, AUTH_ERROR_CODES, AuthError, type AuthTokens } from '@repo/core/api';
 
-import type { AuthTokenResponse, LoginPayload } from '../utils/types';
+import type { AuthTokenResponse, LoginPayload } from '../types';
 
 // 로그인 API
 export async function postAuthToken(payload: LoginPayload): Promise<AuthTokens> {
