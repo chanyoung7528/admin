@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "vite --mode dev --port 5050 --host",
     "build": "tsc -b && vite build",
-    "build:dev": "tsc -b && vite build --mode dev",
-    "build:prd": "tsc -b && vite build --mode prd",
+    "build:dev": "tsc -b && vite build --mode production.dev",
     "lint": "eslint .",
     "type-check": "tsc -b --noEmit",
     "preview": "vite preview",

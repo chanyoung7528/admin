@@ -9,7 +9,7 @@ const rawEnv = {
 };
 
 const envSchema = z.object({
-  mode: z.enum(['development', 'production', 'test', 'dev', 'prd']),
+  mode: z.enum(['development', 'production', 'test', 'production.dev']),
   apiBaseUrl: z
     .string()
     .min(1)
