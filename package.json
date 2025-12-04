@@ -22,9 +22,9 @@
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
-    "husky": "^9.1.7",
-    "lint-staged": "^16.2.7",
-    "turbo": "^2.6.1"
+    "husky": "catalog:",
+    "lint-staged": "catalog:",
+    "turbo": "catalog:"
   },
   "lint-staged": {
     "apps/my-app/**/*.{ts,tsx,js,jsx}": [
@@ -43,16 +43,7 @@
   },
   "packageManager": "pnpm@9.15.0",
   "name": "with-vite",
-  "pnpm": {
-    "overrides": {
-      "react": "19.2.0",
-      "react-dom": "19.2.0",
-      "@types/react": "19.2.7",
-      "@types/react-dom": "19.2.3",
-      "vite": "7.2.4"
-    }
-  },
   "dependencies": {
-    "@tanstack/react-table": "^8.21.3"
+    "@tanstack/react-table": "catalog:"
   }
 }
