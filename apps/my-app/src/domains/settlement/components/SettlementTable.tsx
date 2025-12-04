@@ -1,6 +1,5 @@
 import { DataTable } from '@shared/components/data-table';
-import { ErrorAlert } from '@shared/components/layouts/content';
-import { StatsCard, StatsGrid } from '@shared/components/ui';
+import { ErrorAlert, StatsCard, StatsGrid } from '@shared/components/layouts/content';
 import { CheckCircle, Clock, DollarSign, TrendingUp } from 'lucide-react';
 import { useMemo } from 'react';
 

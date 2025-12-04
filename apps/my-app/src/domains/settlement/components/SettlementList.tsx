@@ -1,4 +1,5 @@
-import { BasicTable, StatsCard, StatsGrid } from '@repo/shared/components/ui';
+import { StatsCard, StatsGrid } from '@repo/shared/components/layouts/content';
+import { BasicTable } from '@repo/shared/components/ui';
 import { CheckCircle, Clock, Package, ShoppingCart } from 'lucide-react';
 
 import { settlementBasicColumns } from '../columns/settlementBasicColumns';

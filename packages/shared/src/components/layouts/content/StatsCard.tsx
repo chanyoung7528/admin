@@ -1,5 +1,5 @@
-import { cn } from '@shared/lib/utils';
 import { Skeleton } from '@shared/components/ui/skeleton';
+import { cn } from '@shared/lib/utils';
 import type { ComponentType, ReactNode } from 'react';
 
 export interface StatsCardProps {
