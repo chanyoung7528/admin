@@ -59,11 +59,11 @@
     "@repo/typescript-config": "workspace:*",
     "@tailwindcss/vite": "catalog:",
     "@types/lodash-es": "catalog:",
-    "@types/react": "workspace:*",
-    "@types/react-dom": "workspace:*",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
     "@vitejs/plugin-react-swc": "catalog:",
-    "react": "workspace:*",
-    "react-dom": "workspace:*",
+    "react": "catalog:",
+    "react-dom": "catalog:",
     "typescript": "catalog:",
     "vite": "catalog:"
   }

@@ -13,6 +13,7 @@ catalog:
   '@tanstack/react-router': ^1.139.10
   '@tanstack/react-router-devtools': ^1.139.10
   '@tanstack/react-router-plugin': ^1.139.10
+  '@tanstack/router-plugin': ^1.139.12
   '@tanstack/router-cli': ^1.139.14
   '@tanstack/react-query': ^5.90.11
   '@tanstack/react-query-devtools': ^5.91.1
