@@ -1,25 +1,9 @@
 import { profitData, profitInsights, recentOrders, revenueGoals, salesCategoryData, statsData, upcomingSchedule } from '../data/mockData';
 import { ProfitChart, RecentOrders, RevenueGoals, SalesCategory, StatsGrid, UpcomingSchedule } from './widgets';
 
-interface DashboardViewProps {
-  service: 'ALL' | 'BODY' | 'FOOD' | 'MIND';
-}
-
-export function DashboardView({ service }: DashboardViewProps) {
-  const serviceLabel = {
-    ALL: '전체',
-    BODY: 'MY BODY',
-    FOOD: 'MY FOOD',
-    MIND: 'MY MIND',
-  }[service];
-
+export function DashboardView() {
   return (
     <div className="flex flex-col gap-6">
-      <div>
-        <h2 className="text-2xl font-bold tracking-tight">{serviceLabel} 대시보드</h2>
-        <p className="text-muted-foreground mt-1">{serviceLabel} 서비스의 성과 및 통계 개요</p>
-      </div>
-
       <StatsGrid stats={statsData} />
 
       <div className="grid gap-6 lg:grid-cols-12">

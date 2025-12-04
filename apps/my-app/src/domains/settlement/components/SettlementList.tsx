@@ -6,17 +6,6 @@ import { settlementsBasic } from '../services';
 export function SettlementList() {
   return (
     <div className="bg-card flex flex-col gap-4 rounded-lg border p-4 shadow-sm">
-      {/* 헤더 */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-xl font-semibold">주문/발주 내역</h2>
-          <p className="text-muted-foreground mt-1 text-sm">MY FOOD 제품 주문 및 배송 현황을 관리합니다</p>
-        </div>
-        <div className="flex gap-2">
-          <button className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-md px-4 py-2 text-sm">신규 주문 등록</button>
-        </div>
-      </div>
-
       {/* 주문 요약 */}
       <div className="mb-6 grid gap-4 md:grid-cols-4">
         <div className="bg-background rounded-lg p-4">
