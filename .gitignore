@@ -65,6 +65,10 @@ packages/editor/ckeditor5/package-lock.json
 .eslintcache
 .parcel-cache
 
+# TanStack
+.tanstack
+routeTree.gen.ts
+
 # OS
 .DS_Store
 .DS_Store?
