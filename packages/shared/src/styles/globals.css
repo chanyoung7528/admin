@@ -16,7 +16,7 @@
     @apply overflow-x-hidden;
   }
   body {
-    @apply bg-background text-foreground has-[div[data-variant='inset']]:bg-sidebar min-h-svh w-full;
+    @apply bg-background text-foreground has-[div[data-variant='inset']]:bg-sidebar font-pretendard min-h-svh w-full;
   }
 
   /* Override Radix scroll locking for sticky headers */
@@ -126,6 +126,6 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-pretendard;
   }
 }
