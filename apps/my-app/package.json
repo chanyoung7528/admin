@@ -27,6 +27,7 @@
     "react": "catalog:",
     "react-dom": "catalog:",
     "react-hook-form": "catalog:",
+    "recharts": "catalog:",
     "zod": "catalog:",
     "zustand": "catalog:"
   },
@@ -39,12 +40,10 @@
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "@types/uuid": "catalog:",
     "@vitejs/plugin-react": "catalog:",
     "babel-plugin-react-compiler": "catalog:",
     "rollup-plugin-visualizer": "catalog:",
     "typescript": "catalog:",
-    "uuid": "catalog:",
     "vite": "catalog:",
     "vite-bundle-analyzer": "catalog:"
   }

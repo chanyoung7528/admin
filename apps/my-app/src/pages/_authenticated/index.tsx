@@ -1,3 +1,4 @@
+import { ContentWrapper } from '@repo/shared/components/layouts/content';
 import { createFileRoute } from '@tanstack/react-router';
 
 import { DashboardView } from '@/domains/dashboard/components';
@@ -7,10 +8,9 @@ export const Route = createFileRoute('/_authenticated/')({
 });
 
 function DashboardPage() {
-  // Layout은 _authenticated.tsx에서 제공되므로 여기서는 컨텐츠만
   return (
-    <>
+    <ContentWrapper>
       <DashboardView service="ALL" />
-    </>
+    </ContentWrapper>
   );
 }

@@ -3,11 +3,22 @@ import { SidebarTrigger } from '@shared/components/ui/sidebar';
 import { cn } from '@shared/lib/utils';
 import { useEffect, useState } from 'react';
 
+import { ConfigDrawer } from './header/ConfigDrawer';
+import { ProfileDropdown } from './header/ProfileDropdown';
+import { TopNav } from './header/TopNav';
+
 type HeaderProps = React.HTMLAttributes<HTMLElement> & {
   fixed?: boolean;
+  links?: {
+    title: string;
+    href: string;
+    isActive: boolean;
+    disabled?: boolean;
+  }[];
+  onSignOut?: () => void | Promise<void>;
 };
 
-export function Header({ className, fixed, children, ...props }: HeaderProps) {
+export function Header({ className, fixed, children, links, onSignOut, ...props }: HeaderProps) {
   const [offset, setOffset] = useState(0);
 
   useEffect(() => {
@@ -35,7 +46,13 @@ export function Header({ className, fixed, children, ...props }: HeaderProps) {
       >
         <SidebarTrigger variant="outline" className="max-md:scale-125" />
         <Separator orientation="vertical" className="h-6" />
+        {links && <TopNav links={links} />}
         {children}
+
+        <div className="ms-auto flex items-center space-x-4">
+          <ConfigDrawer />
+          <ProfileDropdown onSignOut={onSignOut} />
+        </div>
       </div>
     </header>
   );

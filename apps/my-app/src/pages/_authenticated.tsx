@@ -1,10 +1,9 @@
-import { Layout } from '@repo/shared/components/layouts';
+import { Header, Layout } from '@repo/shared/components/layouts';
 import { ErrorBoundary } from '@repo/shared/components/ui';
 import { createFileRoute, Outlet, redirect } from '@tanstack/react-router';
 
 import { useLogout } from '@/domains/auth/hooks/useLogout';
 import { useAuthStore } from '@/domains/auth/stores/useAuthStore';
-import { Header } from '@/domains/dashboard/components/Header';
 
 // 인증이 필요한 모든 페이지의 레이아웃
 export const Route = createFileRoute('/_authenticated')({
@@ -25,6 +24,11 @@ export const Route = createFileRoute('/_authenticated')({
   component: AuthenticatedLayout,
 });
 
+const topNav = [
+  { title: '개요', href: '/', isActive: true },
+  { title: '인사이트', href: '/user/insight', isActive: false },
+];
+
 function AuthenticatedLayout() {
   const { logout } = useLogout();
 
@@ -37,7 +41,7 @@ function AuthenticatedLayout() {
           console.error('Header Error:', error);
         }}
       >
-        <Header />
+        <Header links={topNav} onSignOut={logout} />
       </ErrorBoundary>
 
       {/* 메인 콘텐츠 영역 에러 바운더리 */}
