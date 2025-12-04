@@ -2,7 +2,7 @@ import type { AuthTokens } from '@repo/core/api';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
-import type { AuthUser } from '../utils/types';
+import type { AuthUser } from '../types';
 
 interface AuthState {
   user: AuthUser | null;

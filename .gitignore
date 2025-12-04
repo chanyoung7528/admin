@@ -28,10 +28,10 @@ pnpm-debug.log*
 lerna-debug.log*
 
 # Environment variables
-.env
+.env*
 .env*.local
-!.env.dev
-!.env.prd
+!.env.development
+!.env.production*
 
 # Vercel
 .vercel
@@ -64,6 +64,10 @@ packages/editor/ckeditor5/package-lock.json
 .cache
 .eslintcache
 .parcel-cache
+
+# TanStack
+.tanstack
+routeTree.gen.ts
 
 # OS
 .DS_Store

@@ -17,7 +17,7 @@ export const AUTH_ERROR_CODES = {
 export type AuthErrorCode = (typeof AUTH_ERROR_CODES)[keyof typeof AUTH_ERROR_CODES];
 
 /**
- * 인증 에러
+ * 인증 에러 클래스
  */
 export class AuthError extends Error {
   constructor(
@@ -53,7 +53,7 @@ export interface AuthStore {
 }
 
 /**
- * 인증 설정
+ * 인증 설정 인터페이스
  */
 interface AuthConfig {
   store: AuthStore;
@@ -65,7 +65,7 @@ interface AuthConfig {
 let authConfig: AuthConfig | null = null;
 
 /**
- * 인증 설정
+ * 인증 설정 초기화
  */
 export function configureAuth(config: AuthConfig): void {
   authConfig = config;
