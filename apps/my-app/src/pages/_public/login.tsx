@@ -8,7 +8,7 @@ export const Route = createFileRoute('/_public/login')({
 
 function LoginPage() {
   const navigate = useNavigate();
-  const search = useSearch({ from: '/_public/login' });
+  const search = useSearch({ from: Route.id });
 
   const handleLoginSuccess = () => {
     const redirectTo = (search as { redirect?: string }).redirect || '/';
