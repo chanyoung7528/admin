@@ -1,3 +1,4 @@
+import { WidgetCard } from '@repo/shared/components/layouts/content';
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 
 import type { SalesCategory as SalesCategoryType } from '../../types';
@@ -7,6 +8,11 @@ interface SalesCategoryProps {
   title?: string;
 }
 
+/**
+ * SalesCategory - 판매 카테고리 분포 차트 위젯
+ * @param categories - 카테고리 데이터 배열
+ * @param title - 위젯 제목
+ */
 export function SalesCategory({ categories, title = '판매 카테고리' }: SalesCategoryProps) {
   const chartData = categories.map(cat => ({
     name: cat.name,
@@ -17,9 +23,8 @@ export function SalesCategory({ categories, title = '판매 카테고리' }: Sal
   }));
 
   return (
-    <div className="bg-card rounded-xl border p-6 shadow-sm">
-      <h3 className="text-lg font-semibold">{title}</h3>
-      <div className="mt-4 h-[350px] w-full">
+    <WidgetCard title={title}>
+      <div className="h-[350px] w-full">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
@@ -54,6 +59,6 @@ export function SalesCategory({ categories, title = '판매 카테고리' }: Sal
           </div>
         ))}
       </div>
-    </div>
+    </WidgetCard>
   );
 }
