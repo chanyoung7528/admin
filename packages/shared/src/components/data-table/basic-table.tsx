@@ -1,7 +1,7 @@
 import { cn } from '@shared/lib/utils';
 import type { ReactNode } from 'react';
 
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './table';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 
 /**
  * BasicTable 컬럼 정의
