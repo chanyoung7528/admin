@@ -1,4 +1,4 @@
-import { StatsCard, StatsGrid } from '@repo/shared/components/layouts/content';
+import { PageBody, StatsCard, StatsGrid } from '@repo/shared/components/layouts/content';
 import { BasicTable } from '@repo/shared/components/ui';
 import { CheckCircle, Clock, Package, ShoppingCart } from 'lucide-react';
 
@@ -7,7 +7,7 @@ import { settlementsBasic } from '../services';
 
 export function SettlementList() {
   return (
-    <div className="bg-card flex flex-col gap-6 rounded-lg border p-6 shadow-sm">
+    <PageBody>
       <StatsGrid>
         <StatsCard title="총 주문" value="156건" icon={ShoppingCart} variant="default" />
         <StatsCard title="배송완료" value="142건" icon={CheckCircle} variant="success" />
@@ -23,6 +23,6 @@ export function SettlementList() {
           console.log('정산 상세:', row);
         }}
       />
-    </div>
+    </PageBody>
   );
 }

@@ -1,4 +1,5 @@
 export { Alert, ErrorAlert } from './Alert';
+export { PageBody } from './PageBody';
 export { PageContainer } from './PageContainer';
 export { PageHeader } from './PageHeader';
 export type { StatsCardProps } from './StatsCard';

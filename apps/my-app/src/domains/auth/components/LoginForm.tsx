@@ -1,4 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
+import { Alert } from '@repo/shared/components/layouts/content';
 import { Button, Input } from '@repo/shared/components/ui';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
@@ -40,19 +41,12 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       {isError && (
-        <div className="rounded-lg border border-red-500 bg-red-50 p-4 dark:bg-red-900/20">
-          <div className="flex items-center gap-3">
-            <div className="rounded-full bg-red-100 p-2 dark:bg-red-900">
-              <svg className="h-5 w-5 text-red-600 dark:text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <div>
-              <p className="text-sm font-medium text-red-800 dark:text-red-200">{error instanceof Error ? error.message : '로그인에 실패했습니다.'}</p>
-              <p className="text-muted-foreground mt-1 text-xs">사용자명과 비밀번호를 확인하고 다시 시도해주세요.</p>
-            </div>
-          </div>
-        </div>
+        <Alert
+          variant="error"
+          title={error instanceof Error ? error.message : '로그인에 실패했습니다.'}
+          description="사용자명과 비밀번호를 확인하고 다시 시도해주세요."
+          className="mb-0"
+        />
       )}
 
       <div className="space-y-2">
