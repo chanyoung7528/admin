@@ -25,25 +25,29 @@ Data Table은 TanStack Table을 기반으로 한 고성능 테이블 컴포넌�
 ## 폴더 구조
 
 ```
-data-table/
-├── hooks/                      # 커스텀 훅 (비즈니스 로직)
-│   ├── use-data-table-state.ts    # 테이블 상태 관리
-│   ├── use-toolbar-state.ts       # 툴바 상태 관리
-│   ├── use-pagination-state.ts    # 페이지네이션 상태 관리
-│   ├── use-faceted-filter-state.ts # 필터 상태 관리
-│   └── index.ts
-├── docs/                       # 문서
-│   ├── ARCHITECTURE.md            # 아키텍처 가이드 (현재 문서)
-│   ├── CONTROLLER_GUIDE.md        # 컨트롤러 사용 가이드
-│   └── DEBOUNCE_GUIDE.md          # 디바운스 가이드
-├── data-table.tsx              # 메인 테이블 컴포넌트
-├── toolbar.tsx                 # 툴바 컴포넌트
-├── pagination.tsx              # 페이지네이션 컴포넌트
-├── faceted-filter.tsx          # 패싯 필터 컴포넌트
-├── use-data-table-controller.ts # URL 동기화 컨트롤러
-├── use-table-url-state.ts      # URL 상태 관리
-├── use-table-instance-key.ts   # 인스턴스 키 관리
-└── index.ts
+packages/shared/
+├── docs/
+│   └── data-table/                # 문서 (공용)
+│       ├── ARCHITECTURE.md        # 아키텍처 가이드 (현재 문서)
+│       ├── CONTROLLER_GUIDE.md    # 컨트롤러 사용 가이드
+│       └── DEBOUNCE_GUIDE.md      # 디바운스 가이드
+└── src/
+    └── components/
+        └── data-table/
+            ├── hooks/                      # 커스텀 훅 (비즈니스 로직)
+            │   ├── use-data-table-state.ts    # 테이블 상태 관리
+            │   ├── use-toolbar-state.ts       # 툴바 상태 관리
+            │   ├── use-pagination-state.ts    # 페이지네이션 상태 관리
+            │   ├── use-faceted-filter-state.ts # 필터 상태 관리
+            │   └── index.ts
+            ├── data-table.tsx              # 메인 테이블 컴포넌트
+            ├── toolbar.tsx                 # 툴바 컴포넌트
+            ├── pagination.tsx              # 페이지네이션 컴포넌트
+            ├── faceted-filter.tsx          # 패싯 필터 컴포넌트
+            ├── use-data-table-controller.ts # URL 동기화 컨트롤러
+            ├── use-table-url-state.ts      # URL 상태 관리
+            ├── use-table-instance-key.ts   # 인스턴스 키 관리
+            └── index.ts
 ```
 
 ## 컴포넌트 계층 구조
