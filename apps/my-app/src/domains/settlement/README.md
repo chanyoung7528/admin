@@ -319,5 +319,5 @@ expect(settlement.status).toBe('completed');
 ## 📚 참고 자료
 
 - [JSONPlaceholder 공식 문서](https://jsonplaceholder.typicode.com/)
-- [Shared DataTable 아키텍처](../../../packages/shared/src/components/data-table/docs/ARCHITECTURE.md)
+- [Shared DataTable 아키텍처](../../../../../packages/shared/docs/data-table/ARCHITECTURE.md)
 - [TanStack Table 문서](https://tanstack.com/table/latest)

@@ -132,6 +132,6 @@ config.store.getState().setTokens(tokens);
 
 ## 6. 연관 문서
 
-- `docs/ROUTE_AUTH_GUIDE.md`: TanStack Router `beforeLoad` 로 인증 라우팅 제어
-- `docs/ERROR_BOUNDARY.md`: 로그인/리다이렉트 시 에러 UI 정책
-- `docs/APP_ARCHITECTURE.md`: Auth Store/Setup 흐름 요약
+- `../../apps/my-app/docs/ROUTE_AUTH_GUIDE.md`: TanStack Router `beforeLoad` 로 인증 라우팅 제어
+- `../../apps/my-app/docs/ERROR_BOUNDARY_IMPLEMENTATION.md`: 로그인/리다이렉트 시 에러 UI 정책
+- `../../apps/my-app/docs/ARCHITECTURE.md`: Auth Store/Setup 흐름 요약
