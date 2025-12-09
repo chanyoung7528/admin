@@ -1,207 +1,75 @@
-# Form Components
+# Form 컴포넌트 사용 가이드
 
-React Hook Form 기반의 재사용 가능한 폼 컴포넌트 모음입니다.
+React Hook Form 기반 테이블 레이아웃(FormTable)과 에러 컴포넌트를 빠르게 쓰기 위한 요약입니다.
 
-## 📦 구성 요소
+## 구성 요소
 
-### FormTable - 테이블 기반 폼 레이아웃
+- `FormTable`: 테이블 형태 레이아웃 (행·셀 단위 배치)
+- `FormInput`: RHF 컨트롤된 인풋
+- `FormError`: 폼 전체 에러 배너
+- `FormFieldError`: 필드 인라인 에러
 
-폼을 테이블 형태로 깔끔하게 배치하는 레이아웃 컴포넌트입니다.
-
-```tsx
-import { FormTable } from '@shared/components/form/FormTable';
-
-<FormTable title="기본 정보">
-  <FormTable.Row>
-    <FormTable.Cell label="이름" required>
-      <Input {...} />
-    </FormTable.Cell>
-    <FormTable.Cell label="이메일" required>
-      <Input {...} />
-    </FormTable.Cell>
-  </FormTable.Row>
-</FormTable>
-```
-
-**Props:**
-
-- `title`: 섹션 제목
-- `FormTable.Cell`:
-  - `label`: 필드 라벨
-  - `required`: 필수 표시 (\*)
-  - `span`: 열 병합 (colspan)
-  - `labelPosition`: `'top' | 'left'` - 라벨 위치
-  - `labelWidth`: 왼쪽 라벨 너비 (labelPosition='left'일 때)
-
-### FormError - 에러 표시 컴포넌트
-
-폼 검증 에러를 일관된 스타일로 표시하는 컴포넌트입니다.
-
-#### 1. FormError - 전체 폼 에러 (상단 표시)
-
-```tsx
-import { FormError } from '@shared/components/form/FormError';
-
-// 기본 사용 (error 스타일)
-<FormError
-  title="입력 오류"
-  errors={{
-    name: '이름을 입력해주세요.',
-    email: '올바른 이메일 형식이 아닙니다.'
-  }}
-/>
-
-// Warning 스타일
-<FormError
-  variant="warning"
-  title="주의"
-  message="일부 필드가 누락되었습니다."
-/>
-
-// Info 스타일
-<FormError
-  variant="info"
-  title="안내"
-  message="필수 입력 항목(*)을 모두 입력해주세요."
-/>
-
-// Destructive 스타일
-<FormError
-  variant="destructive"
-  title="심각한 오류"
-  errors={{
-    server: '서버와의 연결이 끊어졌습니다.'
-  }}
-/>
-```
-
-**Props:**
-
-- `title`: 에러 제목
-- `message`: 단일 메시지 (ReactNode)
-- `errors`: 에러 객체 `Record<string, string | undefined>`
-- `variant`: `'error' | 'warning' | 'info' | 'destructive'` (기본: 'error')
-- `className`: 추가 스타일
-
-#### 2. FormFieldError - 필드별 인라인 에러
-
-```tsx
-import { FormFieldError } from '@shared/components/form/FormError';
-
-<FormTable.Cell label="이름" required>
-  <Input {...} />
-  <FormFieldError message={errors.name?.message} />
-</FormTable.Cell>
-```
-
-**Props:**
-
-- `message`: 에러 메시지 (없으면 렌더링 안됨)
-- `className`: 추가 스타일
-
-### 실제 사용 예제 (권장)
-
-**인라인 에러만 사용 (권장)**
+## 빠른 시작
 
 ```tsx
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { FormTable } from '@shared/components/form/FormTable';
-import { FormFieldError } from '@shared/components/form/FormError';
-import { FormInput } from '@shared/components/form/FormInput';
+import { FormTable, FormInput, FormFieldError, FormError } from '@repo/shared/components/form';
 
-export function MyForm() {
+const schema = z.object({
+  name: z.string().min(1, '이름을 입력해주세요'),
+  email: z.string().email('이메일 형식이 올바르지 않습니다'),
+});
+
+export function ProfileForm() {
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: zodResolver(mySchema),
-  });
+  } = useForm({ resolver: zodResolver(schema) });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(data => console.log(data))}>
+      <FormError title="입력 항목을 확인하세요" errors={Object.fromEntries(Object.entries(errors).map(([k, v]) => [k, v?.message]))} />
       <FormTable title="기본 정보">
         <FormTable.Row>
           <FormTable.Cell label="이름" required>
             <FormInput name="name" control={control} />
-            {/* 각 필드 바로 아래 인라인 에러 표시 */}
             <FormFieldError message={errors.name?.message} />
           </FormTable.Cell>
-
           <FormTable.Cell label="이메일" required>
             <FormInput name="email" control={control} />
             <FormFieldError message={errors.email?.message} />
           </FormTable.Cell>
         </FormTable.Row>
       </FormTable>
-
-      <button type="submit">제출</button>
+      <button type="submit">저장</button>
     </form>
   );
 }
 ```
 
-**전체 에러 요약 + 인라인 에러 (선택사항)**
+## Props 요약
 
-서버 에러나 전체 폼 상태를 요약해서 보여줘야 할 때만 사용:
+- `FormTable.Cell`
+  - `label`: 필드 라벨
+  - `required`: 필수 표시 여부
+  - `span`: 열 병합 (colspan)
+  - `labelPosition`: `'top' | 'left'`
+  - `labelWidth`: 왼쪽 라벨 너비 (`labelPosition='left'`일 때)
+- `FormError`
+  - `title`, `message`, `errors: Record<string, string | undefined>`
+  - `variant`: `'error' | 'warning' | 'info' | 'destructive'` (기본 `error`)
+- `FormFieldError`
+  - `message`: 문자열이 없으면 렌더링되지 않음
 
-```tsx
-export function MyFormWithSummary() {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: zodResolver(mySchema),
-  });
+## 사용 팁
 
-  return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      {/* 전체 에러 요약 (선택) */}
-      <FormError variant="error" title="입력 항목 확인" errors={Object.fromEntries(Object.entries(errors).map(([key, error]) => [key, error?.message]))} />
+- 인라인 에러(`FormFieldError`)만으로도 충분한 경우가 많습니다. 전체 배너(`FormError`)는 서버 에러나 요약이 필요할 때만 사용하세요.
+- 레이아웃은 `FormTable`을 기본으로 쓰고, 자유 레이아웃이 필요하면 일반 Flex/Grid와 혼합해도 됩니다.
+- RHF 컨트롤과 함께 사용할 때는 `control`과 `name`만 전달하면 됩니다.
 
-      <FormTable title="기본 정보">
-        <FormTable.Row>
-          <FormTable.Cell label="이름" required>
-            <FormInput name="name" control={control} />
-            <FormFieldError message={errors.name?.message} />
-          </FormTable.Cell>
-        </FormTable.Row>
-      </FormTable>
+## 참고 링크
 
-      <button type="submit">제출</button>
-    </form>
-  );
-}
-```
-
-## 🎨 에러 스타일 가이드
-
-### Error (기본)
-
-- 빨간색 계열
-- 필수 입력 누락, 형식 오류 등
-
-### Warning
-
-- 노란색 계열
-- 권장사항, 주의사항
-
-### Info
-
-- 파란색 계열
-- 안내 메시지, 도움말
-
-### Destructive
-
-- 진한 빨간색 계열
-- 심각한 오류, 서버 에러, 인증 실패 등
-
-## 📖 Storybook
-
-다양한 예제는 Storybook에서 확인할 수 있습니다:
-
-- `FormError.stories.tsx`: 에러 컴포넌트 예제
-- `FormTable.stories.tsx`: 테이블 레이아웃 예제
-- `FormViewer.stories.tsx`: 읽기 전용 뷰어 예제
+- React Hook Form: https://react-hook-form.com/
+- Zod: https://zod.dev/

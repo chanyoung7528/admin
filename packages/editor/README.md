@@ -1,45 +1,23 @@
 # @repo/editor
 
-CKEditor 5 커스텀 빌드 패키지입니다.
+CKEditor 5 커스텀 빌드(React 래퍼)를 제공하는 패키지입니다. 설치 시 postinstall이 CKEditor를 자동 빌드합니다.
 
-## 설치
-
-```bash
-pnpm install
-```
-
-설치 시 자동으로 CKEditor5 커스텀 빌드가 실행됩니다.
-
-## 사용법
+## 빠른 시작
 
 ```tsx
+import { useState } from 'react';
 import { CKEditor } from '@repo/editor';
 
-function MyComponent() {
+export function EditorExample() {
   const [content, setContent] = useState('');
 
   return <CKEditor data={content} onEditorChange={setContent} placeholder="내용을 입력하세요..." />;
 }
 ```
 
-## 빌드
+## 사용 포인트
 
-CKEditor5 커스텀 빌드를 수동으로 실행하려면:
-
-```bash
-cd packages/editor
-pnpm build
-```
-
-## 참고사항
-
-- CKEditor5 빌드 파일은 git에 커밋되지 않으며, 설치 시 자동으로 생성됩니다.
-- 빌드 시간이 약 5-10초 소요됩니다.
-
-## Vercel 배포
-
-Vercel 배포 시 자동으로 CKEditor 빌드가 실행됩니다:
-
-1. `pnpm install` 실행 → `postinstall` 스크립트가 CKEditor 빌드
-2. Storybook 빌드 시 `ckeditor5-custom-build`를 Vite 최적화에서 제외
-3. 빌드 파일 (~7.3MB)은 gitignore되어 있어 배포 시 자동 생성됨
+- **postinstall 빌드**: `pnpm install` 후 별도 작업 없이 빌드 완료.
+- **수동 빌드**: `pnpm --filter @repo/editor build`
+- **출력물 관리**: CKEditor 번들은 git에 포함되지 않으며 빌드 시 생성됩니다.
+- **번들 최적화**: Vite 설정에서 `ckeditor5-custom-build`는 이미 최적화 제외 처리되어 있습니다.
