@@ -13,6 +13,7 @@ import { useTheme } from '@shared/components/context/ThemeProvider';
 import { useSidebar } from '@shared/components/ui';
 import { Button } from '@shared/components/ui/button';
 import { Sheet, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@shared/components/ui/sheet';
+import { Slider } from '@shared/components/ui/slider';
 import { cn } from '@shared/lib/utils';
 import { CircleCheck, RotateCcw, Settings } from 'lucide-react';
 import { type SVGProps } from 'react';
@@ -37,17 +38,18 @@ export function ConfigDrawer() {
       </SheetTrigger>
       <SheetContent className="flex flex-col">
         <SheetHeader className="pb-0 text-start">
-          <SheetTitle>Theme Settings</SheetTitle>
-          <SheetDescription id="config-drawer-description">Adjust the appearance and layout to suit your preferences.</SheetDescription>
+          <SheetTitle>환경설정</SheetTitle>
+          <SheetDescription id="config-drawer-description">사용자 환경설정을 조정합니다.</SheetDescription>
         </SheetHeader>
         <div className="space-y-6 overflow-y-auto px-4">
+          <FontSizeConfig />
           <ThemeConfig />
           <SidebarConfig />
           <LayoutConfig />
         </div>
         <SheetFooter className="gap-2">
           <Button variant="destructive" onClick={handleReset} aria-label="Reset all settings to default values">
-            Reset
+            초기화
           </Button>
         </SheetFooter>
       </SheetContent>
@@ -114,6 +116,54 @@ function RadioGroupItem({
   );
 }
 
+function FontSizeConfig() {
+  const { defaultFontSize, fontSize, setFontSize } = useLayout();
+
+  const handleValueChange = (value: number[]) => {
+    setFontSize(value[0] ?? fontSize);
+  };
+
+  const handleValueCommit = (value: number[]) => {
+    const newSize = value[0] ?? fontSize;
+    setFontSize(newSize);
+  };
+
+  const handleReset = () => {
+    setFontSize(defaultFontSize);
+  };
+
+  return (
+    <div>
+      <SectionTitle title="Font Size" showReset={fontSize !== defaultFontSize} onReset={handleReset} />
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <span className="text-muted-foreground text-sm">크기</span>
+          <span className="text-foreground text-sm font-medium">{fontSize}%</span>
+        </div>
+        <Slider
+          value={[fontSize]}
+          onValueChange={handleValueChange}
+          onValueCommit={handleValueCommit}
+          min={75}
+          max={125}
+          step={5}
+          className="w-full"
+          aria-label="Adjust font size"
+          aria-describedby="font-size-description"
+        />
+        <div className="text-muted-foreground flex justify-between text-xs">
+          <span>작게 (75%)</span>
+          <span>보통 (100%)</span>
+          <span>크게 (125%)</span>
+        </div>
+      </div>
+      <div id="font-size-description" className="sr-only">
+        애플리케이션의 기본 글꼴 크기를 75%에서 125%로 조정합니다.
+      </div>
+    </div>
+  );
+}
+
 function ThemeConfig() {
   const { defaultTheme, theme, setTheme } = useTheme();
   return (
@@ -147,7 +197,7 @@ function ThemeConfig() {
         ))}
       </Radio>
       <div id="theme-description" className="sr-only">
-        Choose between system preference, light mode, or dark mode
+        시스템 설정, 라이트 모드, 다크 모드 중 선택합니다.
       </div>
     </div>
   );
@@ -186,7 +236,7 @@ function SidebarConfig() {
         ))}
       </Radio>
       <div id="sidebar-description" className="sr-only">
-        Choose between inset, floating, or standard sidebar layout
+        인셋, 플로팅, 스탠다드 사이드바 레이아웃 중 선택합니다.
       </div>
     </div>
   );
@@ -243,7 +293,7 @@ function LayoutConfig() {
         ))}
       </Radio>
       <div id="layout-description" className="sr-only">
-        Choose between default expanded, compact icon-only, or full layout mode
+        기본 확장, 컴팩트 아이콘 오직, 전체 레이아웃 모드 중 선택합니다.
       </div>
     </div>
   );
