@@ -1,18 +1,19 @@
 import { SignOutDialog } from '@shared/components/layouts/sidebar/SignOutDialog';
-import { Avatar, AvatarFallback, AvatarImage } from '@shared/components/ui/avatar';
+// import { Avatar, AvatarFallback, AvatarImage } from '@shared/components/ui/avatar';
 import { Button } from '@shared/components/ui/button';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuTrigger,
-} from '@shared/components/ui/dropdown-menu';
+// import {
+//   DropdownMenu,
+//   DropdownMenuContent,
+//   DropdownMenuGroup,
+//   DropdownMenuItem,
+//   DropdownMenuLabel,
+//   DropdownMenuSeparator,
+//   DropdownMenuShortcut,
+//   DropdownMenuTrigger,
+// } from '@shared/components/ui/dropdown-menu';
 import useDialogState from '@shared/hooks/useDialogState';
-import { Link } from '@tanstack/react-router';
+// import { Link } from '@tanstack/react-router';
+import { LogOut } from 'lucide-react';
 
 interface ProfileDropdownProps {
   onSignOut?: () => void | Promise<void>;
@@ -23,7 +24,10 @@ export function ProfileDropdown({ onSignOut }: ProfileDropdownProps) {
 
   return (
     <>
-      <DropdownMenu modal={false}>
+      <Button size="icon" variant="ghost" aria-label="Logout" className="rounded-full" onClick={() => setOpen(true)}>
+        <LogOut aria-hidden="true" />
+      </Button>
+      {/* <DropdownMenu modal={false}>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="relative h-8 w-8 rounded-full">
             <Avatar className="h-8 w-8">
@@ -67,7 +71,7 @@ export function ProfileDropdown({ onSignOut }: ProfileDropdownProps) {
             <DropdownMenuShortcut className="text-current">⇧⌘Q</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuContent>
-      </DropdownMenu>
+      </DropdownMenu> */}
 
       <SignOutDialog open={!!open} onOpenChange={setOpen} onConfirm={onSignOut} />
     </>

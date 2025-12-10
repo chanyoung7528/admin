@@ -1,7 +1,7 @@
 import { cn } from '@shared/lib/utils';
-import { Link } from '@tanstack/react-router';
 import { Button } from '@shared/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@shared/ui/dropdown-menu';
+import { Link } from '@tanstack/react-router';
 import { Menu } from 'lucide-react';
 
 export type TopNavProps = React.HTMLAttributes<HTMLElement> & {
