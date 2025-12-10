@@ -1,5 +1,5 @@
 import { DataTable } from '@shared/components/data-table';
-import { Alert, PageBody, StatsCard, StatsGrid } from '@shared/components/layouts/content';
+import { Alert, StatsCard, StatsGrid } from '@shared/components/layouts/content';
 import { CheckCircle, Clock, DollarSign, TrendingUp } from 'lucide-react';
 import { useMemo } from 'react';
 
@@ -36,7 +36,7 @@ export function SettlementTable({ service }: SettlementTableProps) {
     }).format(amount);
 
   return (
-    <PageBody>
+    <>
       <StatsGrid>
         <StatsCard
           title="총 정산 금액"
@@ -61,6 +61,6 @@ export function SettlementTable({ service }: SettlementTableProps) {
       {isError && <Alert variant="error" title="데이터를 불러오는데 실패했습니다." description="네트워크 연결을 확인하고 다시 시도해주세요." />}
 
       <DataTable {...tableProps} />
-    </PageBody>
+    </>
   );
 }
