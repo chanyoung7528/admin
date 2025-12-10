@@ -41,7 +41,7 @@ function AuthenticatedLayout() {
           console.error('Header Error:', error);
         }}
       >
-        <Header links={topNav} onSignOut={logout} />
+        <Header links={topNav} onSignOut={logout} fixed={true} />
       </ErrorBoundary>
 
       {/* 메인 콘텐츠 영역 에러 바운더리 */}

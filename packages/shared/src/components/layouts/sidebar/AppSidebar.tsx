@@ -1,6 +1,7 @@
 import { useLayout } from '@shared/components/context/LayoutProvider';
 import { sidebarData } from '@shared/lib/sidebarData';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from '@shared/ui/sidebar';
+
 import type { NavGroup as NavGroupType } from '../../../types/sidebar';
 import { NavGroup } from './NavGroup';
 import { NavUser } from './NavUser';
