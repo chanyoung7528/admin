@@ -3,10 +3,9 @@ import { TanStackRouterVite } from '@tanstack/router-plugin/vite';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 import { visualizer } from 'rollup-plugin-visualizer';
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig, loadEnv, type ProxyOptions } from 'vite';
 
-// 개발 환경 API 프록시 설정
-function createProxyConfig(target: string, prefix: string) {
+function createProxyConfig(target: string, prefix: string): Record<string, ProxyOptions> {
   const prefixPattern = new RegExp(`^${prefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}`);
 
   return {
@@ -15,11 +14,11 @@ function createProxyConfig(target: string, prefix: string) {
       changeOrigin: true,
       rewrite: (path: string) => path.replace(prefixPattern, ''),
       secure: false,
-      configure: (proxy: any) => {
-        proxy.on('error', (err: Error, req: any) => {
-          console.error('[Proxy Error]', err.message, req.url);
+      configure: proxy => {
+        proxy.on('error', (err, req) => {
+          console.error('[Proxy Error]', err instanceof Error ? err.message : String(err), req.url);
         });
-        proxy.on('proxyReq', (proxyReq: any) => {
+        proxy.on('proxyReq', proxyReq => {
           proxyReq.setHeader('Origin', target);
           proxyReq.setHeader('Referer', target);
         });
