@@ -1,9 +1,9 @@
 import { ContentHeader, ContentWrapper } from '@repo/shared/components/layouts/content';
-import { createFileRoute } from '@tanstack/react-router';
+import { createLazyFileRoute } from '@tanstack/react-router';
 
 import { DashboardView } from '@/domains/dashboard/components';
 
-export const Route = createFileRoute('/_authenticated/')({
+export const Route = createLazyFileRoute('/_authenticated/')({
   component: DashboardPage,
 });
 

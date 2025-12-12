@@ -19,28 +19,22 @@ export const Route = createRootRouteWithContext()({
 
 function RootComponent() {
   const router = useRouter();
-  const isFetchingPosts = useIsFetching({ queryKey: [''] });
 
   return (
     <ErrorBoundary
       fallback="default"
       showHomeButton={true}
       onError={(error, info) => {
-        // 에러 로깅 서비스로 전송 (Sentry, LogRocket 등)
         console.error('🚨 Root Level Error:', error);
         console.error('Component Stack:', info.componentStack);
-
-        // TODO: 실제 환경에서는 에러 모니터링 서비스로 전송
-        // Sentry.captureException(error, { contexts: { react: { componentStack: info.componentStack } } });
       }}
       onReset={() => {
-        // 에러 리셋 시 홈으로 이동
         router.navigate({ to: '/' });
       }}
     >
       <Outlet />
 
-      {isFetchingPosts > 0 && <LoadingPageOverlay />}
+      <GlobalFetchingOverlay />
 
       {env.isDebug && (
         <Suspense fallback={null}>
@@ -49,4 +43,10 @@ function RootComponent() {
       )}
     </ErrorBoundary>
   );
+}
+
+function GlobalFetchingOverlay() {
+  const isFetching = useIsFetching();
+  if (isFetching <= 0) return null;
+  return <LoadingPageOverlay />;
 }
