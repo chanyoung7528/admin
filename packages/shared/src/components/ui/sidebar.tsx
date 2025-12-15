@@ -1,5 +1,3 @@
-'use client';
-
 import { Slot } from '@radix-ui/react-slot';
 import { useIsMobile } from '@shared/hooks/useIsMobile';
 import { cn } from '@shared/lib/utils';
