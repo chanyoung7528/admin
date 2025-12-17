@@ -60,6 +60,7 @@
     "zustand": "catalog:"
   },
   "devDependencies": {
+    "@faker-js/faker": "catalog:",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@tailwindcss/vite": "catalog:",

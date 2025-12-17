@@ -29,6 +29,7 @@ function createProxyConfig(target: string, prefix: string): Record<string, Proxy
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
+
   const isDebug = env.VITE_FEATURE_DEBUG === 'true';
   const apiBaseUrl = env.VITE_API_BASE_URL || '';
   const proxyPrefix = env.VITE_API_PROXY_PREFIX || '/api';
@@ -57,6 +58,9 @@ export default defineConfig(({ mode }) => {
         brotliSize: true,
       }),
     ],
+    define: {
+      __VITE_FEATURE_DEBUG__: JSON.stringify(isDebug),
+    },
     resolve: {
       dedupe: ['react', 'react-dom'],
       alias: {

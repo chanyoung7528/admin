@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+import { mockUtils } from '@repo/shared/lib/utils/mockUtils';
 
 import { type Settlement, type SettlementBasic } from '../types';
 
@@ -12,10 +12,6 @@ export interface GetSettlementsParams {
   sortOrder?: 'asc' | 'desc';
 }
 
-// Faker seed 고정으로 일관된 데이터 생성
-faker.seed(12345);
-
-// 확장된 30개 이상의 센터명(사이트) 추가
 const extendedSites = [
   '강남 헬스케어',
   '서초 웰니스',
@@ -53,18 +49,34 @@ const extendedSites = [
   '구리 힐링센터',
 ];
 
-// 1000개의 Settlement 데이터 생성 (id는 faker uuid 사용으로 유니크하게!)
-export const settlements = Array.from({ length: 1000 }, (_, index) => {
+let settlementsCache: Settlement[] | null = null;
+
+async function generateSettlements(): Promise<Settlement[]> {
+  if (settlementsCache) {
+    return settlementsCache;
+  }
+
   const statuses: Settlement['status'][] = ['completed', 'pending'];
-  return {
-    id: `ST-${index + 1}`, // uuid 스타일로 최대한 중복 없이!
-    site: faker.helpers.arrayElement(extendedSites),
-    amount: faker.number.int({ min: 2000000, max: 8000000 }),
-    period: faker.date.between({ from: '2025-01-01', to: '2025-12-31' }).toISOString().slice(0, 7),
-    status: faker.helpers.arrayElement(statuses),
-    date: faker.date.between({ from: '2025-01-01', to: '2025-12-31' }).toISOString().slice(0, 10),
-  } satisfies Settlement;
-});
+
+  settlementsCache = await mockUtils.createArray(1000, async index => {
+    const site = await mockUtils.randomElement(extendedSites);
+    const amount = await mockUtils.randomInt(2000000, 8000000);
+    const periodDate = await mockUtils.randomDate('2025-01-01', '2025-12-31');
+    const status = await mockUtils.randomElement(statuses);
+    const date = await mockUtils.randomDate('2025-01-01', '2025-12-31');
+
+    return {
+      id: `ST-${index + 1}`,
+      site,
+      amount,
+      period: periodDate.toISOString().slice(0, 7),
+      status,
+      date: date.toISOString().slice(0, 10),
+    } satisfies Settlement;
+  });
+
+  return settlementsCache;
+}
 
 export const settlementsBasic: SettlementBasic[] = [
   { id: 'ORD-2025-001', customer: '강남 헬스케어', items: '프로틴 바 외 5건', amount: 450000, status: 'completed', date: '2025-11-08' },
@@ -73,9 +85,6 @@ export const settlementsBasic: SettlementBasic[] = [
   { id: 'ORD-2025-004', customer: '분당 피트니스', items: '프로틴 쉐이크 외 2건', amount: 280000, status: 'cancelled', date: '2025-11-11' },
 ];
 
-/**
- * Settlement 목록 조회 (클라이언트 사이드 필터링)
- */
 export async function getSettlements(params?: GetSettlementsParams): Promise<{
   settlements: Settlement[];
   total: number;
@@ -84,7 +93,7 @@ export async function getSettlements(params?: GetSettlementsParams): Promise<{
 }> {
   const { page = 1, pageSize = 10, status, filter, sortBy, sortOrder = 'asc' } = params || {};
 
-  // 필터 적용
+  const settlements = await generateSettlements();
   let filteredData = [...settlements];
 
   if (status && status.length > 0) {
@@ -134,10 +143,8 @@ export async function getSettlements(params?: GetSettlementsParams): Promise<{
   };
 }
 
-/**
- * Settlement 단일 조회
- */
 export async function getSettlement(id: string): Promise<Settlement | undefined> {
   await new Promise(resolve => setTimeout(resolve, 200));
+  const settlements = await generateSettlements();
   return settlements.find(s => s.id === id);
 }
