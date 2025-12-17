@@ -60,6 +60,16 @@ function UserStatus({ status }: { status: string }) {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+/**
+ * 기본 Badge
+ */
+export const Default: Story = {
+  args: {
+    variant: 'default',
+    children: 'Badge',
+  },
+};
+
 // 모든 변형
 export const AllVariants: Story = {
   render: () => (

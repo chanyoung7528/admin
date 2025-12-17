@@ -68,7 +68,7 @@ const columns: BasicTableColumn<Order>[] = [
     header: '주문금액',
     headerAlign: 'right',
     cellAlign: 'right',
-    cell: (row) => \`₩\${row.amount.toLocaleString()}\`,
+    cell: (row) => '₩' + row.amount.toLocaleString(),
   },
   {
     key: 'status',
@@ -93,32 +93,6 @@ export function OrderList() {
     />
   );
 }`}
-          exampleCode={`// 기본 사용
-<BasicTable data={products} columns={productColumns} />
-
-// 로딩 상태
-<BasicTable data={[]} columns={columns} isLoading={true} />
-
-// 빈 데이터 메시지
-<BasicTable 
-  data={[]} 
-  columns={columns} 
-  emptyMessage="등록된 상품이 없습니다."
-/>
-
-// 행 클릭 핸들러
-<BasicTable
-  data={users}
-  columns={userColumns}
-  onRowClick={(user) => console.log('선택된 사용자:', user)}
-/>
-
-// 커스텀 키 생성
-<BasicTable
-  data={items}
-  columns={columns}
-  getRowKey={(row, index) => \`item-\${row.id}-\${index}\`}
-/>`}
         />
       ),
     },
