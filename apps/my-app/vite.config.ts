@@ -142,6 +142,10 @@ export default defineConfig(({ mode }) => {
               if (id.includes('lucide-react')) {
                 return 'lucide-vendor';
               }
+              // 날짜 라이브러리
+              if (id.includes('date-fns')) {
+                return 'date-vendor';
+              }
               // Form 관련 라이브러리
               if (id.includes('react-hook-form') || id.includes('@hookform')) {
                 return 'form-vendor';
@@ -207,7 +211,7 @@ export default defineConfig(({ mode }) => {
     // 최적화 설정
     optimizeDeps: {
       include: ['react', 'react-dom', '@tanstack/react-router', '@tanstack/react-query', 'lucide-react', 'date-fns', 'date-fns/locale'],
-      exclude: [],
+      exclude: ['@faker-js/faker'],
     },
     // SSR 설정 (lucide-react가 제대로 번들링되도록)
     ssr: {

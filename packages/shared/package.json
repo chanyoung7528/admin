@@ -50,6 +50,7 @@
     "class-variance-authority": "catalog:",
     "clsx": "catalog:",
     "cmdk": "catalog:",
+    "date-fns": "catalog:",
     "lodash-es": "catalog:",
     "lucide-react": "catalog:",
     "react-error-boundary": "catalog:",
