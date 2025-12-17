@@ -58,9 +58,6 @@ export default defineConfig(({ mode }) => {
         brotliSize: true,
       }),
     ],
-    define: {
-      __VITE_FEATURE_DEBUG__: JSON.stringify(isDebug),
-    },
     resolve: {
       dedupe: ['react', 'react-dom'],
       alias: {
@@ -211,7 +208,6 @@ export default defineConfig(({ mode }) => {
     // 최적화 설정
     optimizeDeps: {
       include: ['react', 'react-dom', '@tanstack/react-router', '@tanstack/react-query', 'lucide-react', 'date-fns', 'date-fns/locale'],
-      exclude: ['@faker-js/faker'],
     },
     // SSR 설정 (lucide-react가 제대로 번들링되도록)
     ssr: {

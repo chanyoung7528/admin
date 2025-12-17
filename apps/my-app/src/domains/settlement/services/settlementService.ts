@@ -1,5 +1,3 @@
-import { mockUtils } from '@repo/shared/lib/utils/mockUtils';
-
 import { type Settlement, type SettlementBasic } from '../types';
 
 export interface GetSettlementsParams {
@@ -12,71 +10,53 @@ export interface GetSettlementsParams {
   sortOrder?: 'asc' | 'desc';
 }
 
-const extendedSites = [
-  '강남 헬스케어',
-  '서초 웰니스',
-  '판교 케어센터',
-  '삼성 메디컬',
-  '역삼 웰빙센터',
-  '신사 클리닉',
-  '압구정 센터',
-  '청담 헬스',
-  '도곡 웰니스',
-  '대치 메디컬',
-  '여의도 건강센터',
-  '광화문 헬스케어',
-  '마포 힐링팜',
-  '잠실 피트니스',
-  '논현 리커버리',
-  '수원 메디웰',
-  '분당 하트케어',
-  '동작 밸런스',
-  '구로 메디업',
-  '시청 웰메디',
-  '선릉 리셋센터',
-  '목동 케어힐',
-  '건대 코어웰',
-  '삼성 메디라운지',
-  '부산 해운대 클리닉',
-  '광주 피트케어',
-  '대전 뉴라이프',
-  '울산 메디밸런스',
-  '일산 프라임케어',
-  '인천 센터힐',
-  '노원 메디클럽',
-  '동탄 헬스플러스',
-  '천안 센트럴케어',
-  '구리 힐링센터',
-];
-
-let settlementsCache: Settlement[] | null = null;
-
-async function generateSettlements(): Promise<Settlement[]> {
-  if (settlementsCache) {
-    return settlementsCache;
-  }
+// 하드코딩된 정산 데이터 (1000개)
+const settlements: Settlement[] = Array.from({ length: 1000 }, (_, index) => {
+  const sites = [
+    '강남 헬스케어',
+    '서초 웰니스',
+    '판교 케어센터',
+    '삼성 메디컬',
+    '역삼 웰빙센터',
+    '신사 클리닉',
+    '압구정 센터',
+    '청담 헬스',
+    '도곡 웰니스',
+    '대치 메디컬',
+    '여의도 건강센터',
+    '광화문 헬스케어',
+    '마포 힐링팜',
+    '잠실 피트니스',
+    '논현 리커버리',
+    '수원 메디웰',
+    '분당 하트케어',
+    '동작 밸런스',
+    '구로 메디업',
+    '시청 웰메디',
+    '선릉 리셋센터',
+    '목동 케어힐',
+    '건대 코어웰',
+    '삼성 메디라운지',
+    '부산 해운대 클리닉',
+    '광주 피트케어',
+    '대전 뉴라이프',
+    '울산 메디밸런스',
+    '일산 프라임케어',
+    '인천 센터힐',
+  ];
 
   const statuses: Settlement['status'][] = ['completed', 'pending'];
+  const months = ['2025-01', '2025-02', '2025-03', '2025-04', '2025-05', '2025-06', '2025-07', '2025-08', '2025-09', '2025-10', '2025-11', '2025-12'];
 
-  settlementsCache = await mockUtils.createArray(1000, async index => {
-    const site = await mockUtils.randomElement(extendedSites);
-    const amount = await mockUtils.randomInt(2000000, 8000000);
-    const periodDate = await mockUtils.randomDate('2025-01-01', '2025-12-31');
-    const status = await mockUtils.randomElement(statuses);
-    const date = await mockUtils.randomDate('2025-01-01', '2025-12-31');
-
-    return {
-      id: `ST-${index + 1}`,
-      site,
-      amount,
-      period: periodDate.toISOString().slice(0, 7),
-      status,
-      date: date.toISOString().slice(0, 10),
-    } satisfies Settlement;
-  });
-
-  return settlementsCache;
-}
+  return {
+    id: `ST-${index + 1}`,
+    site: sites[index % sites.length]!,
+    amount: 2000000 + ((index * 6000) % 6000000),
+    period: months[index % months.length]!,
+    status: statuses[index % statuses.length]!,
+    date: `2025-${String((Math.floor(index / 31) % 12) + 1).padStart(2, '0')}-${String((index % 28) + 1).padStart(2, '0')}`,
+  };
+});
 
 export const settlementsBasic: SettlementBasic[] = [
   { id: 'ORD-2025-001', customer: '강남 헬스케어', items: '프로틴 바 외 5건', amount: 450000, status: 'completed', date: '2025-11-08' },
@@ -93,7 +73,6 @@ export async function getSettlements(params?: GetSettlementsParams): Promise<{
 }> {
   const { page = 1, pageSize = 10, status, filter, sortBy, sortOrder = 'asc' } = params || {};
 
-  const settlements = await generateSettlements();
   let filteredData = [...settlements];
 
   if (status && status.length > 0) {
@@ -145,6 +124,5 @@ export async function getSettlements(params?: GetSettlementsParams): Promise<{
 
 export async function getSettlement(id: string): Promise<Settlement | undefined> {
   await new Promise(resolve => setTimeout(resolve, 200));
-  const settlements = await generateSettlements();
   return settlements.find(s => s.id === id);
 }
