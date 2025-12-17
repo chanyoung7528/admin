@@ -84,6 +84,17 @@ function UserActions() {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
+/**
+ * 기본 Button
+ */
+export const Default: Story = {
+  args: {
+    variant: 'default',
+    size: 'default',
+    children: 'Button',
+  },
+};
+
 // 모든 변형 한눈에 보기
 export const AllVariants: Story = {
   render: () => (

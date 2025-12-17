@@ -1,6 +1,6 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@repo/shared/components/ui/tabs';
-import { Controls, Description, Primary, Stories, Subtitle, Title } from '@storybook/blocks';
-import { BookOpen, Library, Package, Settings, Sliders, Sparkles, Wrench } from 'lucide-react';
+import { Controls, Primary, Stories, Subtitle, Title } from '@storybook/blocks';
+import { BookOpen, Library, Package, Settings, Sparkles, Wrench } from 'lucide-react';
 import React from 'react';
 
 interface Section {
@@ -22,7 +22,7 @@ interface CustomDocsPageProps {
 
 export function CustomDocsPage({ installationDeps, implementationCode, exampleCode, utilityCode, children }: CustomDocsPageProps) {
   const [showScrollTop, setShowScrollTop] = React.useState(false);
-  const [activeTab, setActiveTab] = React.useState('description');
+  const [activeTab, setActiveTab] = React.useState('test-controls');
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -88,19 +88,14 @@ export function CustomDocsPage({ installationDeps, implementationCode, exampleCo
 
   const sections: Section[] = [
     {
-      id: 'description',
-      title: '컴포넌트 설명',
+      id: 'test-controls',
+      title: '실시간 테스트',
       icon: BookOpen,
       content: (
         <div className="rounded-lg p-6">
-          <Description />
           <div className="mt-6 rounded-lg">
             <Primary />
             <div className="mt-4">
-              <div className="mb-2 flex items-center gap-2">
-                <Sliders className="h-4 w-4 text-blue-600 dark:text-blue-400" />
-                <h4 className="font-semibold text-blue-900 dark:text-blue-200">실시간 테스트</h4>
-              </div>
               <Controls />
             </div>
           </div>
@@ -137,14 +132,7 @@ export function CustomDocsPage({ installationDeps, implementationCode, exampleCo
       content: implementationCode ? (
         <div className="space-y-4">
           <div className="rounded-lg">
-            <div className="mb-4 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="rounded-full bg-green-100 p-2 dark:bg-green-900">
-                  <Sparkles className="h-4 w-4 text-green-600 dark:text-green-400" />
-                </span>
-                <span className="font-semibold text-gray-900 dark:text-gray-100">완전한 TypeScript 구현 코드</span>
-              </div>
-            </div>
+            <div className="mb-4 flex items-center justify-between"></div>
             <div className="animate-slideDown mt-4">
               <CodeBlock code={implementationCode} />
             </div>
@@ -195,14 +183,7 @@ export function CustomDocsPage({ installationDeps, implementationCode, exampleCo
       content: (
         <div className="space-y-4">
           <div className="rounded-lg">
-            <div className="mb-4 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <span className="rounded-full bg-orange-100 p-2 dark:bg-orange-900">
-                  <Wrench className="h-4 w-4 text-orange-600 dark:text-orange-400" />
-                </span>
-                <span className="font-semibold text-orange-800 dark:text-orange-200">필수 유틸리티 함수 (cn)</span>
-              </div>
-            </div>
+            <div className="mb-4 flex items-center justify-between"></div>
             <div className="mb-4 text-sm text-orange-700 dark:text-orange-300">
               <p>Tailwind CSS 클래스를 안전하게 병합하는 유틸리티 함수입니다.</p>
             </div>
@@ -299,7 +280,7 @@ export function cn(...inputs: ClassValue[]) {
         }}
         aria-hidden={activeTab !== 'examples'}
       >
-        <div className="rounded-lg border border-gray-200 bg-white p-6 shadow-sm">
+        <div className="rounded-lg">
           <Stories />
         </div>
       </div>
