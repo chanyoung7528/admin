@@ -94,6 +94,9 @@ export default defineConfig(({ mode }) => {
     build: {
       // 번들 크기 최적화
       rollupOptions: {
+        treeshake: {
+          moduleSideEffects: 'no-external',
+        },
         output: {
           manualChunks: id => {
             // node_modules 처리
@@ -124,14 +127,12 @@ export default defineConfig(({ mode }) => {
               if (id.includes('@radix-ui')) {
                 return 'radix-vendor';
               }
-              // 아이콘 라이브러리
-              if (id.includes('lucide-react')) {
-                return 'icon-vendor';
-              }
               // Command palette
               if (id.includes('cmdk')) {
                 return 'cmdk-vendor';
               }
+              // 아이콘 라이브러리 (lucide-react는 tree-shaking을 위해 별도 청크로 분리하지 않음)
+              // vendor 청크에 포함되어 처리됨
               // Form 관련 라이브러리
               if (id.includes('react-hook-form') || id.includes('@hookform')) {
                 return 'form-vendor';
@@ -196,7 +197,8 @@ export default defineConfig(({ mode }) => {
     },
     // 최적화 설정
     optimizeDeps: {
-      include: ['react', 'react-dom', '@tanstack/react-router', '@tanstack/react-query'],
+      include: ['react', 'react-dom', '@tanstack/react-router', '@tanstack/react-query', 'lucide-react', 'date-fns', 'date-fns/locale'],
+      exclude: [],
     },
   };
 });
