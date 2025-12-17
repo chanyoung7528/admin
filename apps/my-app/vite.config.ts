@@ -95,7 +95,14 @@ export default defineConfig(({ mode }) => {
       // 번들 크기 최적화
       rollupOptions: {
         treeshake: {
-          moduleSideEffects: 'no-external',
+          moduleSideEffects: (id, external) => {
+            // lucide-react는 side effects 유지
+            if (id.includes('lucide-react')) {
+              return true;
+            }
+            // 외부 모듈은 기본적으로 side effects 제거
+            return !external;
+          },
         },
         output: {
           manualChunks: id => {
@@ -131,8 +138,10 @@ export default defineConfig(({ mode }) => {
               if (id.includes('cmdk')) {
                 return 'cmdk-vendor';
               }
-              // 아이콘 라이브러리 (lucide-react는 tree-shaking을 위해 별도 청크로 분리하지 않음)
-              // vendor 청크에 포함되어 처리됨
+              // 아이콘 라이브러리 - 별도 청크로 분리
+              if (id.includes('lucide-react')) {
+                return 'lucide-vendor';
+              }
               // Form 관련 라이브러리
               if (id.includes('react-hook-form') || id.includes('@hookform')) {
                 return 'form-vendor';
@@ -199,6 +208,10 @@ export default defineConfig(({ mode }) => {
     optimizeDeps: {
       include: ['react', 'react-dom', '@tanstack/react-router', '@tanstack/react-query', 'lucide-react', 'date-fns', 'date-fns/locale'],
       exclude: [],
+    },
+    // SSR 설정 (lucide-react가 제대로 번들링되도록)
+    ssr: {
+      noExternal: ['lucide-react'],
     },
   };
 });
