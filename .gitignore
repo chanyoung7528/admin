@@ -1,13 +1,9 @@
 # Dependencies
-node_modules
+node_modules/
 .pnp
 .pnp.js
 
-# Testing
-coverage
-*.lcov
-
-# Production builds
+# Build outputs
 dist/
 build/
 storybook-static/
@@ -17,10 +13,12 @@ out/
 **/build/
 **/storybook-static/
 
-# Misc
-*.pem
+# Testing
+coverage/
+*.lcov
 
-# Debug logs
+# Logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -33,21 +31,28 @@ lerna-debug.log*
 !.env.development
 !.env.production*
 
-# Vercel
-.vercel
-
-# Turbo
-.turbo
+# Cache & temp
+.cache/
+.turbo/
 .turbo-dev.log
+.eslintcache
+.parcel-cache/
+.tanstack/
 
 # TypeScript
 *.tsbuildinfo
 tsconfig.tsbuildinfo
 
-# CKEditor Build (auto-generated)
+# TanStack Router (자동 생성)
+routeTree.gen.ts
+
+# CKEditor Build (자동 생성)
 packages/editor/ckeditor5/build
 packages/editor/ckeditor5/node_modules
 packages/editor/ckeditor5/package-lock.json
+
+# Deployment
+.vercel/
 
 # IDE
 .vscode/*
@@ -55,19 +60,10 @@ packages/editor/ckeditor5/package-lock.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-.idea
+.idea/
 *.swp
 *.swo
 *~
-
-# Cache
-.cache
-.eslintcache
-.parcel-cache
-
-# TanStack
-.tanstack
-routeTree.gen.ts
 
 # OS
 .DS_Store
@@ -75,5 +71,8 @@ routeTree.gen.ts
 ._*
 .Spotlight-V100
 .Trashes
-ehthumbs.db
 Thumbs.db
+ehthumbs.db
+
+# Misc
+*.pem

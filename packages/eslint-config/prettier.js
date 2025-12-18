@@ -1,15 +1,16 @@
 export default {
   semi: true,
   tabWidth: 2,
-  printWidth: 160,
-  singleQuote: true,
   trailingComma: 'es5',
   jsxSingleQuote: false,
   bracketSpacing: true,
-  arrowParens: 'avoid',
   endOfLine: 'lf',
   useTabs: false,
   bracketSameLine: false,
   quoteProps: 'as-needed',
+
+  printWidth: 160,
+  singleQuote: true,
+  arrowParens: 'avoid',
   plugins: ['prettier-plugin-tailwindcss'],
 };

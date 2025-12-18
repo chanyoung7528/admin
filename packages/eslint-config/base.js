@@ -5,16 +5,15 @@ import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
 /**
- * Base configuration for TypeScript/JavaScript projects
- * Includes:
+ * Base ESLint 설정 (TypeScript/JavaScript)
  * - ESLint Recommended
  * - TypeScript ESLint Recommended
- * - Prettier integration
- * - Simple Import Sort
+ * - Prettier 통합
+ * - Import/Export 자동 정렬
  */
 export const baseConfig = tseslint.config(
   {
-    ignores: ['dist', 'node_modules', 'build', 'coverage', '.turbo', '.changeset', 'storybook-static'],
+    ignores: ['dist', 'node_modules', 'build', 'coverage', '.turbo', '.changeset', 'storybook-static', 'routeTree.gen.ts', '.storybook'],
   },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended, prettier],
