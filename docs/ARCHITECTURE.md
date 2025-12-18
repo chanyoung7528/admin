@@ -21,15 +21,6 @@
 - content (콘텐츠 관리)
 ```
 
-### ❌ DON'T (잘못된 접근)
-
-```
-도메인 ≠ 제품/서비스명 (Who를 위한)
-- productBody (X)
-- productFood (X)
-- productMind (X)
-```
-
 ---
 
 ## 📁 전체 구조
@@ -393,7 +384,7 @@ describe('DashboardView', () => {
 
 | 분류          | 기술                         |
 | ------------- | ---------------------------- |
-| **Framework** | React 19 (Vite)              |
+| **Framework** | Vite + React                 |
 | **Language**  | TypeScript                   |
 | **Routing**   | TanStack Router (File-based) |
 | **State**     | TanStack Query, Zustand      |
