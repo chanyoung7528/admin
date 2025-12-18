@@ -1,6 +1,6 @@
+export { AcquisitionChannels } from './AcquisitionChannels';
 export { DashboardStats } from './DashboardStats';
+export { DeviceSessions } from './DeviceSessions';
 export { ProfitChart } from './ProfitChart';
 export { RecentOrders } from './RecentOrders';
-export { RevenueGoals } from './RevenueGoals';
 export { SalesCategory } from './SalesCategory';
-export { UpcomingSchedule } from './UpcomingSchedule';

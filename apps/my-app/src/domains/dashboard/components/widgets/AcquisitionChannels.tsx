@@ -1,8 +1,6 @@
 import { WidgetCard } from '@repo/shared/components/layouts/content';
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
-import type { RevenueGoal } from '../../types';
-
 const CHANNEL_DATA = [
   { month: '1월', direct: 40, referral: 30, organic: 20, social: 10 },
   { month: '2월', direct: 45, referral: 35, organic: 25, social: 15 },
@@ -21,19 +19,17 @@ const CHANNEL_LEGEND = [
   { label: '소셜', color: 'bg-indigo-200' },
 ] as const;
 
-interface RevenueGoalsProps {
-  goals: RevenueGoal[];
+interface AcquisitionChannelsProps {
   title?: string;
   description?: string;
 }
 
 /**
- * RevenueGoals - 채널별 매출 현황 위젯
- * @param _goals - 목표 데이터 배열 (미사용, 향후 확장용)
+ * AcquisitionChannels - 채널별 매출 현황 위젯
  * @param title - 위젯 제목
  * @param description - 위젯 설명
  */
-export function RevenueGoals({ goals: _goals, title = '획득 채널', description = '월별 목표 설정' }: RevenueGoalsProps) {
+export function AcquisitionChannels({ title = '획득 채널', description = '월별 목표 설정' }: AcquisitionChannelsProps) {
   return (
     <WidgetCard title={title} description={description} className="h-full">
       <div className="mb-6 flex items-center gap-6">

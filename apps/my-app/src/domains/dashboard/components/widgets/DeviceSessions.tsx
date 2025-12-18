@@ -1,25 +1,21 @@
 import { WidgetCard } from '@repo/shared/components/layouts/content';
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from 'recharts';
 
-import type { Schedule } from '../../types';
-
 const DEVICE_SESSION_DATA = [
   { name: '데스크톱', value: 65, color: '#4F46E5' },
   { name: '모바일', value: 25, color: '#818CF8' },
   { name: '태블릿', value: 10, color: '#C7D2FE' },
 ];
 
-interface UpcomingScheduleProps {
-  schedules: Schedule[];
+interface DeviceSessionsProps {
   title?: string;
 }
 
 /**
- * UpcomingSchedule - 디바이스별 세션 분포 위젯
- * @param _schedules - 일정 데이터 배열 (미사용, 향후 확장용)
+ * DeviceSessions - 디바이스별 세션 분포 위젯
  * @param title - 위젯 제목
  */
-export function UpcomingSchedule({ schedules: _schedules, title = '디바이스별 세션' }: UpcomingScheduleProps) {
+export function DeviceSessions({ title = '디바이스별 세션' }: DeviceSessionsProps) {
   return (
     <WidgetCard title={title}>
       <div className="flex items-center justify-center">

@@ -21,29 +21,12 @@ export interface ProfitInsight {
   trend: TrendType;
 }
 
-export interface RevenueGoal {
-  label: string;
-  amount: string;
-  percentage: number;
-  color: string;
-}
-
 export interface SalesCategory {
   name: string;
   value: number;
   count: string;
   color: string;
   customRadius: number;
-}
-
-export type ScheduleType = 'primary' | 'orange' | 'green';
-
-export interface Schedule {
-  date: string;
-  time: string;
-  title: string;
-  description: string;
-  type: ScheduleType;
 }
 
 export type OrderStatus = 'Complete' | 'Pending';
