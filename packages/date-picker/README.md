@@ -13,7 +13,6 @@ React DatePicker 컴포넌트 with dayjs integration
 - 📱 반응형 디자인
 - 🔧 TypeScript 지원
 - 🚀 경량 번들 크기
-- 📦 npm 배포 가능
 
 ### 날짜 라이브러리 사용
 
@@ -29,11 +28,12 @@ date-fns는 react-datepicker의 로케일 시스템에만 최소한으로 사용
 ## 설치
 
 ```bash
-pnpm add @repo/date-picker
-# or
-npm install @repo/date-picker
-# or
-yarn add @repo/date-picker
+# 모노레포(이 레포)에서 워크스페이스 패키지로 추가
+pnpm --filter <target-workspace> add @repo/date-picker@workspace:*
+
+# 예)
+pnpm --filter my-app add @repo/date-picker@workspace:*
+pnpm --filter storybook-docs add @repo/date-picker@workspace:*
 ```
 
 ## Peer Dependencies
@@ -262,25 +262,25 @@ console.log(formatted); // "2025-11-18 23:59:59"
 ### 빌드
 
 ```bash
-pnpm build
+pnpm --filter @repo/date-picker build
 ```
 
 ### 타입 체크
 
 ```bash
-pnpm type-check
+pnpm --filter @repo/date-picker type-check
 ```
 
 ### 린트
 
 ```bash
-pnpm lint
+pnpm --filter @repo/date-picker lint
 ```
 
 ### 클린
 
 ```bash
-pnpm clean
+pnpm --filter @repo/date-picker clean
 ```
 
 ## 브라우저 지원
@@ -289,20 +289,3 @@ pnpm clean
 - Firefox (최신)
 - Safari (최신)
 - Edge (최신)
-
-## 라이센스
-
-MIT
-
-## 기여
-
-기여는 언제나 환영합니다! 이슈나 PR을 자유롭게 제출해주세요.
-
-## 변경 이력
-
-### 1.0.0
-
-- 초기 릴리스
-- dayjs를 사용한 날짜 처리
-- TypeScript 지원
-- 커스터마이징 가능한 스타일

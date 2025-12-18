@@ -29,7 +29,7 @@ import { DataTable } from '@repo/shared/components/data-table';
 />
 ```
 
-자세한 사용법은 [DataTable 문서](./docs/data-table/ARCHITECTURE.md) 참조
+자세한 사용법은 [DataTable 가이드](./docs/data-table/README.md) 참조
 
 ### Form 컴포넌트
 
@@ -76,9 +76,8 @@ Tailwind CSS v4 + CSS Variables 기반:
 
 ## 📚 문서
 
+- [DataTable 가이드](./docs/data-table/README.md)
 - [DataTable 아키텍처](./docs/data-table/ARCHITECTURE.md)
-- [Controller 가이드](./docs/data-table/CONTROLLER_GUIDE.md)
-- [Debounce 가이드](./docs/data-table/DEBOUNCE_GUIDE.md)
 - [Form 컴포넌트](./docs/form/README.md)
 
 ## 🔗 관련 링크

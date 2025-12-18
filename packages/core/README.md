@@ -35,7 +35,7 @@ const timeout = env.apiTimeout;
 
 ```typescript
 import { configureAuth } from '@repo/core/api';
-import { useAuthStore } from '@/stores/useAuthStore';
+import { useAuthStore } from '@/domains/auth/stores/useAuthStore';
 
 configureAuth({
   store: useAuthStore,
@@ -47,7 +47,7 @@ configureAuth({
 });
 ```
 
-자세한 사용법은 [API 인증 가이드](./docs/API_AUTH_INTEGRATION.md) 참조
+`my-app`은 위 설정을 `apps/my-app/src/setupApiClient.ts`에서 한 번만 수행합니다.\n+\n+자세한 사용법은 [API 인증 가이드](./docs/API_AUTH_INTEGRATION.md) 참조
 
 ## 📚 문서
 
