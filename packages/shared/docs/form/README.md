@@ -37,7 +37,7 @@ import { FormTable } from '@shared/components/form/FormTable';
 
 폼 검증 에러를 일관된 스타일로 표시하는 컴포넌트입니다.
 
-#### 1. FormError - 전체 폼 에러 (상단 표시)
+### FormError - 전체 폼 에러 (상단 표시)
 
 ```tsx
 import { FormError } from '@shared/components/form/FormError';
@@ -83,7 +83,7 @@ import { FormError } from '@shared/components/form/FormError';
 - `variant`: `'error' | 'warning' | 'info' | 'destructive'` (기본: 'error')
 - `className`: 추가 스타일
 
-#### 2. FormFieldError - 필드별 인라인 에러
+### FormFieldError - 필드별 인라인 에러
 
 ```tsx
 import { FormFieldError } from '@shared/components/form/FormError';

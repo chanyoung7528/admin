@@ -42,7 +42,7 @@ pnpm preview
 각 컴포넌트는 `CustomDocsPage`를 사용하여 다음 정보를 제공합니다:
 
 1. **컴포넌트 설명**: 개요 및 실시간 테스트
-2. **설치방법**: NPM/PNPM 설치 명령어
+2. **설치방법**: PNPM(모노레포) 기준 설치 명령어
 3. **완벽한 구현코드**: TypeScript 전체 코드
 4. **유틸리티 함수**: 필요한 유틸리티 함수
 5. **모든 예시**: 다양한 사용 사례
@@ -55,7 +55,7 @@ pnpm preview
 
 1. Vercel에 프로젝트 연결
 2. Root Directory를 `apps/storybook`으로 설정
-3. Build Command: `pnpm run build`
+3. Build Command: `pnpm build`
 4. Output Directory: `storybook-static`
 5. Install Command: `pnpm install`
 

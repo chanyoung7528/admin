@@ -72,7 +72,6 @@ pnpm build:storybook
 - [배포 가이드](./apps/my-app/docs/DEPLOYMENT.md)
 - [ErrorBoundary](./apps/my-app/docs/ERROR_BOUNDARY_IMPLEMENTATION.md)
 - [라우트 인증](./apps/my-app/docs/ROUTE_AUTH_GUIDE.md)
-- [Faker 데이터](./apps/my-app/docs/FAKER_SETUP.md)
 
 #### storybook
 
@@ -86,9 +85,8 @@ pnpm build:storybook
 
 #### @repo/shared
 
+- [DataTable 가이드](./packages/shared/docs/data-table/README.md)
 - [DataTable 아키텍처](./packages/shared/docs/data-table/ARCHITECTURE.md)
-- [Controller 가이드](./packages/shared/docs/data-table/CONTROLLER_GUIDE.md)
-- [Debounce 가이드](./packages/shared/docs/data-table/DEBOUNCE_GUIDE.md)
 - [Form 컴포넌트](./packages/shared/docs/form/README.md)
 
 #### @repo/date-picker

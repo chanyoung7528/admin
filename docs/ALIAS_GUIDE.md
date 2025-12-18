@@ -8,7 +8,7 @@
 
 - `my-app`: `@/*` (앱 내부 경로)
 - `shared`: `@shared/*` (공유 패키지 내부 경로)
-- shared 가져오기: `@repo/shared/*` (다른 패키지에서 shared 사용 시)
+- shared 가져오기: `@repo/shared/*` (권장, 패키지 경계 표현) / `@shared/*` (모노레포 내부 소스 직접 참조용 - 현 설정상 앱에서도 사용 가능)
 
 ### 2. **충돌 방지**
 
@@ -24,7 +24,7 @@
 
 #### ✅ my-app 내부 파일 참조
 
-```typescript
+```tsx
 // my-app/src 폴더 내의 파일들 참조
 import { MyComponent } from '@/components/MyComponent';
 import { useMyHook } from '@/hooks/useMyHook';
@@ -35,7 +35,7 @@ import { MyPage } from '@/pages/MyPage';
 
 #### ✅ shared 패키지 가져오기
 
-```typescript
+```tsx
 // shared 패키지의 UI 컴포넌트
 import { Button, Input, Dialog } from '@repo/shared/components/ui';
 
@@ -97,13 +97,17 @@ import { IconCustom } from '@repo/shared/assets/custom';
 
 #### `vite.config.ts`
 
-```typescript
+```tsx
 import path from 'path';
 import { defineConfig } from 'vite';
 
 export default defineConfig({
   resolve: {
+    dedupe: ['react', 'react-dom'],
     alias: {
+      // CSS 파일 절대 경로
+      '@repo/shared/globals.css': path.resolve(__dirname, '../../packages/shared/src/styles/globals.css'),
+
       // shared 패키지 가져오기
       '@repo/shared/components/ui': path.resolve(__dirname, '../../packages/shared/src/components/ui'),
       '@repo/shared/components/context': path.resolve(__dirname, '../../packages/shared/src/components/context'),
@@ -137,7 +141,7 @@ export default defineConfig({
 
 #### ✅ shared 패키지 내부 파일 참조
 
-```typescript
+```tsx
 // UI 컴포넌트
 import { Button } from '@shared/ui/button';
 import { Input } from '@shared/ui/input';
@@ -184,7 +188,7 @@ import { IconCustom } from '@shared/assets/custom';
 
 #### `vite.config.ts`
 
-```typescript
+```tsx
 import path from 'path';
 import { defineConfig } from 'vite';
 
@@ -212,9 +216,9 @@ export default defineConfig({
     "./utils/*": "./src/lib/utils/*.ts",
     "./components/ui": "./src/components/ui/index.ts",
     "./components/layouts": "./src/components/layouts/index.ts",
-    "./components/context": "./src/components/context/index.ts",
     "./components/*": "./src/components/*",
     "./hooks/*": "./src/hooks/*.ts",
+    "./stores/*": "./src/stores/*.ts",
     "./types/*": "./src/types/*.ts"
   }
 }
@@ -228,7 +232,7 @@ export default defineConfig({
 
 #### ✅ shared 패키지 가져오기
 
-```typescript
+```tsx
 // shared 패키지의 UI 컴포넌트
 import { Button, Input, Dialog } from '@repo/shared/components/ui';
 
@@ -279,7 +283,7 @@ import { CustomDocsPage } from '@/components/CustomDocsPage';
 
 #### `.storybook/main.ts`
 
-```typescript
+```tsx
 import { resolve } from 'path';
 
 const config: StorybookConfig = {
@@ -288,10 +292,18 @@ const config: StorybookConfig = {
     config.resolve.alias = {
       ...config.resolve.alias,
 
-      // CSS 파일 절대 경로
-      '@repo/shared/globals.css': resolve(__dirname, '../../../packages/shared/src/styles/globals.css'),
+      // React 중복 방지 (최우선)
+      react: resolve(__dirname, '../../../node_modules/react'),
+      'react-dom': resolve(__dirname, '../../../node_modules/react-dom'),
+      'react/jsx-runtime': resolve(__dirname, '../../../node_modules/react/jsx-runtime'),
+      'react/jsx-dev-runtime': resolve(__dirname, '../../../node_modules/react/jsx-dev-runtime'),
 
-      // shared 패키지 가져오기
+      // date-picker 패키지
+      '@repo/date-picker': resolve(__dirname, '../../../packages/date-picker/src'),
+      '@repo/date-picker/styles.css': resolve(__dirname, '../../../packages/date-picker/src/styles.css'),
+
+      // shared 패키지 가져오기 (구체적인 것부터 먼저)
+      '@repo/shared/globals.css': resolve(__dirname, '../../../packages/shared/src/styles/globals.css'),
       '@repo/shared/components/ui': resolve(__dirname, '../../../packages/shared/src/components/ui'),
       '@repo/shared/components/context': resolve(__dirname, '../../../packages/shared/src/components/context'),
       '@repo/shared/components/layouts': resolve(__dirname, '../../../packages/shared/src/components/layouts'),
@@ -301,7 +313,7 @@ const config: StorybookConfig = {
       '@repo/shared/assets': resolve(__dirname, '../../../packages/shared/src/assets'),
       '@repo/shared': resolve(__dirname, '../../../packages/shared/src'),
 
-      // shared 내부 alias (빌드시 resolve용)
+      // shared 패키지 내부에서 사용하는 alias (빌드시 resolve용)
       '@shared/ui': resolve(__dirname, '../../../packages/shared/src/components/ui'),
       '@shared/components': resolve(__dirname, '../../../packages/shared/src/components'),
       '@shared/lib': resolve(__dirname, '../../../packages/shared/src/lib'),
@@ -311,43 +323,26 @@ const config: StorybookConfig = {
     };
 
     // React 중복 방지 (중요!)
-    config.resolve.dedupe = ['react', 'react-dom'];
+    config.resolve.dedupe = ['react', 'react-dom', 'react/jsx-runtime', 'react/jsx-dev-runtime'];
 
-    // 빌드 최적화 설정 (청크 분리)
-    config.build = config.build || {};
-    config.build.rollupOptions = config.build.rollupOptions || {};
-    config.build.rollupOptions.output = {
-      ...config.build.rollupOptions.output,
-      manualChunks: id => {
-        // React 및 React DOM을 별도 청크로 분리
-        if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) {
-          return 'react-vendor';
-        }
-
-        // Radix UI 컴포넌트를 별도 청크로 분리
-        if (id.includes('node_modules/@radix-ui/')) {
-          return 'radix-vendor';
-        }
-
-        // Lucide 아이콘을 별도 청크로 분리
-        if (id.includes('node_modules/lucide-react/')) {
-          return 'lucide-vendor';
-        }
-
-        // Storybook 관련 패키지
-        if (id.includes('node_modules/@storybook/')) {
-          return 'storybook-vendor';
-        }
-
-        // 기타 큰 node_modules 패키지
-        if (id.includes('node_modules/')) {
-          return 'vendor';
-        }
+    // 개발 모드 의존성 최적화 (React alias 보장)
+    config.optimizeDeps = config.optimizeDeps || {};
+    config.optimizeDeps.include = [
+      ...(config.optimizeDeps.include || []),
+      'react',
+      'react-dom',
+      'react/jsx-runtime',
+      'react/jsx-dev-runtime',
+      'dayjs',
+      'react-datepicker',
+    ];
+    config.optimizeDeps.esbuildOptions = {
+      ...(config.optimizeDeps.esbuildOptions || {}),
+      alias: {
+        react: resolve(__dirname, '../../../node_modules/react'),
+        'react-dom': resolve(__dirname, '../../../node_modules/react-dom'),
       },
     };
-
-    // 청크 크기 경고 임계값 증가 (Storybook은 일반적으로 크므로)
-    config.build.chunkSizeWarningLimit = 3000;
 
     return config;
   },
@@ -356,9 +351,10 @@ const config: StorybookConfig = {
 
 #### `.storybook/preview.ts`
 
-```typescript
+```tsx
 import type { Preview } from '@storybook/react';
-import '@repo/shared/globals.css'; // ✅ 절대 경로 사용
+import '@repo/date-picker/styles.css';
+import '@repo/shared/globals.css';
 
 const preview: Preview = {
   // ...
@@ -369,11 +365,11 @@ const preview: Preview = {
 
 ## 🔍 주요 차이점 요약
 
-| 위치          | 자신의 파일 참조 | shared 패키지 참조 |
-| ------------- | ---------------- | ------------------ |
-| **my-app**    | `@/*`            | `@repo/shared/*`   |
-| **storybook** | `@/*`            | `@repo/shared/*`   |
-| **shared**    | `@shared/*`      | N/A (자기 자신)    |
+| 위치          | 자신의 파일 참조 | shared 패키지 참조                |
+| ------------- | ---------------- | --------------------------------- |
+| **my-app**    | `@/*`            | `@repo/shared/*` 또는 `@shared/*` |
+| **storybook** | `@/*`            | `@repo/shared/*` 또는 `@shared/*` |
+| **shared**    | `@shared/*`      | N/A (자기 자신)                   |
 
 ---
 
@@ -381,19 +377,21 @@ const preview: Preview = {
 
 ### ❌ 하지 말아야 할 것
 
-#### 1. my-app에서 shared의 내부 alias 직접 사용
+#### 1. 앱에서 shared alias 혼용
 
-```typescript
-// ❌ 잘못된 사용
-import { Button } from '@shared/ui/button'; // my-app에서는 사용 불가
-
-// ✅ 올바른 사용
+```tsx
+// ❌ 같은 앱 코드에서 @repo/shared 와 @shared 를 섞어서 사용
 import { Button } from '@repo/shared/components/ui';
+import { DataTable } from '@shared/components/data-table';
+
+// ✅ 하나로 통일 (권장: 앱에서는 @repo/shared/*)
+import { Button } from '@repo/shared/components/ui';
+import { DataTable } from '@repo/shared/components/data-table';
 ```
 
 #### 2. shared에서 @repo/shared 사용
 
-```typescript
+```tsx
 // ❌ 잘못된 사용 (shared 내부에서)
 import { cn } from '@repo/shared/lib/utils';
 
@@ -403,7 +401,7 @@ import { cn } from '@shared/lib/utils';
 
 #### 3. 상대 경로 대신 alias 사용
 
-```typescript
+```tsx
 // ❌ 권장하지 않음
 import { Button } from '../../components/ui/button';
 
@@ -422,16 +420,17 @@ import { Button } from '@repo/shared/components/ui'; // my-app
 
 #### my-app
 
-```typescript
+```tsx
 // apps/my-app/src/index.css
 @import '@repo/shared/globals.css';  // ✅ 절대 경로
 ```
 
 #### storybook
 
-```typescript
+```tsx
 // apps/storybook/.storybook/preview.ts
-import '@repo/shared/globals.css'; // ✅ 절대 경로
+import '@repo/date-picker/styles.css';
+import '@repo/shared/globals.css';
 ```
 
 **주의**: CSS 파일의 절대 경로는 각 앱의 `vite.config.ts`나 `.storybook/main.ts`에서 alias를 설정해야 합니다.
@@ -444,23 +443,23 @@ import '@repo/shared/globals.css'; // ✅ 절대 경로
 
 ```bash
 # my-app 개발 서버
-pnpm run dev:my-app
+pnpm dev:my-app
 
 # storybook 개발 서버
-pnpm run dev:storybook
+pnpm dev:storybook
 ```
 
 ### 빌드
 
 ```bash
 # my-app 빌드
-pnpm run build:my-app
+pnpm build:my-app
 
 # storybook 빌드
-pnpm run build:storybook
+pnpm build:storybook
 
 # 전체 빌드
-pnpm run build
+pnpm build
 ```
 
 ### Storybook 빌드 최적화
@@ -468,11 +467,11 @@ pnpm run build
 Storybook 빌드 시 청크가 효과적으로 분리됩니다:
 
 ```
-✅ lucide-vendor:      19.38 kB (Lucide 아이콘)
-✅ radix-vendor:       43.29 kB (Radix UI 컴포넌트)
-✅ vendor:            109.66 kB (기타 라이브러리)
-✅ react-vendor:      191.04 kB (React & React DOM)
-✅ storybook-vendor: 2,355.35 kB (Storybook 런타임)
+✅ react-vendor (React 코어)
+✅ radix-vendor (Radix UI)
+✅ lucide-vendor (아이콘)
+✅ storybook-vendor (Storybook 런타임)
+✅ vendor (기타 라이브러리)
 ```
 
 **참고**: `storybook-vendor`가 크지만 이는 정상입니다. Storybook은 개발/문서화 도구이므로 프로덕션 번들에는 포함되지 않습니다.
@@ -481,9 +480,15 @@ Storybook 빌드 시 청크가 효과적으로 분리됩니다:
 
 Storybook 배포 시 `Cannot read properties of undefined (reading 'useLayoutEffect')` 에러를 방지하기 위해 **React dedupe 설정**이 필수입니다:
 
-```typescript
+```tsx
 // .storybook/main.ts
-config.resolve.dedupe = ['react', 'react-dom'];
+config.resolve.alias = {
+  react: resolve(__dirname, '../../../node_modules/react'),
+  'react-dom': resolve(__dirname, '../../../node_modules/react-dom'),
+  'react/jsx-runtime': resolve(__dirname, '../../../node_modules/react/jsx-runtime'),
+  'react/jsx-dev-runtime': resolve(__dirname, '../../../node_modules/react/jsx-dev-runtime'),
+};
+config.resolve.dedupe = ['react', 'react-dom', 'react/jsx-runtime', 'react/jsx-dev-runtime'];
 ```
 
 이 설정은 여러 청크에서 React가 중복으로 로드되는 것을 방지합니다.
@@ -503,12 +508,12 @@ config.resolve.dedupe = ['react', 'react-dom'];
    - 경로가 `path.resolve()`로 절대 경로로 변환되는지 확인
 
 3. **package.json exports 확인 (shared 패키지)**
-   - 필요한 경로가 `exports`에 명시되어 있는지 확인
+   - 배포/외부 번들링 환경에서 deep import가 필요한 경우 `exports`에 명시되어 있는지 확인
 
 4. **개발 서버 재시작**
    - alias 설정 변경 후 개발 서버를 재시작해야 합니다
    ```bash
-   pkill -f "vite" && pnpm run dev:my-app
+   pnpm dev:my-app
    ```
 
 ### 타입 오류가 발생하는 경우
@@ -522,7 +527,7 @@ rm -rf packages/shared/node_modules/.tmp
 pnpm install
 
 # 다시 빌드
-pnpm run build:my-app
+pnpm build:my-app
 ```
 
 ### Storybook 배포 시 React 에러
@@ -533,9 +538,9 @@ pnpm run build:my-app
 
 **해결**:
 
-```typescript
+```tsx
 // apps/storybook/.storybook/main.ts
-config.resolve.dedupe = ['react', 'react-dom'];
+config.resolve.dedupe = ['react', 'react-dom', 'react/jsx-runtime', 'react/jsx-dev-runtime'];
 ```
 
 이 설정은 Vite가 React와 React DOM을 단일 인스턴스로 유지하도록 합니다.
@@ -562,5 +567,3 @@ config.resolve.dedupe = ['react', 'react-dom'];
 - [ ] 빌드 테스트
 
 ---
-
-_마지막 업데이트: 2025-11-13_

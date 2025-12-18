@@ -1,188 +1,117 @@
-# 번들 크기 최적화 가이드
+# 번들 크기 최적화 가이드 (my-app)
 
-## 현재 최적화 결과
+## 목표
 
-### 최적화 전
+- **초기 로딩 최소화**: 첫 화면에 필요한 코드만 로드
+- **캐시 효율 극대화**: 변경이 적은 라이브러리는 별도 청크로 분리
+- **프로덕션 번들에서 개발 도구 제거**
 
-- **단일 파일**: 535.56 KB (gzip: 159.47 KB)
+---
 
-### 최적화 후
+## 현재 적용된 최적화(현 코드 기준)
 
-- **vendor.js**: 0.66 KB (gzip: 0.41 KB) - zustand, axios
-- **react-vendor.js**: 11.79 KB (gzip: 4.21 KB) - React, ReactDOM
-- **tanstack-vendor.js**: 106.18 KB (gzip: 33.30 KB) - TanStack Router, Query
-- **index.js**: 416.85 KB (gzip: 122.83 KB) - 앱 코드
-- **총 gzip 크기**: 160.75 KB
+### 1. Vendor/도메인 단위 코드 스플리팅
 
-## 적용된 최적화
+`apps/my-app/vite.config.ts`의 `build.rollupOptions.output.manualChunks`에서 아래 기준으로 청크를 분리합니다.
 
-### 1. 코드 스플리팅 (Code Splitting)
-
-- React 관련 라이브러리를 별도 청크로 분리
-- TanStack 라이브러리를 별도 청크로 분리
-- 기타 vendor 라이브러리 분리
-
-**장점:**
-
-- 브라우저 캐싱 효율 향상
-- 라이브러리 업데이트 시 앱 코드는 캐시 유지
-- 병렬 다운로드로 초기 로딩 속도 개선
+- **React 코어**: `react-vendor`
+- **UI 라이브러리**(Radix UI, Lucide): `ui-vendor`
+- **차트**(Recharts/d3): `chart-vendor`
+- **앱 코어 계층**(TanStack Router/Query/Table, axios, zustand): `app-vendor`
+- **UI 유틸**(react-hook-form, zod, date-fns, lodash-es 등): `ui-utils-vendor`
+- **기타 node_modules**: `vendor`
+- **도메인 코드**: `domain-auth`, `domain-dashboard`, `domain-settlement`, `domain-my-food`
+- **shared 패키지**: `shared-ui`, `shared`
 
 ### 2. 개발 도구 동적 임포트
 
-- ReactQueryDevtools: 프로덕션 빌드에서 제외
-- TanStackRouterDevtools: 프로덕션 빌드에서 제외
+프로덕션 번들에 Devtools가 포함되지 않도록 `VITE_FEATURE_DEBUG=true`일 때만 동적으로 로드합니다.
 
-### 3. 빌드 최적화 설정
+- Router Devtools: `src/pages/__root.tsx`
+- React Query Devtools: `src/main.tsx`
 
-- esbuild를 사용한 minification
-- CSS 코드 스플리팅 활성화
-- 소스맵 제거 (프로덕션)
-- Tree shaking 자동 적용
+### 3. 프로덕션 빌드 최적화
 
-## 추가 최적화 방안
+- **minify**: `esbuild`
+- **CSS code splitting**: 활성화
+- **console/debugger 제거**: `VITE_FEATURE_DEBUG=false`일 때 `esbuild.pure/drop` 적용
 
-### 1. 라우트 기반 Lazy Loading
+### 4. 번들 분석 리포트 생성
 
-페이지별로 지연 로딩을 적용하면 초기 로딩 크기를 더 줄일 수 있습니다.
+빌드 시 `apps/my-app/dist/stats.html`가 생성됩니다. (`rollup-plugin-visualizer`)
 
-```typescript
-// 예시: pages/my-food/dashboard.tsx
-import { createFileRoute } from "@tanstack/react-router";
-import { lazy } from "react";
+---
 
-// 컴포넌트를 lazy로 감싸기
-const DashboardView = lazy(() =>
-  import("@/domains/dashboard/components/DashboardView").then(m => ({
-    default: m.DashboardView
-  }))
-);
+## 번들 분석 방법
 
-export const Route = createFileRoute("/my-food/dashboard")({
-  component: () => (
-    <Suspense fallback={<div>Loading...</div>}>
-      <DashboardView />
-    </Suspense>
-  ),
-});
+```bash
+# my-app 빌드
+pnpm build:my-app
+
+# 리포트 열기
+open apps/my-app/dist/stats.html
 ```
 
-### 2. 무거운 라이브러리 대체
+확인 포인트:
 
-현재 번들 분석 리포트(`dist/stats.html`)를 열어서 큰 용량을 차지하는 라이브러리를 확인하세요.
+- **가장 큰 청크/패키지**가 무엇인지
+- **중복 포함**(React 중복 등)이 없는지
+- **lazy route 전환 후보**(초기 라우트에 불필요하게 포함된 큰 도메인/위젯)
 
-**고려사항:**
+---
 
-- 사용하지 않는 라이브러리 제거
-- 가벼운 대안으로 교체 (예: moment.js → date-fns 또는 dayjs)
-- Tree-shakeable한 라이브러리 선택
+## 추가 최적화 가이드
 
-### 3. 이미지 최적화
+### 1. 라우트 단위 Lazy Loading
 
-```typescript
-// vite.config.ts에 이미지 최적화 플러그인 추가
-import { imagetools } from 'vite-imagetools';
+TanStack Router 파일 기반 라우팅에서는 큰 페이지를 `*.lazy.tsx`로 분리해 초기 번들에서 제외할 수 있습니다.
 
-export default defineConfig({
-  plugins: [
-    // ... 기존 플러그인
-    imagetools(),
-  ],
-});
-```
+- 적용 예: `src/pages/_authenticated/index.lazy.tsx`
+- 후보 예: 정산 상세/등록 등 초기 화면에 불필요한 페이지
 
-### 4. Dynamic Import 패턴
+### 2. 조건부 UI/기능의 Dynamic Import
 
-자주 사용하지 않는 기능은 동적으로 로드:
+모달/차트/에디터처럼 "특정 상황"에만 등장하는 UI는 컴포넌트 레벨에서 동적 임포트를 고려합니다.
 
-```typescript
-// 모달, 차트 등 조건부로 보여지는 컴포넌트
-const HeavyChart = lazy(() => import("./HeavyChart"));
+```tsx
+import { lazy, Suspense, useState } from 'react';
 
-function Dashboard() {
-  const [showChart, setShowChart] = useState(false);
+const HeavyWidget = lazy(() => import('./HeavyWidget'));
+
+export function Example() {
+  const [open, setOpen] = useState(false);
 
   return (
-    <div>
-      <button onClick={() => setShowChart(true)}>차트 보기</button>
-      {showChart && (
-        <Suspense fallback={<Spinner />}>
-          <HeavyChart />
+    <>
+      <button onClick={() => setOpen(true)}>열기</button>
+      {open ? (
+        <Suspense fallback={null}>
+          <HeavyWidget />
         </Suspense>
-      )}
-    </div>
+      ) : null}
+    </>
   );
 }
 ```
 
-### 5. CSS 최적화
+### 3. Tailwind CSS(v4) 소스 스캔 범위 관리
 
-Tailwind CSS를 사용 중이므로 불필요한 클래스가 포함되지 않도록 설정 확인:
+이 프로젝트는 `packages/shared/src/styles/globals.css`에서 `@source`로 스캔 범위를 관리합니다.
 
-```javascript
-// tailwind.config.js
-export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}', '../../packages/shared/src/**/*.{js,ts,jsx,tsx}'],
-  // ... 나머지 설정
-};
-```
+- 불필요한 경로가 넓게 잡히면 CSS가 커질 수 있으니, `@source` 경로를 **실제 사용하는 소스 범위로 유지**합니다.
 
-## 번들 분석
-
-빌드 후 생성된 `dist/stats.html` 파일을 열어서:
-
-1. 가장 큰 용량을 차지하는 패키지 확인
-2. 중복 포함된 패키지 확인
-3. Tree shaking이 제대로 작동하는지 확인
-
-```bash
-# 빌드 후 자동으로 분석 리포트 열기
-pnpm run build
-open apps/my-app/dist/stats.html
-```
-
-## 성능 모니터링
-
-### Lighthouse 점수 확인
-
-```bash
-pnpm run build
-pnpm run preview
-# Chrome DevTools > Lighthouse 실행
-```
-
-### 번들 크기 제한 설정
-
-```typescript
-// vite.config.ts
-export default defineConfig({
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          // ... 기존 설정
-        },
-      },
-    },
-    // 청크 크기 경고 임계값 설정
-    chunkSizeWarningLimit: 500, // KB
-  },
-});
-```
+---
 
 ## 체크리스트
 
-- [x] 코드 스플리팅 적용
-- [x] 개발 도구 동적 임포트
-- [x] 빌드 최적화 설정
-- [x] 번들 분석 도구 설치
-- [ ] 라우트별 lazy loading 적용
-- [ ] 무거운 라이브러리 확인 및 대체
-- [ ] 이미지 최적화 적용
-- [ ] Lighthouse 성능 점수 확인
+- [ ] `pnpm build:my-app` 후 `dist/stats.html`로 큰 의존성/청크 확인
+- [ ] 초기 라우트(대시보드)에 불필요한 무거운 위젯 포함 여부 확인
+- [ ] 큰 페이지는 `*.lazy.tsx`로 전환 검토
+- [ ] 조건부 컴포넌트는 dynamic import로 전환 검토
+- [ ] `VITE_FEATURE_DEBUG`에 따라 Devtools/console 제거가 의도대로 동작하는지 확인
 
-## 참고 자료
+## 참고
 
-- [Vite Build Optimizations](https://vite.dev/guide/build.html)
-- [React Code Splitting](https://react.dev/reference/react/lazy)
-- [TanStack Router Code Splitting](https://tanstack.com/router/latest/docs/framework/react/guide/code-splitting)
+- [Vite - Build](https://vite.dev/guide/build.html)
+- [TanStack Router - Code Splitting](https://tanstack.com/router/latest/docs/framework/react/guide/code-splitting)
+- [React - Code Splitting](https://react.dev/reference/react/lazy)
