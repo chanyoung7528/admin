@@ -4,11 +4,10 @@ import reactRefresh from 'eslint-plugin-react-refresh';
 import { baseConfig } from './base.js';
 
 /**
- * Configuration for React projects
- * Includes:
+ * React 프로젝트 ESLint 설정
  * - Base Config (TS/JS + Prettier)
- * - React Hooks
- * - React Refresh
+ * - React Hooks 규칙
+ * - React Refresh 최적화
  */
 export const reactConfig = tseslint.config(...baseConfig, {
   files: ['**/*.{ts,tsx,js,jsx}'],
@@ -18,6 +17,6 @@ export const reactConfig = tseslint.config(...baseConfig, {
   },
   rules: {
     ...reactHooks.configs.recommended.rules,
-    'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+    'react-refresh/only-export-components': 'off',
   },
 });

@@ -29,7 +29,6 @@ function createProxyConfig(target: string, prefix: string): Record<string, Proxy
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
-
   const isDebug = env.VITE_FEATURE_DEBUG === 'true';
   const apiBaseUrl = env.VITE_API_BASE_URL || '';
   const proxyPrefix = env.VITE_API_PROXY_PREFIX || '/api';
@@ -50,7 +49,6 @@ export default defineConfig(({ mode }) => {
         },
       }),
       tailwindcss(),
-      // 번들 분석 도구 (빌드 시 stats.html 생성)
       visualizer({
         filename: './dist/stats.html',
         open: false,
@@ -58,10 +56,13 @@ export default defineConfig(({ mode }) => {
         brotliSize: true,
       }),
     ],
+    define: {
+      __VITE_FEATURE_DEBUG__: JSON.stringify(isDebug),
+    },
     resolve: {
       dedupe: ['react', 'react-dom'],
       alias: {
-        // shared 패키지 가져오기 (구체적인 것부터 먼저)
+        // @repo/shared 패키지 경로 해석 (구체적인 경로부터 정의)
         '@repo/shared/globals.css': path.resolve(__dirname, '../../packages/shared/src/styles/globals.css'),
         '@repo/shared/components/ui': path.resolve(__dirname, '../../packages/shared/src/components/ui'),
         '@repo/shared/components/context': path.resolve(__dirname, '../../packages/shared/src/components/context'),
@@ -72,7 +73,7 @@ export default defineConfig(({ mode }) => {
         '@repo/shared/assets': path.resolve(__dirname, '../../packages/shared/src/assets'),
         '@repo/shared': path.resolve(__dirname, '../../packages/shared/src'),
 
-        // shared 패키지 내부에서 사용하는 alias (빌드시 resolve용)
+        // @shared 내부 alias (shared 패키지 소스 내에서 사용하는 alias resolve용)
         '@shared/ui': path.resolve(__dirname, '../../packages/shared/src/components/ui'),
         '@shared/components': path.resolve(__dirname, '../../packages/shared/src/components'),
         '@shared/lib': path.resolve(__dirname, '../../packages/shared/src/lib'),
@@ -80,138 +81,87 @@ export default defineConfig(({ mode }) => {
         '@shared/assets': path.resolve(__dirname, '../../packages/shared/src/assets'),
         '@shared': path.resolve(__dirname, '../../packages/shared/src'),
 
-        // my-app 자체의 alias (마지막에)
+        // my-app 앱 내부 경로
         '@': path.resolve(__dirname, './src'),
       },
     },
     esbuild: {
-      pure: isDebug ? [] : ['console.log', 'console.info', 'console.debug', 'console.trace', 'console.group', 'console.groupEnd'],
+      pure: isDebug ? [] : ['console.log', 'console.debug', 'console.trace'],
       drop: isDebug ? [] : ['debugger'],
     },
     build: {
-      // 번들 크기 최적화
       rollupOptions: {
-        treeshake: {
-          moduleSideEffects: (id, external) => {
-            // lucide-react는 side effects 유지
-            if (id.includes('lucide-react')) {
-              return true;
-            }
-            // 외부 모듈은 기본적으로 side effects 제거
-            return !external;
-          },
-        },
         output: {
           manualChunks: id => {
-            // node_modules 처리
             if (id.includes('node_modules')) {
-              // React 코어 + scheduler (정확한 패키지만 매칭)
-              if (
-                id.includes('/react/') ||
-                id.includes('/react-dom/') ||
-                id.includes('/scheduler/') ||
-                id.match(/node_modules\/react$/) ||
-                id.match(/node_modules\/react-dom$/) ||
-                id.match(/node_modules\/scheduler$/)
-              ) {
+              // React 코어
+              if (id.includes('/react/') || id.includes('/react-dom/') || id.includes('/scheduler/')) {
                 return 'react-vendor';
               }
-              // TanStack Router & Query
-              if (id.includes('@tanstack/react-router')) {
-                return 'router-vendor';
+
+              // UI 라이브러리 (Radix UI + Icons)
+              if (id.includes('@radix-ui') || id.includes('lucide-react')) {
+                return 'ui-vendor';
               }
-              if (id.includes('@tanstack/react-query')) {
-                return 'query-vendor';
+
+              // 차트 라이브러리
+              if (id.includes('recharts') || id.includes('d3-')) {
+                return 'chart-vendor';
               }
-              // TanStack Table
-              if (id.includes('@tanstack/react-table') || id.includes('@tanstack/table-core')) {
-                return 'table-vendor';
+
+              // 앱 코어: 상태/데이터 관리 계층
+              if (
+                id.includes('@tanstack/react-router') ||
+                id.includes('@tanstack/react-query') ||
+                id.includes('@tanstack/react-table') ||
+                id.includes('axios') ||
+                id.includes('zustand')
+              ) {
+                return 'app-vendor';
               }
-              // Radix UI - 모두 하나의 청크로 (순환 참조 방지)
-              if (id.includes('@radix-ui')) {
-                return 'radix-vendor';
+
+              // UI 유틸리티
+              if (
+                id.includes('react-hook-form') ||
+                id.includes('@hookform') ||
+                id.includes('zod') ||
+                id.includes('date-fns') ||
+                id.includes('lodash-es') ||
+                id.includes('clsx') ||
+                id.includes('class-variance-authority') ||
+                id.includes('tailwind-merge')
+              ) {
+                return 'ui-utils-vendor';
               }
-              // Command palette
-              if (id.includes('cmdk')) {
-                return 'cmdk-vendor';
-              }
-              // 아이콘 라이브러리 - 별도 청크로 분리
-              if (id.includes('lucide-react')) {
-                return 'lucide-vendor';
-              }
-              // 날짜 라이브러리
-              if (id.includes('date-fns')) {
-                return 'date-vendor';
-              }
-              // Form 관련 라이브러리
-              if (id.includes('react-hook-form') || id.includes('@hookform')) {
-                return 'form-vendor';
-              }
-              // Zod validation
-              if (id.includes('zod')) {
-                return 'zod-vendor';
-              }
-              // 상태 관리
-              if (id.includes('zustand')) {
-                return 'state-vendor';
-              }
-              // HTTP 클라이언트
-              if (id.includes('axios')) {
-                return 'http-vendor';
-              }
-              // 나머지 vendor
+
+              // 기타 vendor
               return 'vendor';
             }
 
-            // 도메인별 코드 분할
+            // 도메인별 코드 분할 (실제 존재하는 도메인만)
             if (id.includes('src/domains/')) {
-              if (id.includes('domains/my-food')) return 'domain-my-food';
-              if (id.includes('domains/user')) return 'domain-user';
-              if (id.includes('domains/order')) return 'domain-order';
-              if (id.includes('domains/settlement')) return 'domain-settlement';
-              if (id.includes('domains/inquiry')) return 'domain-inquiry';
-              if (id.includes('domains/monitoring')) return 'domain-monitoring';
-              if (id.includes('domains/report')) return 'domain-report';
-              if (id.includes('domains/billing')) return 'domain-billing';
-              if (id.includes('domains/content')) return 'domain-content';
-              if (id.includes('domains/dashboard')) return 'domain-dashboard';
-              if (id.includes('domains/insight')) return 'domain-insight';
-              if (id.includes('domains/site')) return 'domain-site';
               if (id.includes('domains/auth')) return 'domain-auth';
+              if (id.includes('domains/dashboard')) return 'domain-dashboard';
+              if (id.includes('domains/settlement')) return 'domain-settlement';
+              if (id.includes('domains/template/my-food')) return 'domain-my-food';
             }
 
-            // shared 패키지 UI 컴포넌트 분리
+            // shared 패키지 분리
             if (id.includes('packages/shared/src/components/ui')) {
               return 'shared-ui';
             }
-
-            // shared 패키지의 나머지
             if (id.includes('packages/shared')) {
               return 'shared';
             }
 
-            // 기본값 반환하지 않으면 Vite가 자동으로 처리
             return undefined;
           },
         },
       },
-      // 청크 크기 경고 임계값 (기본 500kb)
-      chunkSizeWarningLimit: 600,
-      // 소스맵 제거 (프로덕션)
       sourcemap: isDebug,
-      // 최소화 옵션
-      minify: 'esbuild',
-      target: 'esnext',
-      // CSS 코드 분할
+      minify: !isDebug ? 'esbuild' : false,
+      target: 'ES2022',
       cssCodeSplit: true,
-    },
-    // 최적화 설정
-    optimizeDeps: {
-      include: ['react', 'react-dom', '@tanstack/react-router', '@tanstack/react-query', 'lucide-react', 'date-fns', 'date-fns/locale'],
-    },
-    // SSR 설정 (lucide-react가 제대로 번들링되도록)
-    ssr: {
-      noExternal: ['lucide-react'],
     },
   };
 });
