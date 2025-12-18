@@ -1,5 +1,5 @@
-import { profitData, profitInsights, recentOrders, revenueGoals, salesCategoryData, statsData, upcomingSchedule } from '../data/mockData';
-import { DashboardStats, ProfitChart, RecentOrders, RevenueGoals, SalesCategory, UpcomingSchedule } from './widgets';
+import { profitData, profitInsights, recentOrders, salesCategoryData, statsData } from '../data/mockData';
+import { AcquisitionChannels, DashboardStats, DeviceSessions, ProfitChart, RecentOrders, SalesCategory } from './widgets';
 
 export function DashboardView() {
   return (
@@ -11,13 +11,13 @@ export function DashboardView() {
           <ProfitChart data={profitData} insights={profitInsights} />
         </div>
         <div className="lg:col-span-4">
-          <RevenueGoals goals={revenueGoals} />
+          <AcquisitionChannels />
         </div>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
         <SalesCategory categories={salesCategoryData} />
-        <UpcomingSchedule schedules={upcomingSchedule} />
+        <DeviceSessions />
       </div>
 
       <RecentOrders orders={recentOrders} />

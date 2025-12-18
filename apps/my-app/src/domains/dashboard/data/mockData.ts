@@ -1,4 +1,4 @@
-import type { ChartDataPoint, Order, ProfitInsight, RevenueGoal, SalesCategory, Schedule, StatCard } from '../types';
+import type { ChartDataPoint, Order, ProfitInsight, SalesCategory, StatCard } from '../types';
 
 export const statsData: StatCard[] = [
   {
@@ -54,39 +54,10 @@ export const profitInsights: ProfitInsight[] = [
   },
 ];
 
-export const revenueGoals: RevenueGoal[] = [
-  { label: '마케팅', amount: '₩39,739,700', percentage: 85, color: 'bg-primary' },
-  { label: '영업', amount: '₩26,632,380', percentage: 55, color: 'bg-orange-500' },
-];
-
 export const salesCategoryData: SalesCategory[] = [
   { name: '제휴 프로그램', value: 48, count: '2,040개 상품', color: '#3b82f6', customRadius: 110 },
   { name: '직접 구매', value: 33, count: '1,402개 상품', color: '#f97316', customRadius: 90 },
   { name: '광고 수익', value: 19, count: '510개 상품', color: '#10b981', customRadius: 70 },
-];
-
-export const upcomingSchedule: Schedule[] = [
-  {
-    date: '1월 11일 (수)',
-    time: '오전 9:20',
-    title: '비즈니스 분석 발표',
-    description: '데이터 기반 미래 탐색 외 6건',
-    type: 'primary',
-  },
-  {
-    date: '2월 15일 (금)',
-    time: '오전 10:35',
-    title: '비즈니스 스프린트',
-    description: '비즈니스 스프린트 기법 외 2건',
-    type: 'orange',
-  },
-  {
-    date: '3월 18일 (목)',
-    time: '오전 1:15',
-    title: '고객 리뷰 미팅',
-    description: '고객 리뷰 미팅 인사이트 외 8건',
-    type: 'green',
-  },
 ];
 
 export const recentOrders: Order[] = [
