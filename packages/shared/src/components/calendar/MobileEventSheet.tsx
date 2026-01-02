@@ -14,7 +14,7 @@ interface MobileEventSheetProps {
   onDelete: (eventId: string) => void;
 }
 
-const COLORS = ['#3b82f6', '#10b981', '#8b5cf6', '#ec4899', '#f59e0b', '#ef4444'];
+const COLORS = ['#3b82f6', '#10b981', '#8b5cf6', '#ec4899', '#f59e0b', '#ef4444'] as const;
 
 export function MobileEventSheet({ isOpen, onClose, event, selectedDate, onSave, onDelete }: MobileEventSheetProps) {
   const [title, setTitle] = useState(event?.title || '');
@@ -22,7 +22,7 @@ export function MobileEventSheet({ isOpen, onClose, event, selectedDate, onSave,
   const [location, setLocation] = useState(event?.location || '');
   const [startTime, setStartTime] = useState(event ? formatTime(event.start) : '09:00');
   const [endTime, setEndTime] = useState(event ? formatTime(event.end) : '10:00');
-  const [selectedColor, setSelectedColor] = useState(event?.color || COLORS[0]);
+  const [selectedColor, setSelectedColor] = useState<string>(event?.color || COLORS[0]);
 
   function formatTime(date: Date): string {
     const hours = String(date.getHours()).padStart(2, '0');
