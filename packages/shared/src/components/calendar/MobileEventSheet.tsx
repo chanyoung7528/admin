@@ -1,8 +1,7 @@
+import { Clock, MapPin, Palette, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 
 import { Button, Input, Label, Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, Textarea } from '../ui';
-import { Clock, MapPin, Palette, Trash2 } from 'lucide-react';
-
 import type { MobileCalendarEvent } from './MobileCalendar';
 
 interface MobileEventSheetProps {
@@ -41,7 +40,7 @@ export function MobileEventSheet({ isOpen, onClose, event, selectedDate, onSave,
     const baseDate = event ? new Date(event.start) : selectedDate || new Date();
 
     const newEvent: MobileCalendarEvent = {
-      id: event?.id || Date.now().toString(),
+      id: event?.id || crypto.randomUUID(),
       title,
       start: parseTime(startTime, baseDate),
       end: parseTime(endTime, baseDate),
