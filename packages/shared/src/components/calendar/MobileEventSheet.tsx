@@ -33,7 +33,7 @@ export function MobileEventSheet({ isOpen, onClose, event, selectedDate, onSave,
   function parseTime(timeStr: string, baseDate: Date): Date {
     const [hours, minutes] = timeStr.split(':').map(Number);
     const date = new Date(baseDate);
-    date.setHours(hours, minutes, 0, 0);
+    date.setHours(hours ?? 0, minutes ?? 0, 0, 0);
     return date;
   }
 
