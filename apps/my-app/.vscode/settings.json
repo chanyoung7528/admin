@@ -1,0 +1,5 @@
+{
+  "typescript.tsserver.log": "off",
+  "typescript.tsdk": "node_modules/typescript/lib"
+}
+
