@@ -51,6 +51,7 @@
     "clsx": "catalog:",
     "cmdk": "catalog:",
     "date-fns": "catalog:",
+    "framer-motion": "catalog:",
     "lodash-es": "catalog:",
     "lucide-react": "catalog:",
     "react-error-boundary": "catalog:",

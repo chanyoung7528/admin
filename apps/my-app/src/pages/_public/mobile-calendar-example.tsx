@@ -2,7 +2,7 @@ import { MobileCalendar } from '@repo/shared/components/calendar';
 import { ContentHeader, ContentWrapper } from '@repo/shared/components/layouts/content';
 import { createFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/_authenticated/mobile-calendar-example')({
+export const Route = createFileRoute('/_public/mobile-calendar-example')({
   component: MobileCalendarExamplePage,
 });
 
