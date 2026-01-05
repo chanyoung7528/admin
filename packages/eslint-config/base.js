@@ -13,7 +13,28 @@ import tseslint from 'typescript-eslint';
  */
 export const baseConfig = tseslint.config(
   {
-    ignores: ['dist', 'node_modules', 'build', 'coverage', '.turbo', '.changeset', 'storybook-static', 'routeTree.gen.ts', '.storybook'],
+    ignores: [
+      'dist',
+      'node_modules',
+      'build',
+      'coverage',
+      '.turbo',
+      '.changeset',
+      'storybook-static',
+      'routeTree.gen.ts',
+      '.storybook',
+      '**/pnpm-lock.yaml',
+      '**/package-lock.json',
+      '**/yarn.lock',
+      '.next',
+      'out',
+      'comparison-results',
+      '**/*.config.js',
+      '**/vite.config.*',
+      '**/tsconfig.tsbuildinfo',
+      '**/*.gen.ts',
+      '**/*.gen.js',
+    ],
   },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended, prettier],

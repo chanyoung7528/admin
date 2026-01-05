@@ -19,8 +19,8 @@ export function SettlementList() {
         data={settlementsBasic}
         columns={settlementBasicColumns}
         emptyMessage="정산 내역이 없습니다."
-        onRowClick={row => {
-          console.log('정산 상세:', row);
+        onRowClick={_row => {
+          // 정산 상세
         }}
       />
     </>
