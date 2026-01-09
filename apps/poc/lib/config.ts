@@ -5,9 +5,12 @@ const rawEnv = {
   // 클라이언트 공개 변수
   kakaoClientId: process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID || '',
   kakaoRedirectUri: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI || '',
+  naverClientId: process.env.NEXT_PUBLIC_NAVER_CLIENT_ID || '',
+  naverRedirectUri: process.env.NEXT_PUBLIC_NAVER_REDIRECT_URI || '',
   
   // 서버 전용 변수
   kakaoClientSecret: process.env.KAKAO_CLIENT_SECRET || '',
+  naverClientSecret: process.env.NAVER_CLIENT_SECRET || '',
   jwtSecret: process.env.JWT_SECRET || '',
 };
 
@@ -16,6 +19,9 @@ const envSchema = z.object({
   kakaoClientId: z.string().min(1, { message: 'NEXT_PUBLIC_KAKAO_CLIENT_ID가 설정되지 않았습니다.' }),
   kakaoRedirectUri: z.string().url({ message: 'NEXT_PUBLIC_KAKAO_REDIRECT_URI는 유효한 URL이어야 합니다.' }),
   kakaoClientSecret: z.string().min(1, { message: 'KAKAO_CLIENT_SECRET이 설정되지 않았습니다.' }),
+  naverClientId: z.string().min(1, { message: 'NEXT_PUBLIC_NAVER_CLIENT_ID가 설정되지 않았습니다.' }),
+  naverRedirectUri: z.string().url({ message: 'NEXT_PUBLIC_NAVER_REDIRECT_URI는 유효한 URL이어야 합니다.' }),
+  naverClientSecret: z.string().min(1, { message: 'NAVER_CLIENT_SECRET이 설정되지 않았습니다.' }),
   jwtSecret: z.string().min(32, { message: 'JWT_SECRET은 최소 32자 이상이어야 합니다.' }),
 });
 
@@ -38,6 +44,13 @@ export const env = {
     redirectUri: validatedEnv.kakaoRedirectUri,
   },
   
+  // 네이버 설정
+  naver: {
+    clientId: validatedEnv.naverClientId,
+    clientSecret: validatedEnv.naverClientSecret,
+    redirectUri: validatedEnv.naverRedirectUri,
+  },
+  
   // JWT 설정
   jwt: {
     secret: validatedEnv.jwtSecret,
@@ -53,6 +66,9 @@ export function validateEnv(): void {
     'NEXT_PUBLIC_KAKAO_CLIENT_ID',
     'KAKAO_CLIENT_SECRET',
     'NEXT_PUBLIC_KAKAO_REDIRECT_URI',
+    'NEXT_PUBLIC_NAVER_CLIENT_ID',
+    'NAVER_CLIENT_SECRET',
+    'NEXT_PUBLIC_NAVER_REDIRECT_URI',
     'JWT_SECRET',
   ];
 
@@ -66,3 +82,4 @@ export function validateEnv(): void {
     );
   }
 }
+

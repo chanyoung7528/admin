@@ -6,8 +6,6 @@ const rawEnv = {
   apiTimeout: import.meta.env.VITE_API_TIMEOUT || '30000',
   apiAcceptLanguage: import.meta.env.VITE_API_ACCEPT_LANGUAGE || 'ko-KR',
   featureDebug: import.meta.env.VITE_FEATURE_DEBUG || 'false',
-  kakaoClientId: import.meta.env.VITE_KAKAO_CLIENT_ID || '',
-  kakaoRedirectUri: import.meta.env.VITE_KAKAO_REDIRECT_URI || '',
 };
 
 const envSchema = z.object({
@@ -16,8 +14,6 @@ const envSchema = z.object({
   apiTimeout: z.coerce.number().int().min(0, { message: 'VITE_API_TIMEOUT은 0 이상의 숫자여야 합니다.' }),
   apiAcceptLanguage: z.string().min(2),
   featureDebug: z.coerce.boolean(),
-  kakaoClientId: z.string(),
-  kakaoRedirectUri: z.string(),
 });
 
 // API Base URL Prefix 결정 로직
@@ -46,6 +42,4 @@ export const env = {
   apiBaseUrl: getApiBaseUrl(baseEnv.mode, import.meta.env.VITE_API_BASE_URL),
   apiTimeout: baseEnv.apiTimeout,
   apiAcceptLanguage: baseEnv.apiAcceptLanguage,
-  kakaoClientId: baseEnv.kakaoClientId,
-  kakaoRedirectUri: baseEnv.kakaoRedirectUri,
 };

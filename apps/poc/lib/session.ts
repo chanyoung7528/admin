@@ -1,6 +1,6 @@
 import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
-import { env } from './config';
+import { env } from '@/lib/config';
 import type { SessionUser } from './types';
 
 const SESSION_COOKIE_NAME = 'session';

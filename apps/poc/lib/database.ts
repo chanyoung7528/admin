@@ -13,6 +13,28 @@ export async function findUserByKakaoId(kakaoId: string): Promise<User | null> {
 }
 
 /**
+ * 네이버 ID로 사용자 조회
+ */
+export async function findUserByNaverId(naverId: string): Promise<User | null> {
+  const user = await prisma.user.findUnique({
+    where: { naverId },
+  });
+
+  return user;
+}
+
+/**
+ * 이메일로 사용자 조회 (중복 가입 방지)
+ */
+export async function findUserByEmail(email: string): Promise<User | null> {
+  const user = await prisma.user.findUnique({
+    where: { email },
+  });
+
+  return user;
+}
+
+/**
  * 우리 서비스의 사용자 ID로 조회
  */
 export async function findUserById(id: string): Promise<User | null> {
@@ -26,7 +48,7 @@ export async function findUserById(id: string): Promise<User | null> {
 /**
  * 신규 사용자 생성 (카카오 회원가입)
  */
-export async function createUser(data: { kakaoId: string; email: string | null; nickname: string | null; profileImage: string | null }): Promise<User> {
+export async function createKakaoUser(data: { kakaoId: string; email: string | null; nickname: string | null; profileImage: string | null }): Promise<User> {
   const user = await prisma.user.create({
     data: {
       kakaoId: data.kakaoId,
@@ -37,7 +59,26 @@ export async function createUser(data: { kakaoId: string; email: string | null; 
     },
   });
 
-  console.log('✅ [DB] 신규 사용자 생성:', user.id, user.nickname);
+  console.log('✅ [DB] 신규 카카오 사용자 생성:', user.id, user.nickname);
+
+  return user;
+}
+
+/**
+ * 신규 사용자 생성 (네이버 회원가입)
+ */
+export async function createNaverUser(data: { naverId: string; email: string | null; nickname: string | null; profileImage: string | null }): Promise<User> {
+  const user = await prisma.user.create({
+    data: {
+      naverId: data.naverId,
+      email: data.email,
+      nickname: data.nickname,
+      profileImage: data.profileImage,
+      provider: 'naver',
+    },
+  });
+
+  console.log('✅ [DB] 신규 네이버 사용자 생성:', user.id, user.nickname);
 
   return user;
 }
