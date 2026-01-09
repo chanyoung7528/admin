@@ -1,0 +1,155 @@
+.bmi-card {
+  width: 350px;
+  background: white;
+  border-radius: 24px;
+  padding: 30px;
+  display: flex;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  font-family: sans-serif;
+}
+
+.content-left h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.description {
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 40px;
+}
+
+.gauge-section {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  height: 480px;
+}
+
+/* 라벨 영역 */
+.labels {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-right: 15px;
+  padding: 20px 0;
+  font-size: 14px;
+  color: #333;
+  position: relative;
+}
+
+.peer-label {
+  position: absolute;
+  right: 0;
+  color: #3b82f6;
+  font-weight: bold;
+  white-space: nowrap;
+  transform: translateY(50%);
+}
+
+/* 온도계 전체 컨테이너 */
+.thermometer-container {
+  width: 116px;
+  height: 480px;
+  position: relative;
+}
+
+/* 병 하단 (넓은 둥근 부분) - 그라데이션 영역 */
+.bottle-bottom {
+  width: 68px;
+  height: 100%;
+  position: relative;
+  background-image: url(/graghic-2.png);
+  background-size: 68px auto;
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  padding: 10px;
+  box-sizing: border-box;
+  left: 26px;
+  z-index: 100;
+}
+
+/* 맨 밑 둥근 부분 초록색 채우기 */
+.bottle-bottom-2 {
+  width: 137px;
+  height: 48px;
+  position: absolute;
+  bottom: -42px;
+  left: -8px;
+  background-image: url(/graghic-3.png);
+  background-size: 120px auto;
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  box-sizing: border-box;
+  z-index: 10;
+}
+
+.bottle-bottom-2::before {
+  content: '';
+  position: absolute;
+  width: 288px;
+  height: calc(144px / 3);
+  /* bottom: 38px; */
+  left: 50%;
+  transform: translateX(-50%);
+  background-image: url(/graghic-4.png);
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  top: 0px;
+}
+
+/* 병 상단 (좁은 기둥 부분) - 오버플로우 히든 */
+.bottle-top {
+  width: 50px;
+  height: 100%;
+  position: absolute;
+  top: 53px;
+  left: 61%;
+  transform: translateX(-50%);
+  background-image: url(/graghic.png);
+  background-size: 50px 98%;
+  background-repeat: no-repeat;
+  background-position: top center;
+  overflow: hidden;
+  pointer-events: none;
+  padding: 10px;
+  box-sizing: border-box;
+}
+/* 채워지는 게이지 */
+.gauge-fill {
+  position: absolute;
+  bottom: -4px;
+  left: 9px;
+  width: 50px;
+  /* 그라데이션은 인라인 스타일로 동적 적용 */
+  transition:
+    height 1.5s cubic-bezier(0.22, 1, 0.36, 1),
+    background 0.3s ease; /* 부드러운 아웃 효과 + 색상 전환 */
+  border-radius: 20px 20px 0px 0px;
+}
+
+/* '나' 마커 */
+.user-marker {
+  position: absolute;
+  top: 40px; /* gauge-fill의 꼭대기에 위치 */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  background-image: url('/mark.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* 또래 평균 점선 */
+.peer-line {
+  position: absolute;
+  left: 10px;
+  width: calc(100% - 20px); /* 패딩 제외 */
+  border-top: 2px dashed #3b82f6;
+  pointer-events: none;
+}

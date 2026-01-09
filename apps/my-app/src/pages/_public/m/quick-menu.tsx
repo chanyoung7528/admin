@@ -1,52 +1,105 @@
 'use client';
-import { MobileQuickMenuWithAll, type QuickMenuItemType } from '@repo/shared/components/quick-menu';
+
+import './quick.css';
+
 import { createFileRoute } from '@tanstack/react-router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export const Route = createFileRoute('/_public/m/quick-menu')({
   component: MobileQuickMenuPage,
 });
 
 function MobileQuickMenuPage() {
-  const defaultItems: QuickMenuItemType[] = [
-    { id: '1', title: '홈', icon: '🏠', href: '/', color: '#3b82f6', order: 0 },
-    { id: '2', title: '검색', icon: '🔍', href: '/search', color: '#10b981', order: 1 },
-    { id: '3', title: '알림', icon: '🔔', href: '/notifications', color: '#f59e0b', order: 2 },
-    { id: '4', title: '설정', icon: '⚙️', href: '/settings', color: '#8b5cf6', order: 3 },
-    { id: '5', title: '프로필', icon: '👤', href: '/profile', color: '#ec4899', order: 4 },
-    { id: '6', title: '메시지', icon: '💬', href: '/messages', color: '#06b6d4', order: 5 },
-    { id: '7', title: '즐겨찾기', icon: '⭐', href: '/favorites', color: '#eab308', order: 6 },
-    { id: '8', title: '장바구니', icon: '🛒', href: '/cart', color: '#f97316', order: 7 },
-  ];
+  const [height, setHeight] = useState(0);
 
-  const allMenus: Omit<QuickMenuItemType, 'order'>[] = [
-    ...defaultItems.map(item => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { order, ...rest } = item;
-      return rest;
-    }),
-    { id: '9', title: '뉴스', icon: '📰', href: '/news', color: '#14b8a6' },
-    { id: '10', title: '지도', icon: '🗺️', href: '/map', color: '#f43f5e' },
-    { id: '11', title: '사진', icon: '📷', href: '/photos', color: '#a855f7' },
-    { id: '12', title: '동영상', icon: '🎥', href: '/videos', color: '#0ea5e9' },
-    { id: '13', title: '음악', icon: '🎵', href: '/music', color: '#ec4899' },
-    { id: '14', title: '게임', icon: '🎮', href: '/games', color: '#8b5cf6' },
-    { id: '15', title: '책', icon: '📚', href: '/books', color: '#10b981' },
-    { id: '16', title: '날씨', icon: '🌤️', href: '/weather', color: '#06b6d4' },
-  ];
-  const [items, setItems] = useState(defaultItems.slice(0, 4));
+  const value = 65;
+  const peerValue = 45;
+
+  // 높이에 따라 색상 결정
+  const getGradientByValue = (val: number) => {
+    if (val >= 80) {
+      // 매우 나쁨 (80-100%): 초록 → 노란 → 주황 → 빨강 (빨강이 맨 위)
+      return 'linear-gradient(to top, #54e34f 0%, #fbd545 25%, #ff4a00 50%, #f8183c 100%)';
+    } else if (val >= 60) {
+      // 나쁨 (60-80%): 초록 → 노란 → 주황 (주황이 맨 위)
+      return 'linear-gradient(to top, #54e34f 0%, #fbd545 40%, #ff4a00 100%)';
+    } else if (val >= 40) {
+      // 주의 (40-60%): 초록 → 노란 (노란색이 맨 위)
+      return 'linear-gradient(to top, #54e34f 0%, #fbd545 100%)';
+    } else if (val >= 20) {
+      // 좋음 (20-40%): 초록 → 연두 (연두색이 맨 위)
+      return 'linear-gradient(to top, #54e34f 0%, #7ee87a 100%)';
+    } else {
+      // 매우 좋음 (0-20%): 초록색만 (초록색이 맨 위)
+      return 'linear-gradient(to top, #54e34f 0%, #54e34f 100%)';
+    }
+  };
+
+  useEffect(() => {
+    // 컴포넌트 마운트 후 약간의 지연을 주어 애니메이션이 확실히 보이게 합니다.
+    const timer = setTimeout(() => {
+      setHeight(value);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, [value]);
 
   return (
-    <MobileQuickMenuWithAll
-      initialItems={items}
-      allMenus={allMenus}
-      onItemsChange={setItems}
-      onItemClick={_item => {
-        // Item clicked
-      }}
-      maxItems={8}
-      columns={4}
-      enableEdit={true}
-    />
+    <div className="bmi-card">
+      <div className="content-left">
+        <h2>
+          비만은 건강에
+          <br />
+          해로워요
+        </h2>
+        <p className="description">
+          몸매 관리를 위해
+          <br />
+          식단 조절이
+          <br />
+          필요해 보이네요
+        </p>
+        <button className="link-btn">추천 식품은 &gt;</button>
+      </div>
+
+      <div className="gauge-section">
+        {/* 단계별 라벨 */}
+        <div className="labels">
+          <span>매우 나쁨</span>
+          <span>나쁨</span>
+          <span>주의</span>
+          <span className="peer-label" style={{ bottom: `${peerValue}%` }}>
+            또래 평균
+          </span>
+          <span>좋음</span>
+          <span>매우 좋음</span>
+        </div>
+
+        {/* 온도계 본체 */}
+        <div className="thermometer-container">
+          {/* 병 하단 (넓은 둥근 부분) - 그라데이션 포함 */}
+          <div className="bottle-bottom">
+            <div
+              className="gauge-fill"
+              style={{
+                height: `${height}%`,
+                background: getGradientByValue(value),
+              }}
+            >
+              {/* '나' 마커 아이콘 */}
+              <div className="user-marker"></div>
+            </div>
+          </div>
+
+          {/* 맨 밑 둥근 부분 초록색 채우기 */}
+          <div className="bottle-bottom-2"></div>
+
+          {/* 병 상단 (좁은 기둥 부분) - 오버플로우 히든 */}
+          <div className="bottle-top">
+            {/* 또래 평균 점선 */}
+            <div className="peer-line" style={{ bottom: `${peerValue}%` }}></div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
